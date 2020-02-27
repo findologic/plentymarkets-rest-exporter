@@ -1,2 +1,3 @@
-# plentymarkets-rest-exporter-new
-Work in progress rewrite of findologic/plentymarkets-rest-export
+# Plentymarkets REST exporter
+
+This is a work in progress rewrite of the findologic/plentymarkets-rest-export.
