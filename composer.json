@@ -5,7 +5,9 @@
     "require": {
         "php": ">=7.3",
         "guzzlehttp/guzzle": "^6.5",
-        "vasily-kartashov/log4php": "^4.1"
+        "vasily-kartashov/log4php": "^4.1",
+        "ext-json": "*",
+        "ext-yaml": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0"
@@ -29,7 +31,8 @@
     "authors": [
         {
             "name": "Dominik Brader",
-            "email": "d.brader@findologic.com"
+            "email": "d.brader@findologic.com",
+            "role": "maintainer"
         }
     ]
 }

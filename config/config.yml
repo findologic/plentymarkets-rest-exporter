@@ -1,0 +1,9 @@
+# Exporter configuration for bin/run_export.php.
+username: 'FINDOLOGIC_API'
+password: 'secure'
+domain: 'findologic.plentymarkets-cloud02.com'
+multiShopId: 0
+availabilityId: null
+priceId: 1
+rrpId: 2
+language: 'DE'

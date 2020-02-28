@@ -2,7 +2,7 @@
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Request;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\WebstoreResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\WebStoreResponse;
 
 class WebStoreRequest extends Request
 {
@@ -10,5 +10,5 @@ class WebStoreRequest extends Request
 
     protected $endpoint = 'webstores';
 
-    protected $responseClass = WebstoreResponse::class;
+    protected $responseClass = WebStoreResponse::class;
 }

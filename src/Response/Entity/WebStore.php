@@ -1,8 +1,8 @@
 <?php
 
-namespace FINDOLOGIC\PlentyMarketsRestExporter\Response;
+namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
-class WebstoreResponse extends Response
+class WebStore extends Entity
 {
     /** @var int */
     private $id;

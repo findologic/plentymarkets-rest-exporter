@@ -7,8 +7,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\WebstoreResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\WebStoreResponse;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use GuzzleHttp\RequestOptions;
@@ -25,6 +26,9 @@ class Client
     private const
         PROTOCOL_HTTP = 'http',
         PROTOCOL_HTTPS = 'https';
+
+    private const
+        REST_PATH = 'rest';
 
     /** @var GuzzleClient */
     private $client;
@@ -78,17 +82,21 @@ class Client
 
         $this->handleResponse($guzzleRequest, $response);
 
-        // TODO: json_encode the value and cast it to the respective response class.
-        $responseClass = $request->getResponseClass($response);
-        return new $responseClass();
+        $responseClass = $request->getResponseClass();
+        return new $responseClass($response);
     }
 
-    private function sendRequest(RequestInterface $request): ResponseInterface
+    private function sendRequest(RequestInterface $request, array $params = null): ResponseInterface
     {
+        if ($this->accessToken) {
+            $request = $request->withAddedHeader('Authorization', 'Bearer ' . $this->accessToken);
+        }
+
         $response = $this->client->send(
             $request,
             [
                 RequestOptions::HTTP_ERRORS => false,
+                RequestOptions::FORM_PARAMS => $params,
                 RequestOptions::ALLOW_REDIRECTS => true
             ]
         );
@@ -110,7 +118,7 @@ class Client
             case 429:
                 throw new ThrottlingException('Throttling limit reached.');
             case 200:
-                if (empty($response->getBody()->getContents())) {
+                if (empty($response->getBody()->__toString())) {
                     throw new CustomerException(sprintf(
                         'The API for URI "%s" responded with status code %d',
                         $request->getUri()->__toString(),
@@ -138,17 +146,17 @@ class Client
         $request = new GuzzleRequest(
             'POST',
             $this->buildRequestUri('login'),
-            [
-                'username' => $this->config->getUsername(),
-                'password' => $this->config->getPassword(),
-            ]
         );
+        $params = [
+            'username' => $this->config->getUsername(),
+            'password' => $this->config->getPassword()
+        ];
 
-        $response = $this->sendRequest($request);
+        $response = $this->sendRequest($request, $params);
         if ($response->getStatusCode() >= 301 && $response->getStatusCode() <= 404) {
             $this->protocol = self::PROTOCOL_HTTP;
 
-            $response = $this->sendRequest($request);
+            $response = $this->sendRequest($request, $params);
         }
 
         $this->handleLoginResponse($request, $response);
@@ -163,8 +171,8 @@ class Client
             ));
         }
 
-        $data = json_decode($response);
-        if (!property_exists($data, 'accessToken')) {
+        $data = json_decode($response->getBody()->__toString());
+        if (!$data || !property_exists($data, 'accessToken')) {
             throw new CriticalException(
                 'Wrong username or password. The response does not contain an access token.'
             );
@@ -200,11 +208,16 @@ class Client
 
     private function buildRequestUri(string $endpoint): string
     {
-        return sprintf('%s://%s/%s', $this->protocol, $this->config->getDomain(), $endpoint);
+        return sprintf('%s://%s/%s/%s', $this->protocol, $this->config->getDomain(), self::REST_PATH, $endpoint);
     }
 
-    public function getWebStores(): WebstoreResponse
+    public function getWebStores(): WebStoreResponse
     {
+        $webStoreRequest = new WebStoreRequest();
 
+        /** @var Response|WebStoreResponse $response */
+        $response = $this->doRequest($webStoreRequest);
+
+        return $response;
     }
 }

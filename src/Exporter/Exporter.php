@@ -41,17 +41,18 @@ abstract class Exporter
     /**
      * Builds a new exporter instance. Use Exporter::TYPE_CSV / Exporter::TYPE_XML to get the respective type.
      *
+     * @param int $type Exporter::TYPE_CSV / Exporter::TYPE_XML
+     * @param Config $config
      * @param Logger $internalLogger
      * @param Logger $customerLogger
-     * @param Config $config
-     * @param int $type Exporter::TYPE_CSV / Exporter::TYPE_XML
+     *
      * @return Exporter
      */
     public static function buildInstance(
-        Logger $internalLogger,
-        Logger $customerLogger,
+        int $type,
         Config $config,
-        int $type
+        Logger $internalLogger,
+        Logger $customerLogger
     ): Exporter {
         switch ($type) {
             case self::TYPE_CSV:
@@ -65,7 +66,10 @@ abstract class Exporter
 
     public function export(): void
     {
-        $this->customerLogger->info('');
+        $this->customerLogger->info('Getting standard information like webstores, etc.');
+        $webStores = $this->client->getWebStores();
+        $webStores->serialize();
+        var_dump($webStores);
     }
 
     private function fetchGeneralData(): void

@@ -31,6 +31,19 @@ class Config
     /** @var int|null */
     private $rrpId;
 
+    public function __construct(array $rawConfig)
+    {
+        foreach ($rawConfig as $configKey => $configValue) {
+            $setter = 'set' . ucfirst($configKey);
+
+            if (!method_exists($this, $setter)) {
+                continue;
+            }
+
+            $this->{$setter}($configValue);
+        }
+    }
+
     /**
      * A domain or any URI can be submitted to this method. The configuration may only store the domain name itself.
      *
