@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
@@ -9,9 +11,9 @@ class WebStoreResponse extends Response
     /** @var WebStore[] */
     private $webStores = [];
 
-    public function serialize(): void
+    public function parse(): void
     {
-        $webstores = $this->getSerializedResponse();
+        $webstores = $this->jsonSerialize();
 
         foreach ($webstores as $webstore) {
             $this->webStores[$webstore['storeIdentifier']] = $webstore;

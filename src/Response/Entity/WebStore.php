@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
 class WebStore extends Entity

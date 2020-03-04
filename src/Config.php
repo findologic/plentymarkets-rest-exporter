@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
 /**
@@ -31,7 +33,7 @@ class Config
     /** @var int|null */
     private $rrpId;
 
-    public function __construct(array $rawConfig)
+    public function __construct(array $rawConfig = [])
     {
         foreach ($rawConfig as $configKey => $configValue) {
             $setter = 'set' . ucfirst($configKey);

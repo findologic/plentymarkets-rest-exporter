@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
@@ -68,12 +70,12 @@ abstract class Exporter
     {
         $this->customerLogger->info('Getting standard information like webstores, etc.');
         $webStores = $this->client->getWebStores();
-        $webStores->serialize();
+        $webStores->parse();
         var_dump($webStores);
     }
 
-    private function fetchGeneralData(): void
+    private function warmUpRegistry(): void
     {
-
+        $webStores = $this->client->getWebStores();
     }
 }

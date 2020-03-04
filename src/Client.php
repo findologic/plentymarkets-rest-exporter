@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
@@ -45,7 +47,7 @@ class Client
     /** @var string */
     private $protocol = self::PROTOCOL_HTTPS;
 
-    /** @var ResponseInterface */
+    /** @var ResponseInterface Used for rate limiting. */
     private $lastResponse;
 
     /** @var string */
@@ -64,6 +66,16 @@ class Client
         $this->config = $config;
         $this->internalLogger = $internalLogger;
         $this->customerLogger = $customerLogger;
+    }
+
+    public function getWebStores(): WebStoreResponse
+    {
+        $webStoreRequest = new WebStoreRequest();
+
+        /** @var Response|WebStoreResponse $response */
+        $response = $this->doRequest($webStoreRequest);
+
+        return $response;
     }
 
     private function doRequest(Request $request): Response
@@ -184,7 +196,6 @@ class Client
 
     private function refreshLogin(): void
     {
-
     }
 
     private function handleRateLimit(): void
@@ -209,15 +220,5 @@ class Client
     private function buildRequestUri(string $endpoint): string
     {
         return sprintf('%s://%s/%s/%s', $this->protocol, $this->config->getDomain(), self::REST_PATH, $endpoint);
-    }
-
-    public function getWebStores(): WebStoreResponse
-    {
-        $webStoreRequest = new WebStoreRequest();
-
-        /** @var Response|WebStoreResponse $response */
-        $response = $this->doRequest($webStoreRequest);
-
-        return $response;
     }
 }

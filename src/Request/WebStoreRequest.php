@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Request;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\WebStoreResponse;
