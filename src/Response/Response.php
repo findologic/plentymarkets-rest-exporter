@@ -25,6 +25,6 @@ abstract class Response
 
     protected function jsonSerialize(): array
     {
-        return json_decode($this->response->getBody(), true);
+        return json_decode($this->response->getBody()->__toString(), true);
     }
 }
