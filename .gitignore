@@ -2,3 +2,4 @@
 /vendor/
 /logs/*.log
 coverage.xml
+/config/config.yml
