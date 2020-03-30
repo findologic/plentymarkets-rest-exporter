@@ -29,7 +29,7 @@ class WebStoreResponse extends Response implements CollectionInterface
         return $this->webStores;
     }
 
-    public function getWebStore(int $storeIdentifier): ?WebStoreEntity
+    public function getWebStoreByStoreIdentifier(int $storeIdentifier): ?WebStoreEntity
     {
         if (!isset($this->webStores[$storeIdentifier])) {
             return null;
@@ -55,5 +55,20 @@ class WebStoreResponse extends Response implements CollectionInterface
     public function all(): array
     {
         return $this->getWebStores();
+    }
+
+    public function findOne(array $criteria): ?Entity
+    {
+        foreach ($this->webStores as $webStore) {
+            foreach ($criteria as $criterion => $value) {
+                if ($webStore[$criterion] !== $value) {
+                    continue 2;
+                }
+
+                return $webStore;
+            }
+        }
+
+        return null;
     }
 }

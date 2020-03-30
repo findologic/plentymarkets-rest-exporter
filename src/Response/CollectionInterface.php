@@ -17,4 +17,34 @@ interface CollectionInterface
      * @return Entity[]
      */
     public function all(): array;
+
+    /**
+     * Finds an entity in the collection based by a given criteria.
+     * If there are multiple entities matching the same criteria, only the first one may be returned.
+     *
+     * Usage:
+     *
+     * ```
+     * $collection->find([
+     *     'id' => 1234,
+     *     'name' => 'blub',
+     * ]);
+     * ```
+     */
+    public function findOne(array $criteria): ?Entity;
+
+    /**
+     * Finds all entities in the collection based by a given criteria.
+     *
+     * Usage:
+     *
+     * ```
+     * $collection->find([
+     *     'name' => 'blub',
+     * ]);
+     * ```
+     *
+     * @return Entity[]
+     */
+    public function find(array $criteria): array;
 }
