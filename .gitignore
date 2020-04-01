@@ -1,5 +1,7 @@
 /.idea/
-/vendor/
-/logs/*.log
-coverage.xml
 /config/config.yml
+/coverage.xml
+/export/*.csv
+/export/*.xml
+/logs/*.log
+/vendor/

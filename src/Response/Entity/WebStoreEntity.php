@@ -63,4 +63,16 @@ class WebStoreEntity extends Entity
     {
         return $this->configuration;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'type' => $this->type,
+            'storeIdentifier' => $this->storeIdentifier,
+            'name' => $this->name,
+            'pluginSetId' => $this->pluginSetId,
+            'configuration' => $this->configuration
+        ];
+    }
 }

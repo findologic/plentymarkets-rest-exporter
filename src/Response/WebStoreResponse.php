@@ -17,7 +17,7 @@ class WebStoreResponse extends Response implements CollectionInterface
         $webstores = $this->jsonSerialize();
 
         foreach ($webstores as $webstore) {
-            $this->webStores[$webstore['storeIdentifier']] = $webstore;
+            $this->webStores[] = new WebstoreEntity($webstore);
         }
     }
 
@@ -31,11 +31,7 @@ class WebStoreResponse extends Response implements CollectionInterface
 
     public function getWebStoreByStoreIdentifier(int $storeIdentifier): ?WebStoreEntity
     {
-        if (!isset($this->webStores[$storeIdentifier])) {
-            return null;
-        }
-
-        return $this->webStores[$storeIdentifier];
+        return $this->findOne(['storeIdentifier' => $storeIdentifier]);
     }
 
     /**
@@ -57,11 +53,16 @@ class WebStoreResponse extends Response implements CollectionInterface
         return $this->getWebStores();
     }
 
+    /**
+     * @return WebStoreEntity|null
+     */
     public function findOne(array $criteria): ?Entity
     {
         foreach ($this->webStores as $webStore) {
             foreach ($criteria as $criterion => $value) {
-                if ($webStore[$criterion] !== $value) {
+                $getter = 'get' . ucfirst($criterion);
+
+                if ($webStore->{$getter}() !== $value) {
                     continue 2;
                 }
 
@@ -70,5 +71,23 @@ class WebStoreResponse extends Response implements CollectionInterface
         }
 
         return null;
+    }
+
+    public function find(array $criteria): array
+    {
+        $webStoresMatchingCriteria = [];
+        foreach ($this->webStores as $webStore) {
+            foreach ($criteria as $criterion => $value) {
+                $getter = 'get' . ucfirst($criterion);
+
+                if ($webStore->{$getter}() !== $value) {
+                    continue 2;
+                }
+
+                $webStoresMatchingCriteria[] = $webStore;
+            }
+        }
+
+        return $webStoresMatchingCriteria;
     }
 }

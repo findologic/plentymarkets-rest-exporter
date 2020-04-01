@@ -20,6 +20,9 @@
         "phpunit/phpunit": "^9.0",
         "squizlabs/php_codesniffer": "^3.5"
     },
+    "suggest": {
+        "ext-yaml": "Needed if you want to run the export locally."
+    },
     "config": {
         "platform": {
             "php": "7.3"
@@ -38,7 +41,8 @@
     "scripts": {
         "lint": "./vendor/bin/phpcs --standard=phpcs.xml .",
         "fix": "./vendor/bin/phpcbf --standard=phpcs.xml .",
-        "test": "phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml"
+        "test": "phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml",
+        "export": "php bin/run_export.php"
     },
     "license": "MIT"
 }

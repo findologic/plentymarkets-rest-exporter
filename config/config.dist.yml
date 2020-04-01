@@ -1,4 +1,5 @@
-# Exporter configuration for bin/run_export.php. Copy this file and name it "config.yml".
+# Copy this file and name it "config.yml".
+# Exporter configuration for bin/run_export.php.
 username: 'FINDOLOGIC_API'
 password: '1234'
 domain: 'findologic.plentymarkets-cloud02.com'
