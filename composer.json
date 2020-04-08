@@ -1,5 +1,5 @@
 {
-    "name": "thekeymaster/plentymarkets-rest-exporter-new",
+    "name": "findologic/plentymarkets-rest-exporter-new",
     "description": "FINDOLOGIC exporter for exporting product data via the plentymarkets REST API",
     "type": "project",
     "authors": [

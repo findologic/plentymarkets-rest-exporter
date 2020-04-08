@@ -1,6 +1,6 @@
 # Plentymarkets REST exporter
 
-![GitHub Actions Tests](https://github.com/thekeymaster/plentymarkets-rest-exporter-new/workflows/Tests/badge.svg)
+![GitHub Actions Tests](https://github.com/findologic/plentymarkets-rest-exporter-new/workflows/Tests/badge.svg)
 
 ## Table of Contents
 
