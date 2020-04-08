@@ -14,6 +14,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\WebStoreResponse;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
+use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\RequestOptions;
 use Log4Php\Logger;
 use Psr\Http\Message\RequestInterface;
@@ -68,38 +69,25 @@ class Client
         $this->customerLogger = $customerLogger;
     }
 
-    public function getWebStores(): WebStoreResponse
-    {
-        $webStoreRequest = new WebStoreRequest();
-
-        /** @var Response|WebStoreResponse $response */
-        $response = $this->doRequest($webStoreRequest);
-
-        return $response;
-    }
-
-    private function doRequest(Request $request): Response
+    public function send(GuzzleRequest $request): ResponseInterface
     {
         $this->handleRateLimit();
         $this->handleLogin();
 
-        $guzzleRequest = new GuzzleRequest(
-            $request->getMethod(),
-            $this->buildRequestUri($request->getEndpoint()),
-            $request->getHeaders(),
-            $request->getBody()
-        );
+        $request = $request->withUri($this->buildRequestUri($request->getUri()->__toString()));
+        $response = $this->sendRequest($request);
+        $this->handleResponse($request, $response);
 
-        $response = $this->sendRequest($guzzleRequest);
-
-        $this->handleResponse($guzzleRequest, $response);
-
-        $responseClass = $request->getResponseClass();
-        return new $responseClass($response);
+        return $response;
     }
 
     private function sendRequest(RequestInterface $request, array $params = null): ResponseInterface
     {
+        $this->customerLogger->info(sprintf(
+            'Getting data from: %s',
+            $request->getUri()->__toString()
+        ));
+
         if ($this->accessToken) {
             $request = $request->withAddedHeader('Authorization', 'Bearer ' . $this->accessToken);
         }
@@ -155,6 +143,8 @@ class Client
 
     private function doLogin(): void
     {
+        $this->customerLogger->info('Trying to log into the Plentymarkets REST API...');
+
         $request = new GuzzleRequest(
             'POST',
             $this->buildRequestUri('login'),
@@ -190,18 +180,27 @@ class Client
             );
         }
 
+        $this->customerLogger->info('Login to the REST API was successful!');
         $this->accessToken = $data->accessToken;
         $this->refreshToken = $data->refreshToken;
     }
 
     private function refreshLogin(): void
     {
+        // TODO: Login sessions are typically 24 hours, but we want to refresh the login session anyway, if
+        //  the login session time is exceeded.
     }
 
     private function handleRateLimit(): void
     {
         if ($this->lastResponse && $this->isRateLimited()) {
-            sleep($this->getRateLimitWaitTimeInSeconds());
+            $waitTimeInSeconds = $this->getRateLimitWaitTimeInSeconds();
+            $this->customerLogger->info(sprintf(
+                'Waiting for %d seconds, due to rate limiting...',
+                $waitTimeInSeconds
+            ));
+
+            sleep($waitTimeInSeconds);
         }
     }
 
@@ -217,8 +216,14 @@ class Client
         return (int)$this->lastResponse->getHeaderLine(self::PLENTY_SHORT_PERIOD_DECAY_HEADER);
     }
 
-    private function buildRequestUri(string $endpoint): string
+    private function buildRequestUri(string $endpoint): Uri
     {
-        return sprintf('%s://%s/%s/%s', $this->protocol, $this->config->getDomain(), self::REST_PATH, $endpoint);
+        return new Uri(sprintf(
+            '%s://%s/%s/%s',
+            $this->protocol,
+            $this->config->getDomain(),
+            self::REST_PATH,
+            $endpoint
+        ));
     }
 }

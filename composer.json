@@ -13,15 +13,12 @@
         "php": ">=7.3",
         "guzzlehttp/guzzle": "^6.5",
         "vasily-kartashov/log4php": "^4.1",
-        "ext-json": "*",
-        "ext-yaml": "*"
+        "ext-json": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0",
-        "squizlabs/php_codesniffer": "^3.5"
-    },
-    "suggest": {
-        "ext-yaml": "Needed if you want to run the export locally."
+        "squizlabs/php_codesniffer": "^3.5",
+        "symfony/yaml": "^5.0"
     },
     "config": {
         "platform": {
@@ -42,7 +39,7 @@
         "lint": "./vendor/bin/phpcs --standard=phpcs.xml .",
         "fix": "./vendor/bin/phpcbf --standard=phpcs.xml .",
         "test": "phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml",
-        "export": "php bin/run_export.php"
+        "export": "php bin/run_export.php | sleep 1 && tail -f -n +1 logs/import.log"
     },
     "license": "MIT"
 }

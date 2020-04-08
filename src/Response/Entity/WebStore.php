@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
-class WebStoreEntity extends Entity
+class WebStore extends Entity
 {
     /** @var int */
     private $id;

@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Request;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\WebStoreResponse;
+use GuzzleHttp\Psr7\Request as GuzzleRequest;
 
-class WebStoreRequest extends Request
+class WebStoreRequest extends GuzzleRequest
 {
-    protected $method = 'GET';
-
-    protected $endpoint = 'webstores';
-
-    protected $responseClass = WebStoreResponse::class;
+    public function __construct(
+        string $method = 'GET',
+        string $uri = 'webstores',
+        array $headers = [],
+        ?string $body = null,
+        string $version = '1.1'
+    ) {
+        parent::__construct($method, $uri, $headers, $body, $version);
+    }
 }

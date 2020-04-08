@@ -7,8 +7,10 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStoreEntity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use GuzzleHttp\Client as GuzzleClient;
 use InvalidArgumentException;
 use Log4Php\Logger;
@@ -85,14 +87,17 @@ abstract class Exporter
 
     protected function warmUpRegistry(): void
     {
+        $this->customerLogger->info('Starting to initialise necessary data (categories, attributes, etc.).');
+
         $this->registry->set('webStore', $this->getWebStore());
     }
 
-    private function getWebStore(): WebStoreEntity
+    private function getWebStore(): WebStore
     {
-        $webStores = $this->client->getWebStores();
+        $webStoreRequest = new WebStoreRequest();
+        $response = $this->client->send($webStoreRequest);
 
-        $webStores->parse();
+        $webStores = WebStoreParser::parse($response);
         $webStore = $webStores->findOne([
             'id' => $this->config->getMultiShopId()
         ]);

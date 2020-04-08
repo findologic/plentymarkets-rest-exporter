@@ -5,37 +5,36 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStoreEntity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 
 class WebStoreResponse extends Response implements CollectionInterface
 {
-    /** @var WebStoreEntity[] */
+    /** @var WebStore[] */
     private $webStores = [];
 
-    public function parse(): void
+    /**
+     * @param WebStore[] $webStores
+     */
+    public function __construct(array $webStores)
     {
-        $webstores = $this->jsonSerialize();
-
-        foreach ($webstores as $webstore) {
-            $this->webStores[] = new WebstoreEntity($webstore);
-        }
+        $this->webStores = $webStores;
     }
 
     /**
-     * @return WebStoreEntity[]
+     * @return WebStore[]
      */
     public function getWebStores(): array
     {
         return $this->webStores;
     }
 
-    public function getWebStoreByStoreIdentifier(int $storeIdentifier): ?WebStoreEntity
+    public function getWebStoreByStoreIdentifier(int $storeIdentifier): ?WebStore
     {
         return $this->findOne(['storeIdentifier' => $storeIdentifier]);
     }
 
     /**
-     * @return WebStoreEntity
+     * @return WebStore
      */
     public function first(): Entity
     {
@@ -54,7 +53,7 @@ class WebStoreResponse extends Response implements CollectionInterface
     }
 
     /**
-     * @return WebStoreEntity|null
+     * @return WebStore|null
      */
     public function findOne(array $criteria): ?Entity
     {

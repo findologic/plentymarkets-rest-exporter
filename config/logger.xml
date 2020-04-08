@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <log4php:configuration xmlns:log4php="http://logging.apache.org/log4php">
     <appender name="default" class="\Log4Php\Appenders\LoggerAppenderFile">
-        <param name="file" value="../logs/import.log" />
         <param name="append" value="true" />
         <layout class="\Log4Php\Layouts\LoggerLayoutPattern">
             <param name="ConversionPattern" value="%d{Y-m-d H:i:s} [%p] %c: %m %n" />

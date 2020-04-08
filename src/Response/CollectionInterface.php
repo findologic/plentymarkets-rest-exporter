@@ -6,6 +6,9 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
+/**
+ * Responses that contain multiple entities may implement this interface, to allow easy access to their entities.
+ */
 interface CollectionInterface
 {
     /**
@@ -27,7 +30,7 @@ interface CollectionInterface
      * Usage:
      *
      * ```
-     * $collection->find([
+     * $entity = $collection->findOne([
      *     'id' => 1234,
      *     'name' => 'blub',
      * ]);
@@ -41,7 +44,7 @@ interface CollectionInterface
      * Usage:
      *
      * ```
-     * $collection->find([
+     * $entities = $collection->find([
      *     'name' => 'blub',
      * ]);
      * ```

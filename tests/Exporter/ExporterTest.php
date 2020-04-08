@@ -10,7 +10,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStoreEntity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\WebStoreResponse;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
@@ -132,7 +132,7 @@ class ExporterTest extends TestCase
     {
         $exporter = $this->getDefaultExporter($type);
 
-        $expectedWebStore = new WebStoreEntity([
+        $expectedWebStore = new WebStore([
             'id' => 0,
             'type' => 'plentymarkets',
             'storeIdentifier' => 12345,

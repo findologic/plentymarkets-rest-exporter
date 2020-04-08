@@ -4,7 +4,7 @@ username: 'FINDOLOGIC_API'
 password: '1234'
 domain: 'findologic.plentymarkets-cloud02.com'
 multiShopId: 0
-availabilityId: null
+availabilityId: ~
 priceId: 1
 rrpId: 2
 language: 'DE'
