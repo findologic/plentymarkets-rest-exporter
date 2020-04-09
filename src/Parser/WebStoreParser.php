@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\WebStoreResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\WebStoreResponse;
 use Psr\Http\Message\ResponseInterface;
 
 class WebStoreParser extends Parser

@@ -18,7 +18,6 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
 use InvalidArgumentException;
 use Log4Php\Logger;
-use Psr\Http\Message\ResponseInterface;
 
 abstract class Exporter
 {

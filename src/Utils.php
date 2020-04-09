@@ -6,7 +6,6 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\IterableResponseInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class Utils
