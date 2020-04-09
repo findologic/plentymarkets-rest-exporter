@@ -32,7 +32,7 @@ $configDest = __DIR__ . '/../config/config.yml';
 try {
     $rawConfig = Yaml::parseFile($configDest);
 } catch (ParseException $e) {
-    echo $e->getMessage() . "\n";
+    $internalLogger->error('There was an error while parsing the configuration: ' . $e->getMessage());
     exit(1);
 }
 
@@ -45,7 +45,7 @@ try {
 } catch (Throwable $e) {
     $internalLogger->error($e->getMessage());
     $internalLogger->trace($e->getTraceAsString());
-    $customerLogger->error('The export failed with an exception.');
+    $customerLogger->error('The export was unsuccessful and failed with an exception.');
     exit(1);
 }
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FINDOLOGIC\PlentyMarketsRestExporter\Response;
+namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
@@ -35,6 +35,17 @@ interface CollectionInterface
      *     'name' => 'blub',
      * ]);
      * ```
+     *
+     * Complex Usage:
+     *
+     * ```
+     * $entity = $collection->findOne([
+     *     'hasChildren' => false,
+     *     'details' => [
+     *         'categoryId' => 370
+     *     ]
+     * );
+     * ```
      */
     public function findOne(array $criteria): ?Entity;
 
@@ -47,6 +58,17 @@ interface CollectionInterface
      * $entities = $collection->find([
      *     'name' => 'blub',
      * ]);
+     * ```
+     *
+     * Complex Usage:
+     *
+     * ```
+     * $entity = $collection->find([
+     *     'hasChildren' => false,
+     *     'details' => [
+     *         'name' => 'best category'
+     *     ]
+     * );
      * ```
      *
      * @return Entity[]

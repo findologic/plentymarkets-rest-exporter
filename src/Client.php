@@ -9,9 +9,6 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\WebStoreResponse;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use GuzzleHttp\Psr7\Uri;
@@ -69,24 +66,26 @@ class Client
         $this->customerLogger = $customerLogger;
     }
 
-    public function send(GuzzleRequest $request): ResponseInterface
+    public function send(Request $request): ResponseInterface
     {
         $this->handleRateLimit();
         $this->handleLogin();
 
         $request = $request->withUri($this->buildRequestUri($request->getUri()->__toString()));
-        $response = $this->sendRequest($request);
+        $response = $this->sendRequest($request, $request->getParams());
         $this->handleResponse($request, $response);
 
         return $response;
     }
 
-    private function sendRequest(RequestInterface $request, array $params = null): ResponseInterface
+    private function sendRequest(GuzzleRequest $request, array $params = null): ResponseInterface
     {
-        $this->customerLogger->info(sprintf(
-            'Getting data from: %s',
-            $request->getUri()->__toString()
-        ));
+        $uri = $request->getUri()->__toString();
+        if ($request->getMethod() === 'GET' && !empty($params)) {
+            $uri .= sprintf('?%s', http_build_query($params));
+        }
+
+        $this->customerLogger->info(sprintf('Getting data from: %s', $uri));
 
         if ($this->accessToken) {
             $request = $request->withAddedHeader('Authorization', 'Bearer ' . $this->accessToken);
@@ -94,11 +93,7 @@ class Client
 
         $response = $this->client->send(
             $request,
-            [
-                RequestOptions::HTTP_ERRORS => false,
-                RequestOptions::FORM_PARAMS => $params,
-                RequestOptions::ALLOW_REDIRECTS => true
-            ]
+            $this->getRequestOptions($request, $params)
         );
         $this->lastResponse = $response;
 
@@ -225,5 +220,43 @@ class Client
             self::REST_PATH,
             $endpoint
         ));
+    }
+
+    private function sanitizeQueryParams(array $params): array
+    {
+        $sanitized = [];
+        foreach ($params as $key => $value) {
+            if (is_array($value)) {
+                // Plentymarkets REST API separates array parameters with ",".
+                $sanitized[$key] = implode(',', $value);
+
+                continue;
+            }
+
+            $sanitized[$key] = $value;
+        }
+
+        return $sanitized;
+    }
+
+    private function getRequestOptions(GuzzleRequest $request, array $params): array
+    {
+        $options = [
+            RequestOptions::HTTP_ERRORS => false,
+            RequestOptions::ALLOW_REDIRECTS => true,
+        ];
+
+        switch ($request->getMethod()) {
+            case 'POST':
+                $options[RequestOptions::FORM_PARAMS] = $this->sanitizeQueryParams($params);
+                break;
+            case 'GET':
+                $options[RequestOptions::QUERY] = $this->sanitizeQueryParams($params);
+                break;
+            default:
+                break;
+        }
+
+        return $options;
     }
 }

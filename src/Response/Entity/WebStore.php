@@ -12,7 +12,7 @@ class WebStore extends Entity
     /** @var string */
     private $type;
 
-    /** @var string */
+    /** @var int */
     private $storeIdentifier;
 
     /** @var string */
@@ -44,7 +44,7 @@ class WebStore extends Entity
         return $this->type;
     }
 
-    public function getStoreIdentifier(): string
+    public function getStoreIdentifier(): int
     {
         return $this->storeIdentifier;
     }

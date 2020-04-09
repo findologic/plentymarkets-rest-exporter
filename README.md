@@ -35,9 +35,9 @@ Simply run `composer install`.
 1. Set all necessary configurations in `config/config.yml`.
 1. Run `composer export`.
 
-Alternatively you can run the command manually:  `php bin/run_export.php | sleep 1 && tail -f logs/import.log`.
+Alternatively you can run the command manually: `php bin/run_export.php | (sleep 1 && tail -f -n +1 logs/import.log)`.
   * `php bin/run_export.php` Starts the export
-  * `sleep 1 && tail -f -n +1 logs/import.log` Waits one second, so the last log is cleared and then
+  * `(sleep 1 && tail -f -n +1 logs/import.log)` Waits one second, so the last log is cleared and then
   follows the log, so you can see the current status. Arguments `-n +1` tells `tail` to follow from the beginning.
 
 #### Debugging

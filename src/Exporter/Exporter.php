@@ -7,13 +7,18 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
+use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
 use InvalidArgumentException;
 use Log4Php\Logger;
+use Psr\Http\Message\ResponseInterface;
 
 abstract class Exporter
 {
@@ -90,6 +95,7 @@ abstract class Exporter
         $this->customerLogger->info('Starting to initialise necessary data (categories, attributes, etc.).');
 
         $this->registry->set('webStore', $this->getWebStore());
+        $this->registry->set('categories', $this->getCategories());
     }
 
     private function getWebStore(): WebStore
@@ -110,5 +116,26 @@ abstract class Exporter
         }
 
         return $webStore;
+    }
+
+    private function getCategories(): CategoryResponse
+    {
+        /** @var WebStore $webStore */
+        $webStore = $this->registry->get('webStore');
+
+        $categoryRequest = new CategoryRequest($webStore->getStoreIdentifier());
+
+        $categories = [];
+        foreach (Utils::sendIterableRequest($this->client, $categoryRequest) as $response) {
+            $categoryResponse = CategoryParser::parse($response);
+            $categories[] = $categoryResponse->find([
+                'details' => [
+                    'lang' => $this->config->getLanguage(),
+                    'plentyId' => $webStore->getStoreIdentifier()
+                ]
+            ]);
+        }
+
+        return new CategoryResponse(1, count($categories), true, $categories);
     }
 }
