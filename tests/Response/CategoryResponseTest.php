@@ -34,7 +34,7 @@ class CategoryResponseTest extends TestCase
                     'details' => [
                         'name' => 'dfbd',
                         'description' => '',
-                        'updatedBy' => 'Matthias Heimbeck'
+                        'updatedBy' => 'Max Mustermann'
                     ]
                 ],
                 'expectedId' => 16
@@ -45,7 +45,7 @@ class CategoryResponseTest extends TestCase
                     'details' => [
                         'categoryId' => 370,
                         'name' => 'Registrierung',
-                        'updatedBy' => 'Demo User'
+                        'updatedBy' => 'Max Musterfrau'
                     ]
                 ],
                 'expectedId' => 370
@@ -62,7 +62,7 @@ class CategoryResponseTest extends TestCase
             'complex criteria with many sub-criteria' => [
                 'criteria' => [
                     'details' => [
-                        'updatedBy' => 'Demo User',
+                        'updatedBy' => 'Max Musterfrau',
                         'image' => null,
                         'plentyId' => 34185,
                         'name' => 'Bestellvorgang',
