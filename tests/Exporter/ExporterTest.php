@@ -10,8 +10,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\WebStoreResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use Log4Php\Logger;
@@ -20,6 +21,8 @@ use PHPUnit\Framework\TestCase;
 
 class ExporterTest extends TestCase
 {
+    use ResponseHelper;
+
     /** @var Config */
     private $defaultConfig;
 
@@ -63,7 +66,7 @@ class ExporterTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->registryMock = $this->getMockBuilder(Registry::class)
-            ->onlyMethods(['set'])
+            ->onlyMethods(['set', 'get'])
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -127,10 +130,8 @@ class ExporterTest extends TestCase
     /**
      * @dataProvider exporterTypeRegistryProvider
      */
-    public function testRegistryIsWarmedUpWithWebStore(int $type): void
+    public function testRegistryIsWarmedUp(int $type): void
     {
-        $this->markTestSkipped('Test needs a rewrite to accumulate new logic.');
-
         $exporter = $this->getDefaultExporter($type);
 
         $expectedWebStore = new WebStore([
@@ -141,8 +142,7 @@ class ExporterTest extends TestCase
             'pluginSetId' => 44,
             'configuration' => []
         ]);
-
-        $responseBody = [
+        $webStoreResponseBody = [
             $expectedWebStore->jsonSerialize(),
             [
                 'id' => 1,
@@ -153,17 +153,31 @@ class ExporterTest extends TestCase
                 'configuration' => []
             ]
         ];
+        $webStoreResponse = new Response(200, [], json_encode($webStoreResponseBody));
 
-        $response = new Response(200, [], json_encode($responseBody));
-        $webStores = new WebStoreResponse($response);
+        $categoryResponseBody = json_decode(
+            $this->getMockResponse('CategoryResponse/response.json')->getBody()->__toString(),
+            true
+        );
+        $expectedCategories = new CategoryResponse(
+            1,
+            1,
+            true,
+            [[]] // All categories are filtered out by the criteria.
+        );
+        $categoryResponse = new Response(200, [], json_encode($categoryResponseBody));
 
-        $this->clientMock->expects($this->once())
-            ->method('getWebStores')
-            ->willReturn($webStores);
+        $this->clientMock->expects($this->exactly(2))
+            ->method('send')
+            ->willReturnOnConsecutiveCalls($webStoreResponse, $categoryResponse);
 
-        $this->registryMock->expects($this->once())
+        $this->registryMock->expects($this->exactly(2))
             ->method('set')
-            ->with('webStore', $expectedWebStore);
+            ->withConsecutive(['webStore', $expectedWebStore], ['categories', $expectedCategories]);
+
+        $this->registryMock->expects($this->any())
+            ->method('get')
+            ->willReturnOnConsecutiveCalls($expectedWebStore);
 
         $exporter->export();
     }
