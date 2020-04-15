@@ -33,6 +33,9 @@ class Config
     /** @var int|null */
     private $rrpId;
 
+    /** @var bool */
+    private $debug = false;
+
     public function __construct(array $rawConfig = [])
     {
         foreach ($rawConfig as $configKey => $configValue) {
@@ -149,5 +152,17 @@ class Config
     public function getRrpId(): ?int
     {
         return $this->rrpId;
+    }
+
+    public function setDebug(bool $debug): self
+    {
+        $this->debug = $debug;
+
+        return $this;
+    }
+
+    public function isDebug(): bool
+    {
+        return $this->debug;
     }
 }

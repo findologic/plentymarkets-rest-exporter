@@ -1,0 +1,12 @@
+{
+  "token_type": "Bearer",
+  "expires_in": 86400,
+  "access_token": "access token",
+  "refresh_token": "refresh token",
+  "concurrent_sessions": 2,
+  "max_current_sessions": 40,
+  "tokenType": "Bearer",
+  "expiresIn": 86400,
+  "accessToken": "access token",
+  "refreshToken": "refresh token"
+}

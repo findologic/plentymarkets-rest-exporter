@@ -8,17 +8,22 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\RequestOptions;
-use Log4Php\Logger;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 class Client
 {
+    public const
+        METHOD_GET = 'GET',
+        METHOD_POST = 'POST';
+
     private const
         PLENTY_SHORT_PERIOD_CALLS_HEADER = 'X-Plenty-Global-Short-Period-Calls-Left',
         PLENTY_SHORT_PERIOD_DECAY_HEADER = 'X-Plenty-Global-Short-Period-Decay';
@@ -36,10 +41,10 @@ class Client
     /** @var Config */
     private $config;
 
-    /** @var Logger */
+    /** @var LoggerInterface */
     private $internalLogger;
 
-    /** @var Logger */
+    /** @var LoggerInterface */
     private $customerLogger;
 
     /** @var string */
@@ -57,13 +62,13 @@ class Client
     public function __construct(
         GuzzleClient $httpClient,
         Config $config,
-        ?Logger $internalLogger = null,
-        ?Logger $customerLogger = null
+        ?LoggerInterface $internalLogger = null,
+        ?LoggerInterface $customerLogger = null
     ) {
         $this->client = $httpClient;
         $this->config = $config;
-        $this->internalLogger = $internalLogger;
-        $this->customerLogger = $customerLogger;
+        $this->internalLogger = $internalLogger ?? new DummyLogger();
+        $this->customerLogger = $customerLogger ?? new DummyLogger();
     }
 
     public function send(Request $request): ResponseInterface
@@ -81,7 +86,7 @@ class Client
     private function sendRequest(GuzzleRequest $request, array $params = null): ResponseInterface
     {
         $uri = $request->getUri()->__toString();
-        if ($request->getMethod() === 'GET' && !empty($params)) {
+        if ($request->getMethod() === self::METHOD_GET && !empty($params)) {
             $uri .= sprintf('?%s', http_build_query($params));
         }
 
@@ -141,7 +146,7 @@ class Client
         $this->customerLogger->info('Trying to log into the Plentymarkets REST API...');
 
         $request = new GuzzleRequest(
-            'POST',
+            self::METHOD_POST,
             $this->buildRequestUri('login'),
         );
         $params = [
@@ -188,15 +193,17 @@ class Client
 
     private function handleRateLimit(): void
     {
-        if ($this->lastResponse && $this->isRateLimited()) {
-            $waitTimeInSeconds = $this->getRateLimitWaitTimeInSeconds();
-            $this->customerLogger->info(sprintf(
-                'Waiting for %d seconds, due to rate limiting...',
-                $waitTimeInSeconds
-            ));
-
-            sleep($waitTimeInSeconds);
+        if (!$this->lastResponse || !$this->isRateLimited()) {
+            return;
         }
+
+        $waitTimeInSeconds = $this->getRateLimitWaitTimeInSeconds();
+        $this->customerLogger->info(sprintf(
+            'Waiting for %d seconds, due to rate limiting...',
+            $waitTimeInSeconds
+        ));
+
+        sleep($waitTimeInSeconds);
     }
 
     private function isRateLimited(): bool
@@ -247,10 +254,10 @@ class Client
         ];
 
         switch ($request->getMethod()) {
-            case 'POST':
+            case self::METHOD_POST:
                 $options[RequestOptions::FORM_PARAMS] = $this->sanitizeQueryParams($params);
                 break;
-            case 'GET':
+            case self::METHOD_GET:
                 $options[RequestOptions::QUERY] = $this->sanitizeQueryParams($params);
                 break;
             default:

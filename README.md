@@ -1,6 +1,7 @@
 # Plentymarkets REST exporter
 
 [![GitHub Actions Tests](https://github.com/findologic/plentymarkets-rest-exporter-new/workflows/Tests/badge.svg)](https://github.com/findologic/plentymarkets-rest-exporter-new/actions)
+[![codecov](https://codecov.io/gh/findologic/plentymarkets-rest-exporter-new/branch/master/graph/badge.svg)](https://codecov.io/gh/findologic/plentymarkets-rest-exporter-new)
 
 ## Table of Contents
 
@@ -28,6 +29,11 @@ FINDOLOGIC. The data is then wrapped to generate either a CSV or an XML file.
 Simply run `composer install`.
 
 ## Development
+
+### Directory structure
+
+* `.github` Contains everything related to GitHub, including GitHub Actions.
+* `bin` Contains executables
 
 ### Running the export
 

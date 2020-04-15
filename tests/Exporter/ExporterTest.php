@@ -6,12 +6,14 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Exporter;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
+use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
@@ -22,6 +24,7 @@ use PHPUnit\Framework\TestCase;
 class ExporterTest extends TestCase
 {
     use ResponseHelper;
+    use ConfigHelper;
 
     /** @var Config */
     private $defaultConfig;
@@ -49,16 +52,7 @@ class ExporterTest extends TestCase
 
     public function setUp(): void
     {
-        $this->defaultConfig = new Config([
-            'domain' => 'plenty-testshop.de',
-            'username' => 'user',
-            'password' => 'pretty secure, I think!',
-            'language' => 'de',
-            'multiShopId' => 0,
-            'availabilityId' => null,
-            'priceId' => null,
-            'rrpId' => null,
-        ]);
+        $this->defaultConfig = $this->getDefaultConfig();
         $this->loggerMock = $this->getMockBuilder(Logger::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -161,9 +155,9 @@ class ExporterTest extends TestCase
         );
         $expectedCategories = new CategoryResponse(
             1,
-            1,
+            0,
             true,
-            [[]] // All categories are filtered out by the criteria.
+            [] // All categories are filtered out by the criteria.
         );
         $categoryResponse = new Response(200, [], json_encode($categoryResponseBody));
 
@@ -178,6 +172,51 @@ class ExporterTest extends TestCase
         $this->registryMock->expects($this->any())
             ->method('get')
             ->willReturnOnConsecutiveCalls($expectedWebStore);
+
+        $exporter->export();
+    }
+
+    /**
+     * @dataProvider exporterTypeRegistryProvider
+     */
+    public function testExporterFailsIfWebStoreDoesNotExist(int $type): void
+    {
+        $expectedMultiShopId = 1337;
+
+        $this->expectException(CustomerException::class);
+        $this->expectExceptionMessage(sprintf(
+            'Could not find a web store with the multishop id "%d"',
+            $expectedMultiShopId
+        ));
+
+        $exporter = $this->getDefaultExporter($type);
+
+        $expectedWebStore = new WebStore([
+            'id' => 0,
+            'type' => 'plentymarkets',
+            'storeIdentifier' => 12345,
+            'name' => 'German Test Store',
+            'pluginSetId' => 44,
+            'configuration' => []
+        ]);
+        $webStoreResponseBody = [
+            $expectedWebStore->jsonSerialize(),
+            [
+                'id' => 1,
+                'type' => 'plentymarkets',
+                'storeIdentifier' => 12345,
+                'name' => 'German Test Store',
+                'pluginSetId' => 46,
+                'configuration' => []
+            ]
+        ];
+        $webStoreResponse = new Response(200, [], json_encode($webStoreResponseBody));
+
+        $this->clientMock->expects($this->once())
+            ->method('send')
+            ->willReturnOnConsecutiveCalls($webStoreResponse);
+
+        $this->defaultConfig->setMultiShopId($expectedMultiShopId);
 
         $exporter->export();
     }

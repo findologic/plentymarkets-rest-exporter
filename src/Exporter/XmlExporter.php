@@ -7,13 +7,13 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
-use Log4Php\Logger;
+use Psr\Log\LoggerInterface;
 
 class XmlExporter extends Exporter
 {
     public function __construct(
-        Logger $internalLogger,
-        Logger $customerLogger,
+        LoggerInterface $internalLogger,
+        LoggerInterface $customerLogger,
         Config $config,
         ?Client $client = null,
         ?Registry $registry = null

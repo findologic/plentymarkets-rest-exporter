@@ -17,7 +17,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
 use InvalidArgumentException;
-use Log4Php\Logger;
+use Psr\Log\LoggerInterface;
 
 abstract class Exporter
 {
@@ -25,10 +25,10 @@ abstract class Exporter
         TYPE_CSV = 0,
         TYPE_XML = 1;
 
-    /** @var Logger */
+    /** @var LoggerInterface */
     protected $internalLogger;
 
-    /** @var Logger */
+    /** @var LoggerInterface */
     protected $customerLogger;
 
     /** @var Config */
@@ -41,8 +41,8 @@ abstract class Exporter
     protected $registry;
 
     public function __construct(
-        Logger $internalLogger,
-        Logger $customerLogger,
+        LoggerInterface $internalLogger,
+        LoggerInterface $customerLogger,
         Config $config,
         ?Client $client = null,
         ?Registry $registry = null
@@ -59,8 +59,8 @@ abstract class Exporter
      *
      * @param int $type Exporter::TYPE_CSV / Exporter::TYPE_XML
      * @param Config $config
-     * @param Logger $internalLogger
-     * @param Logger $customerLogger
+     * @param LoggerInterface $internalLogger
+     * @param LoggerInterface $customerLogger
      * @param Client|null $client
      * @param Registry|null $registry
      *
@@ -69,8 +69,8 @@ abstract class Exporter
     public static function buildInstance(
         int $type,
         Config $config,
-        Logger $internalLogger,
-        Logger $customerLogger,
+        LoggerInterface $internalLogger,
+        LoggerInterface $customerLogger,
         ?Client $client = null,
         ?Registry $registry = null
     ): Exporter {
@@ -127,12 +127,14 @@ abstract class Exporter
         $categories = [];
         foreach (Utils::sendIterableRequest($this->client, $categoryRequest) as $response) {
             $categoryResponse = CategoryParser::parse($response);
-            $categories[] = $categoryResponse->find([
+            $categoriesMatchingCriteria = $categoryResponse->find([
                 'details' => [
                     'lang' => $this->config->getLanguage(),
                     'plentyId' => $webStore->getStoreIdentifier()
                 ]
             ]);
+
+            $categories = array_merge($categories, $categoriesMatchingCriteria);
         }
 
         return new CategoryResponse(1, count($categories), true, $categories);

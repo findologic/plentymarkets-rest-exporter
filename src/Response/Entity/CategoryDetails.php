@@ -125,6 +125,7 @@ class CategoryDetails extends Entity
             'metaKeywords' => $this->metaKeywords,
             'nameUrl' => $this->nameUrl,
             'metaTitle' => $this->metaTitle,
+            'metaDescription' => $this->metaDescription,
             'position' => $this->position,
             'updatedAt' => $this->updatedAt,
             'updatedBy' => $this->updatedBy,
