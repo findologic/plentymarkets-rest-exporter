@@ -19,6 +19,7 @@ abstract class Request extends GuzzleRequest
         string $version = '1.1'
     ) {
         $this->params = $params;
+        $headers['User-Agent'] = 'FINDOLOGIC-REST-Exporter/1.0';
 
         parent::__construct($method, $uri, $headers, $body, $version);
     }

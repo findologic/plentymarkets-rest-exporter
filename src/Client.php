@@ -7,6 +7,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
@@ -119,17 +120,14 @@ class Client
                 throw new ThrottlingException('Throttling limit reached.');
             case 200:
                 if (empty($response->getBody()->__toString())) {
-                    throw new CustomerException(sprintf(
-                        'The API for URI "%s" responded with status code %d',
-                        $request->getUri()->__toString(),
-                        $response->getStatusCode()
-                    ));
+                    throw new EmptyResponseException($request->getUri()->__toString());
                 }
                 break;
             default:
                 throw new CustomerException(sprintf(
-                    'Could not reach API method with URI "%s"',
-                    $request->getUri()->__toString()
+                    'Could not reach API method with URI "%s". Status code was %d.',
+                    $request->getUri()->__toString(),
+                    $response->getStatusCode()
                 ));
         }
     }
@@ -157,6 +155,7 @@ class Client
         $response = $this->sendRequest($request, $params);
         if ($response->getStatusCode() >= 301 && $response->getStatusCode() <= 404) {
             $this->protocol = self::PROTOCOL_HTTP;
+            $request = $request->withUri($this->buildRequestUri('login'));
 
             $response = $this->sendRequest($request, $params);
         }
@@ -185,6 +184,9 @@ class Client
         $this->refreshToken = $data->refreshToken;
     }
 
+    /**
+     * @codeCoverageIgnore Not yet implemented.
+     */
     private function refreshLogin(): void
     {
         // TODO: Login sessions are typically 24 hours, but we want to refresh the login session anyway, if
@@ -259,8 +261,6 @@ class Client
                 break;
             case self::METHOD_GET:
                 $options[RequestOptions::QUERY] = $this->sanitizeQueryParams($params);
-                break;
-            default:
                 break;
         }
 

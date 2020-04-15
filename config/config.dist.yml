@@ -8,3 +8,4 @@ availabilityId: ~
 priceId: 1
 rrpId: 2
 language: 'DE'
+debug: true
