@@ -6,8 +6,14 @@
             <param name="ConversionPattern" value="%d{Y-m-d H:i:s} [%p] %c: %m %n" />
         </layout>
     </appender>
+    <appender name="console" class="\Log4Php\Appenders\LoggerAppenderConsole">
+        <layout class="\Log4Php\Layouts\LoggerLayoutPattern">
+            <param name="ConversionPattern" value="%d{Y-m-d H:i:s} [%p] %c: %m %n" />
+        </layout>
+    </appender>
     <logger name="import.php">
         <level value="ALL" />
         <appender_ref ref="default"/>
+        <appender_ref ref="console"/>
     </logger>
 </log4php:configuration>

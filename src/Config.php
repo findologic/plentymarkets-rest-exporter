@@ -49,6 +49,23 @@ class Config
         }
     }
 
+    public static function parseByCustomerLoginResponse(array $data, bool $debug = false): self
+    {
+        $shop = array_values($data)[0];
+
+        return new Config([
+            'domain' => $shop['url'],
+            'username' => $shop['export_username'],
+            'password' => $shop['export_password'],
+            'language' => $shop['language'],
+            'multiShopId' => $shop['multishop_id'],
+            'availabilityId' => $shop['availability_id'],
+            'priceId' => $shop['price_id'],
+            'rrpId' => $shop['rrp_id'],
+            'debug' => $debug
+        ]);
+    }
+
     /**
      * A domain or any URI can be submitted to this method. The configuration may only store the domain name itself.
      *

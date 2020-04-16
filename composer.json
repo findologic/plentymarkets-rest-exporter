@@ -41,7 +41,7 @@
         "lint": "./vendor/bin/phpcs --standard=phpcs.xml .",
         "fix": "./vendor/bin/phpcbf --standard=phpcs.xml .",
         "test": "phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml",
-        "export": "php bin/run_export.php | (sleep 1 && tail -f -n +1 logs/import.log)"
+        "export": "bin/export"
     },
     "license": "MIT"
 }
