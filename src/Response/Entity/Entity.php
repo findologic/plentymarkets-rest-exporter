@@ -6,5 +6,5 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
 abstract class Entity
 {
-    abstract public function jsonSerialize(): array;
+    abstract public function getData(): array;
 }

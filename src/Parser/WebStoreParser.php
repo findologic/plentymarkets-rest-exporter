@@ -17,7 +17,7 @@ class WebStoreParser extends Parser
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
-        $rawWebStores = self::jsonSerializeResponse($rawResponse);
+        $rawWebStores = self::unserializeJsonResponse($rawResponse);
 
         $webStores = [];
         foreach ($rawWebStores as $rawWebStore) {

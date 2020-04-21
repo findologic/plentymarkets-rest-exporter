@@ -16,7 +16,7 @@ class CategoryParser extends Parser
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
-        $response = self::jsonSerializeResponse($rawResponse);
+        $response = self::unserializeJsonResponse($rawResponse);
 
         $categories = [];
         foreach ($response['entries'] as $category) {

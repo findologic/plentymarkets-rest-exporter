@@ -38,7 +38,7 @@ class EntityCollectionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Criteria expected "id" to be of type "array". Returned a value of type "integer".'
+            'Criteria expected "id" to be of type "array" or "Entity". Returned a value of type "integer".'
         );
 
         $categoryResponse = CategoryParser::parse($this->getMockResponse('CategoryResponse/response.json'));

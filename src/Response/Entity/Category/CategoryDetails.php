@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
+namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 use DateTime;
 use DateTimeInterface;
 
@@ -113,7 +114,7 @@ class CategoryDetails extends Entity
         $this->plentyId = (int)$data['plentyId'];
     }
 
-    public function jsonSerialize(): array
+    public function getData(): array
     {
         return [
             'categoryId' => $this->categoryId,

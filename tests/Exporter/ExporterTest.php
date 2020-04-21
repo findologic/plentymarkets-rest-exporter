@@ -137,7 +137,7 @@ class ExporterTest extends TestCase
             'configuration' => []
         ]);
         $webStoreResponseBody = [
-            $expectedWebStore->jsonSerialize(),
+            $expectedWebStore->getData(),
             [
                 'id' => 1,
                 'type' => 'plentymarkets',
@@ -200,7 +200,7 @@ class ExporterTest extends TestCase
             'configuration' => []
         ]);
         $webStoreResponseBody = [
-            $expectedWebStore->jsonSerialize(),
+            $expectedWebStore->getData(),
             [
                 'id' => 1,
                 'type' => 'plentymarkets',

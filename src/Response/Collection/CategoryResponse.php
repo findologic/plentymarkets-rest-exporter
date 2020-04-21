@@ -4,34 +4,13 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
 
-class CategoryResponse extends Response implements CollectionInterface, IterableResponseInterface
+class CategoryResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
 {
     use EntityCollection;
-
-    /** @var int */
-    private $page;
-
-    /** @var int */
-    private $totalsCount;
-
-    /** @var bool */
-    private $isLastPage;
-
-    /** @var int */
-    private $lastPageNumber;
-
-    /** @var int */
-    private $firstOnPage;
-
-    /** @var int */
-    private $lastOnPage;
-
-    /** @var int */
-    private $itemsPerPage;
 
     /** @var Category[] */
     private $categories;
@@ -91,40 +70,5 @@ class CategoryResponse extends Response implements CollectionInterface, Iterable
     public function find(array $criteria): array
     {
         return $this->findEntitiesByCriteria($this->categories, $criteria);
-    }
-
-    public function getPage(): int
-    {
-        return $this->page;
-    }
-
-    public function getTotalsCount(): int
-    {
-        return $this->totalsCount;
-    }
-
-    public function isLastPage(): bool
-    {
-        return $this->isLastPage;
-    }
-
-    public function getLastPageNumber(): int
-    {
-        return $this->lastPageNumber;
-    }
-
-    public function getFirstOnPage(): int
-    {
-        return $this->firstOnPage;
-    }
-
-    public function getLastOnPage(): int
-    {
-        return $this->lastOnPage;
-    }
-
-    public function getItemsPerPage(): int
-    {
-        return $this->itemsPerPage;
     }
 }

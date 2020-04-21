@@ -8,7 +8,7 @@ use DateTime;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\CategoryDetails;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\CategoryDetails;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
 
@@ -242,7 +242,7 @@ class CategoryResponseTest extends TestCase
             $expectedCategoryData['details'][0]['updatedAt']
         );
 
-        $this->assertEquals($expectedCategoryData, $category->jsonSerialize());
+        $this->assertEquals($expectedCategoryData, $category->getData());
         $this->assertSame($expectedId, $category->getId());
         $this->assertSame($expectedParentCategoryId, $category->getParentCategoryId());
         $this->assertSame($expectedLevel, $category->getLevel());
@@ -317,7 +317,7 @@ class CategoryResponseTest extends TestCase
         // The getter returns a DateTime object.
         $expectedCategoryDetails['updatedAt'] = $expectedUpdatedAt;
 
-        $this->assertEquals($expectedCategoryDetails, $categoryDetails->jsonSerialize());
+        $this->assertEquals($expectedCategoryDetails, $categoryDetails->getData());
         $this->assertSame($expectedCategoryId, $categoryDetails->getCategoryId());
         $this->assertSame($expectedLang, $categoryDetails->getLang());
         $this->assertSame($expectedName, $categoryDetails->getName());
