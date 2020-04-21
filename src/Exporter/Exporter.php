@@ -9,10 +9,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\VatRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
@@ -95,6 +98,7 @@ abstract class Exporter
 
         $this->registry->set('webStore', $this->getWebStore());
         $this->registry->set('categories', $this->getCategories());
+        $this->registry->set('vat', $this->getVat());
     }
 
     private function getWebStore(): WebStore
@@ -138,5 +142,19 @@ abstract class Exporter
         }
 
         return new CategoryResponse(1, count($categories), true, $categories);
+    }
+
+    private function getVat(): VatResponse
+    {
+        $vatRequest = new VatRequest();
+
+        $vatConfigurations = [];
+
+        foreach (Utils::sendIterableRequest($this->client, $vatRequest) as $response) {
+            $vatResponse = VatParser::parse($response);
+            $vatConfigurations = array_merge($vatResponse->all(), $vatConfigurations);
+        }
+
+        return new VatResponse(1, count($vatConfigurations), true, $vatConfigurations);
     }
 }

@@ -10,8 +10,11 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\VatConfiguration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
@@ -161,13 +164,16 @@ class ExporterTest extends TestCase
         );
         $categoryResponse = new Response(200, [], json_encode($categoryResponseBody));
 
-        $this->clientMock->expects($this->exactly(2))
-            ->method('send')
-            ->willReturnOnConsecutiveCalls($webStoreResponse, $categoryResponse);
+        $vatResponse = $this->getMockResponse('VatResponse/response.json');
+        $expectedVat = VatParser::parse($vatResponse);
 
-        $this->registryMock->expects($this->exactly(2))
+        $this->clientMock->expects($this->exactly(3))
+            ->method('send')
+            ->willReturnOnConsecutiveCalls($webStoreResponse, $categoryResponse, $vatResponse);
+
+        $this->registryMock->expects($this->exactly(3))
             ->method('set')
-            ->withConsecutive(['webStore', $expectedWebStore], ['categories', $expectedCategories]);
+            ->withConsecutive(['webStore', $expectedWebStore], ['categories', $expectedCategories], ['vat', $expectedVat]);
 
         $this->registryMock->expects($this->any())
             ->method('get')
