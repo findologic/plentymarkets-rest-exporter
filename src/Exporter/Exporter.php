@@ -10,12 +10,15 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPricesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\VatRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\SalesPricesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPricesResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
@@ -99,6 +102,7 @@ abstract class Exporter
         $this->registry->set('webStore', $this->getWebStore());
         $this->registry->set('categories', $this->getCategories());
         $this->registry->set('vat', $this->getVat());
+        $this->registry->set('salesPrices', $this->getSalesPrices());
     }
 
     private function getWebStore(): WebStore
@@ -156,5 +160,19 @@ abstract class Exporter
         }
 
         return new VatResponse(1, count($vatConfigurations), true, $vatConfigurations);
+    }
+
+    private function getSalesPrices(): SalesPricesResponse
+    {
+        $salesPricesRequest = new SalesPricesRequest();
+
+        $salesPrices = [];
+
+        foreach (Utils::sendIterableRequest($this->client, $salesPricesRequest) as $response) {
+            $salesPricesResponse = SalesPricesParser::parse($response);
+            $salesPrices = array_merge($salesPricesResponse->all(), $salesPrices);
+        }
+
+        return new SalesPricesResponse(1, count($salesPrices), true, $salesPrices);
     }
 }
