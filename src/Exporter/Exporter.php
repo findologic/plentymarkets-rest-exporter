@@ -11,14 +11,17 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPricesParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\VatRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\SalesPricesRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\AttributesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPricesResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributesResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
@@ -103,6 +106,7 @@ abstract class Exporter
         $this->registry->set('categories', $this->getCategories());
         $this->registry->set('vat', $this->getVat());
         $this->registry->set('salesPrices', $this->getSalesPrices());
+        $this->registry->set('attributes', $this->getAttributes());
     }
 
     private function getWebStore(): WebStore
@@ -174,5 +178,19 @@ abstract class Exporter
         }
 
         return new SalesPricesResponse(1, count($salesPrices), true, $salesPrices);
+    }
+
+    private function getAttributes(): AttributesResponse
+    {
+        $attributesRequest = new AttributesRequest();
+
+        $attributes = [];
+
+        foreach (Utils::sendIterableRequest($this->client, $attributesRequest) as $response) {
+            $attributesResponse = AttributesParser::parse($response);
+            $attributes = array_merge($attributesResponse->all(), $attributes);
+        }
+
+        return new AttributesResponse(1, count($attributes), true, $attributes);
     }
 }
