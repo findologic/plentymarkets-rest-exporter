@@ -12,6 +12,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPricesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributesParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturersParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
@@ -175,18 +176,30 @@ class ExporterTest extends TestCase
         $attributeResponse = $this->getMockResponse('AttributesResponse/response.json');
         $expectedAttribute = AttributesParser::parse($attributeResponse);
 
-        $this->clientMock->expects($this->exactly(5))
-            ->method('send')
-            ->willReturnOnConsecutiveCalls($webStoreResponse, $categoryResponse, $vatResponse, $salesPriceResponse, $attributeResponse);
+        $manufacturerResponse = $this->getMockResponse('ManufacturersResponse/response.json');
+        $expectedManufacturer = ManufacturersParser::parse($manufacturerResponse);
 
-        $this->registryMock->expects($this->exactly(5))
+
+        $this->clientMock->expects($this->exactly(6))
+            ->method('send')
+            ->willReturnOnConsecutiveCalls(
+                $webStoreResponse,
+                $categoryResponse,
+                $vatResponse,
+                $salesPriceResponse,
+                $attributeResponse,
+                $manufacturerResponse
+            );
+
+        $this->registryMock->expects($this->exactly(6))
             ->method('set')
             ->withConsecutive(
                 ['webStore', $expectedWebStore],
                 ['categories', $expectedCategories],
                 ['vat', $expectedVat],
                 ['salesPrices', $expectedSalesPrice],
-                ['attributes', $expectedAttribute]
+                ['attributes', $expectedAttribute],
+                ['manufacturers', $expectedManufacturer]
             );
 
         $this->registryMock->expects($this->any())

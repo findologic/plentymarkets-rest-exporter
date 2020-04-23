@@ -12,16 +12,19 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPricesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributesParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturersParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\VatRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\SalesPricesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\AttributesRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\ManufacturersRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPricesResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributesResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturersResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
@@ -107,6 +110,7 @@ abstract class Exporter
         $this->registry->set('vat', $this->getVat());
         $this->registry->set('salesPrices', $this->getSalesPrices());
         $this->registry->set('attributes', $this->getAttributes());
+        $this->registry->set('manufacturers', $this->getManufacturers());
     }
 
     private function getWebStore(): WebStore
@@ -192,5 +196,19 @@ abstract class Exporter
         }
 
         return new AttributesResponse(1, count($attributes), true, $attributes);
+    }
+
+    private function getManufacturers(): ManufacturersResponse
+    {
+        $manufacturersRequest = new ManufacturersRequest();
+
+        $manufacturers = [];
+
+        foreach (Utils::sendIterableRequest($this->client, $manufacturersRequest) as $response) {
+            $manufacturersResponse = ManufacturersParser::parse($response);
+            $manufacturers = array_merge($manufacturersResponse->all(), $manufacturers);
+        }
+
+        return new ManufacturersResponse(1, count($manufacturers), true, $manufacturers);
     }
 }
