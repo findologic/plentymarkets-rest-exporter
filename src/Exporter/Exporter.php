@@ -13,6 +13,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Product;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Variation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
@@ -39,6 +41,12 @@ abstract class Exporter
 
     /** @var Registry */
     protected $registry;
+
+    /** @var string */
+    protected $exportPath = __DIR__ . '/../../export';
+
+    /** @var int */
+    protected $offset = 0;
 
     public function __construct(
         LoggerInterface $internalLogger,
@@ -87,6 +95,41 @@ abstract class Exporter
     public function export(): void
     {
         $this->warmUpRegistry();
+        $this->exportProducts();
+    }
+
+    public function setExportPath(string $path): self
+    {
+        $this->exportPath = $path;
+
+        return $this;
+    }
+
+    public function getExportPath(): string
+    {
+        return $this->exportPath;
+    }
+
+    abstract protected function wrapData(int $totalCount, array $products, array $variations): void;
+
+    protected function exportProducts(): void
+    {
+        // TODO: Fetch 100 Products and then the next 100 products... Including variations.
+        $continue = true;
+        while ($continue) {
+            $products = [
+                new Product()
+            ];
+            $variations = [
+                new Variation()
+            ];
+
+            $this->offset = $this->offset + 100;
+
+            $this->wrapData(1, $products, $variations);
+
+            $continue = false;
+        }
     }
 
     protected function warmUpRegistry(): void

@@ -28,13 +28,13 @@ class Client
         METHOD_GET = 'GET',
         METHOD_POST = 'POST';
 
+    public const
+        PROTOCOL_HTTP = 'http',
+        PROTOCOL_HTTPS = 'https';
+
     private const
         PLENTY_SHORT_PERIOD_CALLS_HEADER = 'X-Plenty-Global-Short-Period-Calls-Left',
         PLENTY_SHORT_PERIOD_DECAY_HEADER = 'X-Plenty-Global-Short-Period-Decay';
-
-    private const
-        PROTOCOL_HTTP = 'http',
-        PROTOCOL_HTTPS = 'https';
 
     private const
         REST_PATH = 'rest';
@@ -53,9 +53,6 @@ class Client
 
     /** @var DebuggerInterface */
     private $debugger;
-
-    /** @var string */
-    private $protocol = self::PROTOCOL_HTTPS;
 
     /** @var ResponseInterface Used for rate limiting. */
     private $lastResponse;
@@ -168,7 +165,7 @@ class Client
 
         $response = $this->sendRequest($request, $params);
         if ($response->getStatusCode() >= 301 && $response->getStatusCode() <= 404) {
-            $this->protocol = self::PROTOCOL_HTTP;
+            $this->config->setProtocol(self::PROTOCOL_HTTP);
             $request = $request->withUri($this->buildRequestUri('login'));
 
             $response = $this->sendRequest($request, $params);
@@ -238,7 +235,7 @@ class Client
     {
         return new Uri(sprintf(
             '%s://%s/%s/%s',
-            $this->protocol,
+            $this->config->getProtocol(),
             $this->config->getDomain(),
             self::REST_PATH,
             $endpoint

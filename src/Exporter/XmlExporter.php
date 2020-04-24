@@ -22,4 +22,9 @@ class XmlExporter extends Exporter
 
         parent::__construct($internalLogger, $customerLogger, $config, $client, $registry);
     }
+
+    protected function wrapData(int $totalCount, array $products, array $variations): void
+    {
+        // TODO: Implement wrapData() method.
+    }
 }
