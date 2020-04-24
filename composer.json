@@ -13,7 +13,8 @@
         "php": ">=7.3",
         "guzzlehttp/guzzle": "^6.5",
         "vasily-kartashov/log4php": "^4.1",
-        "ext-json": "*"
+        "ext-json": "*",
+        "findologic/libflexport": "^2.6"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0",
