@@ -8,4 +8,4 @@ priceId: 1
 rrpId: 2
 language: 'DE'
 debug: true
-customerLoginUri: ~
+customerLoginUri: ~ # Set this to the path of the customerLogin, that returns the configuration for the importer.
