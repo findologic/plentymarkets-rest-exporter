@@ -10,6 +10,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertiesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPricesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturersParser;
@@ -183,7 +184,10 @@ class ExporterTest extends TestCase
         $propertiesResponse = $this->getMockResponse('PropertiesResponse/response.json');
         $expectedProperties = PropertiesParser::parse($propertiesResponse);
 
-        $this->clientMock->expects($this->exactly(7))
+        $itemPropertiesResponse = $this->getMockResponse('ItemPropertiesResponse/response.json');
+        $expectedItemProperties = ItemPropertiesParser::parse($itemPropertiesResponse);
+
+        $this->clientMock->expects($this->exactly(8))
             ->method('send')
             ->willReturnOnConsecutiveCalls(
                 $webStoreResponse,
@@ -193,9 +197,10 @@ class ExporterTest extends TestCase
                 $attributeResponse,
                 $manufacturerResponse,
                 $propertiesResponse,
+                $itemPropertiesResponse
             );
 
-        $this->registryMock->expects($this->exactly(7))
+        $this->registryMock->expects($this->exactly(8))
             ->method('set')
             ->withConsecutive(
                 ['webStore', $expectedWebStore],
@@ -205,6 +210,7 @@ class ExporterTest extends TestCase
                 ['attributes', $expectedAttribute],
                 ['manufacturers', $expectedManufacturer],
                 ['properties', $expectedProperties],
+                ['itemProperties', $expectedItemProperties],
             );
 
         $this->registryMock->expects($this->any())

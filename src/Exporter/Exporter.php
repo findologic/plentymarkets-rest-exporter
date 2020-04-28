@@ -14,6 +14,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertiesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPricesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturersParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertiesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
@@ -22,12 +23,14 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertiesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\SalesPricesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\AttributesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ManufacturersRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemPropertiesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertiesResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPricesResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributesResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturersResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertiesResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
@@ -115,6 +118,7 @@ abstract class Exporter
         $this->registry->set('attributes', $this->getAttributes());
         $this->registry->set('manufacturers', $this->getManufacturers());
         $this->registry->set('properties', $this->getProperties());
+        $this->registry->set('itemProperties', $this->getItemProperties());
     }
 
     private function getWebStore(): WebStore
@@ -218,7 +222,6 @@ abstract class Exporter
 
     private function getProperties(): PropertiesResponse
     {
-        //TODO: clarification needed - documentation specifies this request as non-iterable, however it seems to be. Treating as iterable
         $propertiesRequest = new PropertiesRequest();
 
         $properties = [];
@@ -229,5 +232,19 @@ abstract class Exporter
         }
 
         return new PropertiesResponse(1, count($properties), true, $properties);
+    }
+
+    private function getItemProperties(): ItemPropertiesResponse
+    {
+        $propertiesRequest = new ItemPropertiesRequest();
+
+        $properties = [];
+
+        foreach (Utils::sendIterableRequest($this->client, $propertiesRequest) as $response) {
+            $propertiesResponse = ItemPropertiesParser::parse($response);
+            $properties = array_merge($propertiesResponse->all(), $properties);
+        }
+
+        return new ItemPropertiesResponse(1, count($properties), true, $properties);
     }
 }
