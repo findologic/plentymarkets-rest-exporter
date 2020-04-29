@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Selection extends Entity
@@ -27,6 +28,9 @@ class Selection extends Entity
     /** @var Relation */
     private $relation;
 
+    /** @var Property */
+    private $property;
+
     public function __construct(array $data)
     {
         //Undocumented - the properties may not match the received data exactly
@@ -39,18 +43,31 @@ class Selection extends Entity
         if (!empty($data['relation'])) {
             $this->relation = new Relation($data['relation']);
         }
+
+        if (!empty($data['property'])) {
+            $this->property = new Property($data['property']);
+        }
     }
 
     public function getData(): array
     {
-        return [
+        $data = [
             'id' => $this->id,
             'propertyId' => $this->propertyId,
             'position' => $this->position,
             'createdAt' => $this->createdAt,
-            'updatedAt' => $this->updatedAt,
-            'relation' => $this->relation->getData()
+            'updatedAt' => $this->updatedAt
         ];
+
+        if ($this->relation) {
+            $data['relation'] = $this->relation->getData();
+        }
+
+        if ($this->property) {
+            $data['property'] = $this->property->getData();
+        }
+
+        return $data;
     }
 
     public function getId(): int
@@ -81,5 +98,10 @@ class Selection extends Entity
     public function getRelation(): ?Relation
     {
         return $this->relation;
+    }
+
+    public function getProperty(): ?Property
+    {
+        return $this->property;
     }
 }

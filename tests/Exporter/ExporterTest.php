@@ -16,6 +16,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturersParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertiesParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
@@ -191,7 +192,10 @@ class ExporterTest extends TestCase
         $unitsResponse = $this->getMockResponse('UnitsResponse/response.json');
         $expectedUnits = UnitsParser::parse($unitsResponse);
 
-        $this->clientMock->expects($this->exactly(9))
+        $propertySelectionsResponse = $this->getMockResponse('PropertySelectionsResponse/response.json');
+        $expectedPropertySelections = PropertySelectionsParser::parse($propertySelectionsResponse);
+
+        $this->clientMock->expects($this->exactly(10))
             ->method('send')
             ->willReturnOnConsecutiveCalls(
                 $webStoreResponse,
@@ -202,10 +206,11 @@ class ExporterTest extends TestCase
                 $manufacturerResponse,
                 $propertiesResponse,
                 $itemPropertiesResponse,
-                $unitsResponse
+                $unitsResponse,
+                $propertySelectionsResponse
             );
 
-        $this->registryMock->expects($this->exactly(9))
+        $this->registryMock->expects($this->exactly(10))
             ->method('set')
             ->withConsecutive(
                 ['webStore', $expectedWebStore],
@@ -217,6 +222,7 @@ class ExporterTest extends TestCase
                 ['properties', $expectedProperties],
                 ['itemProperties', $expectedItemProperties],
                 ['units', $expectedUnits],
+                ['propertySelections', $expectedPropertySelections]
             );
 
         $this->registryMock->expects($this->any())

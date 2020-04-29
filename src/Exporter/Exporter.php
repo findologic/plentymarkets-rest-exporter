@@ -11,6 +11,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertiesParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPricesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturersParser;
@@ -21,6 +22,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\VatRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertiesRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertySelectionsRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\SalesPricesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\AttributesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ManufacturersRequest;
@@ -29,6 +31,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\UnitsRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertiesResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionsResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPricesResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributesResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturersResponse;
@@ -123,6 +126,7 @@ abstract class Exporter
         $this->registry->set('properties', $this->getProperties());
         $this->registry->set('itemProperties', $this->getItemProperties());
         $this->registry->set('units', $this->getUnits());
+        $this->registry->set('propertySelections', $this->getPropertySelections());
     }
 
     private function getWebStore(): WebStore
@@ -264,5 +268,19 @@ abstract class Exporter
         }
 
         return new UnitsResponse(1, count($units), true, $units);
+    }
+
+    private function getPropertySelections(): PropertySelectionsResponse
+    {
+        $selectionsRequest = new PropertySelectionsRequest();
+
+        $selections = [];
+
+        foreach (Utils::sendIterableRequest($this->client, $selectionsRequest) as $response) {
+            $selectionsResponse = PropertySelectionsParser::parse($response);
+            $selections = array_merge($selectionsResponse->all(), $selections);
+        }
+
+        return new PropertySelectionsResponse(1, count($selections), true, $selections);
     }
 }
