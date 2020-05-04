@@ -17,6 +17,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
@@ -28,6 +29,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\AttributeRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ManufacturerRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemPropertyRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\UnitRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
@@ -38,6 +40,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributeResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturerResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\UnitResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
 use InvalidArgumentException;
@@ -127,6 +130,7 @@ abstract class Exporter
         $this->registry->set('itemProperties', $this->getItemProperties());
         $this->registry->set('units', $this->getUnits());
         $this->registry->set('propertySelections', $this->getPropertySelections());
+        $this->registry->set('items', $this->getItems());
     }
 
     private function getWebStore(): WebStore
@@ -282,5 +286,19 @@ abstract class Exporter
         }
 
         return new PropertySelectionResponse(1, count($selections), true, $selections);
+    }
+
+    private function getItems(): ItemResponse
+    {
+        $itemRequest = new ItemRequest(null, $this->config->getLanguage());
+
+        $items = [];
+
+        foreach (Utils::sendIterableRequest($this->client, $itemRequest) as $response) {
+            $itemResponse = ItemParser::parse($response);
+            $items = array_merge($itemResponse->all(), $items);
+        }
+
+        return new ItemResponse(1, count($items), true, $items);
     }
 }
