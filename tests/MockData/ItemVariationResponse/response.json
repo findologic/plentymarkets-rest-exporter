@@ -1,0 +1,1621 @@
+{
+  "page": 1,
+  "totalsCount": 4,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 1000,
+      "isMain": true,
+      "mainVariationId": null,
+      "itemId": 102,
+      "categoryVariationId": 2000,
+      "marketVariationId": 3000,
+      "clientVariationId": 4000,
+      "salesPriceVariationId": 5000,
+      "supplierVariationId": 6000,
+      "warehouseVariationId": 7000,
+      "position": 0,
+      "isActive": true,
+      "number": "S-005951-X",
+      "model": "model",
+      "externalId": "externalId",
+      "parentVariationId": 123,
+      "parentVariationQuantity": 10.12,
+      "availability": 5,
+      "estimatedAvailableAt": "2042-01-01 00:00:00",
+      "purchasePrice": 0,
+      "createdAt": "2014-12-23T23:00:00+00:00",
+      "updatedAt": "2019-02-22T10:46:08+00:00",
+      "relatedUpdatedAt": "2019-02-25T08:08:10+00:00",
+      "priceCalculationId": 1234,
+      "picking": "picking",
+      "stockLimitation": 1,
+      "isVisibleIfNetStockIsPositive": true,
+      "isInvisibleIfNetStockIsNotPositive": true,
+      "isAvailableIfNetStockIsPositive": false,
+      "isUnavailableIfNetStockIsNotPositive": false,
+      "mainWarehouseId": 1,
+      "maximumOrderQuantity": 14.44,
+      "minimumOrderQuantity": 15.55,
+      "intervalOrderQuantity": 16.66,
+      "availableUntil": "2042-04-21 00:00:00",
+      "releasedAt": "2040-01-01 00:00:00",
+      "unitCombinationId": 55,
+      "name": "name",
+      "weightG": 1,
+      "weightNetG": 2,
+      "widthMM": 3,
+      "lengthMM": 4,
+      "heightMM": 5,
+      "extraShippingCharge1": 6,
+      "extraShippingCharge2": 7,
+      "unitsContained": 8,
+      "palletTypeId": 9,
+      "packingUnits": 10,
+      "packingUnitTypeId": 11,
+      "transportationCosts": 12,
+      "storageCosts": 13,
+      "customs": 14,
+      "operatingCosts": 15,
+      "vatId": 16,
+      "bundleType": "bundleType",
+      "automaticClientVisibility": 0,
+      "isHiddenInCategoryList": false,
+      "defaultShippingCosts": 0.99,
+      "mayShowUnitPrice": true,
+      "movingAveragePrice": 1000,
+      "propertyVariationId": "1001",
+      "automaticListVisibility": 3,
+      "isVisibleInListIfNetStockIsPositive": false,
+      "isInvisibleInListIfNetStockIsNotPositive": false,
+      "singleItemCount": 0,
+      "availabilityUpdatedAt": "2019-02-22T10:46:08+00:00",
+      "tagVariationId": "1000",
+      "hasCalculatedBundleWeight": true,
+      "hasCalculatedBundleNetWeight": false,
+      "hasCalculatedBundlePurchasePrice": true,
+      "hasCalculatedBundleMovingAveragePrice": false,
+      "salesRank": 4,
+      "variationCategories": [
+        {
+          "variationId": 1000,
+          "categoryId": 17,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "variationSalesPrices": [
+        {
+          "variationId": 1000,
+          "salesPriceId": 1,
+          "price": 269.99,
+          "updatedAt": "2016-09-05T12:25:20+01:00",
+          "createdAt": "2016-09-05T12:25:20+01:00"
+        },
+        {
+          "variationId": 1000,
+          "salesPriceId": 2,
+          "price": 320,
+          "updatedAt": "2016-09-05T12:25:20+01:00",
+          "createdAt": "2016-09-05T12:25:20+01:00"
+        }
+      ],
+      "variationAttributeValues": [
+        {
+          "attributeValueSetId": 1,
+          "attributeId": 1,
+          "valueId": 1,
+          "isLinkableToImage": false,
+          "attribute": {
+            "id": 1,
+            "backendName": "Couch color",
+            "position": 1,
+            "isSurchargePercental": false,
+            "isLinkableToImage": true,
+            "amazonAttribute": "amazonAttribute",
+            "fruugoAttribute": "color",
+            "pixmaniaAttribute": 0,
+            "ottoAttribute": "ottoAttribute",
+            "googleShoppingAttribute": "",
+            "neckermannAtEpAttribute": 0,
+            "typeOfSelectionInOnlineStore": "dropdown",
+            "laRedouteAttribute": 0,
+            "isGroupable": false,
+            "updatedAt": "2015-04-30T08:56:34+01:00"
+          },
+          "attributeValue": {
+            "id": 1,
+            "attributeId": 1,
+            "backendName": "black",
+            "position": 1,
+            "image": "image",
+            "comment": "comment",
+            "amazonValue": "amazonValue",
+            "ottoValue": "ottoValue",
+            "neckermannAtEpValue": "neckermannAtEpValue",
+            "laRedouteValue": "laRedouteValue",
+            "tracdelightValue": "tracdelightValue",
+            "percentageDistribution": 0,
+            "updatedAt": "2014-01-14T23:32:01+00:00"
+          }
+        }
+      ],
+      "variationProperties": [
+        {
+          "id": 4,
+          "itemId": 102,
+          "propertyId": 1,
+          "propertySelectionId": null,
+          "valueInt": 123,
+          "valueFloat": 321.12,
+          "valueFile": null,
+          "surcharge": 0,
+          "updatedAt": "2018-06-12T15:31:14+01:00",
+          "createdAt": "2018-06-12T15:31:14+01:00",
+          "variationId": 1000,
+          "names": [],
+          "propertySelection": [],
+          "property": {
+            "id": 1,
+            "position": 0,
+            "unit": "KGM",
+            "propertyGroupId": null,
+            "backendName": "Test",
+            "valueType": "int",
+            "isSearchable": true,
+            "isOderProperty": false,
+            "isShownOnItemPage": true,
+            "isShownOnItemList": true,
+            "isShownAtCheckout": true,
+            "isShownInPdf": true,
+            "comment": "",
+            "surcharge": 0,
+            "isShownAsAdditionalCosts": false,
+            "updatedAt": "2019-02-22T13:57:13+00:00"
+          }
+        },
+        {
+          "id": 3,
+          "itemId": 102,
+          "propertyId": 2,
+          "propertySelectionId": null,
+          "valueInt": 3,
+          "valueFloat": null,
+          "valueFile": null,
+          "surcharge": 0,
+          "updatedAt": "2018-06-04T07:18:59+01:00",
+          "createdAt": "2018-06-04T07:18:45+01:00",
+          "variationId": 1000,
+          "names": [],
+          "propertySelection": [],
+          "property": {
+            "id": 2,
+            "position": 50,
+            "unit": "KGM",
+            "propertyGroupId": null,
+            "backendName": "Second Property",
+            "valueType": "int",
+            "isSearchable": true,
+            "isOderProperty": false,
+            "isShownOnItemPage": true,
+            "isShownOnItemList": true,
+            "isShownAtCheckout": false,
+            "isShownInPdf": false,
+            "comment": "",
+            "surcharge": 0,
+            "isShownAsAdditionalCosts": false,
+            "updatedAt": "2018-06-04T07:16:35+01:00"
+          }
+        },
+        {
+          "id": 5,
+          "itemId": 102,
+          "propertyId": 3,
+          "propertySelectionId": null,
+          "valueInt": null,
+          "valueFloat": null,
+          "valueFile": null,
+          "surcharge": 0,
+          "updatedAt": "2019-02-22T10:46:08+00:00",
+          "createdAt": "2019-02-22T10:46:08+00:00",
+          "variationId": 1000,
+          "names": [],
+          "propertySelection": [],
+          "property": {
+            "id": 3,
+            "position": 15,
+            "unit": "AA",
+            "propertyGroupId": 1,
+            "backendName": "Third Property",
+            "valueType": "empty",
+            "isSearchable": true,
+            "isOderProperty": false,
+            "isShownOnItemPage": true,
+            "isShownOnItemList": true,
+            "isShownAtCheckout": false,
+            "isShownInPdf": false,
+            "comment": "",
+            "surcharge": 0,
+            "isShownAsAdditionalCosts": false,
+            "updatedAt": "2018-06-04T07:17:35+01:00"
+          }
+        }
+      ],
+      "variationBarcodes": [],
+      "variationClients": [
+        {
+          "variationId": 1000,
+          "plentyId": 37811,
+          "createdAt": "2016-09-05T12:25:16+01:00"
+        }
+      ],
+      "properties": [
+        {
+          "id": 9,
+          "propertyId": 6,
+          "relationTypeIdentifier": "item",
+          "relationTargetId": 1000,
+          "selectionRelationId": null,
+          "createdAt": "2019-02-25T07:39:34+00:00",
+          "updatedAt": "2019-02-25T07:39:34+00:00",
+          "relationValues": [
+            {
+              "id": 16,
+              "propertyRelationId": 9,
+              "lang": "EN",
+              "value": "Changes",
+              "description": null,
+              "createdAt": "2019-02-25T07:43:56+00:00",
+              "updatedAt": "2019-02-25T08:08:10+00:00"
+            }
+          ],
+          "propertyRelation": {
+            "id": 6,
+            "cast": "shortText",
+            "typeIdentifier": "item",
+            "position": 50,
+            "createdAt": "2019-02-22T14:54:23+00:00",
+            "updatedAt": "2019-02-22T14:54:23+00:00"
+          }
+        }
+      ],
+      "itemImages": [
+        {
+          "id": 19,
+          "itemId": 102,
+          "type": "internal",
+          "fileType": "jpg",
+          "path": "S3:102:102-sessel-leder-gruen.jpg",
+          "position": 0,
+          "lastUpdate": "2019-02-22 10:46:08",
+          "insert": "2013-12-09 14:34:48",
+          "md5Checksum": "",
+          "width": 0,
+          "height": 0,
+          "size": 0,
+          "storageProviderId": "2",
+          "md5ChecksumOriginal": "",
+          "cleanImageName": "102-sessel-leder-gruen.jpg",
+          "url": "https:\/\/images.com\/full\/image.jpg",
+          "urlMiddle": "https:\/\/images.com\/middle\/image.jpg",
+          "urlPreview": "https:\/\/images.com\/preview\/image.jpg",
+          "urlSecondPreview": "https:\/\/images.com\/secondPreview\/image.jpg",
+          "documentUploadPath": "v3b53of2xcyu\/item\/images\/102\/full\/image.jpg",
+          "documentUploadPathPreview": "v3b53of2xcyu\/item\/images\/102\/preview\/image.jpg",
+          "documentUploadPreviewWidth": 0,
+          "documentUploadPreviewHeight": 0,
+          "availabilities": [
+            {
+              "imageId": 19,
+              "type": "mandant",
+              "value": 37811
+            },
+            {
+              "imageId": 19,
+              "type": "marketplace",
+              "value": 2.01
+            },
+            {
+              "imageId": 19,
+              "type": "listing",
+              "value": 101
+            }
+          ],
+          "names": [
+            {
+              "imageId": 19,
+              "lang": "de",
+              "name": "name",
+              "alternate": "alt"
+            },
+            {
+              "imageId": 19,
+              "lang": "en",
+              "name": "",
+              "alternate": ""
+            }
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "tagId": "1",
+          "tagType": "variation",
+          "relationshipValue": "1011",
+          "relationshipUUID5": "",
+          "createdAt": "2019-04-30T14:37:00+01:00",
+          "updatedAt": "2019-04-30T14:37:00+01:00",
+          "tag": {
+            "id": 1,
+            "tagName": "aaaa",
+            "color": null,
+            "createdAt": "2019-04-30T14:33:08+01:00",
+            "updatedAt": "2020-03-03T12:27:50+00:00",
+            "names": [
+              {
+                "id": 1,
+                "tagId": "1",
+                "tagLang": "de",
+                "tagName": "Germany First Tage"
+              },
+              {
+                "id": 2,
+                "tagId": "1",
+                "tagLang": "en",
+                "tagName": "aaaa"
+              },
+              {
+                "id": 3,
+                "tagId": "1",
+                "tagLang": "fr",
+                "tagName": "France First Tage"
+              },
+              {
+                "id": 4,
+                "tagId": "1",
+                "tagLang": "it",
+                "tagName": "Italian First Tage"
+              },
+              {
+                "id": 5,
+                "tagId": "1",
+                "tagLang": "es",
+                "tagName": "Estonian First Tage"
+              }
+            ]
+          }
+        },
+        {
+          "tagId": "2",
+          "tagType": "variation",
+          "relationshipValue": "1011",
+          "relationshipUUID5": "",
+          "createdAt": "2019-04-30T14:37:00+01:00",
+          "updatedAt": "2019-04-30T14:37:00+01:00",
+          "tag": {
+            "id": 2,
+            "tagName": "Second TAge",
+            "color": null,
+            "createdAt": "2019-04-30T14:34:53+01:00",
+            "updatedAt": "2019-04-30T14:34:53+01:00",
+            "names": [
+              {
+                "id": 6,
+                "tagId": "2",
+                "tagLang": "de",
+                "tagName": "Germany"
+              },
+              {
+                "id": 7,
+                "tagId": "2",
+                "tagLang": "en",
+                "tagName": "Second TAge"
+              }
+            ]
+          }
+        },
+        {
+          "tagId": "3",
+          "tagType": "variation",
+          "relationshipValue": "1011",
+          "relationshipUUID5": "",
+          "createdAt": "2019-04-30T14:37:00+01:00",
+          "updatedAt": "2019-04-30T14:37:00+01:00",
+          "tag": {
+            "id": 3,
+            "tagName": "Zeta Tage",
+            "color": "#771717",
+            "createdAt": "2019-04-30T14:35:16+01:00",
+            "updatedAt": "2019-04-30T14:35:16+01:00",
+            "names": [
+              {
+                "id": 8,
+                "tagId": "3",
+                "tagLang": "en",
+                "tagName": "Zeta Tage"
+              },
+              {
+                "id": 9,
+                "tagId": "3",
+                "tagLang": "fr",
+                "tagName": "France Tage"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 1001,
+      "isMain": true,
+      "mainVariationId": null,
+      "itemId": 103,
+      "categoryVariationId": 1001,
+      "marketVariationId": 1001,
+      "clientVariationId": 1001,
+      "salesPriceVariationId": 1001,
+      "supplierVariationId": 1001,
+      "warehouseVariationId": 1001,
+      "position": 0,
+      "isActive": true,
+      "number": "S-000813-C",
+      "model": "",
+      "externalId": "",
+      "parentVariationId": null,
+      "parentVariationQuantity": null,
+      "availability": 1,
+      "estimatedAvailableAt": null,
+      "purchasePrice": 0,
+      "createdAt": "2014-12-23T23:00:00+00:00",
+      "updatedAt": "2018-02-28T10:49:53+00:00",
+      "relatedUpdatedAt": null,
+      "priceCalculationId": null,
+      "picking": null,
+      "stockLimitation": 1,
+      "isVisibleIfNetStockIsPositive": true,
+      "isInvisibleIfNetStockIsNotPositive": true,
+      "isAvailableIfNetStockIsPositive": false,
+      "isUnavailableIfNetStockIsNotPositive": false,
+      "mainWarehouseId": 1,
+      "maximumOrderQuantity": 0,
+      "minimumOrderQuantity": null,
+      "intervalOrderQuantity": null,
+      "availableUntil": null,
+      "releasedAt": null,
+      "unitCombinationId": 1,
+      "name": null,
+      "weightG": 0,
+      "weightNetG": 0,
+      "widthMM": 0,
+      "lengthMM": 0,
+      "heightMM": 0,
+      "extraShippingCharge1": 0,
+      "extraShippingCharge2": 0,
+      "unitsContained": 1,
+      "palletTypeId": 24,
+      "packingUnits": 1,
+      "packingUnitTypeId": 0,
+      "transportationCosts": 0,
+      "storageCosts": 0,
+      "customs": 0,
+      "operatingCosts": 0,
+      "vatId": 0,
+      "bundleType": null,
+      "automaticClientVisibility": 0,
+      "isHiddenInCategoryList": false,
+      "defaultShippingCosts": null,
+      "mayShowUnitPrice": true,
+      "movingAveragePrice": null,
+      "propertyVariationId": "1001",
+      "automaticListVisibility": 3,
+      "isVisibleInListIfNetStockIsPositive": false,
+      "isInvisibleInListIfNetStockIsNotPositive": false,
+      "singleItemCount": 0,
+      "availabilityUpdatedAt": "2018-02-28T10:49:53+00:00",
+      "tagVariationId": "1001",
+      "hasCalculatedBundleWeight": null,
+      "hasCalculatedBundleNetWeight": null,
+      "hasCalculatedBundlePurchasePrice": null,
+      "hasCalculatedBundleMovingAveragePrice": null,
+      "salesRank": null,
+      "variationCategories": [
+        {
+          "variationId": 1001,
+          "categoryId": 17,
+          "position": 0,
+          "isNeckermannPrimary": false
+        }
+      ],
+      "variationSalesPrices": [
+        {
+          "variationId": 1001,
+          "salesPriceId": 1,
+          "price": 499,
+          "updatedAt": "2016-09-05T12:25:20+01:00",
+          "createdAt": "2016-09-05T12:25:20+01:00"
+        },
+        {
+          "variationId": 1001,
+          "salesPriceId": 2,
+          "price": 560,
+          "updatedAt": "2016-09-05T12:25:20+01:00",
+          "createdAt": "2016-09-05T12:25:20+01:00"
+        }
+      ],
+      "variationAttributeValues": [],
+      "variationProperties": [
+        {
+          "id": 64,
+          "itemId": 103,
+          "propertyId": 1,
+          "propertySelectionId": null,
+          "valueInt": null,
+          "valueFloat": null,
+          "valueFile": null,
+          "surcharge": 0,
+          "updatedAt": "2019-07-11T08:04:55+01:00",
+          "createdAt": "2019-07-11T08:04:55+01:00",
+          "variationId": 1001,
+          "names": [],
+          "propertySelection": [],
+          "property": {
+            "id": 1,
+            "position": 0,
+            "unit": "KGM",
+            "propertyGroupId": null,
+            "backendName": "Test",
+            "valueType": "int",
+            "isSearchable": true,
+            "isOderProperty": false,
+            "isShownOnItemPage": true,
+            "isShownOnItemList": true,
+            "isShownAtCheckout": true,
+            "isShownInPdf": true,
+            "comment": "",
+            "surcharge": 0,
+            "isShownAsAdditionalCosts": false,
+            "updatedAt": "2019-02-22T13:57:13+00:00"
+          }
+        },
+        {
+          "id": 65,
+          "itemId": 103,
+          "propertyId": 2,
+          "propertySelectionId": null,
+          "valueInt": null,
+          "valueFloat": null,
+          "valueFile": null,
+          "surcharge": 0,
+          "updatedAt": "2019-07-11T08:04:55+01:00",
+          "createdAt": "2019-07-11T08:04:55+01:00",
+          "variationId": 1001,
+          "names": [],
+          "propertySelection": [],
+          "property": {
+            "id": 2,
+            "position": 50,
+            "unit": "KGM",
+            "propertyGroupId": null,
+            "backendName": "Second Property",
+            "valueType": "int",
+            "isSearchable": true,
+            "isOderProperty": false,
+            "isShownOnItemPage": true,
+            "isShownOnItemList": true,
+            "isShownAtCheckout": false,
+            "isShownInPdf": false,
+            "comment": "",
+            "surcharge": 0,
+            "isShownAsAdditionalCosts": false,
+            "updatedAt": "2018-06-04T07:16:35+01:00"
+          }
+        },
+        {
+          "id": 66,
+          "itemId": 103,
+          "propertyId": 3,
+          "propertySelectionId": null,
+          "valueInt": null,
+          "valueFloat": null,
+          "valueFile": null,
+          "surcharge": 0,
+          "updatedAt": "2019-07-11T08:04:55+01:00",
+          "createdAt": "2019-07-11T08:04:55+01:00",
+          "variationId": 1001,
+          "names": [],
+          "propertySelection": [],
+          "property": {
+            "id": 3,
+            "position": 15,
+            "unit": "AA",
+            "propertyGroupId": 1,
+            "backendName": "Third Property",
+            "valueType": "empty",
+            "isSearchable": true,
+            "isOderProperty": false,
+            "isShownOnItemPage": true,
+            "isShownOnItemList": true,
+            "isShownAtCheckout": false,
+            "isShownInPdf": false,
+            "comment": "",
+            "surcharge": 0,
+            "isShownAsAdditionalCosts": false,
+            "updatedAt": "2018-06-04T07:17:35+01:00"
+          }
+        }
+      ],
+      "variationBarcodes": [],
+      "variationClients": [
+        {
+          "variationId": 1001,
+          "plentyId": 37811,
+          "createdAt": "2016-09-05T12:25:16+01:00"
+        }
+      ],
+      "properties": [],
+      "itemImages": [
+        {
+          "id": 16,
+          "itemId": 103,
+          "type": "internal",
+          "fileType": "jpg",
+          "path": "S3:103:103-sessel-braun-1.jpg",
+          "position": 0,
+          "lastUpdate": "2018-03-08 09:43:11",
+          "insert": "2013-12-09 14:34:20",
+          "md5Checksum": "",
+          "width": 0,
+          "height": 0,
+          "size": 0,
+          "storageProviderId": "2",
+          "md5ChecksumOriginal": "",
+          "cleanImageName": "103-sessel-braun-1.jpg",
+          "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/103\/full\/103-sessel-braun-1.jpg",
+          "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/103\/middle\/103-sessel-braun-1.jpg",
+          "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/103\/preview\/103-sessel-braun-1.jpg",
+          "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/103\/secondPreview\/103-sessel-braun-1.jpg",
+          "documentUploadPath": "v3b53of2xcyu\/item\/images\/103\/full\/103-sessel-braun-1.jpg",
+          "documentUploadPathPreview": "v3b53of2xcyu\/item\/images\/103\/preview\/103-sessel-braun-1.jpg",
+          "documentUploadPreviewWidth": 0,
+          "documentUploadPreviewHeight": 0,
+          "availabilities": [
+            {
+              "imageId": 16,
+              "type": "mandant",
+              "value": 37811
+            },
+            {
+              "imageId": 16,
+              "type": "marketplace",
+              "value": 2.01
+            },
+            {
+              "imageId": 16,
+              "type": "marketplace",
+              "value": 2.02
+            }
+          ],
+          "names": [
+            {
+              "imageId": 16,
+              "lang": "de",
+              "name": "",
+              "alternate": ""
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "itemId": 103,
+          "type": "internal",
+          "fileType": "jpg",
+          "path": "S3:103:103-sessel-braun-2.jpg",
+          "position": 1,
+          "lastUpdate": "2018-03-08 09:43:11",
+          "insert": "2013-12-09 14:34:20",
+          "md5Checksum": "",
+          "width": 0,
+          "height": 0,
+          "size": 0,
+          "storageProviderId": "2",
+          "md5ChecksumOriginal": "",
+          "cleanImageName": "103-sessel-braun-2.jpg",
+          "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/103\/full\/103-sessel-braun-2.jpg",
+          "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/103\/middle\/103-sessel-braun-2.jpg",
+          "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/103\/preview\/103-sessel-braun-2.jpg",
+          "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/103\/secondPreview\/103-sessel-braun-2.jpg",
+          "documentUploadPath": "v3b53of2xcyu\/item\/images\/103\/full\/103-sessel-braun-2.jpg",
+          "documentUploadPathPreview": "v3b53of2xcyu\/item\/images\/103\/preview\/103-sessel-braun-2.jpg",
+          "documentUploadPreviewWidth": 0,
+          "documentUploadPreviewHeight": 0,
+          "availabilities": [
+            {
+              "imageId": 17,
+              "type": "mandant",
+              "value": 37811
+            },
+            {
+              "imageId": 17,
+              "type": "marketplace",
+              "value": 2.01
+            },
+            {
+              "imageId": 17,
+              "type": "marketplace",
+              "value": 2.02
+            },
+            {
+              "imageId": 17,
+              "type": "marketplace",
+              "value": 2.03
+            }
+          ],
+          "names": [
+            {
+              "imageId": 17,
+              "lang": "de",
+              "name": "",
+              "alternate": ""
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "itemId": 103,
+          "type": "internal",
+          "fileType": "jpg",
+          "path": "S3:103:103-sessel-braun-3.jpg",
+          "position": 5,
+          "lastUpdate": "2018-03-08 09:43:11",
+          "insert": "2013-12-09 14:33:59",
+          "md5Checksum": "",
+          "width": 0,
+          "height": 0,
+          "size": 0,
+          "storageProviderId": "2",
+          "md5ChecksumOriginal": "",
+          "cleanImageName": "103-sessel-braun-3.jpg",
+          "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/103\/full\/103-sessel-braun-3.jpg",
+          "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/103\/middle\/103-sessel-braun-3.jpg",
+          "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/103\/preview\/103-sessel-braun-3.jpg",
+          "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/103\/secondPreview\/103-sessel-braun-3.jpg",
+          "documentUploadPath": "v3b53of2xcyu\/item\/images\/103\/full\/103-sessel-braun-3.jpg",
+          "documentUploadPathPreview": "v3b53of2xcyu\/item\/images\/103\/preview\/103-sessel-braun-3.jpg",
+          "documentUploadPreviewWidth": 0,
+          "documentUploadPreviewHeight": 0,
+          "availabilities": [
+            {
+              "imageId": 18,
+              "type": "mandant",
+              "value": 37811
+            },
+            {
+              "imageId": 18,
+              "type": "marketplace",
+              "value": 2.01
+            },
+            {
+              "imageId": 18,
+              "type": "marketplace",
+              "value": 2.02
+            },
+            {
+              "imageId": 18,
+              "type": "marketplace",
+              "value": 2.03
+            }
+          ],
+          "names": [
+            {
+              "imageId": 18,
+              "lang": "de",
+              "name": "",
+              "alternate": ""
+            }
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "tagId": "1",
+          "tagType": "variation",
+          "relationshipValue": "1008",
+          "relationshipUUID5": "",
+          "createdAt": "2019-04-30T14:36:23+01:00",
+          "updatedAt": "2019-04-30T14:36:23+01:00",
+          "tag": {
+            "id": 1,
+            "tagName": "aaaa",
+            "color": null,
+            "createdAt": "2019-04-30T14:33:08+01:00",
+            "updatedAt": "2020-03-03T12:27:50+00:00",
+            "names": [
+              {
+                "id": 1,
+                "tagId": "1",
+                "tagLang": "de",
+                "tagName": "Germany First Tage"
+              },
+              {
+                "id": 2,
+                "tagId": "1",
+                "tagLang": "en",
+                "tagName": "aaaa"
+              },
+              {
+                "id": 3,
+                "tagId": "1",
+                "tagLang": "fr",
+                "tagName": "France First Tage"
+              },
+              {
+                "id": 4,
+                "tagId": "1",
+                "tagLang": "it",
+                "tagName": "Italian First Tage"
+              },
+              {
+                "id": 5,
+                "tagId": "1",
+                "tagLang": "es",
+                "tagName": "Estonian First Tage"
+              }
+            ]
+          }
+        },
+        {
+          "tagId": "3",
+          "tagType": "variation",
+          "relationshipValue": "1008",
+          "relationshipUUID5": "",
+          "createdAt": "2019-04-30T14:36:23+01:00",
+          "updatedAt": "2019-04-30T14:36:23+01:00",
+          "tag": {
+            "id": 3,
+            "tagName": "Zeta Tage",
+            "color": "#771717",
+            "createdAt": "2019-04-30T14:35:16+01:00",
+            "updatedAt": "2019-04-30T14:35:16+01:00",
+            "names": [
+              {
+                "id": 8,
+                "tagId": "3",
+                "tagLang": "en",
+                "tagName": "Zeta Tage"
+              },
+              {
+                "id": 9,
+                "tagId": "3",
+                "tagLang": "fr",
+                "tagName": "France Tage"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 1002,
+      "isMain": true,
+      "mainVariationId": null,
+      "itemId": 104,
+      "categoryVariationId": 1002,
+      "marketVariationId": 1002,
+      "clientVariationId": 1002,
+      "salesPriceVariationId": 1002,
+      "supplierVariationId": 1002,
+      "warehouseVariationId": 1002,
+      "position": 0,
+      "isActive": true,
+      "number": "WSO-00431-B",
+      "model": "",
+      "externalId": "",
+      "parentVariationId": null,
+      "parentVariationQuantity": null,
+      "availability": 1,
+      "estimatedAvailableAt": null,
+      "purchasePrice": 0,
+      "createdAt": "2014-12-23T23:00:00+00:00",
+      "updatedAt": "2019-02-22T13:58:41+00:00",
+      "relatedUpdatedAt": "2019-02-22T13:58:41+00:00",
+      "priceCalculationId": null,
+      "picking": null,
+      "stockLimitation": 1,
+      "isVisibleIfNetStockIsPositive": true,
+      "isInvisibleIfNetStockIsNotPositive": true,
+      "isAvailableIfNetStockIsPositive": false,
+      "isUnavailableIfNetStockIsNotPositive": false,
+      "mainWarehouseId": 1,
+      "maximumOrderQuantity": null,
+      "minimumOrderQuantity": null,
+      "intervalOrderQuantity": null,
+      "availableUntil": null,
+      "releasedAt": null,
+      "unitCombinationId": 1,
+      "name": null,
+      "weightG": 0,
+      "weightNetG": 0,
+      "widthMM": 100,
+      "lengthMM": 0,
+      "heightMM": 0,
+      "extraShippingCharge1": 0,
+      "extraShippingCharge2": 0,
+      "unitsContained": 1,
+      "palletTypeId": 24,
+      "packingUnits": 1,
+      "packingUnitTypeId": 0,
+      "transportationCosts": 0,
+      "storageCosts": 0,
+      "customs": 0,
+      "operatingCosts": 0,
+      "vatId": 0,
+      "bundleType": null,
+      "automaticClientVisibility": 0,
+      "isHiddenInCategoryList": false,
+      "defaultShippingCosts": null,
+      "mayShowUnitPrice": true,
+      "movingAveragePrice": null,
+      "propertyVariationId": "1002",
+      "automaticListVisibility": 3,
+      "isVisibleInListIfNetStockIsPositive": false,
+      "isInvisibleInListIfNetStockIsNotPositive": false,
+      "singleItemCount": 0,
+      "availabilityUpdatedAt": "2019-02-22T13:58:41+00:00",
+      "tagVariationId": "1002",
+      "hasCalculatedBundleWeight": null,
+      "hasCalculatedBundleNetWeight": null,
+      "hasCalculatedBundlePurchasePrice": null,
+      "hasCalculatedBundleMovingAveragePrice": null,
+      "salesRank": null,
+      "variationCategories": [
+        {
+          "variationId": 1002,
+          "categoryId": 18,
+          "position": 0,
+          "isNeckermannPrimary": false
+        }
+      ],
+      "variationSalesPrices": [
+        {
+          "variationId": 1002,
+          "salesPriceId": 1,
+          "price": 639,
+          "updatedAt": "2016-09-05T12:25:20+01:00",
+          "createdAt": "2016-09-05T12:25:20+01:00"
+        },
+        {
+          "variationId": 1002,
+          "salesPriceId": 2,
+          "price": 710,
+          "updatedAt": "2016-09-05T12:25:20+01:00",
+          "createdAt": "2016-09-05T12:25:20+01:00"
+        }
+      ],
+      "variationAttributeValues": [
+        {
+          "attributeValueSetId": 4,
+          "attributeId": 1,
+          "valueId": 2,
+          "isLinkableToImage": false,
+          "attribute": {
+            "id": 1,
+            "backendName": "Couch color",
+            "position": 1,
+            "isSurchargePercental": false,
+            "isLinkableToImage": true,
+            "amazonAttribute": "",
+            "fruugoAttribute": "color",
+            "pixmaniaAttribute": 0,
+            "ottoAttribute": "",
+            "googleShoppingAttribute": "",
+            "neckermannAtEpAttribute": 0,
+            "typeOfSelectionInOnlineStore": "dropdown",
+            "laRedouteAttribute": 0,
+            "isGroupable": false,
+            "updatedAt": "2015-04-30T08:56:34+01:00"
+          },
+          "attributeValue": {
+            "id": 2,
+            "attributeId": 1,
+            "backendName": "purple",
+            "position": 2,
+            "image": "",
+            "comment": "",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2014-01-14T23:32:31+00:00"
+          }
+        }
+      ],
+      "variationProperties": [
+        {
+          "id": 67,
+          "itemId": 104,
+          "propertyId": 1,
+          "propertySelectionId": null,
+          "valueInt": null,
+          "valueFloat": null,
+          "valueFile": null,
+          "surcharge": 0,
+          "updatedAt": "2019-07-11T08:04:55+01:00",
+          "createdAt": "2019-07-11T08:04:55+01:00",
+          "variationId": 1002,
+          "names": [],
+          "propertySelection": [],
+          "property": {
+            "id": 1,
+            "position": 0,
+            "unit": "KGM",
+            "propertyGroupId": null,
+            "backendName": "Test",
+            "valueType": "int",
+            "isSearchable": true,
+            "isOderProperty": false,
+            "isShownOnItemPage": true,
+            "isShownOnItemList": true,
+            "isShownAtCheckout": true,
+            "isShownInPdf": true,
+            "comment": "",
+            "surcharge": 0,
+            "isShownAsAdditionalCosts": false,
+            "updatedAt": "2019-02-22T13:57:13+00:00"
+          }
+        },
+        {
+          "id": 68,
+          "itemId": 104,
+          "propertyId": 2,
+          "propertySelectionId": null,
+          "valueInt": null,
+          "valueFloat": null,
+          "valueFile": null,
+          "surcharge": 0,
+          "updatedAt": "2019-07-11T08:04:55+01:00",
+          "createdAt": "2019-07-11T08:04:55+01:00",
+          "variationId": 1002,
+          "names": [],
+          "propertySelection": [],
+          "property": {
+            "id": 2,
+            "position": 50,
+            "unit": "KGM",
+            "propertyGroupId": null,
+            "backendName": "Second Property",
+            "valueType": "int",
+            "isSearchable": true,
+            "isOderProperty": false,
+            "isShownOnItemPage": true,
+            "isShownOnItemList": true,
+            "isShownAtCheckout": false,
+            "isShownInPdf": false,
+            "comment": "",
+            "surcharge": 0,
+            "isShownAsAdditionalCosts": false,
+            "updatedAt": "2018-06-04T07:16:35+01:00"
+          }
+        },
+        {
+          "id": 6,
+          "itemId": 104,
+          "propertyId": 3,
+          "propertySelectionId": null,
+          "valueInt": null,
+          "valueFloat": null,
+          "valueFile": null,
+          "surcharge": 0,
+          "updatedAt": "2019-02-22T13:58:41+00:00",
+          "createdAt": "2019-02-22T13:58:41+00:00",
+          "variationId": 1002,
+          "names": [],
+          "propertySelection": [],
+          "property": {
+            "id": 3,
+            "position": 15,
+            "unit": "AA",
+            "propertyGroupId": 1,
+            "backendName": "Third Property",
+            "valueType": "empty",
+            "isSearchable": true,
+            "isOderProperty": false,
+            "isShownOnItemPage": true,
+            "isShownOnItemList": true,
+            "isShownAtCheckout": false,
+            "isShownInPdf": false,
+            "comment": "",
+            "surcharge": 0,
+            "isShownAsAdditionalCosts": false,
+            "updatedAt": "2018-06-04T07:17:35+01:00"
+          }
+        }
+      ],
+      "variationBarcodes": [],
+      "variationClients": [
+        {
+          "variationId": 1002,
+          "plentyId": 37811,
+          "createdAt": "2016-09-05T12:25:16+01:00"
+        }
+      ],
+      "properties": [],
+      "itemImages": [
+        {
+          "id": 15,
+          "itemId": 104,
+          "type": "internal",
+          "fileType": "jpg",
+          "path": "S3:104:104-couche-leder-braun-1.jpg",
+          "position": 0,
+          "lastUpdate": "2018-03-08 09:43:11",
+          "insert": "2013-12-09 14:33:25",
+          "md5Checksum": "",
+          "width": 0,
+          "height": 0,
+          "size": 0,
+          "storageProviderId": "2",
+          "md5ChecksumOriginal": "",
+          "cleanImageName": "104-couche-leder-braun-1.jpg",
+          "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/104\/full\/104-couche-leder-braun-1.jpg",
+          "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/104\/middle\/104-couche-leder-braun-1.jpg",
+          "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/104\/preview\/104-couche-leder-braun-1.jpg",
+          "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/104\/secondPreview\/104-couche-leder-braun-1.jpg",
+          "documentUploadPath": "v3b53of2xcyu\/item\/images\/104\/full\/104-couche-leder-braun-1.jpg",
+          "documentUploadPathPreview": "v3b53of2xcyu\/item\/images\/104\/preview\/104-couche-leder-braun-1.jpg",
+          "documentUploadPreviewWidth": 0,
+          "documentUploadPreviewHeight": 0,
+          "availabilities": [
+            {
+              "imageId": 15,
+              "type": "mandant",
+              "value": 37811
+            },
+            {
+              "imageId": 15,
+              "type": "marketplace",
+              "value": 2.01
+            },
+            {
+              "imageId": 15,
+              "type": "marketplace",
+              "value": 2.02
+            }
+          ],
+          "names": [
+            {
+              "imageId": 15,
+              "lang": "de",
+              "name": "",
+              "alternate": ""
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "itemId": 104,
+          "type": "internal",
+          "fileType": "jpg",
+          "path": "S3:104:104-couche-leder-braun-2.jpg",
+          "position": 1,
+          "lastUpdate": "2018-03-08 09:43:11",
+          "insert": "2013-12-09 14:33:25",
+          "md5Checksum": "",
+          "width": 0,
+          "height": 0,
+          "size": 0,
+          "storageProviderId": "2",
+          "md5ChecksumOriginal": "",
+          "cleanImageName": "104-couche-leder-braun-2.jpg",
+          "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/104\/full\/104-couche-leder-braun-2.jpg",
+          "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/104\/middle\/104-couche-leder-braun-2.jpg",
+          "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/104\/preview\/104-couche-leder-braun-2.jpg",
+          "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/104\/secondPreview\/104-couche-leder-braun-2.jpg",
+          "documentUploadPath": "v3b53of2xcyu\/item\/images\/104\/full\/104-couche-leder-braun-2.jpg",
+          "documentUploadPathPreview": "v3b53of2xcyu\/item\/images\/104\/preview\/104-couche-leder-braun-2.jpg",
+          "documentUploadPreviewWidth": 0,
+          "documentUploadPreviewHeight": 0,
+          "availabilities": [
+            {
+              "imageId": 14,
+              "type": "mandant",
+              "value": 37811
+            },
+            {
+              "imageId": 14,
+              "type": "marketplace",
+              "value": 2.01
+            }
+          ],
+          "names": [
+            {
+              "imageId": 14,
+              "lang": "de",
+              "name": "aaaaeeeeeee",
+              "alternate": ""
+            }
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "tagId": "1",
+          "tagType": "variation",
+          "relationshipValue": "1011",
+          "relationshipUUID5": "",
+          "createdAt": "2019-04-30T14:37:00+01:00",
+          "updatedAt": "2019-04-30T14:37:00+01:00",
+          "tag": {
+            "id": 1,
+            "tagName": "aaaa",
+            "color": null,
+            "createdAt": "2019-04-30T14:33:08+01:00",
+            "updatedAt": "2020-03-03T12:27:50+00:00",
+            "names": [
+              {
+                "id": 1,
+                "tagId": "1",
+                "tagLang": "de",
+                "tagName": "Germany First Tage"
+              },
+              {
+                "id": 2,
+                "tagId": "1",
+                "tagLang": "en",
+                "tagName": "aaaa"
+              },
+              {
+                "id": 3,
+                "tagId": "1",
+                "tagLang": "fr",
+                "tagName": "France First Tage"
+              },
+              {
+                "id": 4,
+                "tagId": "1",
+                "tagLang": "it",
+                "tagName": "Italian First Tage"
+              },
+              {
+                "id": 5,
+                "tagId": "1",
+                "tagLang": "es",
+                "tagName": "Estonian First Tage"
+              }
+            ]
+          }
+        },
+        {
+          "tagId": "2",
+          "tagType": "variation",
+          "relationshipValue": "1011",
+          "relationshipUUID5": "",
+          "createdAt": "2019-04-30T14:37:00+01:00",
+          "updatedAt": "2019-04-30T14:37:00+01:00",
+          "tag": {
+            "id": 2,
+            "tagName": "Second TAge",
+            "color": null,
+            "createdAt": "2019-04-30T14:34:53+01:00",
+            "updatedAt": "2019-04-30T14:34:53+01:00",
+            "names": [
+              {
+                "id": 6,
+                "tagId": "2",
+                "tagLang": "de",
+                "tagName": "Germany"
+              },
+              {
+                "id": 7,
+                "tagId": "2",
+                "tagLang": "en",
+                "tagName": "Second TAge"
+              }
+            ]
+          }
+        },
+        {
+          "tagId": "3",
+          "tagType": "variation",
+          "relationshipValue": "1011",
+          "relationshipUUID5": "",
+          "createdAt": "2019-04-30T14:37:00+01:00",
+          "updatedAt": "2019-04-30T14:37:00+01:00",
+          "tag": {
+            "id": 3,
+            "tagName": "Zeta Tage",
+            "color": "#771717",
+            "createdAt": "2019-04-30T14:35:16+01:00",
+            "updatedAt": "2019-04-30T14:35:16+01:00",
+            "names": [
+              {
+                "id": 8,
+                "tagId": "3",
+                "tagLang": "en",
+                "tagName": "Zeta Tage"
+              },
+              {
+                "id": 9,
+                "tagId": "3",
+                "tagLang": "fr",
+                "tagName": "France Tage"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 1003,
+      "isMain": true,
+      "mainVariationId": null,
+      "itemId": 105,
+      "categoryVariationId": 1003,
+      "marketVariationId": 1003,
+      "clientVariationId": 1003,
+      "salesPriceVariationId": 1003,
+      "supplierVariationId": 1003,
+      "warehouseVariationId": 1003,
+      "position": 0,
+      "isActive": true,
+      "number": "FH-002237-G",
+      "model": "",
+      "externalId": "",
+      "parentVariationId": null,
+      "parentVariationQuantity": null,
+      "availability": 1,
+      "estimatedAvailableAt": null,
+      "purchasePrice": 0,
+      "createdAt": "2014-12-23T23:00:00+00:00",
+      "updatedAt": "2019-02-22T14:39:08+00:00",
+      "relatedUpdatedAt": "2019-02-22T14:39:34+00:00",
+      "priceCalculationId": null,
+      "picking": null,
+      "stockLimitation": 1,
+      "isVisibleIfNetStockIsPositive": true,
+      "isInvisibleIfNetStockIsNotPositive": true,
+      "isAvailableIfNetStockIsPositive": false,
+      "isUnavailableIfNetStockIsNotPositive": false,
+      "mainWarehouseId": 1,
+      "maximumOrderQuantity": 0,
+      "minimumOrderQuantity": null,
+      "intervalOrderQuantity": null,
+      "availableUntil": null,
+      "releasedAt": null,
+      "unitCombinationId": 1,
+      "name": null,
+      "weightG": 0,
+      "weightNetG": 0,
+      "widthMM": 100,
+      "lengthMM": 0,
+      "heightMM": 0,
+      "extraShippingCharge1": 0,
+      "extraShippingCharge2": 0,
+      "unitsContained": 1,
+      "palletTypeId": 24,
+      "packingUnits": 1,
+      "packingUnitTypeId": 0,
+      "transportationCosts": 0,
+      "storageCosts": 0,
+      "customs": 0,
+      "operatingCosts": 0,
+      "vatId": 0,
+      "bundleType": null,
+      "automaticClientVisibility": 0,
+      "isHiddenInCategoryList": false,
+      "defaultShippingCosts": null,
+      "mayShowUnitPrice": true,
+      "movingAveragePrice": null,
+      "propertyVariationId": "1003",
+      "automaticListVisibility": 3,
+      "isVisibleInListIfNetStockIsPositive": false,
+      "isInvisibleInListIfNetStockIsNotPositive": false,
+      "singleItemCount": 0,
+      "availabilityUpdatedAt": "2019-02-22T14:39:08+00:00",
+      "tagVariationId": "1003",
+      "hasCalculatedBundleWeight": null,
+      "hasCalculatedBundleNetWeight": null,
+      "hasCalculatedBundlePurchasePrice": null,
+      "hasCalculatedBundleMovingAveragePrice": null,
+      "salesRank": null,
+      "variationCategories": [
+        {
+          "variationId": 1003,
+          "categoryId": 20,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "variationSalesPrices": [
+        {
+          "variationId": 1003,
+          "salesPriceId": 1,
+          "price": 415.31,
+          "updatedAt": "2016-09-05T12:25:20+01:00",
+          "createdAt": "2016-09-05T12:25:20+01:00"
+        },
+        {
+          "variationId": 1003,
+          "salesPriceId": 2,
+          "price": 450,
+          "updatedAt": "2016-09-05T12:25:20+01:00",
+          "createdAt": "2016-09-05T12:25:20+01:00"
+        }
+      ],
+      "variationAttributeValues": [],
+      "variationProperties": [
+        {
+          "id": 13,
+          "itemId": 105,
+          "propertyId": 1,
+          "propertySelectionId": null,
+          "valueInt": 158,
+          "valueFloat": null,
+          "valueFile": null,
+          "surcharge": 0,
+          "updatedAt": "2019-02-22T14:39:08+00:00",
+          "createdAt": "2019-02-22T14:38:25+00:00",
+          "variationId": 1003,
+          "names": [],
+          "propertySelection": [],
+          "property": {
+            "id": 1,
+            "position": 0,
+            "unit": "KGM",
+            "propertyGroupId": null,
+            "backendName": "Test",
+            "valueType": "int",
+            "isSearchable": true,
+            "isOderProperty": false,
+            "isShownOnItemPage": true,
+            "isShownOnItemList": true,
+            "isShownAtCheckout": true,
+            "isShownInPdf": true,
+            "comment": "Test comment",
+            "surcharge": 0,
+            "isShownAsAdditionalCosts": false,
+            "updatedAt": "2019-02-22T13:57:13+00:00"
+          }
+        },
+        {
+          "id": 12,
+          "itemId": 105,
+          "propertyId": 2,
+          "propertySelectionId": null,
+          "valueInt": 158221,
+          "valueFloat": null,
+          "valueFile": null,
+          "surcharge": 0,
+          "updatedAt": "2019-02-22T14:39:08+00:00",
+          "createdAt": "2019-02-22T14:38:25+00:00",
+          "variationId": 1003,
+          "names": [],
+          "propertySelection": [],
+          "property": {
+            "id": 2,
+            "position": 50,
+            "unit": "KGM",
+            "propertyGroupId": null,
+            "backendName": "Second Property",
+            "valueType": "int",
+            "isSearchable": true,
+            "isOderProperty": false,
+            "isShownOnItemPage": true,
+            "isShownOnItemList": true,
+            "isShownAtCheckout": false,
+            "isShownInPdf": false,
+            "comment": "",
+            "surcharge": 0,
+            "isShownAsAdditionalCosts": false,
+            "updatedAt": "2018-06-04T07:16:35+01:00"
+          }
+        },
+        {
+          "id": 11,
+          "itemId": 105,
+          "propertyId": 3,
+          "propertySelectionId": null,
+          "valueInt": null,
+          "valueFloat": null,
+          "valueFile": null,
+          "surcharge": 0,
+          "updatedAt": "2019-02-22T14:38:25+00:00",
+          "createdAt": "2019-02-22T14:38:25+00:00",
+          "variationId": 1003,
+          "names": [],
+          "propertySelection": [],
+          "property": {
+            "id": 3,
+            "position": 15,
+            "unit": "AA",
+            "propertyGroupId": 1,
+            "backendName": "Third Property",
+            "valueType": "empty",
+            "isSearchable": true,
+            "isOderProperty": false,
+            "isShownOnItemPage": true,
+            "isShownOnItemList": true,
+            "isShownAtCheckout": false,
+            "isShownInPdf": false,
+            "comment": "",
+            "surcharge": 0,
+            "isShownAsAdditionalCosts": false,
+            "updatedAt": "2018-06-04T07:17:35+01:00"
+          }
+        }
+      ],
+      "variationBarcodes": [],
+      "variationClients": [
+        {
+          "variationId": 1003,
+          "plentyId": 37811,
+          "createdAt": "2016-09-05T12:25:16+01:00"
+        }
+      ],
+      "properties": [],
+      "itemImages": [
+        {
+          "id": 13,
+          "itemId": 105,
+          "type": "internal",
+          "fileType": "jpg",
+          "path": "S3:105:105-buerostuhl-schwarz.jpg",
+          "position": 0,
+          "lastUpdate": "2018-03-08 09:43:10",
+          "insert": "2013-12-09 14:32:49",
+          "md5Checksum": "",
+          "width": 0,
+          "height": 0,
+          "size": 0,
+          "storageProviderId": "2",
+          "md5ChecksumOriginal": "",
+          "cleanImageName": "105-buerostuhl-schwarz.jpg",
+          "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/105\/full\/105-buerostuhl-schwarz.jpg",
+          "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/105\/middle\/105-buerostuhl-schwarz.jpg",
+          "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/105\/preview\/105-buerostuhl-schwarz.jpg",
+          "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/105\/secondPreview\/105-buerostuhl-schwarz.jpg",
+          "documentUploadPath": "v3b53of2xcyu\/item\/images\/105\/full\/105-buerostuhl-schwarz.jpg",
+          "documentUploadPathPreview": "v3b53of2xcyu\/item\/images\/105\/preview\/105-buerostuhl-schwarz.jpg",
+          "documentUploadPreviewWidth": 0,
+          "documentUploadPreviewHeight": 0,
+          "availabilities": [
+            {
+              "imageId": 13,
+              "type": "mandant",
+              "value": 37811
+            },
+            {
+              "imageId": 13,
+              "type": "marketplace",
+              "value": 2.01
+            },
+            {
+              "imageId": 13,
+              "type": "marketplace",
+              "value": 2.02
+            },
+            {
+              "imageId": 13,
+              "type": "marketplace",
+              "value": 2.03
+            }
+          ],
+          "names": [
+            {
+              "imageId": 13,
+              "lang": "de",
+              "name": "",
+              "alternate": ""
+            }
+          ]
+        }
+      ],
+      "tags": []
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100
+}

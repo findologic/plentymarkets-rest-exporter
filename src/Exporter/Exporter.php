@@ -18,6 +18,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemVariationParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
@@ -30,6 +31,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\ManufacturerRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemPropertyRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\UnitRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
@@ -41,6 +43,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturerRespons
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\UnitResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemVariationResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
 use InvalidArgumentException;
@@ -131,6 +134,7 @@ abstract class Exporter
         $this->registry->set('units', $this->getUnits());
         $this->registry->set('propertySelections', $this->getPropertySelections());
         $this->registry->set('items', $this->getItems());
+        $this->registry->set('itemVariations', $this->getItemVariations());
     }
 
     private function getWebStore(): WebStore
@@ -300,5 +304,74 @@ abstract class Exporter
         }
 
         return new ItemResponse(1, count($items), true, $items);
+    }
+
+    private function getItemVariations(): ItemVariationResponse
+    {
+        /** @var ItemResponse $items */
+        $items = $this->registry->get('items');
+        $itemIds = implode(',', $items->getAllIds());
+        $itemVariationRequest = new ItemVariationRequest(
+            $this->getRequiredVariationValues(),
+            true,
+            null,
+            null,
+            $itemIds
+        );
+
+        $itemVariations = [];
+
+        foreach (Utils::sendIterableRequest($this->client, $itemVariationRequest) as $response) {
+            $itemVariationResponse = ItemVariationParser::parse($response);
+            $itemVariations = array_merge($itemVariationResponse->all(), $itemVariations);
+        }
+
+        return new ItemVariationResponse(1, count($itemVariations), true, $itemVariations);
+    }
+
+    private function getRequiredVariationValues(): string
+    {
+        $variationValues = [];
+
+        $categories = $this->registry->get('categories');
+        if ($categories && $categories->all()) {
+            $variationValues[] = 'variationCategories';
+        }
+
+        $salesPrices = $this->registry->get('salesPrices');
+        if ($salesPrices && $salesPrices->all()) {
+            $variationValues[] = 'variationSalesPrices';
+        }
+
+        $attributes = $this->registry->get('attributes');
+        if ($attributes && $attributes->all()) {
+            $variationValues[] = 'variationAttributeValues';
+        }
+
+        $itemProperties = $this->registry->get('itemProperties');
+        $properties = $this->registry->get('properties');
+
+        if ($itemProperties && $properties) {
+            $allProperties = array_merge($itemProperties->all(), $properties->all());
+            if (!empty($allProperties)) {
+                $variationValues[] = 'variationProperties';
+            }
+        }
+
+        $units = $this->registry->get('units');
+        if ($units && $units->all()) {
+            $variationValues[] = 'units';
+        }
+
+        array_push(
+            $variationValues,
+            'variationBarcodes',
+            'variationClients',
+            'properties',
+            'itemImages',
+            'tags'
+        );
+
+        return implode(',', $variationValues);
     }
 }

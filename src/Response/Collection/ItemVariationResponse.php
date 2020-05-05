@@ -5,24 +5,24 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
 
-class ItemResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
+class ItemVariationResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
 {
     use EntityCollection;
 
-    /** @var Item[] */
-    private $items;
+    /** @var ItemVariation[] */
+    private $itemVariations;
 
     /**
-     * @param Item[] $items
+     * @param ItemVariation[] $itemVariations
      */
     public function __construct(
         int $page,
         int $totalsCount,
         bool $isLastPage,
-        array $items,
+        array $itemVariations,
         int $lastPageNumber = 1,
         int $firstOnPage = 1,
         int $lastOnPage = 1,
@@ -31,7 +31,7 @@ class ItemResponse extends IterableResponse implements CollectionInterface, Iter
         $this->page = $page;
         $this->totalsCount = $totalsCount;
         $this->isLastPage = $isLastPage;
-        $this->items = $items;
+        $this->itemVariations = $itemVariations;
         $this->lastPageNumber = $lastPageNumber;
         $this->firstOnPage = $firstOnPage;
         $this->lastOnPage = $lastOnPage;
@@ -39,47 +39,36 @@ class ItemResponse extends IterableResponse implements CollectionInterface, Iter
     }
 
     /**
-     * @return Item|null
+     * @return ItemVariation|null
      */
     public function first(): ?Entity
     {
-        return $this->getFirstEntity($this->items);
+        return $this->getFirstEntity($this->itemVariations);
     }
 
     /**
-     * @return Item[]
+     * @return ItemVariation[]
      */
     public function all(): array
     {
-        return $this->items;
+        return $this->itemVariations;
     }
 
     /**
      * @param array $criteria
-     * @return Item|null
+     * @return ItemVariation|null
      */
     public function findOne(array $criteria): ?Entity
     {
-        return $this->findOneEntityByCriteria($this->items, $criteria);
+        return $this->findOneEntityByCriteria($this->itemVariations, $criteria);
     }
 
     /**
      * @param array $criteria
-     * @return Item[]
+     * @return ItemVariation[]
      */
     public function find(array $criteria): array
     {
-        return $this->findEntitiesByCriteria($this->items, $criteria);
-    }
-
-    public function getAllIds(): array
-    {
-        $ids = [];
-
-        foreach ($this->items as $item) {
-            $ids[] = $item->getId();
-        }
-
-        return $ids;
+        return $this->findEntitiesByCriteria($this->itemVariations, $criteria);
     }
 }

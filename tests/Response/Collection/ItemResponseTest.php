@@ -11,7 +11,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
 
-class ItemsResponseTest extends TestCase
+class ItemResponseTest extends TestCase
 {
     use ResponseHelper;
 
@@ -20,7 +20,7 @@ class ItemsResponseTest extends TestCase
     /** @var ItemResponse */
     private $itemResponse;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->response = $this->getMockResponse('ItemResponse/response.json');
         $this->itemResponse = ItemParser::parse($this->response);

@@ -20,7 +20,7 @@ class RelationValue extends Entity
     /** @var string */
     private $value;
 
-    /** @var string */
+    /** @var string|null */
     private $description;
 
     /** @var string */
@@ -36,7 +36,7 @@ class RelationValue extends Entity
         $this->propertyRelationId = (int)$data['propertyRelationId'];
         $this->lang = (string)$data['lang'];
         $this->value = (string)$data['value'];
-        $this->description = (string)$data['description'];
+        $this->description = is_null($data['description']) ? null : (string)$data['description'];
         $this->createdAt = (string)$data['createdAt'];
         $this->updatedAt = (string)$data['updatedAt'];
     }
@@ -74,7 +74,7 @@ class RelationValue extends Entity
         return $this->value;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }

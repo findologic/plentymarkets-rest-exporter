@@ -21,7 +21,7 @@ class Relation extends Entity
     /** @var int|null */
     private $relationTargetId;
 
-    /** @var int */
+    /** @var int|null */
     private $selectionRelationId;
 
     /** @var string */
@@ -42,7 +42,7 @@ class Relation extends Entity
         $this->relationTypeId = is_null($data['relationTypeIdentifier']) ? null : $data['relationTypeIdentifier'];
         // Unknown type - received only null values.
         $this->relationTargetId = is_null($data['relationTargetId']) ? null : $data['relationTargetId'];
-        $this->selectionRelationId = (int)$data['selectionRelationId'];
+        $this->selectionRelationId = is_null($data['selectionRelationId']) ? null : (int)$data['selectionRelationId'];
         $this->createdAt = (string)$data['createdAt'];
         $this->updatedAt = (string)$data['updatedAt'];
 
@@ -92,7 +92,7 @@ class Relation extends Entity
         return $this->relationTargetId;
     }
 
-    public function getSelectionRelationId(): int
+    public function getSelectionRelationId(): ?int
     {
         return $this->selectionRelationId;
     }

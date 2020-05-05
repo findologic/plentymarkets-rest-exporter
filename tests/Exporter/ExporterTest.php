@@ -12,6 +12,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemVariationParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
@@ -199,7 +200,10 @@ class ExporterTest extends TestCase
         $itemResponse = $this->getMockResponse('ItemResponse/response.json');
         $expectedItems = ItemParser::parse($itemResponse);
 
-        $this->clientMock->expects($this->exactly(11))
+        $itemVariationResponse = $this->getMockResponse('ItemVariationResponse/response.json');
+        $expectedItemVariations = ItemVariationParser::parse($itemVariationResponse);
+
+        $this->clientMock->expects($this->exactly(12))
             ->method('send')
             ->willReturnOnConsecutiveCalls(
                 $webStoreResponse,
@@ -212,10 +216,11 @@ class ExporterTest extends TestCase
                 $itemPropertyResponse,
                 $unitResponse,
                 $propertySelectionResponse,
-                $itemResponse
+                $itemResponse,
+                $itemVariationResponse
             );
 
-        $this->registryMock->expects($this->exactly(11))
+        $this->registryMock->expects($this->exactly(12))
             ->method('set')
             ->withConsecutive(
                 ['webStore', $expectedWebStore],
@@ -228,12 +233,13 @@ class ExporterTest extends TestCase
                 ['itemProperties', $expectedItemProperties],
                 ['units', $expectedUnits],
                 ['propertySelections', $expectedPropertySelections],
-                ['items', $expectedItems]
+                ['items', $expectedItems],
+                ['itemVariations', $expectedItemVariations]
             );
 
         $this->registryMock->expects($this->any())
             ->method('get')
-            ->willReturnOnConsecutiveCalls($expectedWebStore);
+            ->willReturnOnConsecutiveCalls($expectedWebStore, $expectedItems);
 
         $exporter->export();
     }
