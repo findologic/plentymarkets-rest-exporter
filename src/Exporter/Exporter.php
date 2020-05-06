@@ -15,6 +15,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPricesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturersParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertiesParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
@@ -24,6 +25,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\SalesPricesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\AttributesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ManufacturersRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemPropertiesRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\UnitsRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertiesResponse;
@@ -31,6 +33,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPricesResponse
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributesResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturersResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertiesResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\UnitsResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
@@ -119,6 +122,7 @@ abstract class Exporter
         $this->registry->set('manufacturers', $this->getManufacturers());
         $this->registry->set('properties', $this->getProperties());
         $this->registry->set('itemProperties', $this->getItemProperties());
+        $this->registry->set('units', $this->getUnits());
     }
 
     private function getWebStore(): WebStore
@@ -246,5 +250,19 @@ abstract class Exporter
         }
 
         return new ItemPropertiesResponse(1, count($properties), true, $properties);
+    }
+
+    private function getUnits(): UnitsResponse
+    {
+        $unitsRequest = new UnitsRequest();
+
+        $units = [];
+
+        foreach (Utils::sendIterableRequest($this->client, $unitsRequest) as $response) {
+            $unitsResponse = UnitsParser::parse($response);
+            $units = array_merge($unitsResponse->all(), $units);
+        }
+
+        return new UnitsResponse(1, count($units), true, $units);
     }
 }
