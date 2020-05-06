@@ -10,6 +10,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertiesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPricesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributesParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturersParser;
@@ -17,11 +18,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\VatRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertiesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\SalesPricesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\AttributesRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ManufacturersRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertiesResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPricesResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributesResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturersResponse;
@@ -111,6 +114,7 @@ abstract class Exporter
         $this->registry->set('salesPrices', $this->getSalesPrices());
         $this->registry->set('attributes', $this->getAttributes());
         $this->registry->set('manufacturers', $this->getManufacturers());
+        $this->registry->set('properties', $this->getProperties());
     }
 
     private function getWebStore(): WebStore
@@ -210,5 +214,20 @@ abstract class Exporter
         }
 
         return new ManufacturersResponse(1, count($manufacturers), true, $manufacturers);
+    }
+
+    private function getProperties(): PropertiesResponse
+    {
+        //TODO: clarification needed - documentation specifies this request as non-iterable, however it seems to be. Treating as iterable
+        $propertiesRequest = new PropertiesRequest();
+
+        $properties = [];
+
+        foreach (Utils::sendIterableRequest($this->client, $propertiesRequest) as $response) {
+            $propertiesResponse = PropertiesParser::parse($response);
+            $properties = array_merge($propertiesResponse->all(), $properties);
+        }
+
+        return new PropertiesResponse(1, count($properties), true, $properties);
     }
 }
