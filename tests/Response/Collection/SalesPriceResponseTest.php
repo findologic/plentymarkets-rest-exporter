@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPricesParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPricesResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPriceResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\Country;
@@ -24,10 +24,10 @@ class SalesPriceResponseTest extends TestCase
 
     private $salesPriceResponse;
 
-    public function setup(): void
+    public function setUp(): void
     {
-        $this->response = $this->getMockResponse('SalesPricesResponse/response.json');
-        $this->salesPriceResponse = SalesPricesParser::parse($this->response);
+        $this->response = $this->getMockResponse('SalesPriceResponse/response.json');
+        $this->salesPriceResponse = SalesPriceParser::parse($this->response);
     }
 
     public function criteriaProvider(): array
@@ -161,7 +161,7 @@ class SalesPriceResponseTest extends TestCase
         /** @var CustomerClass $customerClass */
         $customerClass = reset($customerClasses);
         $this->assertEquals(1, $customerClass->getSalesPriceId());
-        $this->assertEquals(-1, $customerClass->getCustomerClassId());
+        $this->assertEquals(-1, $customerClass->getId());
         $this->assertEquals('2016-09-06T10:02:02+01:00', $customerClass->getCreatedAt());
         $this->assertEquals('2016-09-06T10:02:02+01:00', $customerClass->getUpdatedAt());
 

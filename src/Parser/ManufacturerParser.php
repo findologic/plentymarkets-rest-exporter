@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturersResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturerResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Manufacturer;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class ManufacturersParser extends Parser
+class ManufacturerParser extends Parser
 {
     /**
-     * @return ManufacturersResponse
+     * @return ManufacturerResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
@@ -23,7 +23,7 @@ class ManufacturersParser extends Parser
             $manufacturers[] = new Manufacturer($manufacturer);
         }
 
-        return new ManufacturersResponse(
+        return new ManufacturerResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],

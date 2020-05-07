@@ -8,15 +8,15 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequest;
 
-class PropertySelectionsRequest extends Request implements IterableRequestInterface
+class AttributeRequest extends Request implements IterableRequestInterface
 {
     use IterableRequest;
 
-    public function __construct()
+    public function __construct(?string $updatedAt = null)
     {
         parent::__construct(
             'GET',
-            'properties/selections',
+            'items/attributes',
             [
                 'page' => $this->page,
                 'itemsPerPage' => self::$ITEMS_PER_PAGE

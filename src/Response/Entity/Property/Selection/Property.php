@@ -29,7 +29,7 @@ class Property extends Entity
 
     public function __construct(array $data)
     {
-        //Undocumented - the properties may not match the received data exactly
+        // Undocumented - the properties may not match the received data exactly
         $this->id = (int)$data['id'];
         $this->cast = (string)$data['cast'];
         $this->typeIdentifier = (string)$data['typeIdentifier'];
@@ -79,5 +79,4 @@ class Property extends Entity
     {
         return $this->updatedAt;
     }
-
 }

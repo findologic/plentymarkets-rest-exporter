@@ -22,7 +22,7 @@ class Currency extends Entity
 
     public function __construct(array $data)
     {
-        //Undocumented - the properties may not match the received data exactly
+        // Undocumented - the properties may not match the received data exactly
         $this->salesPriceId = (int)$data['salesPriceId'];
         $this->currency = (string)$data['currency'];
         $this->createdAt = (string)$data['createdAt'];

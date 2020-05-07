@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertiesParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertiesResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
 
-class ItemPropertiesResponseTest extends TestCase
+class ItemPropertyResponseTest extends TestCase
 {
     use ResponseHelper;
 
@@ -18,10 +18,10 @@ class ItemPropertiesResponseTest extends TestCase
 
     private $propertiesResponse;
 
-    public function setup(): void
+    public function setUp(): void
     {
-        $this->response = $this->getMockResponse('ItemPropertiesResponse/response.json');
-        $this->propertiesResponse = ItemPropertiesParser::parse($this->response);
+        $this->response = $this->getMockResponse('ItemPropertyResponse/response.json');
+        $this->propertiesResponse = ItemPropertyParser::parse($this->response);
     }
 
     public function criteriaProvider(): array

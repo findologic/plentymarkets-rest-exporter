@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPricesResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPriceResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class SalesPricesParser extends Parser
+class SalesPriceParser extends Parser
 {
     /**
-     * @return SalesPricesResponse
+     * @return SalesPriceResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
@@ -23,7 +23,7 @@ class SalesPricesParser extends Parser
             $salesPrices[] = new SalesPrice($salesPrice);
         }
 
-        return new SalesPricesResponse(
+        return new SalesPriceResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],

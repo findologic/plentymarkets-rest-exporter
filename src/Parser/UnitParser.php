@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\UnitsResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\UnitResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Unit;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class UnitsParser extends Parser
+class UnitParser extends Parser
 {
     /**
-     * @return UnitsResponse
+     * @return UnitResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
@@ -23,7 +23,7 @@ class UnitsParser extends Parser
             $units[] = new Unit($unit);
         }
 
-        return new UnitsResponse(
+        return new UnitResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],

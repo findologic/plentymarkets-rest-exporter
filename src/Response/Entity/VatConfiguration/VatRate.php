@@ -19,6 +19,7 @@ class VatRate extends Entity
 
     public function __construct(array $data)
     {
+        // Undocumented - the properties may not match the received data exactly
         $this->id = (int)$data['id'];
         $this->name = (string) $data['name'];
         $this->vatRate = (float)$data['vatRate'];

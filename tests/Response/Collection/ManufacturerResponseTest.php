@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturersParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\Parser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturersResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturerResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Manufacturer;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
 
-class ManufacturersResponseTest extends TestCase
+class ManufacturerResponseTest extends TestCase
 {
     use ResponseHelper;
 
     private $response;
 
-    private $manufacturersResponse;
+    private $manufacturerResponse;
 
-    public function setup(): void
+    public function setUp(): void
     {
-        $this->response = $this->getMockResponse('ManufacturersResponse/response.json');
-        $this->manufacturersResponse = ManufacturersParser::parse($this->response);
+        $this->response = $this->getMockResponse('ManufacturerResponse/response.json');
+        $this->manufacturerResponse = ManufacturerParser::parse($this->response);
     }
 
     public function criteriaProvider(): array
@@ -49,14 +49,14 @@ class ManufacturersResponseTest extends TestCase
      */
     public function testCriteriaSearchWorksAsExpected(array $criteria, int $expectedId): void
     {
-        $salesPrice = $this->manufacturersResponse->findOne($criteria);
+        $salesPrice = $this->manufacturerResponse->findOne($criteria);
 
         $this->assertEquals($expectedId, $salesPrice->getId());
     }
 
     public function testGetAllReturnsCorrectNumberOfItems()
     {
-        self::assertCount(3, $this->manufacturersResponse->all());
+        self::assertCount(3, $this->manufacturerResponse->all());
     }
 
     public function testFindReturnsCorrectNumberOfItems()
@@ -65,13 +65,13 @@ class ManufacturersResponseTest extends TestCase
             'countryId' => 1
         ];
 
-        self::assertCount(2, $this->manufacturersResponse->find($criteria));
+        self::assertCount(2, $this->manufacturerResponse->find($criteria));
     }
 
     public function testManufacturerDataCanBeFetched(): void
     {
         $responseData = json_decode((string)$this->response->getBody(), true);
-        $manufacturer = $this->manufacturersResponse->first();
+        $manufacturer = $this->manufacturerResponse->first();
 
         $this->assertEqualsCanonicalizing($responseData['entries'][0], $manufacturer->getData());
 

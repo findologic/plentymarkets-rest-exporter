@@ -98,6 +98,7 @@ class Unit extends Entity
      */
     public function getNames(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->names;
     }
 }

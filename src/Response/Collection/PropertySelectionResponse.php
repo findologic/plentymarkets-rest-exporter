@@ -8,7 +8,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertySelection;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
 
-class PropertySelectionsResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
+class PropertySelectionResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
 {
     use EntityCollection;
 

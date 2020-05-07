@@ -39,8 +39,8 @@ class Property extends Entity
     /** @var Group[] */
     private $groups = [];
 
-    /** @var mixed */
-    private $availabilities;
+    /** @var array */
+    private $availabilities = [];
 
     /** @var Name[] */
     private $names = [];
@@ -48,8 +48,8 @@ class Property extends Entity
     /** @var Option[] */
     private $options = [];
 
-    /** @var mixed */
-    private $markets;
+    /** @var array */
+    private $markets = [];
 
     /** @var Selection[] */
     private $selections = [];
@@ -59,7 +59,7 @@ class Property extends Entity
 
     public function __construct(array $data)
     {
-        //The documentation completely differs from what is actually received
+        // The documentation completely differs from what is actually received
         $this->id = (int)$data['id'];
         $this->cast = (string)$data['cast'];
         $this->typeIdentifier = (string)$data['typeIdentifier'];
@@ -68,8 +68,8 @@ class Property extends Entity
         $this->updatedAt = (string)$data['updatedAt'];
         $this->propertyId = (string)$data['propertyId'];
         $this->propertyGroupId = (string)$data['propertyGroupId'];
-        $this->availabilities = $data['availabilities']; //Unknown structure - undocumented, got only empty arrays.
-        $this->markets = $data['markets']; //Unknown structure - undocumented, got only empty arrays.
+        $this->availabilities = $data['availabilities']; // Unknown structure - undocumented, got only empty arrays.
+        $this->markets = $data['markets']; // Unknown structure - undocumented, got only empty arrays.
 
         if (!empty($data['groups'])) {
             foreach ($data['groups'] as $group) {
@@ -150,76 +150,106 @@ class Property extends Entity
 
     public function getId(): int
     {
+        // Undocumented
         return $this->id;
     }
 
     public function getCast(): string
     {
+        // Undocumented
         return $this->cast;
     }
 
     public function getTypeIdentifier(): string
     {
+        // Undocumented
         return $this->typeIdentifier;
     }
 
     public function getPosition(): int
     {
+        // Undocumented
         return $this->position;
     }
 
     public function getCreatedAt(): string
     {
+        // Undocumented
         return $this->createdAt;
     }
 
     public function getUpdatedAt(): string
     {
+        // Undocumented
         return $this->updatedAt;
     }
 
     public function getPropertyId(): string
     {
+        // Undocumented
         return $this->propertyId;
     }
 
     public function getPropertyGroupId(): string
     {
+        // Undocumented
         return $this->propertyGroupId;
     }
 
+    /**
+     * @return Group[]
+     */
     public function getGroups(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->groups;
     }
 
-    public function getAvailabilities()
+    public function getAvailabilities(): array
     {
+        // Undocumented
         return $this->availabilities;
     }
 
+    /**
+     * @return Name[]
+     */
     public function getNames(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->names;
     }
 
+    /**
+     * @return Option[]
+     */
     public function getOptions(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->options;
     }
 
-    public function getMarkets()
+    public function getMarkets(): array
     {
+        // Undocumented
         return $this->markets;
     }
 
+    /**
+     * @return Selection[]
+     */
     public function getSelections(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->selections;
     }
 
+    /**
+     * @return Amazon[]
+     */
     public function getAmazons(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->amazons;
     }
 }

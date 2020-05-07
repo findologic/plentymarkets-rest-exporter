@@ -4,28 +4,25 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CollectionInterface;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\IterableResponseInterface;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\EntityCollection;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
 
-class SalesPricesResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
+class ItemPropertyResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
 {
     use EntityCollection;
 
-    /** @var SalesPrice[] */
-    private $salesPrices;
+    /** @var Property[] */
+    private $properties;
 
     /**
-     * @param SalesPrice[] $salesPrices
+     * @param Property[] $properties
      */
     public function __construct(
         int $page,
         int $totalsCount,
         bool $isLastPage,
-        array $salesPrices,
+        array $properties,
         int $lastPageNumber = 1,
         int $firstOnPage = 1,
         int $lastOnPage = 1,
@@ -34,7 +31,7 @@ class SalesPricesResponse extends IterableResponse implements CollectionInterfac
         $this->page = $page;
         $this->totalsCount = $totalsCount;
         $this->isLastPage = $isLastPage;
-        $this->salesPrices = $salesPrices;
+        $this->properties = $properties;
         $this->lastPageNumber = $lastPageNumber;
         $this->firstOnPage = $firstOnPage;
         $this->lastOnPage = $lastOnPage;
@@ -42,36 +39,36 @@ class SalesPricesResponse extends IterableResponse implements CollectionInterfac
     }
 
     /**
-     * @return SalesPrice|null
+     * @return Property|null
      */
     public function first(): ?Entity
     {
-        return $this->getFirstEntity($this->salesPrices);
+        return $this->getFirstEntity($this->properties);
     }
 
     /**
-     * @return SalesPrice[]
+     * @return Property[]
      */
     public function all(): array
     {
-        return $this->salesPrices;
+        return $this->properties;
     }
 
     /**
      * @param array $criteria
-     * @return SalesPrice|null
+     * @return Property|null
      */
     public function findOne(array $criteria): ?Entity
     {
-        return $this->findOneEntityByCriteria($this->salesPrices, $criteria);
+        return $this->findOneEntityByCriteria($this->properties, $criteria);
     }
 
     /**
      * @param array $criteria
-     * @return SalesPrice[]
+     * @return Property[]
      */
     public function find(array $criteria): array
     {
-        return $this->findEntitiesByCriteria($this->salesPrices, $criteria);
+        return $this->findEntitiesByCriteria($this->properties, $criteria);
     }
 }

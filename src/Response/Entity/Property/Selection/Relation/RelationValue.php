@@ -31,7 +31,7 @@ class RelationValue extends Entity
 
     public function __construct(array $data)
     {
-        //Undocumented - the properties may not match the received data exactly
+        // Undocumented - the properties may not match the received data exactly
         $this->id = (int)$data['id'];
         $this->propertyRelationId = (int)$data['propertyRelationId'];
         $this->lang = (string)$data['lang'];

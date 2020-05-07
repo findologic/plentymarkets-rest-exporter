@@ -19,7 +19,7 @@ class VatResponseTest extends TestCase
 
     private $vatResponse;
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->response = $this->getMockResponse('VatResponse/response.json');
         $this->vatResponse = VatParser::parse($this->response);

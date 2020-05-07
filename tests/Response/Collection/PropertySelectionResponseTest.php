@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionsParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionsResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation\RelationValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
 
-class PropertySelectionsResponseTest extends TestCase
+class PropertySelectionResponseTest extends TestCase
 {
     use ResponseHelper;
 
     private $response;
 
-    private $selectionsResponse;
+    private $selectionResponse;
 
-    public function setup(): void
+    public function setUp(): void
     {
-        $this->response = $this->getMockResponse('PropertySelectionsResponse/response.json');
-        $this->selectionsResponse = PropertySelectionsParser::parse($this->response);
+        $this->response = $this->getMockResponse('PropertySelectionResponse/response.json');
+        $this->selectionResponse = PropertySelectionParser::parse($this->response);
     }
 
     public function criteriaProvider(): array
@@ -77,14 +77,14 @@ class PropertySelectionsResponseTest extends TestCase
      */
     public function testCriteriaSearchWorksAsExpected(array $criteria, int $expectedId): void
     {
-        $salesPrice = $this->selectionsResponse->findOne($criteria);
+        $salesPrice = $this->selectionResponse->findOne($criteria);
 
         $this->assertEquals($expectedId, $salesPrice->getId());
     }
 
     public function testGetAllReturnsCorrectNumberOfItems()
     {
-        self::assertCount(3, $this->selectionsResponse->all());
+        self::assertCount(3, $this->selectionResponse->all());
     }
 
     public function testFindReturnsCorrectNumberOfItems()
@@ -93,13 +93,13 @@ class PropertySelectionsResponseTest extends TestCase
             'propertyId' => 7
         ];
 
-        self::assertCount(2, $this->selectionsResponse->find($criteria));
+        self::assertCount(2, $this->selectionResponse->find($criteria));
     }
 
     public function testSelectionsDataCanBeFetched(): void
     {
         $responseData = json_decode((string)$this->response->getBody(), true);
-        $selection = $this->selectionsResponse->first();
+        $selection = $this->selectionResponse->first();
 
         $this->assertEqualsCanonicalizing($responseData['entries'][0], $selection->getData());
 

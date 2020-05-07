@@ -4,30 +4,30 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributesResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertyResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class AttributesParser extends Parser
+class PropertyParser extends Parser
 {
     /**
-     * @return AttributesResponse
+     * @return PropertyResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
         $response = self::unserializeJsonResponse($rawResponse);
 
-        $attributes = [];
-        foreach ($response['entries'] as $attribute) {
-            $attributes[] = new Attribute($attribute);
+        $properties = [];
+        foreach ($response['entries'] as $property) {
+            $properties[] = new Property($property);
         }
 
-        return new AttributesResponse(
+        return new PropertyResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],
-            $attributes,
+            $properties,
             $response['lastPageNumber'],
             $response['firstOnPage'],
             $response['lastOnPage'],

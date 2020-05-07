@@ -30,7 +30,7 @@ class Group extends Entity
 
     public function __construct(array $data)
     {
-        //Undocumented - the properties may not match the received data exactly
+        // Undocumented - the properties may not match the received data exactly
         $this->id = (int)$data['id'];
         $this->position = (int)$data['position'];
         $this->createdAt = (string)$data['createdAt'];
@@ -94,11 +94,13 @@ class Group extends Entity
      */
     public function getNames(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->names;
     }
 
     public function getGroupRelation(): ?GroupRelation
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->groupRelation;
     }
 }

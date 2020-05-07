@@ -10,34 +10,34 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertiesParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionsParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPricesParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributesParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturersParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertiesParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\VatRequest;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertiesRequest;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertySelectionsRequest;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\SalesPricesRequest;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\AttributesRequest;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\ManufacturersRequest;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemPropertiesRequest;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\UnitsRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertyRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertySelectionRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\SalesPriceRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\AttributeRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\ManufacturerRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemPropertyRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\UnitRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertiesResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionsResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPricesResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributesResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturersResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertiesResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\UnitsResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertyResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPriceResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributeResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturerResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\UnitResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
 use InvalidArgumentException;
@@ -186,101 +186,101 @@ abstract class Exporter
         return new VatResponse(1, count($vatConfigurations), true, $vatConfigurations);
     }
 
-    private function getSalesPrices(): SalesPricesResponse
+    private function getSalesPrices(): SalesPriceResponse
     {
-        $salesPricesRequest = new SalesPricesRequest();
+        $salesPriceRequest = new SalesPriceRequest();
 
         $salesPrices = [];
 
-        foreach (Utils::sendIterableRequest($this->client, $salesPricesRequest) as $response) {
-            $salesPricesResponse = SalesPricesParser::parse($response);
-            $salesPrices = array_merge($salesPricesResponse->all(), $salesPrices);
+        foreach (Utils::sendIterableRequest($this->client, $salesPriceRequest) as $response) {
+            $salesPriceResponse = SalesPriceParser::parse($response);
+            $salesPrices = array_merge($salesPriceResponse->all(), $salesPrices);
         }
 
-        return new SalesPricesResponse(1, count($salesPrices), true, $salesPrices);
+        return new SalesPriceResponse(1, count($salesPrices), true, $salesPrices);
     }
 
-    private function getAttributes(): AttributesResponse
+    private function getAttributes(): AttributeResponse
     {
-        $attributesRequest = new AttributesRequest();
+        $attributeRequest = new AttributeRequest();
 
         $attributes = [];
 
-        foreach (Utils::sendIterableRequest($this->client, $attributesRequest) as $response) {
-            $attributesResponse = AttributesParser::parse($response);
-            $attributes = array_merge($attributesResponse->all(), $attributes);
+        foreach (Utils::sendIterableRequest($this->client, $attributeRequest) as $response) {
+            $attributeResponse = AttributeParser::parse($response);
+            $attributes = array_merge($attributeResponse->all(), $attributes);
         }
 
-        return new AttributesResponse(1, count($attributes), true, $attributes);
+        return new AttributeResponse(1, count($attributes), true, $attributes);
     }
 
-    private function getManufacturers(): ManufacturersResponse
+    private function getManufacturers(): ManufacturerResponse
     {
-        $manufacturersRequest = new ManufacturersRequest();
+        $manufacturerRequest = new ManufacturerRequest();
 
         $manufacturers = [];
 
-        foreach (Utils::sendIterableRequest($this->client, $manufacturersRequest) as $response) {
-            $manufacturersResponse = ManufacturersParser::parse($response);
-            $manufacturers = array_merge($manufacturersResponse->all(), $manufacturers);
+        foreach (Utils::sendIterableRequest($this->client, $manufacturerRequest) as $response) {
+            $manufacturerResponse = ManufacturerParser::parse($response);
+            $manufacturers = array_merge($manufacturerResponse->all(), $manufacturers);
         }
 
-        return new ManufacturersResponse(1, count($manufacturers), true, $manufacturers);
+        return new ManufacturerResponse(1, count($manufacturers), true, $manufacturers);
     }
 
-    private function getProperties(): PropertiesResponse
+    private function getProperties(): PropertyResponse
     {
-        $propertiesRequest = new PropertiesRequest();
+        $propertyRequest = new PropertyRequest();
 
         $properties = [];
 
-        foreach (Utils::sendIterableRequest($this->client, $propertiesRequest) as $response) {
-            $propertiesResponse = PropertiesParser::parse($response);
-            $properties = array_merge($propertiesResponse->all(), $properties);
+        foreach (Utils::sendIterableRequest($this->client, $propertyRequest) as $response) {
+            $propertyResponse = PropertyParser::parse($response);
+            $properties = array_merge($propertyResponse->all(), $properties);
         }
 
-        return new PropertiesResponse(1, count($properties), true, $properties);
+        return new PropertyResponse(1, count($properties), true, $properties);
     }
 
-    private function getItemProperties(): ItemPropertiesResponse
+    private function getItemProperties(): ItemPropertyResponse
     {
-        $propertiesRequest = new ItemPropertiesRequest();
+        $propertyRequest = new ItemPropertyRequest();
 
         $properties = [];
 
-        foreach (Utils::sendIterableRequest($this->client, $propertiesRequest) as $response) {
-            $propertiesResponse = ItemPropertiesParser::parse($response);
-            $properties = array_merge($propertiesResponse->all(), $properties);
+        foreach (Utils::sendIterableRequest($this->client, $propertyRequest) as $response) {
+            $propertyResponse = ItemPropertyParser::parse($response);
+            $properties = array_merge($propertyResponse->all(), $properties);
         }
 
-        return new ItemPropertiesResponse(1, count($properties), true, $properties);
+        return new ItemPropertyResponse(1, count($properties), true, $properties);
     }
 
-    private function getUnits(): UnitsResponse
+    private function getUnits(): UnitResponse
     {
-        $unitsRequest = new UnitsRequest();
+        $unitRequest = new UnitRequest();
 
         $units = [];
 
-        foreach (Utils::sendIterableRequest($this->client, $unitsRequest) as $response) {
-            $unitsResponse = UnitsParser::parse($response);
-            $units = array_merge($unitsResponse->all(), $units);
+        foreach (Utils::sendIterableRequest($this->client, $unitRequest) as $response) {
+            $unitResponse = UnitParser::parse($response);
+            $units = array_merge($unitResponse->all(), $units);
         }
 
-        return new UnitsResponse(1, count($units), true, $units);
+        return new UnitResponse(1, count($units), true, $units);
     }
 
-    private function getPropertySelections(): PropertySelectionsResponse
+    private function getPropertySelections(): PropertySelectionResponse
     {
-        $selectionsRequest = new PropertySelectionsRequest();
+        $selectionsRequest = new PropertySelectionRequest();
 
         $selections = [];
 
         foreach (Utils::sendIterableRequest($this->client, $selectionsRequest) as $response) {
-            $selectionsResponse = PropertySelectionsParser::parse($response);
+            $selectionsResponse = PropertySelectionParser::parse($response);
             $selections = array_merge($selectionsResponse->all(), $selections);
         }
 
-        return new PropertySelectionsResponse(1, count($selections), true, $selections);
+        return new PropertySelectionResponse(1, count($selections), true, $selections);
     }
 }

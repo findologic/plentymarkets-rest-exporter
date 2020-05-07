@@ -8,7 +8,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Unit;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
 
-class UnitsResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
+class UnitResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
 {
     use EntityCollection;
 

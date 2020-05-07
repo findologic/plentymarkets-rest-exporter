@@ -82,7 +82,7 @@ class Manufacturer extends Entity
         $this->email = (string)$data['email'];
         $this->countryId = (int)$data['countryId'];
         $this->pixmaniaBrandId = (int)$data['pixmaniaBrandId'];
-        $this->neckermannBrandId = (int)$data['neckermannBrandId']; //Undocumented
+        $this->neckermannBrandId = (int)$data['neckermannBrandId']; // Undocumented
         $this->neckermannAtEpBrandId = (int)$data['neckermannAtEpBrandId'];
         $this->laRedouteBrandId = (int)$data['laRedouteBrandId'];
         $this->position = (int)$data['position'];
@@ -188,6 +188,7 @@ class Manufacturer extends Entity
 
     public function getNeckermannBrandId(): int
     {
+        // Undocumented
         return $this->neckermannBrandId;
     }
 

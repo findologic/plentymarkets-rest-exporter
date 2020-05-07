@@ -84,7 +84,7 @@ class SalesPrice extends Entity
             }
         }
 
-        $this->accounts = $data['accounts']; //Unknown structure - undocumented, received only empty arrays
+        $this->accounts = $data['accounts']; // Unknown structure - undocumented, received only empty arrays
 
         if (!empty($data['countries'])) {
             foreach ($data['countries'] as $country) {
@@ -225,11 +225,13 @@ class SalesPrice extends Entity
      */
     public function getNames(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->names;
     }
 
     public function getAccounts(): array
     {
+        // Undocumented
         return $this->accounts;
     }
 
@@ -238,6 +240,7 @@ class SalesPrice extends Entity
      */
     public function getCountries(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->countries;
     }
 
@@ -246,6 +249,7 @@ class SalesPrice extends Entity
      */
     public function getCurrencies(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->currencies;
     }
 
@@ -254,6 +258,7 @@ class SalesPrice extends Entity
      */
     public function getCustomerClasses(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->customerClasses;
     }
 
@@ -262,6 +267,7 @@ class SalesPrice extends Entity
      */
     public function getReferrers(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->referrers;
     }
 
@@ -270,6 +276,7 @@ class SalesPrice extends Entity
      */
     public function getClients(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->clients;
     }
 }

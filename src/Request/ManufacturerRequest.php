@@ -8,7 +8,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequest;
 
-class ManufacturersRequest extends Request implements IterableRequestInterface
+class ManufacturerRequest extends Request implements IterableRequestInterface
 {
     use IterableRequest;
 

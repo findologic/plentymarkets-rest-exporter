@@ -10,13 +10,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertiesParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPricesParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributesParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturersParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitsParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertiesParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
@@ -174,26 +174,26 @@ class ExporterTest extends TestCase
         $vatResponse = $this->getMockResponse('VatResponse/response.json');
         $expectedVat = VatParser::parse($vatResponse);
 
-        $salesPriceResponse = $this->getMockResponse('SalesPricesResponse/response.json');
-        $expectedSalesPrice = SalesPricesParser::parse($salesPriceResponse);
+        $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/response.json');
+        $expectedSalesPrice = SalesPriceParser::parse($salesPriceResponse);
 
-        $attributeResponse = $this->getMockResponse('AttributesResponse/response.json');
-        $expectedAttribute = AttributesParser::parse($attributeResponse);
+        $attributeResponse = $this->getMockResponse('AttributeResponse/response.json');
+        $expectedAttribute = AttributeParser::parse($attributeResponse);
 
-        $manufacturerResponse = $this->getMockResponse('ManufacturersResponse/response.json');
-        $expectedManufacturer = ManufacturersParser::parse($manufacturerResponse);
+        $manufacturerResponse = $this->getMockResponse('ManufacturerResponse/response.json');
+        $expectedManufacturer = ManufacturerParser::parse($manufacturerResponse);
 
-        $propertiesResponse = $this->getMockResponse('PropertiesResponse/response.json');
-        $expectedProperties = PropertiesParser::parse($propertiesResponse);
+        $propertyResponse = $this->getMockResponse('PropertyResponse/response.json');
+        $expectedProperties = PropertyParser::parse($propertyResponse);
 
-        $itemPropertiesResponse = $this->getMockResponse('ItemPropertiesResponse/response.json');
-        $expectedItemProperties = ItemPropertiesParser::parse($itemPropertiesResponse);
+        $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/response.json');
+        $expectedItemProperties = ItemPropertyParser::parse($itemPropertyResponse);
 
-        $unitsResponse = $this->getMockResponse('UnitsResponse/response.json');
-        $expectedUnits = UnitsParser::parse($unitsResponse);
+        $unitResponse = $this->getMockResponse('UnitResponse/response.json');
+        $expectedUnits = UnitParser::parse($unitResponse);
 
-        $propertySelectionsResponse = $this->getMockResponse('PropertySelectionsResponse/response.json');
-        $expectedPropertySelections = PropertySelectionsParser::parse($propertySelectionsResponse);
+        $propertySelectionResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
+        $expectedPropertySelections = PropertySelectionParser::parse($propertySelectionResponse);
 
         $this->clientMock->expects($this->exactly(10))
             ->method('send')
@@ -204,10 +204,10 @@ class ExporterTest extends TestCase
                 $salesPriceResponse,
                 $attributeResponse,
                 $manufacturerResponse,
-                $propertiesResponse,
-                $itemPropertiesResponse,
-                $unitsResponse,
-                $propertySelectionsResponse
+                $propertyResponse,
+                $itemPropertyResponse,
+                $unitResponse,
+                $propertySelectionResponse
             );
 
         $this->registryMock->expects($this->exactly(10))

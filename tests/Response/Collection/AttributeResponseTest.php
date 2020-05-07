@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributesParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributesResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributeResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
 
-class AttributesResponseTest extends TestCase
+class AttributeResponseTest extends TestCase
 {
     use ResponseHelper;
 
     private $response;
 
-    private $attributesResponse;
+    private $attributeResponse;
 
-    public function setup(): void
+    public function setUp(): void
     {
-        $this->response = $this->getMockResponse('AttributesResponse/response.json');
-        $this->attributesResponse = AttributesParser::parse($this->response);
+        $this->response = $this->getMockResponse('AttributeResponse/response.json');
+        $this->attributeResponse = AttributeParser::parse($this->response);
     }
 
     public function criteriaProvider(): array
@@ -48,14 +48,14 @@ class AttributesResponseTest extends TestCase
      */
     public function testCriteriaSearchWorksAsExpected(array $criteria, int $expectedId): void
     {
-        $salesPrice = $this->attributesResponse->findOne($criteria);
+        $salesPrice = $this->attributeResponse->findOne($criteria);
 
         $this->assertEquals($expectedId, $salesPrice->getId());
     }
 
     public function testGetAllReturnsCorrectNumberOfItems()
     {
-        self::assertCount(2, $this->attributesResponse->all());
+        self::assertCount(2, $this->attributeResponse->all());
     }
 
     public function testFindReturnsCorrectNumberOfItems()
@@ -64,13 +64,13 @@ class AttributesResponseTest extends TestCase
             'position' => 1
         ];
 
-        self::assertCount(1, $this->attributesResponse->find($criteria));
+        self::assertCount(1, $this->attributeResponse->find($criteria));
     }
 
     public function testAttributeDataCanBeFetched(): void
     {
         $responseData = json_decode((string)$this->response->getBody(), true);
-        $attribute = $this->attributesResponse->first();
+        $attribute = $this->attributeResponse->first();
 
         $this->assertEqualsCanonicalizing($responseData['entries'][0], $attribute->getData());
 

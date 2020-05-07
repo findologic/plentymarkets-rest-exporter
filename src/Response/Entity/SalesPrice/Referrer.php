@@ -22,7 +22,7 @@ class Referrer extends Entity
 
     public function __construct(array $data)
     {
-        //Undocumented - the properties may not match the received data exactly
+        // Undocumented - the properties may not match the received data exactly
         $this->salesPriceId = (int)$data['salesPriceId'];
         $this->referrerId = (int)$data['referrerId'];
         $this->createdAt = (string)$data['createdAt'];

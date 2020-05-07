@@ -69,7 +69,7 @@ class Attribute extends Entity
         $this->typeOfSelectionInOnlineStore = (string)$data['typeOfSelectionInOnlineStore'];
         $this->laRedouteAttribute = (int)$data['laRedouteAttribute'];
         $this->isGroupable = (bool)$data['isGroupable'];
-        $this->updatedAt = (string)$data['updatedAt']; //Undocumented
+        $this->updatedAt = (string)$data['updatedAt'];
     }
 
     public function getData(): array

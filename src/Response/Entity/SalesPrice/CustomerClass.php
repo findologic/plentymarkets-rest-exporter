@@ -12,7 +12,7 @@ class CustomerClass extends Entity
     private $salesPriceId;
 
     /** @var int */
-    private $customerClassId;
+    private $id;
 
     /** @var string */
     private $createdAt;
@@ -22,9 +22,9 @@ class CustomerClass extends Entity
 
     public function __construct(array $data)
     {
-        //Undocumented - the properties may not match the received data exactly
+        // Undocumented - the properties may not match the received data exactly
         $this->salesPriceId = (int)$data['salesPriceId'];
-        $this->customerClassId = (int)$data['customerClassId'];
+        $this->id = (int)$data['customerClassId'];
         $this->createdAt = (string)$data['createdAt'];
         $this->updatedAt = (string)$data['updatedAt'];
     }
@@ -33,7 +33,7 @@ class CustomerClass extends Entity
     {
         return [
             'salesPriceId' => $this->salesPriceId,
-            'customerClassId' => $this->customerClassId,
+            'customerClassId' => $this->id,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt
         ];
@@ -44,9 +44,9 @@ class CustomerClass extends Entity
         return $this->salesPriceId;
     }
 
-    public function getCustomerClassId(): int
+    public function getId(): int
     {
-        return $this->customerClassId;
+        return $this->id;
     }
 
     public function getCreatedAt(): string

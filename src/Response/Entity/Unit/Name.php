@@ -19,7 +19,7 @@ class Name extends Entity
 
     public function __construct(array $data)
     {
-        //Undocumented - the properties may not match the received data exactly
+        // Undocumented - the properties may not match the received data exactly
         $this->unitId = (int)$data['unitId'];
         $this->lang = (string)$data['lang'];
         $this->name = (string)$data['name'];

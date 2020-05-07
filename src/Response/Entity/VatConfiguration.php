@@ -54,7 +54,8 @@ class VatConfiguration extends Entity
         $this->locationId = (int)$data['locationId'];
         $this->marginScheme = (string)$data['marginScheme'];
         $this->isRestrictedToDigitalItems = (bool)$data['isRestrictedToDigitalItems'];
-        $this->isStandard = (bool)($data['isStandard'] ?? false); //documentated as bool, however nothing was returned during testing
+        // documentated as bool, however nothing was returned during testing
+        $this->isStandard = (bool)($data['isStandard'] ?? false);
         $this->createdAt = (string)$data['createdAt'];
         $this->updatedAt = (string)$data['updatedAt'];
 
@@ -148,6 +149,7 @@ class VatConfiguration extends Entity
      */
     public function getVatRates(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->vatRates;
     }
 }

@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Request;
 
-class PropertiesRequest extends Request implements IterableRequestInterface
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequest;
+
+class PropertySelectionRequest extends Request implements IterableRequestInterface
 {
     use IterableRequest;
 
@@ -12,7 +16,7 @@ class PropertiesRequest extends Request implements IterableRequestInterface
     {
         parent::__construct(
             'GET',
-            'properties',
+            'properties/selections',
             [
                 'page' => $this->page,
                 'itemsPerPage' => self::$ITEMS_PER_PAGE

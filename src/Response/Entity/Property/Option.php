@@ -25,7 +25,7 @@ class Option extends Entity
 
     public function __construct(array $data)
     {
-        //Undocumented - the properties may not match the received data exactly
+        // Undocumented - the properties may not match the received data exactly
         $this->id = (int)$data['id'];
         $this->propertyId = (int)$data['propertyId'];
         $this->typeOptionIdentifier = (string)$data['typeOptionIdentifier'];

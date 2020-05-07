@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Request;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequest;
-
-class SalesPricesRequest extends Request implements IterableRequestInterface
+class UnitRequest extends Request implements IterableRequestInterface
 {
     use IterableRequest;
 
@@ -16,7 +12,7 @@ class SalesPricesRequest extends Request implements IterableRequestInterface
     {
         parent::__construct(
             'GET',
-            'items/sales_prices',
+            'items/units',
             [
                 'updatedAt' => $updatedAt,
                 'page' => $this->page,

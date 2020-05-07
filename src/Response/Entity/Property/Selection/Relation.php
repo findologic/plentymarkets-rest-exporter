@@ -15,10 +15,10 @@ class Relation extends Entity
     /** @var int */
     private $propertyId;
 
-    /** @var mixed */
-    private $relationTypeIdentifier;
+    /** @var int|null */
+    private $relationTypeId;
 
-    /** @var mixed */
+    /** @var int|null */
     private $relationTargetId;
 
     /** @var int */
@@ -35,11 +35,13 @@ class Relation extends Entity
 
     public function __construct(array $data)
     {
-        //Undocumented - the properties may not match the received data exactly
+        // Undocumented - the properties may not match the received data exactly
         $this->id = (int)$data['id'];
         $this->propertyId = (int)$data['propertyId'];
-        $this->relationTypeIdentifier = $data['relationTypeIdentifier']; //Unknown type - received only null values
-        $this->relationTargetId = $data['relationTargetId']; //Unknown type - received only null values
+        // Unknown type - received only null values
+        $this->relationTypeId = is_null($data['relationTypeIdentifier']) ? null : $data['relationTypeIdentifier'];
+        // Unknown type - received only null values.
+        $this->relationTargetId = is_null($data['relationTargetId']) ? null : $data['relationTargetId'];
         $this->selectionRelationId = (int)$data['selectionRelationId'];
         $this->createdAt = (string)$data['createdAt'];
         $this->updatedAt = (string)$data['updatedAt'];
@@ -61,7 +63,7 @@ class Relation extends Entity
         return [
             'id' => $this->id,
             'propertyId' => $this->propertyId,
-            'relationTypeIdentifier' => $this->relationTypeIdentifier,
+            'relationTypeIdentifier' => $this->relationTypeId,
             'relationTargetId' => $this->relationTargetId,
             'selectionRelationId' => $this->selectionRelationId,
             'createdAt' => $this->createdAt,
@@ -80,12 +82,12 @@ class Relation extends Entity
         return $this->propertyId;
     }
 
-    public function getRelationTypeIdentifier()
+    public function getRelationTypeIdentifier(): ?int
     {
-        return $this->relationTypeIdentifier;
+        return $this->relationTypeId;
     }
 
-    public function getRelationTargetId()
+    public function getRelationTargetId(): ?int
     {
         return $this->relationTargetId;
     }
@@ -110,6 +112,7 @@ class Relation extends Entity
      */
     public function getRelationValues(): array
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->relationValues;
     }
 }
