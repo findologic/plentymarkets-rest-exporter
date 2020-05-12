@@ -1,0 +1,45 @@
+{
+  "page": 1,
+  "totalsCount": 2,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 1,
+      "backendName": "Couch color",
+      "position": 1,
+      "isSurchargePercental": false,
+      "isLinkableToImage": true,
+      "amazonAttribute": "",
+      "fruugoAttribute": "color",
+      "pixmaniaAttribute": 0,
+      "ottoAttribute": "",
+      "googleShoppingAttribute": "",
+      "neckermannAtEpAttribute": 0,
+      "typeOfSelectionInOnlineStore": "dropdown",
+      "laRedouteAttribute": 0,
+      "isGroupable": false,
+      "updatedAt": "2015-04-30T08:56:34+01:00"
+    },
+    {
+      "id": 2,
+      "backendName": "Test",
+      "position": 0,
+      "isSurchargePercental": false,
+      "isLinkableToImage": false,
+      "amazonAttribute": "",
+      "fruugoAttribute": "",
+      "pixmaniaAttribute": 0,
+      "ottoAttribute": "",
+      "googleShoppingAttribute": "",
+      "neckermannAtEpAttribute": 0,
+      "typeOfSelectionInOnlineStore": "dropdown",
+      "laRedouteAttribute": 0,
+      "isGroupable": false,
+      "updatedAt": "2018-06-19T08:04:07+01:00"
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100
+}

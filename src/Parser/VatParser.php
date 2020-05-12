@@ -4,30 +4,30 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\VatConfiguration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class CategoryParser extends Parser
+class VatParser extends Parser
 {
     /**
-     * @return CategoryResponse
+     * @return VatResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
         $response = self::unserializeJsonResponse($rawResponse);
 
-        $categories = [];
-        foreach ($response['entries'] as $category) {
-            $categories[] = new Category($category);
+        $vatConfigurations = [];
+        foreach ($response['entries'] as $vatConfiguration) {
+            $vatConfigurations[] = new VatConfiguration($vatConfiguration);
         }
 
-        return new CategoryResponse(
+        return new VatResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],
-            $categories,
+            $vatConfigurations,
             $response['lastPageNumber'],
             $response['firstOnPage'],
             $response['lastOnPage'],

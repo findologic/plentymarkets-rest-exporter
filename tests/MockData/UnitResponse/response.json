@@ -1,0 +1,91 @@
+{
+  "page": 1,
+  "totalsCount": 4,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 1,
+      "position": 1,
+      "unitOfMeasurement": "C62",
+      "isDecimalPlacesAllowed": false,
+      "updatedAt": "2016-09-05T12:24:57+01:00",
+      "createdAt": "2016-09-05T12:24:57+01:00",
+      "names": [
+        {
+          "unitId": 1,
+          "lang": "de",
+          "name": "St\u00fcck"
+        },
+        {
+          "unitId": 1,
+          "lang": "en",
+          "name": "piece"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "position": 2,
+      "unitOfMeasurement": "KGM",
+      "isDecimalPlacesAllowed": true,
+      "updatedAt": "2016-09-05T12:24:57+01:00",
+      "createdAt": "2016-09-05T12:24:57+01:00",
+      "names": [
+        {
+          "unitId": 2,
+          "lang": "de",
+          "name": "Kilogramm"
+        },
+        {
+          "unitId": 2,
+          "lang": "en",
+          "name": "kilogram"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "position": 3,
+      "unitOfMeasurement": "GRM",
+      "isDecimalPlacesAllowed": true,
+      "updatedAt": "2016-09-05T12:24:58+01:00",
+      "createdAt": "2016-09-05T12:24:58+01:00",
+      "names": [
+        {
+          "unitId": 3,
+          "lang": "de",
+          "name": "Gramm"
+        },
+        {
+          "unitId": 3,
+          "lang": "en",
+          "name": "gram"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "position": 4,
+      "unitOfMeasurement": "MGM",
+      "isDecimalPlacesAllowed": false,
+      "updatedAt": "2016-09-05T12:24:58+01:00",
+      "createdAt": "2016-09-05T12:24:58+01:00",
+      "names": [
+        {
+          "unitId": 4,
+          "lang": "de",
+          "name": "Milligramm"
+        },
+        {
+          "unitId": 4,
+          "lang": "en",
+          "name": "milligram"
+        }
+      ]
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100
+}

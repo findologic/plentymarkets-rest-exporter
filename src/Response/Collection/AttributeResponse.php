@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
 
-class CategoryResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
+class AttributeResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
 {
     use EntityCollection;
 
-    /** @var Category[] */
-    private $categories;
+    /** @var Attribute[] */
+    private $attributes;
 
     /**
-     * @param Category[] $categories
+     * @param Attribute[] $attributes
      */
     public function __construct(
         int $page,
         int $totalsCount,
         bool $isLastPage,
-        array $categories,
+        array $attributes,
         int $lastPageNumber = 1,
         int $firstOnPage = 1,
         int $lastOnPage = 1,
@@ -31,7 +31,7 @@ class CategoryResponse extends IterableResponse implements CollectionInterface, 
         $this->page = $page;
         $this->totalsCount = $totalsCount;
         $this->isLastPage = $isLastPage;
-        $this->categories = $categories;
+        $this->attributes = $attributes;
         $this->lastPageNumber = $lastPageNumber;
         $this->firstOnPage = $firstOnPage;
         $this->lastOnPage = $lastOnPage;
@@ -39,36 +39,36 @@ class CategoryResponse extends IterableResponse implements CollectionInterface, 
     }
 
     /**
-     * @return Category|null
+     * @return Attribute|null
      */
     public function first(): ?Entity
     {
-        return $this->getFirstEntity($this->categories);
+        return $this->getFirstEntity($this->attributes);
     }
 
     /**
-     * @return Category[]
+     * @return Attribute[]
      */
     public function all(): array
     {
-        return $this->categories;
+        return $this->attributes;
     }
 
     /**
      * @param array $criteria
-     * @return Category|null
+     * @return Attribute|null
      */
     public function findOne(array $criteria): ?Entity
     {
-        return $this->findOneEntityByCriteria($this->categories, $criteria);
+        return $this->findOneEntityByCriteria($this->attributes, $criteria);
     }
 
     /**
      * @param array $criteria
-     * @return Category[]
+     * @return Attribute[]
      */
     public function find(array $criteria): array
     {
-        return $this->findEntitiesByCriteria($this->categories, $criteria);
+        return $this->findEntitiesByCriteria($this->attributes, $criteria);
     }
 }

@@ -64,7 +64,7 @@ class WebStore extends Entity
         return $this->configuration;
     }
 
-    public function jsonSerialize(): array
+    public function getData(): array
     {
         return [
             'id' => $this->id,

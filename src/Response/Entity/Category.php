@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\CategoryDetails;
+
 class Category extends Entity
 {
     /** @var int */
@@ -44,16 +47,18 @@ class Category extends Entity
         $this->sitemap = (string)$data['sitemap'];
         $this->hasChildren = (bool)$data['hasChildren'];
 
-        foreach ($data['details'] as $categoryDetails) {
-            $this->details[] = new CategoryDetails($categoryDetails);
+        if (!empty($data['details'])) {
+            foreach ($data['details'] as $categoryDetails) {
+                $this->details[] = new CategoryDetails($categoryDetails);
+            }
         }
     }
 
-    public function jsonSerialize(): array
+    public function getData(): array
     {
         $details = [];
         foreach ($this->details as $categoryDetails) {
-            $details[] = $categoryDetails->jsonSerialize();
+            $details[] = $categoryDetails->getData();
         }
 
         return [

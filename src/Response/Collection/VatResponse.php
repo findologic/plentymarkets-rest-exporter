@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\VatConfiguration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
 
-class CategoryResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
+class VatResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
 {
     use EntityCollection;
 
-    /** @var Category[] */
-    private $categories;
+    /** @var VatConfiguration[] */
+    private $vatConfigurations;
 
     /**
-     * @param Category[] $categories
+     * @param VatConfiguration[] $vatConfigurations
      */
     public function __construct(
         int $page,
         int $totalsCount,
         bool $isLastPage,
-        array $categories,
+        array $vatConfigurations,
         int $lastPageNumber = 1,
         int $firstOnPage = 1,
         int $lastOnPage = 1,
@@ -31,7 +31,7 @@ class CategoryResponse extends IterableResponse implements CollectionInterface, 
         $this->page = $page;
         $this->totalsCount = $totalsCount;
         $this->isLastPage = $isLastPage;
-        $this->categories = $categories;
+        $this->vatConfigurations = $vatConfigurations;
         $this->lastPageNumber = $lastPageNumber;
         $this->firstOnPage = $firstOnPage;
         $this->lastOnPage = $lastOnPage;
@@ -39,36 +39,36 @@ class CategoryResponse extends IterableResponse implements CollectionInterface, 
     }
 
     /**
-     * @return Category|null
+     * @return VatConfiguration|null
      */
     public function first(): ?Entity
     {
-        return $this->getFirstEntity($this->categories);
+        return $this->getFirstEntity($this->vatConfigurations);
     }
 
     /**
-     * @return Category[]
+     * @return VatConfiguration[]
      */
     public function all(): array
     {
-        return $this->categories;
+        return $this->vatConfigurations;
     }
 
     /**
      * @param array $criteria
-     * @return Category|null
+     * @return VatConfiguration|null
      */
     public function findOne(array $criteria): ?Entity
     {
-        return $this->findOneEntityByCriteria($this->categories, $criteria);
+        return $this->findOneEntityByCriteria($this->vatConfigurations, $criteria);
     }
 
     /**
      * @param array $criteria
-     * @return Category[]
+     * @return VatConfiguration[]
      */
     public function find(array $criteria): array
     {
-        return $this->findEntitiesByCriteria($this->categories, $criteria);
+        return $this->findEntitiesByCriteria($this->vatConfigurations, $criteria);
     }
 }

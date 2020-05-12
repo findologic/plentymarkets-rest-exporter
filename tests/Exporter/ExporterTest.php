@@ -10,8 +10,18 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\VatConfiguration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
@@ -137,7 +147,7 @@ class ExporterTest extends TestCase
             'configuration' => []
         ]);
         $webStoreResponseBody = [
-            $expectedWebStore->jsonSerialize(),
+            $expectedWebStore->getData(),
             [
                 'id' => 1,
                 'type' => 'plentymarkets',
@@ -161,13 +171,59 @@ class ExporterTest extends TestCase
         );
         $categoryResponse = new Response(200, [], json_encode($categoryResponseBody));
 
-        $this->clientMock->expects($this->exactly(2))
-            ->method('send')
-            ->willReturnOnConsecutiveCalls($webStoreResponse, $categoryResponse);
+        $vatResponse = $this->getMockResponse('VatResponse/response.json');
+        $expectedVat = VatParser::parse($vatResponse);
 
-        $this->registryMock->expects($this->exactly(2))
+        $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/response.json');
+        $expectedSalesPrice = SalesPriceParser::parse($salesPriceResponse);
+
+        $attributeResponse = $this->getMockResponse('AttributeResponse/response.json');
+        $expectedAttribute = AttributeParser::parse($attributeResponse);
+
+        $manufacturerResponse = $this->getMockResponse('ManufacturerResponse/response.json');
+        $expectedManufacturer = ManufacturerParser::parse($manufacturerResponse);
+
+        $propertyResponse = $this->getMockResponse('PropertyResponse/response.json');
+        $expectedProperties = PropertyParser::parse($propertyResponse);
+
+        $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/response.json');
+        $expectedItemProperties = ItemPropertyParser::parse($itemPropertyResponse);
+
+        $unitResponse = $this->getMockResponse('UnitResponse/response.json');
+        $expectedUnits = UnitParser::parse($unitResponse);
+
+        $propertySelectionResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
+        $expectedPropertySelections = PropertySelectionParser::parse($propertySelectionResponse);
+
+        $this->clientMock->expects($this->exactly(10))
+            ->method('send')
+            ->willReturnOnConsecutiveCalls(
+                $webStoreResponse,
+                $categoryResponse,
+                $vatResponse,
+                $salesPriceResponse,
+                $attributeResponse,
+                $manufacturerResponse,
+                $propertyResponse,
+                $itemPropertyResponse,
+                $unitResponse,
+                $propertySelectionResponse
+            );
+
+        $this->registryMock->expects($this->exactly(10))
             ->method('set')
-            ->withConsecutive(['webStore', $expectedWebStore], ['categories', $expectedCategories]);
+            ->withConsecutive(
+                ['webStore', $expectedWebStore],
+                ['categories', $expectedCategories],
+                ['vat', $expectedVat],
+                ['salesPrices', $expectedSalesPrice],
+                ['attributes', $expectedAttribute],
+                ['manufacturers', $expectedManufacturer],
+                ['properties', $expectedProperties],
+                ['itemProperties', $expectedItemProperties],
+                ['units', $expectedUnits],
+                ['propertySelections', $expectedPropertySelections]
+            );
 
         $this->registryMock->expects($this->any())
             ->method('get')
@@ -200,7 +256,7 @@ class ExporterTest extends TestCase
             'configuration' => []
         ]);
         $webStoreResponseBody = [
-            $expectedWebStore->jsonSerialize(),
+            $expectedWebStore->getData(),
             [
                 'id' => 1,
                 'type' => 'plentymarkets',

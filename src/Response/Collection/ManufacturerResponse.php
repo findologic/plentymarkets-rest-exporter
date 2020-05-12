@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Manufacturer;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
 
-class CategoryResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
+class ManufacturerResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
 {
     use EntityCollection;
 
-    /** @var Category[] */
-    private $categories;
+    /** @var Manufacturer[] */
+    private $manufacturers;
 
     /**
-     * @param Category[] $categories
+     * @param Manufacturer[] $manufacturers
      */
     public function __construct(
         int $page,
         int $totalsCount,
         bool $isLastPage,
-        array $categories,
+        array $manufacturers,
         int $lastPageNumber = 1,
         int $firstOnPage = 1,
         int $lastOnPage = 1,
@@ -31,7 +31,7 @@ class CategoryResponse extends IterableResponse implements CollectionInterface, 
         $this->page = $page;
         $this->totalsCount = $totalsCount;
         $this->isLastPage = $isLastPage;
-        $this->categories = $categories;
+        $this->manufacturers = $manufacturers;
         $this->lastPageNumber = $lastPageNumber;
         $this->firstOnPage = $firstOnPage;
         $this->lastOnPage = $lastOnPage;
@@ -39,36 +39,36 @@ class CategoryResponse extends IterableResponse implements CollectionInterface, 
     }
 
     /**
-     * @return Category|null
+     * @return Manufacturer|null
      */
     public function first(): ?Entity
     {
-        return $this->getFirstEntity($this->categories);
+        return $this->getFirstEntity($this->manufacturers);
     }
 
     /**
-     * @return Category[]
+     * @return Manufacturer[]
      */
     public function all(): array
     {
-        return $this->categories;
+        return $this->manufacturers;
     }
 
     /**
      * @param array $criteria
-     * @return Category|null
+     * @return Manufacturer|null
      */
     public function findOne(array $criteria): ?Entity
     {
-        return $this->findOneEntityByCriteria($this->categories, $criteria);
+        return $this->findOneEntityByCriteria($this->manufacturers, $criteria);
     }
 
     /**
      * @param array $criteria
-     * @return Category[]
+     * @return Manufacturer[]
      */
     public function find(array $criteria): array
     {
-        return $this->findEntitiesByCriteria($this->categories, $criteria);
+        return $this->findEntitiesByCriteria($this->manufacturers, $criteria);
     }
 }
