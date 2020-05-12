@@ -4,30 +4,30 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class CategoryParser extends Parser
+class PropertySelectionParser extends Parser
 {
     /**
-     * @return CategoryResponse
+     * @return PropertySelectionResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
         $response = self::unserializeJsonResponse($rawResponse);
 
-        $categories = [];
-        foreach ($response['entries'] as $category) {
-            $categories[] = new Category($category);
+        $selections = [];
+        foreach ($response['entries'] as $selection) {
+            $selections[] = new Selection($selection);
         }
 
-        return new CategoryResponse(
+        return new PropertySelectionResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],
-            $categories,
+            $selections,
             $response['lastPageNumber'],
             $response['firstOnPage'],
             $response['lastOnPage'],

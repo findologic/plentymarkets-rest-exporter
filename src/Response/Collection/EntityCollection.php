@@ -69,7 +69,7 @@ trait EntityCollection
                 continue;
             }
 
-            if (is_array($value)) {
+            if (is_array($value) || $value instanceof Entity) {
                 return $this->handleSubCriteria($criterion, $value, $getterReturnValue);
             }
 
@@ -107,22 +107,24 @@ trait EntityCollection
 
     private function handleSubCriteria(string $criterion, array $criteria, $value): bool
     {
-        if (!is_array($value)) {
+        if (is_array($value)) {
+            foreach ($value as $item) {
+                if (!$this->isCriteriaMatching($criteria, $item)) {
+                    continue;
+                }
+
+                return true;
+            }
+
+            return false;
+        } elseif ($value instanceof Entity) {
+            return $this->isCriteriaMatching($criteria, $value);
+        } else {
             throw new InvalidArgumentException(sprintf(
-                'Criteria expected "%s" to be of type "array". Returned a value of type "%s".',
+                'Criteria expected "%s" to be of type "array" or "Entity". Returned a value of type "%s".',
                 $criterion,
                 gettype($value)
             ));
         }
-
-        foreach ($value as $item) {
-            if (!$this->isCriteriaMatching($criteria, $item)) {
-                return false;
-            }
-
-            return true;
-        }
-
-        return false;
     }
 }

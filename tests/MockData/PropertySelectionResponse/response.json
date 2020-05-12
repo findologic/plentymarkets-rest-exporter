@@ -1,0 +1,143 @@
+{
+  "page": 1,
+  "totalsCount": 3,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 9,
+      "propertyId": 7,
+      "position": 0,
+      "createdAt": "2020-04-07T11:39:05+01:00",
+      "updatedAt": "2020-04-07T11:39:05+01:00",
+      "property": {
+        "id": 7,
+        "cast": "multiSelection",
+        "typeIdentifier": "item",
+        "position": 5,
+        "createdAt": "2020-04-07T10:48:55+01:00",
+        "updatedAt": "2020-04-07T10:48:55+01:00"
+      },
+      "relation": {
+        "id": 12,
+        "propertyId": 7,
+        "relationTypeIdentifier": null,
+        "relationTargetId": null,
+        "selectionRelationId": 9,
+        "createdAt": "2020-04-07T11:39:05+01:00",
+        "updatedAt": "2020-04-07T11:39:05+01:00",
+        "relationValues": [
+          {
+            "id": 18,
+            "propertyRelationId": 12,
+            "lang": "EN",
+            "value": "value2",
+            "description": null,
+            "createdAt": "2020-04-07T11:39:05+01:00",
+            "updatedAt": "2020-04-07T11:39:05+01:00"
+          },
+          {
+            "id": 19,
+            "propertyRelationId": 12,
+            "lang": "de",
+            "value": "value2",
+            "description": "",
+            "createdAt": "2020-04-07T11:39:15+01:00",
+            "updatedAt": "2020-04-07T11:39:23+01:00"
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "propertyId": 7,
+      "position": 0,
+      "createdAt": "2020-04-07T11:38:56+01:00",
+      "updatedAt": "2020-04-07T11:38:56+01:00",
+      "property": {
+        "id": 7,
+        "cast": "multiSelection",
+        "typeIdentifier": "item",
+        "position": 5,
+        "createdAt": "2020-04-07T10:48:55+01:00",
+        "updatedAt": "2020-04-07T10:48:55+01:00"
+      },
+      "relation": {
+        "id": 11,
+        "propertyId": 7,
+        "relationTypeIdentifier": null,
+        "relationTargetId": null,
+        "selectionRelationId": 8,
+        "createdAt": "2020-04-07T11:38:56+01:00",
+        "updatedAt": "2020-04-07T11:38:56+01:00",
+        "relationValues": [
+          {
+            "id": 17,
+            "propertyRelationId": 11,
+            "lang": "EN",
+            "value": "value1",
+            "description": null,
+            "createdAt": "2020-04-07T11:38:56+01:00",
+            "updatedAt": "2020-04-07T11:38:56+01:00"
+          },
+          {
+            "id": 20,
+            "propertyRelationId": 11,
+            "lang": "de",
+            "value": "value1",
+            "description": "",
+            "createdAt": "2020-04-07T11:39:34+01:00",
+            "updatedAt": "2020-04-07T11:39:34+01:00"
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "propertyId": 4,
+      "position": 0,
+      "createdAt": "2019-02-22T10:41:58+00:00",
+      "updatedAt": "2019-02-22T10:41:58+00:00",
+      "property": {
+        "id": 4,
+        "cast": "selection",
+        "typeIdentifier": "item",
+        "position": 50,
+        "createdAt": "2019-02-22T10:39:10+00:00",
+        "updatedAt": "2019-02-22T10:44:45+00:00"
+      },
+      "relation": {
+        "id": 7,
+        "propertyId": 4,
+        "relationTypeIdentifier": null,
+        "relationTargetId": null,
+        "selectionRelationId": 7,
+        "createdAt": "2019-02-22T10:41:58+00:00",
+        "updatedAt": "2019-02-22T10:41:58+00:00",
+        "relationValues": [
+          {
+            "id": 11,
+            "propertyRelationId": 7,
+            "lang": "EN",
+            "value": "Very Large",
+            "description": "Very Large",
+            "createdAt": "2019-02-22T10:41:58+00:00",
+            "updatedAt": "2019-02-22T10:41:58+00:00"
+          },
+          {
+            "id": 12,
+            "propertyRelationId": 7,
+            "lang": "DE",
+            "value": "Sehr Grob",
+            "description": "Sehr Grob",
+            "createdAt": "2019-02-22T10:41:58+00:00",
+            "updatedAt": "2019-02-22T10:41:58+00:00"
+          }
+        ]
+      }
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100
+}

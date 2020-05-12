@@ -11,7 +11,7 @@ abstract class Parser
 {
     abstract public static function parse(ResponseInterface $rawResponse): Response;
 
-    protected static function jsonSerializeResponse(ResponseInterface $rawResponse): array
+    protected static function unserializeJsonResponse(ResponseInterface $rawResponse): array
     {
         $response = $rawResponse->getBody()->__toString();
         return json_decode($response, true);
