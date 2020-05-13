@@ -262,7 +262,7 @@ class ItemVariation extends Entity
     {
         $this->id = (int)$data['id'];
         $this->isMain = (bool)$data['isMain'];
-        $this->mainVariationId = is_null($data['mainVariationId']) ? null : (int)$data['mainVariationId'];
+        $this->mainVariationId = $this->getIntProperty('mainVariationId', $data);
         $this->itemId = (int)$data['itemId'];
         $this->categoryVariationId = (int)$data['categoryVariationId'];
         $this->marketVariationId = (int)$data['marketVariationId'];
@@ -275,42 +275,27 @@ class ItemVariation extends Entity
         $this->number = (string)$data['number'];
         $this->model = (string)$data['model'];
         $this->externalId = (string)$data['externalId'];
-        $this->parentVariationId = is_null($data['parentVariationId']) ? null : (int)$data['parentVariationId'];
-        $this->parentVariationQuantity = null;
-        if (!is_null($data['parentVariationQuantity'])) {
-            $this->parentVariationQuantity = (float)$data['parentVariationQuantity'];
-        }
+        $this->parentVariationId = $this->getIntProperty('parentVariationId', $data);
+        $this->parentVariationQuantity = $this->getFloatProperty('parentVariationQuantity', $data);
         $this->availability = (int)$data['availability'];
-        $this->estimatedAvailableAt = null;
-        if (!is_null($data['estimatedAvailableAt'])) {
-            $this->estimatedAvailableAt = (string)$data['estimatedAvailableAt'];
-        }
+        $this->estimatedAvailableAt = $this->getStringProperty('estimatedAvailableAt', $data);
         $this->purchasePrice = (float)$data['purchasePrice'];
         $this->createdAt = (string)$data['createdAt'];
         $this->updatedAt = (string)$data['updatedAt'];
-        $this->relatedUpdatedAt = is_null($data['relatedUpdatedAt']) ? null : (string)$data['relatedUpdatedAt'];
-        $this->priceCalculationId = is_null($data['priceCalculationId']) ? null : (int)$data['priceCalculationId'];
-        $this->picking = is_null($data['picking']) ? null : (string)$data['picking'];
+        $this->relatedUpdatedAt = $this->getStringProperty('relatedUpdatedAt', $data);
+        $this->priceCalculationId = $this->getIntProperty('priceCalculationId', $data);
+        $this->picking = $this->getStringProperty('picking', $data);
         $this->stockLimitation = (int)$data['stockLimitation'];
         $this->isVisibleIfNetStockIsPositive = (bool)$data['isVisibleIfNetStockIsPositive'];
         $this->isInvisibleIfNetStockIsNotPositive = (bool)$data['isInvisibleIfNetStockIsNotPositive'];
         $this->isAvailableIfNetStockIsPositive = (bool)$data['isAvailableIfNetStockIsPositive'];
         $this->isUnavailableIfNetStockIsNotPositive = (bool)$data['isUnavailableIfNetStockIsNotPositive'];
         $this->mainWarehouseId = (int)$data['mainWarehouseId'];
-        $this->maximumOrderQuantity = null;
-        if (!is_null($data['maximumOrderQuantity'])) {
-            $this->maximumOrderQuantity = (float)$data['maximumOrderQuantity'];
-        }
-        $this->minimumOrderQuantity = null;
-        if (!is_null($data['minimumOrderQuantity'])) {
-            $this->minimumOrderQuantity = (float)$data['minimumOrderQuantity'];
-        }
-        $this->intervalOrderQuantity = null;
-        if (!is_null($data['intervalOrderQuantity'])) {
-            $this->intervalOrderQuantity = (float)$data['intervalOrderQuantity'];
-        }
-        $this->availableUntil = is_null($data['availableUntil']) ? null : (string)$data['availableUntil'];
-        $this->releasedAt = is_null($data['releasedAt']) ? null : (string)$data['releasedAt'];
+        $this->maximumOrderQuantity = $this->getFloatProperty('maximumOrderQuantity', $data);
+        $this->minimumOrderQuantity = $this->getFloatProperty('minimumOrderQuantity', $data);
+        $this->intervalOrderQuantity = $this->getFloatProperty('intervalOrderQuantity', $data);
+        $this->availableUntil = $this->getStringProperty('availableUntil', $data);
+        $this->releasedAt = $this->getStringProperty('releasedAt', $data);
         $this->unitCombinationId = (int)$data['unitCombinationId'];
         $this->name = (string)$data['name'];
         $this->weightG = (int)$data['weightG'];
@@ -321,7 +306,7 @@ class ItemVariation extends Entity
         $this->extraShippingCharge1 = (float)$data['extraShippingCharge1'];
         $this->extraShippingCharge2 = (float)$data['extraShippingCharge2'];
         $this->unitsContained = (int)$data['unitsContained'];
-        $this->palletTypeId = is_null($data['palletTypeId']) ? null : (int)$data['palletTypeId'];
+        $this->palletTypeId = $this->getIntProperty('palletTypeId', $data);
         $this->packingUnits = (int)$data['packingUnits'];
         $this->packingUnitTypeId = (int)$data['packingUnitTypeId'];
         $this->transportationCosts = (float)$data['transportationCosts'];
@@ -329,13 +314,10 @@ class ItemVariation extends Entity
         $this->customs = (float)$data['customs'];
         $this->operatingCosts = (float)$data['operatingCosts'];
         $this->vatId = (int)$data['vatId'];
-        $this->bundleType = is_null($data['bundleType']) ? null : (string)$data['bundleType'];
+        $this->bundleType = $this->getStringProperty('bundleType', $data);
         $this->automaticClientVisibility = (int)$data['automaticClientVisibility'];
         $this->isHiddenInCategoryList = (bool)$data['isHiddenInCategoryList'];
-        $this->defaultShippingCosts = null;
-        if (!is_null($data['defaultShippingCosts'])) {
-            $this->defaultShippingCosts = (float)$data['defaultShippingCosts'];
-        }
+        $this->defaultShippingCosts = $this->getFloatProperty('defaultShippingCosts', $data);
         $this->mayShowUnitPrice = (bool)$data['mayShowUnitPrice'];
         $this->movingAveragePrice = (float)$data['movingAveragePrice'];
         $this->propertyVariationId = (int)$data['propertyVariationId'];
@@ -345,25 +327,16 @@ class ItemVariation extends Entity
         $this->singleItemCount = (int)$data['singleItemCount'];
         $this->availabilityUpdatedAt = (string)$data['availabilityUpdatedAt'];
         $this->tagVariationId = (int)$data['tagVariationId'];
-        $this->hasCalculatedBundleWeight = null;
-        if (!is_null($data['hasCalculatedBundleWeight'])) {
-            $this->hasCalculatedBundleWeight = (bool)$data['hasCalculatedBundleWeight'];
-        }
-        $this->hasCalculatedBundleNetWeight = null;
-        if (!is_null($data['hasCalculatedBundleNetWeight'])) {
-            $this->hasCalculatedBundleNetWeight = (bool)$data['hasCalculatedBundleNetWeight'];
-        }
-        $this->hasCalculatedBundlePurchasePrice = null;
-        if (!is_null($data['hasCalculatedBundlePurchasePrice'])) {
-            $this->hasCalculatedBundlePurchasePrice = (bool)$data['hasCalculatedBundlePurchasePrice'];
-        }
-        $this->hasCalculatedBundleMovingAveragePrice = null;
-        if (!is_null($data['hasCalculatedBundleMovingAveragePrice'])) {
-            $this->hasCalculatedBundleMovingAveragePrice = (bool)$data['hasCalculatedBundleMovingAveragePrice'];
-        }
-        $this->salesRank = is_null($data['salesRank']) ? null : (int)$data['salesRank'];
+        $this->hasCalculatedBundleWeight = $this->getBoolProperty('hasCalculatedBundleWeight', $data);
+        $this->hasCalculatedBundleNetWeight = $this->getBoolProperty('hasCalculatedBundleNetWeight', $data);
+        $this->hasCalculatedBundlePurchasePrice = $this->getBoolProperty('hasCalculatedBundlePurchasePrice', $data);
+        $this->hasCalculatedBundleMovingAveragePrice = $this->getBoolProperty(
+            'hasCalculatedBundleMovingAveragePrice',
+            $data
+        );
+        $this->salesRank = $this->getIntProperty('salesRank', $data);
 
-        //Note - none of the following are documented, entity structure may not match data perfectly
+        // None of the following are documented, entity structure may not match data perfectly
         if (!empty($data['variationCategories'])) {
             foreach ($data['variationCategories'] as $variationCategory) {
                 $this->variationCategories[] = new VariationCategory($variationCategory);
@@ -388,7 +361,7 @@ class ItemVariation extends Entity
             }
         }
 
-        $this->variationBarcodes = $data['variationBarcodes']; //Unknown structure - received only empty arrays
+        $this->variationBarcodes = $data['variationBarcodes']; // Unknown structure - received only empty arrays
 
         if (!empty($data['variationClients'])) {
             foreach ($data['variationClients'] as $variationClient) {
@@ -417,7 +390,6 @@ class ItemVariation extends Entity
 
     public function getData(): array
     {
-
         $variationCategories = [];
         foreach ($this->variationCategories as $variationCategory) {
             $variationCategories[] = $variationCategory->getData();

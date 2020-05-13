@@ -239,7 +239,16 @@ class ExporterTest extends TestCase
 
         $this->registryMock->expects($this->any())
             ->method('get')
-            ->willReturnOnConsecutiveCalls($expectedWebStore, $expectedItems);
+            ->willReturnOnConsecutiveCalls(
+                $expectedWebStore,
+                $expectedItems,
+                new CategoryResponse(1, 1, true, [1]),
+                $expectedSalesPrice,
+                $expectedAttribute,
+                $expectedItemProperties,
+                $expectedProperties,
+                $expectedUnits
+            );
 
         $exporter->export();
     }

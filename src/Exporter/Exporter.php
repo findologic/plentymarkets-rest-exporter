@@ -308,28 +308,27 @@ abstract class Exporter
 
     private function getItemVariations(): ItemVariationResponse
     {
-        /** @var ItemResponse $items */
-        $items = $this->registry->get('items');
-        $itemIds = implode(',', $items->getAllIds());
-        $itemVariationRequest = new ItemVariationRequest(
-            $this->getRequiredVariationValues(),
-            true,
-            null,
-            null,
-            $itemIds
-        );
-
         $itemVariations = [];
 
-        foreach (Utils::sendIterableRequest($this->client, $itemVariationRequest) as $response) {
-            $itemVariationResponse = ItemVariationParser::parse($response);
-            $itemVariations = array_merge($itemVariationResponse->all(), $itemVariations);
+        /** @var ItemResponse $items */
+        $items = $this->registry->get('items');
+
+        if ($itemIds = $items->getAllIds()) {
+            $itemVariationRequest = new ItemVariationRequest();
+            $itemVariationRequest->setWith($this->getRequiredVariationValues())
+                ->setIsActive(true)
+                ->setItemId($itemIds);
+
+            foreach (Utils::sendIterableRequest($this->client, $itemVariationRequest) as $response) {
+                $itemVariationResponse = ItemVariationParser::parse($response);
+                $itemVariations = array_merge($itemVariationResponse->all(), $itemVariations);
+            }
         }
 
         return new ItemVariationResponse(1, count($itemVariations), true, $itemVariations);
     }
 
-    private function getRequiredVariationValues(): string
+    private function getRequiredVariationValues(): array
     {
         $variationValues = [];
 
@@ -372,6 +371,6 @@ abstract class Exporter
             'tags'
         );
 
-        return implode(',', $variationValues);
+        return $variationValues;
     }
 }

@@ -300,8 +300,8 @@
           "urlMiddle": "https:\/\/images.com\/middle\/image.jpg",
           "urlPreview": "https:\/\/images.com\/preview\/image.jpg",
           "urlSecondPreview": "https:\/\/images.com\/secondPreview\/image.jpg",
-          "documentUploadPath": "v3b53of2xcyu\/item\/images\/102\/full\/image.jpg",
-          "documentUploadPathPreview": "v3b53of2xcyu\/item\/images\/102\/preview\/image.jpg",
+          "documentUploadPath": "v3b53of2xcyu\/item\/images\/documentupload.jpg",
+          "documentUploadPathPreview": "v3b53of2xcyu\/item\/images\/documentpreview.jpg",
           "documentUploadPreviewWidth": 0,
           "documentUploadPreviewHeight": 0,
           "availabilities": [

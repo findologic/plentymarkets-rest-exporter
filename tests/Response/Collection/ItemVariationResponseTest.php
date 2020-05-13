@@ -348,6 +348,8 @@ class ItemVariationResponseTest extends TestCase
         $this->assertEquals('https://images.com/middle/image.jpg', $itemImage->getUrlMiddle());
         $this->assertEquals('https://images.com/preview/image.jpg', $itemImage->getUrlPreview());
         $this->assertEquals('https://images.com/secondPreview/image.jpg', $itemImage->getUrlSecondPreview());
+        $this->assertEquals('v3b53of2xcyu/item/images/documentupload.jpg', $itemImage->getDocumentUploadPath());
+        $this->assertEquals('v3b53of2xcyu/item/images/documentpreview.jpg', $itemImage->getDocumentUploadPathPreview());
         $this->assertEquals(0.0, $itemImage->getDocumentUploadPreviewWidth());
         $this->assertEquals(0.0, $itemImage->getDocumentUploadPreviewHeight());
 
