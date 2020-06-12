@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^6.5",
         "vasily-kartashov/log4php": "^4.1",
         "ext-json": "*",
-        "findologic/libflexport": "^2.6"
+        "findologic/libflexport": "^2.7"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0",
