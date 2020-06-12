@@ -8,8 +8,8 @@ use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Product as ProductEntity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Variation;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 
 class Product
@@ -26,7 +26,7 @@ class Product
     /** @var ProductEntity */
     private $productEntity;
 
-    /** @var Variation[] */
+    /** @var ItemVariation[] */
     private $variations;
 
     /** @var string|null */
@@ -87,17 +87,17 @@ class Product
             return;
         }
 
-        $textId = $webStore->getConfiguration()['displayItemName'];
+        $textGetter = 'getName' . $webStore->getConfiguration()['displayItemName'];
 
         foreach ($this->productEntity->getTexts() as $texts) {
-            if (strtoupper($texts['lang']) !== $this->config->getLanguage()) {
+            if (strtoupper($texts->getLang()) !== $this->config->getLanguage()) {
                 continue;
             }
 
-            $this->item->addName($texts['name' . $textId]);
-            $this->item->addSummary($texts['shortDescription']);
-            $this->item->addDescription($texts['description']);
-            $this->item->addUrl($this->buildProductUrl($texts['urlPath']));
+            $this->item->addName($texts->$textGetter());
+            $this->item->addSummary($texts->getShortDescription());
+            $this->item->addDescription($texts->getDescription());
+            $this->item->addUrl($this->buildProductUrl($texts->getUrlPath()));
         }
     }
 
