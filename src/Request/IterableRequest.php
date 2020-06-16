@@ -6,11 +6,9 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Request;
 
 trait IterableRequest
 {
-    /** @var int Maximum count of entities per page. */
-    public static $ITEMS_PER_PAGE = 100;
+    public static int $ITEMS_PER_PAGE = 100; // Maximum count of entities per page.
 
-    /** @var int */
-    protected $page = 1;
+    protected int $page = 1;
 
     public function getParams(): array
     {

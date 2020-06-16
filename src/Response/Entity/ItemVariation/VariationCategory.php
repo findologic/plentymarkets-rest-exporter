@@ -8,17 +8,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class VariationCategory extends Entity
 {
-    /** @var int */
-    private $variationId;
+    private int $variationId;
 
-    /** @var int */
-    private $categoryId;
+    private int $categoryId;
 
-    /** @var int */
-    private $position;
+    private int $position;
 
-    /** @var bool */
-    private $isNeckermannPrimary;
+    private bool $isNeckermannPrimary;
 
     public function __construct(array $data)
     {

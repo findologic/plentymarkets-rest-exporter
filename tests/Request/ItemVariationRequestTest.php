@@ -9,6 +9,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Log4Php\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -45,7 +46,7 @@ class ItemVariationRequestTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $responseBodyMock = $this->getMockBuilder(StreamInterface::class)->getMock();
-        $responseBodyMock->method('__toString')->willReturn('{"accessToken":"111","refreshToken":true}');
+        $responseBodyMock->method('__toString')->willReturn('{"accessToken":"111","refreshToken":"ab"}');
         $this->responseMock = $this->getMockBuilder(ResponseInterface::class)->getMock();
         $this->responseMock->method('getStatusCode')->willReturn(200);
         $this->responseMock->method('getBody')->willReturn($responseBodyMock);

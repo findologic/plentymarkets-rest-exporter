@@ -11,10 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class PropertySelectionParser extends Parser
 {
-    /**
-     * @return PropertySelectionResponse
-     */
-    public static function parse(ResponseInterface $rawResponse): Response
+    public static function parse(ResponseInterface $rawResponse): PropertySelectionResponse
     {
         $response = self::unserializeJsonResponse($rawResponse);
 

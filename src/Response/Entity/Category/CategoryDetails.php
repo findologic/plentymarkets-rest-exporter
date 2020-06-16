@@ -10,80 +10,55 @@ use DateTimeInterface;
 
 class CategoryDetails extends Entity
 {
-    /** @var int */
-    private $categoryId;
+    private int $categoryId;
 
-    /** @var string */
-    private $lang;
+    private string $lang;
 
-    /** @var string */
-    private $name;
+    private string $name;
 
-    /** @var string */
-    private $description;
+    private string $description;
 
-    /** @var string */
-    private $description2;
+    private string $description2;
 
-    /** @var string */
-    private $shortDescription;
+    private string $shortDescription;
 
-    /** @var string */
-    private $metaKeywords;
+    private string $metaKeywords;
 
-    /** @var string */
-    private $metaDescription;
+    private string $metaDescription;
 
-    /** @var string */
-    private $nameUrl;
+    private string $nameUrl;
 
-    /** @var string */
-    private $metaTitle;
+    private string $metaTitle;
 
-    /** @var int */
-    private $position;
+    private int $position;
 
-    /** @var DateTimeInterface */
-    private $updatedAt;
+    private DateTimeInterface $updatedAt;
 
-    /** @var string */
-    private $updatedBy;
+    private string $updatedBy;
 
-    /** @var string */
-    private $itemListView;
+    private string $itemListView;
 
-    /** @var string */
-    private $singleItemView;
+    private string $singleItemView;
 
-    /** @var string */
-    private $pageView;
+    private string $pageView;
 
-    /** @var string|null */
-    private $fullText;
+    private ?string $fullText;
 
-    /** @var string */
-    private $metaRobots;
+    private string $metaRobots;
 
-    /** @var string */
-    private $canonicalLink;
+    private string $canonicalLink;
 
-    /** @var string */
-    private $previewUrl;
+    private string $previewUrl;
 
-    /** @var string|null */
-    private $image;
+    private ?string $image;
 
-    /** @var string|null */
-    private $imagePath;
+    private ?string $imagePath;
 
-    /** @var string|null */
-    private $image2;
+    private ?string $image2;
 
-    /** @var string|null */
-    private $image2Path;
+    private ?string $image2Path;
 
-    /** @var int */
-    private $plentyId;
+    private int $plentyId;
 
     public function __construct(array $data)
     {

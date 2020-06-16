@@ -14,23 +14,18 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 
 class Product
 {
-    /** @var Item */
-    private $item;
+    private Item $item;
 
-    /** @var Config */
-    private $config;
+    private Config $config;
 
-    /** @var Registry */
-    private $registry;
+    private Registry $registry;
 
-    /** @var ProductEntity */
-    private $productEntity;
+    private ProductEntity $productEntity;
 
     /** @var ItemVariation[] */
-    private $variations;
+    private array $variations;
 
-    /** @var string|null */
-    private $reason = null;
+    private ?string $reason = null;
 
     public function __construct(
         Exporter $exporter,

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\Category;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
 
@@ -13,7 +13,7 @@ class CategoryResponse extends IterableResponse implements CollectionInterface, 
     use EntityCollection;
 
     /** @var Category[] */
-    private $categories;
+    private array $categories;
 
     /**
      * @param Category[] $categories

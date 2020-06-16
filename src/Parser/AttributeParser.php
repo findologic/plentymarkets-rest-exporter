@@ -11,10 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class AttributeParser extends Parser
 {
-    /**
-     * @return AttributeResponse
-     */
-    public static function parse(ResponseInterface $rawResponse): Response
+    public static function parse(ResponseInterface $rawResponse): AttributeResponse
     {
         $response = self::unserializeJsonResponse($rawResponse);
 

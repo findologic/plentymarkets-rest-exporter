@@ -41,20 +41,15 @@ use Psr\Log\LoggerInterface;
 
 class RegistryWarmer
 {
-    /** @var LoggerInterface */
-    protected $internalLogger;
+    protected LoggerInterface $internalLogger;
 
-    /** @var LoggerInterface */
-    protected $customerLogger;
+    protected LoggerInterface $customerLogger;
 
-    /** @var Config */
-    protected $config;
+    protected Config $config;
 
-    /** @var Client */
-    protected $client;
+    protected Client $client;
 
-    /** @var Registry */
-    protected $registry;
+    protected Registry $registry;
 
     public function __construct(
         LoggerInterface $internalLogger,

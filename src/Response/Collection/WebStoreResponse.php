@@ -13,7 +13,7 @@ class WebStoreResponse extends Response implements CollectionInterface
     use EntityCollection;
 
     /** @var WebStore[] */
-    private $webStores = [];
+    private array $webStores = [];
 
     /**
      * @param WebStore[] $webStores

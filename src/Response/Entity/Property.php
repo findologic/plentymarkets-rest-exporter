@@ -12,50 +12,41 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Amazon;
 
 class Property extends Entity
 {
-    /** @var int  */
-    private $id;
+    private int $id;
 
-    /** @var string  */
-    private $cast;
+    private string $cast;
 
-    /** @var string  */
-    private $typeIdentifier;
+    private string $typeIdentifier;
 
-    /** @var int  */
-    private $position;
+    private int $position;
 
-    /** @var string  */
-    private $createdAt;
+    private string $createdAt;
 
-    /** @var string  */
-    private $updatedAt;
+    private string $updatedAt;
 
-    /** @var string  */
-    private $propertyId;
+    private string $propertyId;
 
-    /** @var string  */
-    private $propertyGroupId;
+    private string $propertyGroupId;
 
     /** @var Group[] */
-    private $groups = [];
+    private array $groups = [];
 
-    /** @var array */
-    private $availabilities = [];
+    private array $availabilities = [];
 
     /** @var Name[] */
-    private $names = [];
+    private array $names = [];
 
     /** @var Option[] */
-    private $options = [];
+    private array $options = [];
 
     /** @var array */
-    private $markets = [];
+    private array $markets = [];
 
     /** @var Selection[] */
-    private $selections = [];
+    private array $selections = [];
 
     /** @var Amazon[] */
-    private $amazons = [];
+    private array $amazons = [];
 
     public function __construct(array $data)
     {

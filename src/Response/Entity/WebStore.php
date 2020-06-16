@@ -6,23 +6,17 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
 class WebStore extends Entity
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var string */
-    private $type;
+    private string $type;
 
-    /** @var int */
-    private $storeIdentifier;
+    private int $storeIdentifier;
 
-    /** @var string */
-    private $name;
+    private string $name;
 
-    /** @var int */
-    private $pluginSetId;
+    private int $pluginSetId;
 
-    /** @var array */
-    private $configuration;
+    private array $configuration;
 
     public function __construct(array $data)
     {

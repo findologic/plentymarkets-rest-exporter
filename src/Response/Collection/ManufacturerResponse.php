@@ -13,7 +13,7 @@ class ManufacturerResponse extends IterableResponse implements CollectionInterfa
     use EntityCollection;
 
     /** @var Manufacturer[] */
-    private $manufacturers;
+    private array $manufacturers;
 
     /**
      * @param Manufacturer[] $manufacturers

@@ -9,8 +9,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Prop
 
 class Property extends Relation
 {
-    /** @var SelectionProperty|null */
-    private $propertyRelation;
+    private ?SelectionProperty $propertyRelation;
 
     public function __construct(array $data)
     {

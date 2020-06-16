@@ -11,17 +11,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 
 class CsvWrapper extends Wrapper
 {
-    /** @var string */
-    private $path;
+    private string $path;
 
-    /** @var Exporter */
-    private $exporter;
+    private Exporter $exporter;
 
-    /** @var Config */
-    private $config;
+    private Config $config;
 
-    /** @var Registry */
-    private $registry;
+    private Registry $registry;
 
     public function __construct(string $path, Exporter $exporter, Config $config, Registry $registry)
     {

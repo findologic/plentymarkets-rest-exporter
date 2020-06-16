@@ -8,11 +8,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class GroupRelation extends Entity
 {
-    /** @var int */
-    private $propertyId;
+    private int $propertyId;
 
-    /** @var int */
-    private $propertyGroupId;
+    private int $propertyGroupId;
 
     public function __construct(array $data)
     {

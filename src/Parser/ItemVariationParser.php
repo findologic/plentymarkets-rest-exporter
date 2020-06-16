@@ -11,10 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class ItemVariationParser extends Parser
 {
-    /**
-     * @return ItemVariationResponse
-     */
-    public static function parse(ResponseInterface $rawResponse): Response
+    public static function parse(ResponseInterface $rawResponse): ItemVariationResponse
     {
         $response = self::unserializeJsonResponse($rawResponse);
 

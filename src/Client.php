@@ -36,29 +36,21 @@ class Client
     private const
         REST_PATH = 'rest';
 
-    /** @var GuzzleClient */
-    private $client;
+    private GuzzleClient $client;
 
-    /** @var Config */
-    private $config;
+    private Config $config;
 
-    /** @var LoggerInterface */
-    private $internalLogger;
+    private LoggerInterface $internalLogger;
 
-    /** @var LoggerInterface */
-    private $customerLogger;
+    private LoggerInterface $customerLogger;
 
-    /** @var DebuggerInterface */
-    private $debugger;
+    private DebuggerInterface $debugger;
 
-    /** @var ResponseInterface Used for rate limiting. */
-    private $lastResponse;
+    private ?ResponseInterface $lastResponse = null; // Used for rate limiting.
 
-    /** @var string */
-    private $accessToken;
+    private ?string $accessToken = null;
 
-    /** @var string */
-    private $refreshToken;
+    private ?string $refreshToken = null;
 
     public function __construct(
         GuzzleClient $httpClient,

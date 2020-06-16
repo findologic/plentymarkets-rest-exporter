@@ -16,7 +16,7 @@ class SalesPriceResponse extends IterableResponse implements CollectionInterface
     use EntityCollection;
 
     /** @var SalesPrice[] */
-    private $salesPrices;
+    private array $salesPrices;
 
     /**
      * @param SalesPrice[] $salesPrices

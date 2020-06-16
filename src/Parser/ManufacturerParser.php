@@ -11,10 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class ManufacturerParser extends Parser
 {
-    /**
-     * @return ManufacturerResponse
-     */
-    public static function parse(ResponseInterface $rawResponse): Response
+    public static function parse(ResponseInterface $rawResponse): ManufacturerResponse
     {
         $response = self::unserializeJsonResponse($rawResponse);
 

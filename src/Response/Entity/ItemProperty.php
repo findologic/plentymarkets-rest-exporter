@@ -6,53 +6,37 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
 class ItemProperty extends Entity
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var int */
-    private $position;
+    private int $position;
 
-    /** @var int|null */
-    private $propertyGroupId;
+    private ?int $propertyGroupId;
 
-    /** @var string */
-    private $unit;
+    private string $unit;
 
-    /** @var string */
-    private $backendName;
+    private string $backendName;
 
-    /** @var string */
-    private $comment;
+    private string $comment;
 
-    /** @var string */
-    private $valueType;
+    private string $valueType;
 
-    /** @var bool */
-    private $isSearchable;
+    private bool $isSearchable;
 
-    /** @var bool */
-    private $isOderProperty;
+    private bool $isOderProperty;
 
-    /** @var bool */
-    private $isShownOnItemPage;
+    private bool $isShownOnItemPage;
 
-    /** @var bool */
-    private $isShownOnItemList;
+    private bool $isShownOnItemList;
 
-    /** @var bool */
-    private $isShownAtCheckout;
+    private bool $isShownAtCheckout;
 
-    /** @var bool */
-    private $isShownInPdf;
+    private bool $isShownInPdf;
 
-    /** @var bool */
-    private $isShownAsAdditionalCosts;
+    private bool $isShownAsAdditionalCosts;
 
-    /** @var float */
-    private $surcharge;
+    private float $surcharge;
 
-    /** @var string */
-    private $updatedAt;
+    private string $updatedAt;
 
     public function __construct(array $data)
     {

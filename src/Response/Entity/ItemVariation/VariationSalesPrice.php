@@ -8,20 +8,15 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class VariationSalesPrice extends Entity
 {
-    /** @var int */
-    private $variationId;
+    private int $variationId;
 
-    /** @var int */
-    private $salesPriceId;
+    private int $salesPriceId;
 
-    /** @var float */
-    private $price;
+    private float $price;
 
-    /** @var string */
-    private $updatedAt;
+    private string $updatedAt;
 
-    /** @var string */
-    private $createdAt;
+    private string $createdAt;
 
     public function __construct(array $data)
     {

@@ -8,35 +8,25 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Text extends Entity
 {
-    /** @var string */
-    private $lang;
+    private string $lang;
 
-    /** @var string */
-    private $name1;
+    private string $name1;
 
-    /** @var string */
-    private $name2;
+    private string $name2;
 
-    /** @var string */
-    private $name3;
+    private string $name3;
 
-    /** @var string */
-    private $shortDescription;
+    private string $shortDescription;
 
-    /** @var string */
-    private $metaDescription;
+    private string $metaDescription;
 
-    /** @var string */
-    private $description;
+    private string $description;
 
-    /** @var string */
-    private $technicalData;
+    private string $technicalData;
 
-    /** @var string */
-    private $urlPath;
+    private string $urlPath;
 
-    /** @var string */
-    private $keywords;
+    private string $keywords;
 
     public function __construct(array $data)
     {

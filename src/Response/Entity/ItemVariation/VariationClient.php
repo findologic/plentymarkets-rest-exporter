@@ -8,14 +8,11 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class VariationClient extends Entity
 {
-    /** @var int */
-    private $variationId;
+    private int $variationId;
 
-    /** @var int */
-    private $plentyId;
+    private int $plentyId;
 
-    /** @var string */
-    private $createdAt;
+    private string $createdAt;
 
     public function __construct(array $data)
     {

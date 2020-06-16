@@ -11,11 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class WebStoreParser extends Parser
 {
-    /**
-     * @param ResponseInterface $rawResponse
-     * @return WebStoreResponse
-     */
-    public static function parse(ResponseInterface $rawResponse): Response
+    public static function parse(ResponseInterface $rawResponse): WebStoreResponse
     {
         $rawWebStores = self::unserializeJsonResponse($rawResponse);
 

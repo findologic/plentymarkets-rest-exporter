@@ -12,8 +12,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
  */
 class Registry
 {
-    /** @var array */
-    private $registryData = [];
+
+    private array $registryData = [];
 
     /**
      * @param string $key

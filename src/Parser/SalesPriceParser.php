@@ -11,10 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class SalesPriceParser extends Parser
 {
-    /**
-     * @return SalesPriceResponse
-     */
-    public static function parse(ResponseInterface $rawResponse): Response
+    public static function parse(ResponseInterface $rawResponse): SalesPriceResponse
     {
         $response = self::unserializeJsonResponse($rawResponse);
 

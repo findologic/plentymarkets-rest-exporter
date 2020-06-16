@@ -6,65 +6,45 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
 class Manufacturer extends Entity
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var string */
-    private $name;
+    private string $name;
 
-    /** @var string */
-    private $externalName;
+    private string $externalName;
 
-    /** @var string */
-    private $logo;
+    private string $logo;
 
-    /** @var string */
-    private $url;
+    private string $url;
 
-    /** @var string|null */
-    private $street;
+    private ?string $street;
 
-    /** @var string|null */
-    private $houseNo;
+    private ?string $houseNo;
 
-    /** @var string|null */
-    private $postcode;
+    private ?string $postcode;
 
-    /** @var string|null */
-    private $town;
+    private ?string $town;
 
-    /** @var string|null */
-    private $phoneNumber;
+    private ?string $phoneNumber;
 
-    /** @var string|null */
-    private $faxNumber;
+    private ?string $faxNumber;
 
-    /** @var string */
-    private $email;
+    private string $email;
 
-    /** @var int */
-    private $countryId;
+    private int $countryId;
 
-    /** @var int */
-    private $pixmaniaBrandId;
+    private int $pixmaniaBrandId;
 
-    /** @var int */
-    private $neckermannBrandId;
+    private int $neckermannBrandId;
 
-    /** @var int */
-    private $neckermannAtEpBrandId;
+    private int $neckermannAtEpBrandId;
 
-    /** @var int */
-    private $laRedouteBrandId;
+    private int $laRedouteBrandId;
 
-    /** @var int */
-    private $position;
+    private int $position;
 
-    /** @var string */
-    private $comment;
+    private string $comment;
 
-    /** @var string|null */
-    private $updatedAt;
+    private ?string $updatedAt;
 
     public function __construct(array $data)
     {

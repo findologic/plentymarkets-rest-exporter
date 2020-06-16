@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
 
 class ItemPropertyResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
@@ -13,7 +13,7 @@ class ItemPropertyResponse extends IterableResponse implements CollectionInterfa
     use EntityCollection;
 
     /** @var Property[] */
-    private $properties;
+    private array $properties;
 
     /**
      * @param Property[] $properties

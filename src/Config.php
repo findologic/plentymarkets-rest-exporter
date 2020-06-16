@@ -9,35 +9,25 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter;
  */
 class Config
 {
-    /** @var string */
-    private $domain;
+    private string $domain;
 
-    /** @var string */
-    private $username;
+    private string $username;
 
-    /** @var string */
-    private $password;
+    private string $password;
 
-    /** @var string */
-    private $language;
+    private string $language;
 
-    /** @var int|null */
-    private $multiShopId;
+    private ?int $multiShopId;
 
-    /** @var int|null */
-    private $availabilityId;
+    private ?int $availabilityId;
 
-    /** @var int|null */
-    private $priceId;
+    private ?int $priceId;
 
-    /** @var int|null */
-    private $rrpId;
+    private ?int $rrpId;
 
-    /** @var string  */
-    private $protocol = Client::PROTOCOL_HTTPS;
+    private string $protocol = Client::PROTOCOL_HTTPS;
 
-    /** @var bool */
-    private $debug = false;
+    private bool $debug = false;
 
     public function __construct(array $rawConfig = [])
     {

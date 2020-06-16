@@ -11,10 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class VatParser extends Parser
 {
-    /**
-     * @return VatResponse
-     */
-    public static function parse(ResponseInterface $rawResponse): Response
+    public static function parse(ResponseInterface $rawResponse): VatResponse
     {
         $response = self::unserializeJsonResponse($rawResponse);
 

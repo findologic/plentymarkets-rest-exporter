@@ -8,14 +8,11 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Availability extends Entity
 {
-    /** @var int */
-    private $imageId;
+    private int $imageId;
 
-    /** @var string */
-    private $type;
+    private string $type;
 
-    /** @var string */
-    private $value;
+    private string $value;
 
     public function __construct(array $data)
     {

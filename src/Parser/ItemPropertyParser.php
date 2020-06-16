@@ -12,10 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class ItemPropertyParser extends Parser
 {
-    /**
-     * @return ItemPropertyResponse
-     */
-    public static function parse(ResponseInterface $rawResponse): Response
+    public static function parse(ResponseInterface $rawResponse): ItemPropertyResponse
     {
         $response = self::unserializeJsonResponse($rawResponse);
 

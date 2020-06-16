@@ -9,23 +9,17 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Property extends Entity
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var string */
-    private $cast;
+    private string $cast;
 
-    /** @var string */
-    private $typeIdentifier;
+    private string $typeIdentifier;
 
-    /** @var int */
-    private $position;
+    private int $position;
 
-    /** @var string */
-    private $createdAt;
+    private string $createdAt;
 
-    /** @var string */
-    private $updatedAt;
+    private string $updatedAt;
 
     public function __construct(array $data)
     {

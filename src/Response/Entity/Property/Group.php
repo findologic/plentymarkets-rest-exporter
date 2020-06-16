@@ -10,23 +10,18 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Group extends Entity
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var int */
-    private $position;
+    private int $position;
 
-    /** @var string */
-    private $createdAt;
+    private string $createdAt;
 
-    /** @var string */
-    private $updatedAt;
+    private string $updatedAt;
 
     /** @var Name[] */
-    private $names = [];
+    private array $names = [];
 
-    /** @var GroupRelation */
-    private $groupRelation;
+    private GroupRelation $groupRelation;
 
     public function __construct(array $data)
     {

@@ -25,35 +25,25 @@ abstract class Exporter
         TYPE_CSV = 0,
         TYPE_XML = 1;
 
-    /** @var LoggerInterface */
-    protected $internalLogger;
+    protected LoggerInterface $internalLogger;
 
-    /** @var LoggerInterface */
-    protected $customerLogger;
+    protected LoggerInterface $customerLogger;
 
-    /** @var Config */
-    protected $config;
+    protected Config $config;
 
-    /** @var Client */
-    protected $client;
+    protected Client $client;
 
-    /** @var Registry */
-    protected $registry;
+    protected Registry $registry;
 
-    /** @var RegistryWarmer */
-    protected $registryWarmer;
+    protected RegistryWarmer $registryWarmer;
 
-    /** @var string */
-    protected $exportPath = __DIR__ . '/../../export';
+    protected string $exportPath = __DIR__ . '/../../export';
 
-    /** @var ItemRequest */
-    protected $itemRequest;
+    protected ItemRequest $itemRequest;
 
-    /** @var ItemVariationRequest */
-    protected $itemVariationRequest;
+    protected ItemVariationRequest $itemVariationRequest;
 
-    /** @var int */
-    protected $offset = 0;
+    protected int $offset = 0;
 
     public function __construct(
         LoggerInterface $internalLogger,

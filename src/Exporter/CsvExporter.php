@@ -8,7 +8,7 @@ use FINDOLOGIC\Export\Exporter as LibflexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Product;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as Product;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\CsvWrapper;
 use Psr\Log\LoggerInterface;
 

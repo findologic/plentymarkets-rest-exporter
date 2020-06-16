@@ -15,248 +15,175 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\Variation
 
 class ItemVariation extends Entity
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var bool */
-    private $isMain;
+    private bool $isMain;
 
-    /** @var int|null */
-    private $mainVariationId;
+    private ?int $mainVariationId;
 
-    /** @var int */
-    private $itemId;
+    private int $itemId;
 
-    /** @var int */
-    private $categoryVariationId;
+    private int $categoryVariationId;
 
-    /** @var int */
-    private $marketVariationId;
+    private int $marketVariationId;
 
-    /** @var int */
-    private $clientVariationId;
+    private int $clientVariationId;
 
-    /** @var int */
-    private $salesPriceVariationId;
+    private int $salesPriceVariationId;
 
-    /** @var int */
-    private $supplierVariationId;
+    private int $supplierVariationId;
 
-    /** @var int */
-    private $warehouseVariationId;
+    private int $warehouseVariationId;
 
-    /** @var int */
-    private $position;
+    private int $position;
 
-    /** @var bool */
-    private $isActive;
+    private bool $isActive;
 
-    /** @var string */
-    private $number;
+    private string $number;
 
-    /** @var string */
-    private $model;
+    private string $model;
 
-    /** @var string */
-    private $externalId;
+    private string $externalId;
 
-    /** @var int|null */
-    private $parentVariationId;
+    private ?int $parentVariationId;
 
-    /** @var float|null */
-    private $parentVariationQuantity;
+    private ?float $parentVariationQuantity;
 
-    /** @var int */
-    private $availability;
+    private int $availability;
 
-    /** @var string|null */
-    private $estimatedAvailableAt;
+    private ?string $estimatedAvailableAt;
 
-    /** @var float */
-    private $purchasePrice;
+    private float $purchasePrice;
 
-    /** @var string */
-    private $createdAt;
+    private string $createdAt;
 
-    /** @var string */
-    private $updatedAt;
+    private string $updatedAt;
 
-    /** @var string|null */
-    private $relatedUpdatedAt;
+    private ?string $relatedUpdatedAt;
 
-    /** @var int|null */
-    private $priceCalculationId;
+    private ?int $priceCalculationId;
 
-    /** @var string|null */
-    private $picking;
+    private ?string $picking;
 
-    /** @var int */
-    private $stockLimitation;
+    private int $stockLimitation;
 
-    /** @var bool */
-    private $isVisibleIfNetStockIsPositive;
+    private bool $isVisibleIfNetStockIsPositive;
 
-    /** @var bool */
-    private $isInvisibleIfNetStockIsNotPositive;
+    private bool $isInvisibleIfNetStockIsNotPositive;
 
-    /** @var bool */
-    private $isAvailableIfNetStockIsPositive;
+    private bool $isAvailableIfNetStockIsPositive;
 
-    /** @var bool */
-    private $isUnavailableIfNetStockIsNotPositive;
+    private bool $isUnavailableIfNetStockIsNotPositive;
 
-    /** @var int */
-    private $mainWarehouseId;
+    private int $mainWarehouseId;
 
-    /** @var float|null */
-    private $maximumOrderQuantity;
+    private ?float $maximumOrderQuantity;
 
-    /** @var float|null */
-    private $minimumOrderQuantity;
+    private ?float $minimumOrderQuantity;
 
-    /** @var float|null */
-    private $intervalOrderQuantity;
+    private ?float $intervalOrderQuantity;
 
-    /** @var string|null */
-    private $availableUntil;
+    private ?string $availableUntil;
 
-    /** @var string|null */
-    private $releasedAt;
+    private ?string $releasedAt;
 
-    /** @var int */
-    private $unitCombinationId;
+    private int $unitCombinationId;
 
-    /** @var string */
-    private $name;
+    private string $name;
 
-    /** @var int */
-    private $weightG;
+    private int $weightG;
 
-    /** @var int */
-    private $weightNetG;
+    private int $weightNetG;
 
-    /** @var int */
-    private $widthMM;
+    private int $widthMM;
 
-    /** @var int */
-    private $lengthMM;
+    private int $lengthMM;
 
-    /** @var int */
-    private $heightMM;
+    private int $heightMM;
 
-    /** @var float */
-    private $extraShippingCharge1;
+    private float $extraShippingCharge1;
 
-    /** @var float */
-    private $extraShippingCharge2;
+    private float $extraShippingCharge2;
 
-    /** @var int */
-    private $unitsContained;
+    private int $unitsContained;
 
-    /** @var int|null */
-    private $palletTypeId;
+    private ?int $palletTypeId;
 
-    /** @var int */
-    private $packingUnits;
+    private int $packingUnits;
 
-    /** @var int */
-    private $packingUnitTypeId;
+    private int $packingUnitTypeId;
 
-    /** @var float */
-    private $transportationCosts;
+    private float $transportationCosts;
 
-    /** @var float */
-    private $storageCosts;
+    private float $storageCosts;
 
-    /** @var float */
-    private $customs;
+    private float $customs;
 
-    /** @var float */
-    private $operatingCosts;
+    private float $operatingCosts;
 
-    /** @var int */
-    private $vatId;
+    private int $vatId;
 
-    /** @var string|null */
-    private $bundleType;
+    private ?string $bundleType;
 
-    /** @var int */
-    private $automaticClientVisibility;
+    private int $automaticClientVisibility;
 
-    /** @var bool */
-    private $isHiddenInCategoryList;
+    private bool $isHiddenInCategoryList;
 
-    /** @var float|null */
-    private $defaultShippingCosts;
+    private ?float $defaultShippingCosts;
 
-    /** @var bool */
-    private $mayShowUnitPrice;
+    private bool $mayShowUnitPrice;
 
-    /** @var bool */
-    private $movingAveragePrice;
+    private float $movingAveragePrice;
 
-    /** @var int */
-    private $propertyVariationId;
+    private int $propertyVariationId;
 
-    /** @var int */
-    private $automaticListVisibility;
+    private int $automaticListVisibility;
 
-    /** @var bool */
-    private $isVisibleInListIfNetStockIsPositive;
+    private bool $isVisibleInListIfNetStockIsPositive;
 
-    /** @var bool */
-    private $isInvisibleInListIfNetStockIsNotPositive;
+    private bool $isInvisibleInListIfNetStockIsNotPositive;
 
-    /** @var int */
-    private $singleItemCount;
+    private int $singleItemCount;
 
-    /** @var string */
-    private $availabilityUpdatedAt;
+    private string $availabilityUpdatedAt;
 
-    /** @var int */
-    private $tagVariationId;
+    private int $tagVariationId;
 
-    /** @var bool|null */
-    private $hasCalculatedBundleWeight;
+    private ?bool $hasCalculatedBundleWeight;
 
-    /** @var bool|null */
-    private $hasCalculatedBundleNetWeight;
+    private ?bool $hasCalculatedBundleNetWeight;
 
-    /** @var bool|null */
-    private $hasCalculatedBundlePurchasePrice;
+    private ?bool $hasCalculatedBundlePurchasePrice;
 
-    /** @var bool|null */
-    private $hasCalculatedBundleMovingAveragePrice;
+    private ?bool $hasCalculatedBundleMovingAveragePrice;
 
-    /** @var int|null */
-    private $salesRank;
+    private ?int $salesRank;
 
     /** @var VariationCategory[] */
-    private $variationCategories = [];
+    private array $variationCategories = [];
 
     /** @var VariationSalesPrice[] */
-    private $variationSalesPrices = [];
+    private array $variationSalesPrices = [];
 
     /** @var VariationAttributeValue[] */
-    private $variationAttributeValues = [];
+    private array $variationAttributeValues = [];
 
     /** @var VariationProperty[] */
-    private $variationProperties = [];
+    private array $variationProperties = [];
 
-    /** @var array */
-    private $variationBarcodes = [];
+    private array $variationBarcodes = [];
 
     /** @var VariationClient[] */
-    private $variationClients = [];
+    private array $variationClients = [];
 
     /** @var Property[] */
-    private $properties = [];
+    private array $properties = [];
 
     /** @var ItemImage[] */
-    private $itemImages = [];
+    private array $itemImages = [];
 
     /** @var VariationTag[] */
-    private $tags = [];
+    private array $tags = [];
 
     public function __construct(array $data)
     {
