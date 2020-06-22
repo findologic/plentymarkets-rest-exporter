@@ -25,16 +25,16 @@ use Psr\Log\LoggerInterface;
 class Client
 {
     public const
+        PROTOCOL_HTTP = 'http',
+        PROTOCOL_HTTPS = 'https';
+
+    public const
         METHOD_GET = 'GET',
         METHOD_POST = 'POST';
 
     private const
         PLENTY_SHORT_PERIOD_CALLS_HEADER = 'X-Plenty-Global-Short-Period-Calls-Left',
         PLENTY_SHORT_PERIOD_DECAY_HEADER = 'X-Plenty-Global-Short-Period-Decay';
-
-    private const
-        PROTOCOL_HTTP = 'http',
-        PROTOCOL_HTTPS = 'https';
 
     private const
         REST_PATH = 'rest';
