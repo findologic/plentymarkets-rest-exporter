@@ -168,7 +168,7 @@ class Client
 
         $response = $this->sendRequest($request, $params);
         if ($response->getStatusCode() >= 301 && $response->getStatusCode() <= 404) {
-            $this->protocol = self::PROTOCOL_HTTP;
+            $this->config->setProtocol(self::PROTOCOL_HTTP);
             $request = $request->withUri($this->buildRequestUri('login'));
 
             $response = $this->sendRequest($request, $params);
@@ -238,7 +238,7 @@ class Client
     {
         return new Uri(sprintf(
             '%s://%s/%s/%s',
-            $this->protocol,
+            $this->config->getProtocol(),
             $this->config->getDomain(),
             self::REST_PATH,
             $endpoint

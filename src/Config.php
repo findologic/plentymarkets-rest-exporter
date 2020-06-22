@@ -33,6 +33,9 @@ class Config
     /** @var int|null */
     private $rrpId;
 
+    /** @var string  */
+    private $protocol = Client::PROTOCOL_HTTPS;
+
     /** @var bool */
     private $debug = false;
 
@@ -181,5 +184,15 @@ class Config
     public function isDebug(): bool
     {
         return $this->debug;
+    }
+
+    public function setProtocol(string $protocol): void
+    {
+        $this->protocol = $protocol;
+    }
+
+    public function getProtocol(): string
+    {
+        return $this->protocol;
     }
 }

@@ -12,7 +12,7 @@ class ItemProperty extends Entity
     /** @var int */
     private $position;
 
-    /** @var int */
+    /** @var int|null */
     private $propertyGroupId;
 
     /** @var string */
@@ -106,7 +106,7 @@ class ItemProperty extends Entity
         return $this->position;
     }
 
-    public function getPropertyGroupId(): int
+    public function getPropertyGroupId(): ?int
     {
         return $this->propertyGroupId;
     }
