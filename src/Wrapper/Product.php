@@ -14,18 +14,26 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 
 class Product
 {
-    private Item $item;
+    /** @var Item */
+    private $item;
 
-    private Config $config;
+    /** @var Config */
+    private $config;
 
-    private Registry $registry;
+    /** @var Registry */
+    private $registry;
 
-    private ProductEntity $productEntity;
+    /** @var ProductEntity */
+    private $productEntity;
 
     /** @var ItemVariation[] */
-    private array $variations;
+    private $variations;
 
-    private ?string $reason = null;
+    /** @var string|null */
+    private $reason = null;
+
+    /** @var array|null  */
+    private $storeConfiguration;
 
     public function __construct(
         Exporter $exporter,
@@ -58,13 +66,15 @@ class Product
 
         $this->item->addSalesFrequency(0);
         $this->item->addPrice(13.37);
-        $this->item->addDateAdded(new \DateTime());
+        $this->item->addDateAdded(new \DateTime($this->productEntity->getCreatedAt()));
 
         return $this->item;
     }
 
     /**
      * May return the reason why a product wasn't able to get exported.
+     *
+     * @codeCoverageIgnore
      *
      * @return string|null
      */
@@ -75,17 +85,14 @@ class Product
 
     protected function setTexts(): void
     {
-        /** @var WebStore $webStore */
-        $webStore = $this->registry->get('webStore');
-
-        if (!$webStore || !$webStore->getConfiguration()) {
+        $storeConfiguration = $this->getStoreConfiguration();
+        if (!isset($storeConfiguration['displayItemName'])) {
             return;
         }
-
-        $textGetter = 'getName' . $webStore->getConfiguration()['displayItemName'];
+        $textGetter = 'getName' . $storeConfiguration['displayItemName'];
 
         foreach ($this->productEntity->getTexts() as $texts) {
-            if (strtoupper($texts->getLang()) !== $this->config->getLanguage()) {
+            if (strtoupper($texts->getLang()) !== strtoupper($this->config->getLanguage())) {
                 continue;
             }
 
@@ -133,7 +140,9 @@ class Product
         /** @var WebStore $webStore */
         $webStore = $this->registry->get('webStore');
 
-        return (strtoupper($webStore->getConfiguration()['defaultLanguage']) === $this->config->getLanguage());
+        $defaultStoreLanguage = $webStore->getConfiguration()['defaultLanguage'] ?? null;
+
+        return strtoupper($defaultStoreLanguage) === strtoupper($this->config->getLanguage());
     }
 
     private function isLanguageAvailable(): bool
@@ -144,6 +153,18 @@ class Product
         $availableLanguages = explode(',', $webStore->getConfiguration()['languageList']);
         $upperCasedLanguages = array_map('strtoupper', $availableLanguages);
 
-        return (in_array($this->config->getLanguage(), $upperCasedLanguages));
+        return (in_array(strtoupper($this->config->getLanguage()), $upperCasedLanguages));
+    }
+
+    private function getStoreConfiguration(): ?array
+    {
+        if ($this->storeConfiguration === null) {
+            /** @var WebStore $webStore */
+            $webStore = $this->registry->get('webStore');
+
+            $this->storeConfiguration = $webStore ? $webStore->getConfiguration() : [];
+        }
+
+        return $this->storeConfiguration;
     }
 }

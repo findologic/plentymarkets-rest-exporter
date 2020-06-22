@@ -11,17 +11,21 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 
 class CsvWrapper extends Wrapper
 {
-    private string $path;
+    /** @var string */
+    protected $exportPath;
 
-    private Exporter $exporter;
+    /** @var Exporter */
+    private $exporter;
 
-    private Config $config;
+    /** @var Config */
+    private $config;
 
-    private Registry $registry;
+    /** @var Registry */
+    private $registry;
 
     public function __construct(string $path, Exporter $exporter, Config $config, Registry $registry)
     {
-        $this->path = $path;
+        $this->exportPath = $path;
         $this->exporter = $exporter;
         $this->config = $config;
         $this->registry = $registry;
@@ -42,13 +46,27 @@ class CsvWrapper extends Wrapper
             $productWrapper = new Product($this->exporter, $this->config, $this->registry, $product, $variations);
             $item = $productWrapper->processProductData();
 
-            if (!$item) {
-                continue;
-            }
-
             $items[] = $item;
         }
 
-        $this->exporter->serializeItemsToFile($this->path, $items, $start, count($items), $total);
+        $this->exporter->serializeItemsToFile($this->exportPath, $items, $start, count($items), $total);
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function setExportPath(string $path): self
+    {
+        $this->exportPath = $path;
+
+        return $this;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function getExportPath(): string
+    {
+        return $this->exportPath;
     }
 }

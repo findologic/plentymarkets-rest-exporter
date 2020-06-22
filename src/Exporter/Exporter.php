@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 
+use FINDOLOGIC\Export\Exporter as LibflexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
-use FINDOLOGIC\PlentyMarketsRestExporter\RegistryWarmer;
+use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
@@ -15,6 +16,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemVariationResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemVariationParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
+use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Wrapper;
 use GuzzleHttp\Client as GuzzleClient;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
@@ -25,25 +27,38 @@ abstract class Exporter
         TYPE_CSV = 0,
         TYPE_XML = 1;
 
-    protected LoggerInterface $internalLogger;
+    /** @var LoggerInterface */
+    protected $internalLogger;
 
-    protected LoggerInterface $customerLogger;
+    /** @var LoggerInterface */
+    protected $customerLogger;
 
-    protected Config $config;
+    /** @var Config */
+    protected $config;
 
-    protected Client $client;
+    /** @var Wrapper */
+    protected $wrapper;
 
-    protected Registry $registry;
+    /** @var Client */
+    protected $client;
 
-    protected RegistryWarmer $registryWarmer;
+    /** @var Registry */
+    protected $registry;
 
-    protected string $exportPath = __DIR__ . '/../../export';
+    /** @var RegistryService */
+    protected $registryService;
 
-    protected ItemRequest $itemRequest;
+    /** @var ItemRequest */
+    protected $itemRequest;
 
-    protected ItemVariationRequest $itemVariationRequest;
+    /** @var ItemVariationRequest */
+    protected $itemVariationRequest;
 
-    protected int $offset = 0;
+    /** @var LibflexportExporter */
+    protected $fileExporter;
+
+    /** @var int */
+    protected $offset = 0;
 
     public function __construct(
         LoggerInterface $internalLogger,
@@ -51,19 +66,26 @@ abstract class Exporter
         Config $config,
         ?Client $client = null,
         ?Registry $registry = null,
-        ?RegistryWarmer $registryWarmer = null,
+        ?RegistryService $registryService = null,
         ?ItemRequest $itemRequest = null,
-        ?ItemVariationRequest $itemVariationRequest = null
+        ?ItemVariationRequest $itemVariationRequest = null,
+        LibflexportExporter $fileExporter = null
     ) {
         $this->internalLogger = $internalLogger;
         $this->customerLogger = $customerLogger;
         $this->config = $config;
         $this->client = $client ?? new Client(new GuzzleClient(), $config, $internalLogger, $customerLogger);
         $this->registry = $registry ?? new Registry();
-        if (!$registryWarmer) {
-            $registryWarmer = new RegistryWarmer($internalLogger, $customerLogger, $config, $client, $this->registry);
+        if (!$registryService) {
+            $registryService = new RegistryService(
+                $internalLogger,
+                $customerLogger,
+                $config,
+                $this->client,
+                $this->registry
+            );
         }
-        $this->registryWarmer = $registryWarmer;
+        $this->registryService = $registryService;
         if (!$itemRequest) {
             $itemRequest = new ItemRequest(null, $this->config->getLanguage());
         }
@@ -73,6 +95,8 @@ abstract class Exporter
             $itemVariationRequest->setWith($this->getRequiredVariationValues())->setIsActive(true);
         }
         $this->itemVariationRequest = $itemVariationRequest;
+
+        $this->fileExporter = $fileExporter;
     }
 
     abstract protected function wrapData(int $totalCount, array $products, array $variations): void;
@@ -86,7 +110,11 @@ abstract class Exporter
      * @param LoggerInterface $customerLogger
      * @param Client|null $client
      * @param Registry|null $registry
-     *
+     * @param RegistryService|null $registryService
+     * @param ItemRequest|null $itemRequest
+     * @param ItemVariationRequest|null $itemVariationRequest
+     * @param LibflexportExporter|null $fileExporter
+     * @param string|null $exportPath
      * @return Exporter
      */
     public static function buildInstance(
@@ -95,13 +123,39 @@ abstract class Exporter
         LoggerInterface $internalLogger,
         LoggerInterface $customerLogger,
         ?Client $client = null,
-        ?Registry $registry = null
+        ?Registry $registry = null,
+        ?RegistryService $registryService = null,
+        ?ItemRequest $itemRequest = null,
+        ?ItemVariationRequest $itemVariationRequest = null,
+        ?LibflexportExporter $fileExporter = null,
+        ?string $exportPath = __DIR__ . '/../../export'
     ): Exporter {
         switch ($type) {
             case self::TYPE_CSV:
-                return new CsvExporter($internalLogger, $customerLogger, $config, $client, $registry);
+                return new CsvExporter(
+                    $internalLogger,
+                    $customerLogger,
+                    $config,
+                    $exportPath,
+                    $client,
+                    $registry,
+                    $registryService,
+                    $itemRequest,
+                    $itemVariationRequest,
+                    $fileExporter
+                );
             case self::TYPE_XML:
-                return new XmlExporter($internalLogger, $customerLogger, $config, $client, $registry);
+                return new XmlExporter(
+                    $internalLogger,
+                    $customerLogger,
+                    $config,
+                    $client,
+                    $registry,
+                    $registryService,
+                    $itemRequest,
+                    $itemVariationRequest,
+                    $fileExporter
+                );
             default:
                 throw new InvalidArgumentException('Unknown or unsupported exporter type.');
         }
@@ -109,20 +163,8 @@ abstract class Exporter
 
     public function export(): void
     {
-        $this->registryWarmer->warmUpRegistry();
+        $this->registryService->warmUp();
         $this->exportProducts();
-    }
-
-    public function setExportPath(string $path): self
-    {
-        $this->exportPath = $path;
-
-        return $this;
-    }
-
-    public function getExportPath(): string
-    {
-        return $this->exportPath;
     }
 
     protected function exportProducts(): void
@@ -137,8 +179,9 @@ abstract class Exporter
             if ($products->isLastPage()) {
                 break;
             }
-
+            // @codeCoverageIgnoreStart
             $page++;
+            // @codeCoverageIgnoreEnd
         }
     }
 
@@ -164,6 +207,9 @@ abstract class Exporter
         return new ItemVariationResponse(1, count($itemVariations), true, $itemVariations);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     private function getRequiredVariationValues(): array
     {
         $variationValues = [];

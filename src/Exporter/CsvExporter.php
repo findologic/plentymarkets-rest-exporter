@@ -8,7 +8,10 @@ use FINDOLOGIC\Export\Exporter as LibflexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as Product;
+use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemVariationRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\CsvWrapper;
 use Psr\Log\LoggerInterface;
 
@@ -18,28 +21,45 @@ class CsvExporter extends Exporter
         LoggerInterface $internalLogger,
         LoggerInterface $customerLogger,
         Config $config,
+        string $exportPath,
         ?Client $client = null,
-        ?Registry $registry = null
+        ?Registry $registry = null,
+        ?RegistryService $registryService = null,
+        ?ItemRequest $itemRequest = null,
+        ?ItemVariationRequest $itemVariationRequest = null,
+        ?LibflexportExporter $fileExporter = null
     ) {
         $internalLogger->debug('Using Plentymarkets CsvExporter for exporting.');
 
-        parent::__construct($internalLogger, $customerLogger, $config, $client, $registry);
-    }
+        if (!$fileExporter) {
+            $fileExporter = LibflexportExporter::create(LibflexportExporter::TYPE_CSV, 100);
+        }
 
-    /**
-     * @param Product[] $products
-     */
-    protected function wrapData(int $totalCount, array $products, array $variations): void
-    {
-        $exporter = LibflexportExporter::create(LibflexportExporter::TYPE_CSV, 100);
+        parent::__construct(
+            $internalLogger,
+            $customerLogger,
+            $config,
+            $client,
+            $registry,
+            $registryService,
+            $itemRequest,
+            $itemVariationRequest,
+            $fileExporter
+        );
 
-        $wrapper = new CsvWrapper(
-            $this->exportPath,
-            $exporter,
+        $this->wrapper = new CsvWrapper(
+            $exportPath,
+            $this->fileExporter,
             $this->config,
             $this->registry
         );
+    }
 
-        $wrapper->wrap($this->offset, $totalCount, $products, $variations);
+    /**
+     * @param Item[] $products
+     */
+    protected function wrapData(int $totalCount, array $products, array $variations): void
+    {
+        $this->wrapper->wrap($this->offset, $totalCount, $products, $variations);
     }
 }
