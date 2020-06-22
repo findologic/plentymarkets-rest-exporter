@@ -8,4 +8,5 @@ priceId: 1
 rrpId: 2
 language: 'DE'
 debug: true
-customerLoginUri: ~
+customerLoginUri: ~ # Set this to the path of the customerLogin, that returns the configuration for the importer.
+#protocol: 'http' # Uncomment to force the protocol. Needs to be either http or https.

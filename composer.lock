@@ -4,8 +4,106 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa0d62e83bac4986b97ab1bd6102bd9d",
+    "content-hash": "54c804db1385cc5b5a596a45c060878a",
     "packages": [
+        {
+            "name": "findologic/libflexport",
+            "version": "v2.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/findologic/libflexport.git",
+                "reference": "3401f7562e021aeefe8e88a788287bd60094714d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/findologic/libflexport/zipball/3401f7562e021aeefe8e88a788287bd60094714d",
+                "reference": "3401f7562e021aeefe8e88a788287bd60094714d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-mbstring": "*",
+                "findologic/xml-export-schema": "^1.4",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5|^8.5|^9.0",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "FINDOLOGIC\\Export\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Ortner",
+                    "email": "chris@codexfons.com",
+                    "role": "maintainer"
+                },
+                {
+                    "name": "Markus Machatschek",
+                    "email": "mmachatschek@yahoo.com",
+                    "role": "developer"
+                },
+                {
+                    "name": "Dominik Brader",
+                    "email": "d.brader@findologic.com",
+                    "role": "developer"
+                },
+                {
+                    "name": "Mohamad Assani",
+                    "email": "m.assani@findologic.com",
+                    "role": "developer"
+                },
+                {
+                    "name": "Huzaifa Mustafa",
+                    "email": "24492269+zaifastafa@users.noreply.github.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "FINDOLOGIC export toolkit for XML and CSV data export",
+            "homepage": "https://github.com/findologic/libflexport",
+            "time": "2020-04-27T11:52:56+00:00"
+        },
+        {
+            "name": "findologic/xml-export-schema",
+            "version": "v1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/findologic/xml-export.git",
+                "reference": "c10e5ce392192d348c9da0f6337c02073b180634"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/findologic/xml-export/zipball/c10e5ce392192d348c9da0f6337c02073b180634",
+                "reference": "c10e5ce392192d348c9da0f6337c02073b180634",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "FINDOLOGIC\\Export\\": "src/main/php/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "FINDOLOGIC Developers",
+                    "email": "devops@findologic.com"
+                }
+            ],
+            "description": "XML schema for the FINDOLOGIC XML export format.",
+            "time": "2020-02-14T11:03:27+00:00"
+        },
         {
             "name": "guzzlehttp/guzzle",
             "version": "6.5.2",
