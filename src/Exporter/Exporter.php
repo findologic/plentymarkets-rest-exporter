@@ -86,20 +86,16 @@ abstract class Exporter
             );
         }
         $this->registryService = $registryService;
-        if (!$itemRequest) {
-            $itemRequest = new ItemRequest(null, $this->config->getLanguage());
-        }
-        $this->itemRequest = $itemRequest;
-        if (!$itemVariationRequest) {
-            $itemVariationRequest = new ItemVariationRequest();
-            $itemVariationRequest->setWith($this->getRequiredVariationValues())->setIsActive(true);
-        }
-        $this->itemVariationRequest = $itemVariationRequest;
-
+        $this->itemRequest = $itemRequest ?: new ItemRequest(null, $this->config->getLanguage());
+        $this->itemVariationRequest = $itemVariationRequest ?: new ItemVariationRequest();
         $this->fileExporter = $fileExporter;
     }
 
-    abstract protected function wrapData(int $totalCount, array $products, array $variations): void;
+    abstract protected function wrapData(
+        int $totalCount,
+        ItemResponse $products,
+        ItemVariationResponse $variations
+    ): void;
 
     /**
      * Builds a new exporter instance. Use Exporter::TYPE_CSV / Exporter::TYPE_XML to get the respective type.
@@ -173,7 +169,7 @@ abstract class Exporter
         while (true) {
             $products = $this->getItems($page);
             $variations = $products->getAllIds() ? $this->getItemVariations($products->getAllIds()) : [];
-            $this->wrapData(count($products->all()), $products->all(), $variations->all());
+            $this->wrapData(count($products->all()), $products, $variations);
             $this->offset += ItemVariationRequest::$ITEMS_PER_PAGE;
 
             if ($products->isLastPage()) {
@@ -197,7 +193,11 @@ abstract class Exporter
     {
         $itemVariations = [];
 
-        $this->itemVariationRequest->setPage(1)->setItemId($itemIds);
+        $this->itemVariationRequest
+            ->setPage(1)
+            ->setItemId($itemIds)
+            ->setWith($this->getRequiredVariationValues())
+            ->setIsActive(true);
 
         foreach (Utils::sendIterableRequest($this->client, $this->itemVariationRequest) as $response) {
             $itemVariationResponse = ItemVariationParser::parse($response);
@@ -207,9 +207,6 @@ abstract class Exporter
         return new ItemVariationResponse(1, count($itemVariations), true, $itemVariations);
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     private function getRequiredVariationValues(): array
     {
         $variationValues = [];

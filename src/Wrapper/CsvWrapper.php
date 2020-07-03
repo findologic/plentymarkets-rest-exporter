@@ -8,6 +8,9 @@ use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemVariationResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 
 class CsvWrapper extends Wrapper
 {
@@ -23,12 +26,19 @@ class CsvWrapper extends Wrapper
     /** @var Registry */
     private $registry;
 
+    /** @var array */
+    private $storeConfiguration = [];
+
     public function __construct(string $path, Exporter $exporter, Config $config, Registry $registry)
     {
         $this->exportPath = $path;
         $this->exporter = $exporter;
         $this->config = $config;
         $this->registry = $registry;
+
+        /** @var WebStore $webStore */
+        $webStore = $this->registry->get('webStore');
+        $this->storeConfiguration = $webStore ? $webStore->getConfiguration() : [];
     }
 
     /**
@@ -37,13 +47,22 @@ class CsvWrapper extends Wrapper
     public function wrap(
         int $start,
         int $total,
-        array $products,
-        array $variations
+        ItemResponse $products,
+        ItemVariationResponse $variations
     ): void {
         /** @var Item[] $items */
         $items = [];
-        foreach ($products as $product) {
-            $productWrapper = new Product($this->exporter, $this->config, $this->registry, $product, $variations);
+        foreach ($products->all() as $product) {
+            $productVariations = $variations->find(['itemId' => $product->getId()]);
+
+            $productWrapper = new Product(
+                $this->exporter,
+                $this->config,
+                $this->storeConfiguration,
+                $this->registry,
+                $product,
+                $productVariations
+            );
             $item = $productWrapper->processProductData();
 
             $items[] = $item;

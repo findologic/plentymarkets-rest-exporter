@@ -11,6 +11,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemVariationRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemVariationResponse;
 use Psr\Log\LoggerInterface;
 
 class XmlExporter extends Exporter
@@ -44,7 +46,7 @@ class XmlExporter extends Exporter
     /**
      * @codeCoverageIgnore
      */
-    protected function wrapData(int $totalCount, array $products, array $variations): void
+    protected function wrapData(int $totalCount, ItemResponse $products, ItemVariationResponse $variations): void
     {
         // TODO: Implement wrapData() method.
     }

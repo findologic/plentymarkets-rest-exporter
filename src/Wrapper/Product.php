@@ -27,6 +27,9 @@ class Product
     private $productEntity;
 
     /** @var ItemVariation[] */
+    private $variationEntities;
+
+    /** @var Variation[] */
     private $variations;
 
     /** @var string|null */
@@ -35,18 +38,24 @@ class Product
     /** @var array|null  */
     private $storeConfiguration;
 
+    /** @var Exporter */
+    private $exporter;
+
     public function __construct(
         Exporter $exporter,
         Config $config,
+        array $storeConfiguration,
         Registry $registry,
         ProductEntity $productEntity,
-        array $variations
+        array $variationEntities
     ) {
+        $this->exporter = $exporter;
         $this->item = $exporter->createItem($productEntity->getId());
         $this->config = $config;
         $this->productEntity = $productEntity;
         $this->registry = $registry;
-        $this->variations = $variations;
+        $this->variationEntities = $variationEntities;
+        $this->storeConfiguration = $storeConfiguration;
     }
 
     /**
@@ -62,6 +71,7 @@ class Product
      */
     public function processProductData(): ?Item
     {
+        $this->processVariations();
         $this->setTexts();
 
         $this->item->addSalesFrequency(0);
@@ -85,11 +95,10 @@ class Product
 
     protected function setTexts(): void
     {
-        $storeConfiguration = $this->getStoreConfiguration();
-        if (!isset($storeConfiguration['displayItemName'])) {
+        if (!isset($this->storeConfiguration['displayItemName'])) {
             return;
         }
-        $textGetter = 'getName' . $storeConfiguration['displayItemName'];
+        $textGetter = 'getName' . $this->storeConfiguration['displayItemName'];
 
         foreach ($this->productEntity->getTexts() as $texts) {
             if (strtoupper($texts->getLang()) !== strtoupper($this->config->getLanguage())) {
@@ -100,6 +109,15 @@ class Product
             $this->item->addSummary($texts->getShortDescription());
             $this->item->addDescription($texts->getDescription());
             $this->item->addUrl($this->buildProductUrl($texts->getUrlPath()));
+        }
+    }
+
+    protected function processVariations(): void
+    {
+        foreach ($this->variationEntities as $variationEntity) {
+            $variation = new Variation($this->config, $this->registry, $variationEntity);
+            $variation->processData();
+            $this->variations[] = $variation;
         }
     }
 
@@ -137,34 +155,16 @@ class Product
      */
     private function isDefaultLanguage(): bool
     {
-        /** @var WebStore $webStore */
-        $webStore = $this->registry->get('webStore');
-
-        $defaultStoreLanguage = $webStore->getConfiguration()['defaultLanguage'] ?? null;
+        $defaultStoreLanguage = $this->storeConfiguration['defaultLanguage'] ?? null;
 
         return strtoupper($defaultStoreLanguage) === strtoupper($this->config->getLanguage());
     }
 
     private function isLanguageAvailable(): bool
     {
-        /** @var WebStore $webStore */
-        $webStore = $this->registry->get('webStore');
-
-        $availableLanguages = explode(',', $webStore->getConfiguration()['languageList']);
+        $availableLanguages = explode(',', $this->storeConfiguration['languageList']);
         $upperCasedLanguages = array_map('strtoupper', $availableLanguages);
 
         return (in_array(strtoupper($this->config->getLanguage()), $upperCasedLanguages));
-    }
-
-    private function getStoreConfiguration(): ?array
-    {
-        if ($this->storeConfiguration === null) {
-            /** @var WebStore $webStore */
-            $webStore = $this->registry->get('webStore');
-
-            $this->storeConfiguration = $webStore ? $webStore->getConfiguration() : [];
-        }
-
-        return $this->storeConfiguration;
     }
 }
