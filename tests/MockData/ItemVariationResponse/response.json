@@ -241,7 +241,14 @@
           }
         }
       ],
-      "variationBarcodes": [],
+      "variationBarcodes": [
+        {
+          "variationId": 1000,
+          "barcodeId": 0,
+          "code": "1231231231231",
+          "createdAt": "2016-09-05T12:25:16+01:00"
+        }
+      ],
       "variationClients": [
         {
           "variationId": 1000,

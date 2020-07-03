@@ -9,6 +9,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\Variation
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationSalesPrice;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationAttributeValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationProperty;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationBarcode;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationTag;
@@ -243,7 +244,7 @@ class ItemVariation extends Entity
     /** @var VariationProperty[] */
     private $variationProperties = [];
 
-    /** @var array */
+    /** @var VariationBarcode[] */
     private $variationBarcodes = [];
 
     /** @var VariationClient[] */
@@ -361,7 +362,11 @@ class ItemVariation extends Entity
             }
         }
 
-        $this->variationBarcodes = $data['variationBarcodes']; // Unknown structure - received only empty arrays
+        if (!empty($data['variationBarcodes'])) {
+            foreach ($data['variationBarcodes'] as $variationBarcode) {
+                $this->variationBarcodes[] = new VariationBarcode($variationBarcode);
+            }
+        }
 
         if (!empty($data['variationClients'])) {
             foreach ($data['variationClients'] as $variationClient) {
@@ -413,6 +418,11 @@ class ItemVariation extends Entity
         $variationClients = [];
         foreach ($this->variationClients as $variationClient) {
             $variationClients[] = $variationClient->getData();
+        }
+
+        $variationBarcodes = [];
+        foreach ($this->variationBarcodes as $variationBarcode) {
+            $variationBarcodes[] = $variationBarcode->getData();
         }
 
         $properties = [];
@@ -507,7 +517,7 @@ class ItemVariation extends Entity
             'variationSalesPrices' => $variationSalesPrices,
             'variationAttributeValues' => $variationAttributeValues,
             'variationProperties' => $variationProperties,
-            'variationBarcodes' => $this->variationBarcodes,
+            'variationBarcodes' => $variationBarcodes,
             'variationClients' => $variationClients,
             'properties' => $properties,
             'itemImages' => $itemImages,
@@ -911,6 +921,9 @@ class ItemVariation extends Entity
         return $this->variationProperties;
     }
 
+    /**
+     * @return VariationBarcode[]
+     */
     public function getVariationBarcodes(): array
     {
         return $this->variationBarcodes;

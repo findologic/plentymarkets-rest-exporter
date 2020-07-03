@@ -20,6 +20,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\Variation
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationAttributeValue\AttributeValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationCategory;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationClient;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationBarcode;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationSalesPrice;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationTag;
@@ -298,8 +299,15 @@ class ItemVariationResponseTest extends TestCase
         $this->assertEquals(0.0, $property->getSurcharge());
         $this->assertEquals('2019-02-22T13:57:13+00:00', $property->getUpdatedAt());
 
-        $this->assertIsArray($itemVariation->getVariationBarcodes());
-        $this->assertCount(0, $itemVariation->getVariationBarcodes());
+        $variationBarcodes = $itemVariation->getVariationBarcodes();
+        $this->assertIsArray($variationBarcodes);
+        $this->assertCount(1, $variationBarcodes);
+        /** @var VariationBarcode $variationBarcode */
+        $variationBarcode = reset($variationBarcodes);
+        $this->assertEquals(1000, $variationBarcode->getVariationId());
+        $this->assertEquals(0, $variationBarcode->getBarcodeId());
+        $this->assertEquals('1231231231231', $variationBarcode->getCode());
+        $this->assertEquals('2016-09-05T12:25:16+01:00', $variationBarcode->getCreatedAt());
 
         $variationClients = $itemVariation->getVariationClients();
         $this->assertIsArray($variationClients);
