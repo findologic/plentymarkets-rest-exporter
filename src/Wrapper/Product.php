@@ -10,7 +10,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration as StoreConfiguration;
 
 class Product
 {
@@ -35,7 +35,7 @@ class Product
     /** @var string|null */
     private $reason = null;
 
-    /** @var array|null  */
+    /** @var StoreConfiguration  */
     private $storeConfiguration;
 
     /** @var Exporter */
@@ -44,7 +44,7 @@ class Product
     public function __construct(
         Exporter $exporter,
         Config $config,
-        array $storeConfiguration,
+        StoreConfiguration $storeConfiguration,
         Registry $registry,
         ProductEntity $productEntity,
         array $variationEntities
@@ -95,10 +95,11 @@ class Product
 
     protected function setTexts(): void
     {
-        if (!isset($this->storeConfiguration['displayItemName'])) {
+        if (!$this->storeConfiguration->getDisplayItemName()) {
             return;
         }
-        $textGetter = 'getName' . $this->storeConfiguration['displayItemName'];
+
+        $textGetter = 'getName' . $this->storeConfiguration->getDisplayItemName();
 
         foreach ($this->productEntity->getTexts() as $texts) {
             if (strtoupper($texts->getLang()) !== strtoupper($this->config->getLanguage())) {
@@ -155,16 +156,15 @@ class Product
      */
     private function isDefaultLanguage(): bool
     {
-        $defaultStoreLanguage = $this->storeConfiguration['defaultLanguage'] ?? null;
+        $defaultStoreLanguage = $this->storeConfiguration->getDefaultLanguage();
 
         return strtoupper($defaultStoreLanguage) === strtoupper($this->config->getLanguage());
     }
 
     private function isLanguageAvailable(): bool
     {
-        $availableLanguages = explode(',', $this->storeConfiguration['languageList']);
-        $upperCasedLanguages = array_map('strtoupper', $availableLanguages);
+        $availableLanguages = array_map('strtoupper', $this->storeConfiguration->getLanguageList());
 
-        return (in_array(strtoupper($this->config->getLanguage()), $upperCasedLanguages));
+        return (in_array(strtoupper($this->config->getLanguage()), $availableLanguages));
     }
 }

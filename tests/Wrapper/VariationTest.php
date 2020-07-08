@@ -59,7 +59,7 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertEquals(true, $wrapper->isMain());
+        $this->assertTrue($wrapper->isMain());
         $this->assertEquals(0, $wrapper->getPosition());
         $this->assertEquals(16, $wrapper->getVatId());
         $this->assertEquals('S-000813-C', $wrapper->getNumber());

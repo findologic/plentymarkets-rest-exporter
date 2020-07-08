@@ -136,11 +136,24 @@ class ExporterTest extends TestCase
      */
     public function testExporterReturnsCorrectType(int $type, string $expected): void
     {
+        $webStore = new WebStore([
+            'id' => 1,
+            'type' => 'plentymarkets',
+            'storeIdentifier' => 12345,
+            'name' => 'French Test Store',
+            'pluginSetId' => 44,
+            'configuration' => ['defaultLanguage' => 'en']
+        ]);
+
+        $this->registryMock->method('get')->willReturn($webStore);
+
         $exporter = Exporter::buildInstance(
             $type,
             $this->defaultConfig,
             $this->loggerMock,
-            $this->loggerMock
+            $this->loggerMock,
+            null,
+            $this->registryMock
         );
 
         $this->assertInstanceOf($expected, $exporter);
@@ -343,13 +356,13 @@ class ExporterTest extends TestCase
         $units = UnitParser::parse($unitResponse);
 
         $returnsQueue = [
-            $webStore,
             $categories,
             $salesPrices,
             $attributes,
             $itemProperties,
             $properties,
             $units,
+            $webStore
         ];
 
         for ($i = 0; $i < $variationsCount; $i++) {

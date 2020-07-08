@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration;
+
 class WebStore extends Entity
 {
     /** @var int */
@@ -21,7 +23,7 @@ class WebStore extends Entity
     /** @var int */
     private $pluginSetId;
 
-    /** @var array */
+    /** @var Configuration */
     private $configuration;
 
     public function __construct(array $data)
@@ -31,7 +33,7 @@ class WebStore extends Entity
         $this->storeIdentifier = (int)$data['storeIdentifier'];
         $this->name = (string)$data['name'];
         $this->pluginSetId = (int)$data['pluginSetId'];
-        $this->configuration = (array)$data['configuration'];
+        $this->configuration = new Configuration($data['configuration']);
     }
 
     public function getId(): int
@@ -59,8 +61,9 @@ class WebStore extends Entity
         return $this->pluginSetId;
     }
 
-    public function getConfiguration(): array
+    public function getConfiguration(): Configuration
     {
+        // Undocumented - the properties may not match the received data exactly
         return $this->configuration;
     }
 
@@ -72,7 +75,7 @@ class WebStore extends Entity
             'storeIdentifier' => $this->storeIdentifier,
             'name' => $this->name,
             'pluginSetId' => $this->pluginSetId,
-            'configuration' => $this->configuration
+            'configuration' => $this->configuration->getData()
         ];
     }
 }

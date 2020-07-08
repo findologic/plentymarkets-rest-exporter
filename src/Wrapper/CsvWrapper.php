@@ -11,6 +11,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemVariationResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration as StoreConfiguration;
 
 class CsvWrapper extends Wrapper
 {
@@ -26,8 +27,8 @@ class CsvWrapper extends Wrapper
     /** @var Registry */
     private $registry;
 
-    /** @var array */
-    private $storeConfiguration = [];
+    /** @var StoreConfiguration */
+    private $storeConfiguration;
 
     public function __construct(string $path, Exporter $exporter, Config $config, Registry $registry)
     {
@@ -35,10 +36,6 @@ class CsvWrapper extends Wrapper
         $this->exporter = $exporter;
         $this->config = $config;
         $this->registry = $registry;
-
-        /** @var WebStore $webStore */
-        $webStore = $this->registry->get('webStore');
-        $this->storeConfiguration = $webStore ? $webStore->getConfiguration() : [];
     }
 
     /**
@@ -58,7 +55,7 @@ class CsvWrapper extends Wrapper
             $productWrapper = new Product(
                 $this->exporter,
                 $this->config,
-                $this->storeConfiguration,
+                $this->getStoreConfiguration(),
                 $this->registry,
                 $product,
                 $productVariations
@@ -87,5 +84,16 @@ class CsvWrapper extends Wrapper
     public function getExportPath(): string
     {
         return $this->exportPath;
+    }
+
+    private function getStoreConfiguration(): StoreConfiguration
+    {
+        if (!$this->storeConfiguration) {
+            /** @var WebStore $webStore */
+            $webStore = $this->registry->get('webStore');
+            $this->storeConfiguration = $webStore->getConfiguration();
+        }
+
+        return $this->storeConfiguration;
     }
 }
