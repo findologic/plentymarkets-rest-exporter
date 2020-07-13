@@ -156,7 +156,7 @@ class ItemResponseTest extends TestCase
         $this->assertEquals(1000, $item->getMainVariationId());
 
         $texts = $item->getTexts();
-        $this->assertCount(1, $texts);
+        $this->assertCount(2, $texts);
         /** @var Text $text */
         $text = reset($texts);
         $this->assertEquals('en', $text->getLang());

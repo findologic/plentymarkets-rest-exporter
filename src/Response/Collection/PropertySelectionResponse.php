@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertySelection;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
 
 class PropertySelectionResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
@@ -70,5 +70,25 @@ class PropertySelectionResponse extends IterableResponse implements CollectionIn
     public function find(array $criteria): array
     {
         return $this->findEntitiesByCriteria($this->selections, $criteria);
+    }
+
+    public function getPropertySelectionValues(int $id, string $lang): array
+    {
+        $propertySelections = $this->find(['propertyId' => $id]);
+        $values = [];
+        foreach ($propertySelections as $propertySelection) {
+            if (!$relation = $propertySelection->getRelation()) {
+                // @codeCoverageIgnoreStart
+                continue;
+                // @codeCoverageIgnoreEnd
+            }
+            foreach ($relation->getRelationValues() as $relationValue) {
+                if (strtoupper($relationValue->getLang()) == strtoupper($lang)) {
+                    $values[] = $relationValue->getValue();
+                }
+            }
+        }
+
+        return $values;
     }
 }

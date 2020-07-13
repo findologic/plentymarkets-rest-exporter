@@ -29,9 +29,6 @@ class Product
     /** @var ItemVariation[] */
     private $variationEntities;
 
-    /** @var Variation[] */
-    private $variations;
-
     /** @var string|null */
     private $reason = null;
 
@@ -72,10 +69,10 @@ class Product
     public function processProductData(): ?Item
     {
         $this->processVariations();
+
         $this->setTexts();
 
         $this->item->addSalesFrequency(0);
-        $this->item->addPrice(13.37);
         $this->item->addDateAdded(new \DateTime($this->productEntity->getCreatedAt()));
 
         return $this->item;
@@ -107,8 +104,12 @@ class Product
             }
 
             $this->item->addName($texts->$textGetter());
-            $this->item->addSummary($texts->getShortDescription());
-            $this->item->addDescription($texts->getDescription());
+            if ($texts->getShortDescription()) {
+                $this->item->addSummary($texts->getShortDescription());
+            }
+            if ($texts->getDescription()) {
+                $this->item->addDescription($texts->getDescription());
+            }
             $this->item->addUrl($this->buildProductUrl($texts->getUrlPath()));
         }
     }
@@ -118,7 +119,21 @@ class Product
         foreach ($this->variationEntities as $variationEntity) {
             $variation = new Variation($this->config, $this->registry, $variationEntity);
             $variation->processData();
-            $this->variations[] = $variation;
+
+            if ($variation->isMain()) {
+                $this->item->addImage($variation->getImage());
+                $this->item->addSort($variation->getPosition());
+                $this->item->addPrice($variation->getPrice());
+                $this->item->setInsteadPrice($variation->getInsteadPrice());
+                foreach ($variation->getGroups() as $group) {
+                    $this->item->addUsergroup($group);
+                }
+                $this->item->setAllKeywords($variation->getTags());
+            }
+
+            foreach ($variation->getAttributes() as $attribute) {
+                $this->item->addMergedAttribute($attribute);
+            }
         }
     }
 

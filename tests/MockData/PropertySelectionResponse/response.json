@@ -39,7 +39,7 @@
             "id": 19,
             "propertyRelationId": 12,
             "lang": "de",
-            "value": "value2",
+            "value": "de-value2",
             "description": "",
             "createdAt": "2020-04-07T11:39:15+01:00",
             "updatedAt": "2020-04-07T11:39:23+01:00"
@@ -83,7 +83,7 @@
             "id": 20,
             "propertyRelationId": 11,
             "lang": "de",
-            "value": "value1",
+            "value": "de-value1",
             "description": "",
             "createdAt": "2020-04-07T11:39:34+01:00",
             "updatedAt": "2020-04-07T11:39:34+01:00"

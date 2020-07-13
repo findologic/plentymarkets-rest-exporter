@@ -9,6 +9,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Prop
 
 class Property extends Relation
 {
+    public const PROPERTY_TYPE_ITEM = 'item';
+
     /** @var SelectionProperty|null */
     private $propertyRelation;
 

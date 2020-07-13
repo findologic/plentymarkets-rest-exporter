@@ -71,4 +71,49 @@ class PropertyResponse extends IterableResponse implements CollectionInterface, 
     {
         return $this->findEntitiesByCriteria($this->properties, $criteria);
     }
+
+    public function getPropertyName(int $id, string $lang): ?string
+    {
+        if (!$property = $this->findOne(['id' => $id])) {
+            // @codeCoverageIgnoreStart
+            return null;
+            // @codeCoverageIgnoreEnd
+        }
+
+        foreach ($property->getNames() as $name) {
+            if (strtoupper($name->getLang()) == strtoupper($lang)) {
+                return $name->getName();
+            }
+        }
+        // @codeCoverageIgnoreStart
+        return null;
+        // @codeCoverageIgnoreEnd
+    }
+
+    public function getPropertySelectionValue(int $id, int $selectionId, string $lang): ?string
+    {
+        if (!$property = $this->findOne(['id' => $id])) {
+            // @codeCoverageIgnoreStart
+            return null;
+            // @codeCoverageIgnoreEnd
+        }
+
+        foreach ($property->getSelections() as $selection) {
+            if ($selection->getId() !== $selectionId) {
+                continue;
+            }
+
+            foreach ($selection->getRelation()->getRelationValues() as $relationValue) {
+                if (strtoupper($relationValue->getLang()) != strtoupper($lang)) {
+                    continue;
+                }
+
+                return $relationValue->getValue();
+            }
+        }
+
+        // @codeCoverageIgnoreStart
+        return null;
+        // @codeCoverageIgnoreEnd
+    }
 }

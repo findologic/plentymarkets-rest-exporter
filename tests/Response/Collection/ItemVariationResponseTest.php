@@ -101,7 +101,7 @@ class ItemVariationResponseTest extends TestCase
 
     public function testGetAllReturnsCorrectNumberOfItems()
     {
-        self::assertCount(4, $this->itemVariationResponse->all());
+        self::assertCount(6, $this->itemVariationResponse->all());
     }
 
     public function testFindReturnsCorrectNumberOfItems()
@@ -110,7 +110,7 @@ class ItemVariationResponseTest extends TestCase
             'widthMM' => 100
         ];
 
-        self::assertCount(2, $this->itemVariationResponse->find($criteria));
+        self::assertCount(4, $this->itemVariationResponse->find($criteria));
     }
 
     public function testItemVariationDataCanBeFetched(): void
@@ -315,12 +315,12 @@ class ItemVariationResponseTest extends TestCase
         /** @var VariationClient $variationClient */
         $variationClient = reset($variationClients);
         $this->assertEquals(1000, $variationClient->getVariationId());
-        $this->assertEquals(37811, $variationClient->getPlentyId());
+        $this->assertEquals(1234, $variationClient->getPlentyId());
         $this->assertEquals('2016-09-05T12:25:16+01:00', $variationClient->getCreatedAt());
 
         $properties = $itemVariation->getProperties();
         $this->assertIsArray($properties);
-        $this->assertCount(1, $properties);
+        $this->assertCount(2, $properties);
         /** @var Property $property */
         $property = reset($properties);
         /** @var SelectionProperty $propertyRelation */

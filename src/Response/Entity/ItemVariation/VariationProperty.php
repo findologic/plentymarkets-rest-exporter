@@ -153,18 +153,34 @@ class VariationProperty extends Entity
         return $this->variationId;
     }
 
-    public function getNames()
+    public function getNames(): array
     {
+        // Unknown structure - received only empty arrays
         return $this->names;
     }
 
     public function getPropertySelection()
     {
+        // Unknown structure - received only empty arrays
         return $this->propertySelection;
     }
 
     public function getProperty(): ?ItemProperty
     {
         return $this->property;
+    }
+
+    public function getPropertyName(string $lang): ?string
+    {
+        $name = $this->getProperty()->getBackendName();
+
+        $names = $this->getNames();
+        if (!empty($names[strtoupper($lang)])) {
+            // @codeCoverageIgnoreStart
+            $name = $names[strtoupper($lang)];
+            // @codeCoverageIgnoreEnd
+        }
+
+        return $name;
     }
 }
