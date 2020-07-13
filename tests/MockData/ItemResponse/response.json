@@ -72,6 +72,18 @@
           "technicalData": "techdata",
           "urlPath": "urlpath",
           "keywords": "keywords"
+        },
+        {
+          "lang": "de",
+          "name1": "de1",
+          "name2": "de2",
+          "name3": "de3",
+          "shortDescription": "de-shortdescription",
+          "metaDescription": "de-metadescription",
+          "description": "de-description",
+          "technicalData": "de-techdata",
+          "urlPath": "de-urlpath",
+          "keywords": "de-keywords"
         }
       ]
     },
@@ -144,6 +156,18 @@
           "technicalData": "",
           "urlPath": "brown-armchair-new-york-with-real-leather-upholstery",
           "keywords": ""
+        },
+        {
+          "lang": "de",
+          "name1": "de-Brown armchair \u00bbNew York\u00ab with real leather upholstery",
+          "name2": "",
+          "name3": "",
+          "shortDescription": "de-Upholstery: pigmented Napa leather (100% leather) Upholstery color: brown",
+          "metaDescription": "de-Brown armchair \u00bbNew York\u00ab with real leather upholstery living room chairs & sofas",
+          "description": "de-deeeeescription",
+          "technicalData": "",
+          "urlPath": "de-brown-armchair-new-york-with-real-leather-upholstery",
+          "keywords": ""
         }
       ]
     },
@@ -207,6 +231,18 @@
       "texts": [
         {
           "lang": "en",
+          "name1": "Leather sofa \u00bbSan Jose\u00ab brown",
+          "name2": "",
+          "name3": "",
+          "shortDescription": "Elegant padded furniture made of real leather",
+          "metaDescription": "Real leather sofa \u00bbSan Jose\u00ab brown living room chairs & sofas",
+          "description": "<p style=\"text-align: left;\">Luxurious sofas made of elegant leather</p>",
+          "technicalData": "",
+          "urlPath": "leather-sofa-san-jose-brown",
+          "keywords": ""
+        },
+        {
+          "lang": "de",
           "name1": "Leather sofa \u00bbSan Jose\u00ab brown",
           "name2": "",
           "name3": "",
@@ -288,6 +324,18 @@
           "technicalData": "",
           "urlPath": "designer-executive-chair-brookhaven-black-leather",
           "keywords": ""
+        },
+        {
+          "lang": "de",
+          "name1": "Designer executive chair \u00bbBrookhaven\u00ab black leather",
+          "name2": "",
+          "name3": "",
+          "shortDescription": "Swivel office chair",
+          "metaDescription": "Designer executive chair \u00bbBrookhaven\u00ab black leather office & office chairs",
+          "description": "asdfasdf165498c79gfdn",
+          "technicalData": "",
+          "urlPath": "designer-executive-chair-brookhaven-black-leather",
+          "keywords": ""
         }
       ]
     },
@@ -351,6 +399,18 @@
       "texts": [
         {
           "lang": "en",
+          "name1": "Modern office chair \u00bbMerrick\u00ab green",
+          "name2": "",
+          "name3": "",
+          "shortDescription": "Classic design and a relaxed style",
+          "metaDescription": "Modern office chair \u00bbMerrick\u00ab green office & office chairs",
+          "description": "h asdf po gfklj hgfp sfdg",
+          "technicalData": "",
+          "urlPath": "modern-office-chair-merrick-green",
+          "keywords": ""
+        },
+        {
+          "lang": "de",
           "name1": "Modern office chair \u00bbMerrick\u00ab green",
           "name2": "",
           "name3": "",

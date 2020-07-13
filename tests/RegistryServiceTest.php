@@ -17,7 +17,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
@@ -77,26 +79,9 @@ class RegistryServiceTest extends TestCase
 
     public function testRegistryIsWarmedUp(): void
     {
-        $expectedWebStore = new WebStore([
-            'id' => 0,
-            'type' => 'plentymarkets',
-            'storeIdentifier' => 12345,
-            'name' => 'German Test Store',
-            'pluginSetId' => 44,
-            'configuration' => []
-        ]);
-        $webStoreResponseBody = [
-            $expectedWebStore->getData(),
-            [
-                'id' => 1,
-                'type' => 'plentymarkets',
-                'storeIdentifier' => 12345,
-                'name' => 'German Test Store',
-                'pluginSetId' => 46,
-                'configuration' => []
-            ]
-        ];
-        $webStoreResponse = new Response(200, [], json_encode($webStoreResponseBody));
+        $storesResponse = $this->getMockResponse('WebStoreResponse/response.json');
+        $expectedStores = WebStoreParser::parse($storesResponse);
+        $expectedWebStore = $expectedStores->first();
 
         $categoryResponseBody = json_decode(
             $this->getMockResponse('CategoryResponse/response.json')->getBody()->__toString(),
@@ -134,10 +119,13 @@ class RegistryServiceTest extends TestCase
         $propertySelectionResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
         $expectedPropertySelections = PropertySelectionParser::parse($propertySelectionResponse);
 
-        $this->clientMock->expects($this->exactly(10))
+        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/response.json');
+        $expectedPropertyGroups = PropertyGroupParser::parse($propertyGroupResponse);
+
+        $this->clientMock->expects($this->exactly(11))
             ->method('send')
             ->willReturnOnConsecutiveCalls(
-                $webStoreResponse,
+                $storesResponse,
                 $categoryResponse,
                 $vatResponse,
                 $salesPriceResponse,
@@ -147,11 +135,13 @@ class RegistryServiceTest extends TestCase
                 $itemPropertyResponse,
                 $unitResponse,
                 $propertySelectionResponse,
+                $propertyGroupResponse
             );
 
-        $this->registryMock->expects($this->exactly(10))
+        $this->registryMock->expects($this->exactly(12))
             ->method('set')
             ->withConsecutive(
+                ['stores', $expectedStores],
                 ['webStore', $expectedWebStore],
                 ['categories', $expectedCategories],
                 ['vat', $expectedVat],
@@ -161,7 +151,8 @@ class RegistryServiceTest extends TestCase
                 ['properties', $expectedProperties],
                 ['itemProperties', $expectedItemProperties],
                 ['units', $expectedUnits],
-                ['propertySelections', $expectedPropertySelections]
+                ['propertySelections', $expectedPropertySelections],
+                ['propertyGroups', $expectedPropertyGroups]
             );
 
         $this->registryMock->expects($this->any())

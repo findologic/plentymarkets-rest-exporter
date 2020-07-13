@@ -8,6 +8,11 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemVariationParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
@@ -39,7 +44,30 @@ class VariationTest extends TestCase
         $attributeResponse = $this->getMockResponse('AttributeResponse/response.json');
         $attributes = AttributeParser::parse($attributeResponse);
 
-        $this->registryMock->method('get')->willReturnOnConsecutiveCalls($categories, $attributes);
+        $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/response.json');
+        $salesPrices = SalesPriceParser::parse($salesPriceResponse);
+
+        $storesResponse = $this->getMockResponse('WebStoreResponse/response.json');
+        $stores = WebStoreParser::parse($storesResponse);
+
+        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/response.json');
+        $propertyGroups = PropertyGroupParser::parse($propertyGroupResponse);
+
+        $propertyResponse = $this->getMockResponse('PropertyResponse/response.json');
+        $properties = PropertyParser::parse($propertyResponse);
+
+        $propertySelectionResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
+        $propertySelections = PropertySelectionParser::parse($propertySelectionResponse);
+
+        $this->registryMock->method('get')->willReturnOnConsecutiveCalls(
+            $propertyGroups,
+            $propertySelections,
+            $categories,
+            $salesPrices,
+            $attributes,
+            $stores,
+            $properties
+        );
 
         $this->defaultConfig = $this->getDefaultConfig();
         $this->defaultConfig->setLanguage('en');
@@ -67,10 +95,10 @@ class VariationTest extends TestCase
         $this->assertEquals(1001, $wrapper->getId());
         $this->assertEquals(103, $wrapper->getItemId());
         $this->assertEquals(['3213213213213'], $wrapper->getBarcodes());
-        $this->assertEquals([499.0, 560.0], $wrapper->getPrices());
+        $this->assertEquals(499.0, $wrapper->getPrice());
 
         $attributes = $wrapper->getAttributes();
-        $this->assertCount(3, $attributes);
+        $this->assertCount(9, $attributes);
         $this->assertEquals('cat', $attributes[0]->getKey());
         $this->assertEquals(['Armchairs & Stools'], $attributes[0]->getValues());
         $this->assertEquals('cat_url', $attributes[1]->getKey());

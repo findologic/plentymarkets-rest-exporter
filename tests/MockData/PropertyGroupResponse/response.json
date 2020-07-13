@@ -1,0 +1,43 @@
+{
+  "page": 1,
+  "totalsCount": 2,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 1,
+      "backendName": "Test Group",
+      "orderPropertyGroupingType": "single",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2018-06-04T07:06:37+01:00",
+      "names": [
+        {
+          "propertyGroupId": 1,
+          "lang": "en",
+          "name": "Test Group",
+          "description": "description 1"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "backendName": "Test Group 2",
+      "orderPropertyGroupingType": "single",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2018-06-04T07:06:37+01:00",
+      "names": [
+        {
+          "propertyGroupId": 2,
+          "lang": "en",
+          "name": "Test Group 2",
+          "description": "description 2"
+        }
+      ]
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100
+}

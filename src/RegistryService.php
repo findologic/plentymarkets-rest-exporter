@@ -15,6 +15,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\VatRequest;
@@ -25,6 +26,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\AttributeRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ManufacturerRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemPropertyRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\UnitRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertyGroupRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
@@ -35,6 +37,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributeResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturerResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\UnitResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertyGroupResponse;
 use GuzzleHttp\Client as GuzzleClient;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
@@ -74,24 +77,26 @@ class RegistryService
     {
         $this->customerLogger->info('Starting to initialise necessary data (categories, attributes, etc.).');
 
-        $this->registry->set('webStore', $this->getWebStore());
-        $this->registry->set('categories', $this->getCategories());
-        $this->registry->set('vat', $this->getVat());
-        $this->registry->set('salesPrices', $this->getSalesPrices());
-        $this->registry->set('attributes', $this->getAttributes());
-        $this->registry->set('manufacturers', $this->getManufacturers());
-        $this->registry->set('properties', $this->getProperties());
-        $this->registry->set('itemProperties', $this->getItemProperties());
-        $this->registry->set('units', $this->getUnits());
-        $this->registry->set('propertySelections', $this->getPropertySelections());
+        $this->warmUpStores();
+        $this->warmUpCategories();
+        $this->warmUpVat();
+        $this->warmUpSalesPrices();
+        $this->warmUpAttributes();
+        $this->warmUpManufacturers();
+        $this->warmUpProperties();
+        $this->warmUpItemProperties();
+        $this->warmUpUnits();
+        $this->warmUpPropertySelections();
+        $this->warmUpPropertyGroups();
     }
 
-    private function getWebStore(): WebStore
+    private function warmUpStores(): void
     {
         $webStoreRequest = new WebStoreRequest();
         $response = $this->client->send($webStoreRequest);
 
         $webStores = WebStoreParser::parse($response);
+        $this->registry->set('stores', $webStores);
         $webStore = $webStores->findOne([
             'id' => $this->config->getMultiShopId()
         ]);
@@ -103,10 +108,10 @@ class RegistryService
             ));
         }
 
-        return $webStore;
+        $this->registry->set('webStore', $webStore);
     }
 
-    private function getCategories(): CategoryResponse
+    private function warmUpCategories(): void
     {
         /** @var WebStore $webStore */
         $webStore = $this->registry->get('webStore');
@@ -126,10 +131,10 @@ class RegistryService
             $categories = array_merge($categories, $categoriesMatchingCriteria);
         }
 
-        return new CategoryResponse(1, count($categories), true, $categories);
+        $this->registry->set('categories', new CategoryResponse(1, count($categories), true, $categories));
     }
 
-    private function getVat(): VatResponse
+    private function warmUpVat(): void
     {
         $vatRequest = new VatRequest();
 
@@ -140,10 +145,10 @@ class RegistryService
             $vatConfigurations = array_merge($vatResponse->all(), $vatConfigurations);
         }
 
-        return new VatResponse(1, count($vatConfigurations), true, $vatConfigurations);
+        $this->registry->set('vat', new VatResponse(1, count($vatConfigurations), true, $vatConfigurations));
     }
 
-    private function getSalesPrices(): SalesPriceResponse
+    private function warmUpSalesPrices(): void
     {
         $salesPriceRequest = new SalesPriceRequest();
 
@@ -154,10 +159,10 @@ class RegistryService
             $salesPrices = array_merge($salesPriceResponse->all(), $salesPrices);
         }
 
-        return new SalesPriceResponse(1, count($salesPrices), true, $salesPrices);
+        $this->registry->set('salesPrices', new SalesPriceResponse(1, count($salesPrices), true, $salesPrices));
     }
 
-    private function getAttributes(): AttributeResponse
+    private function warmUpAttributes(): void
     {
         $attributeRequest = new AttributeRequest();
 
@@ -168,10 +173,10 @@ class RegistryService
             $attributes = array_merge($attributeResponse->all(), $attributes);
         }
 
-        return new AttributeResponse(1, count($attributes), true, $attributes);
+        $this->registry->set('attributes', new AttributeResponse(1, count($attributes), true, $attributes));
     }
 
-    private function getManufacturers(): ManufacturerResponse
+    private function warmUpManufacturers(): void
     {
         $manufacturerRequest = new ManufacturerRequest();
 
@@ -182,10 +187,10 @@ class RegistryService
             $manufacturers = array_merge($manufacturerResponse->all(), $manufacturers);
         }
 
-        return new ManufacturerResponse(1, count($manufacturers), true, $manufacturers);
+        $this->registry->set('manufacturers', new ManufacturerResponse(1, count($manufacturers), true, $manufacturers));
     }
 
-    private function getProperties(): PropertyResponse
+    private function warmUpProperties(): void
     {
         $propertyRequest = new PropertyRequest();
 
@@ -196,10 +201,10 @@ class RegistryService
             $properties = array_merge($propertyResponse->all(), $properties);
         }
 
-        return new PropertyResponse(1, count($properties), true, $properties);
+        $this->registry->set('properties', new PropertyResponse(1, count($properties), true, $properties));
     }
 
-    private function getItemProperties(): ItemPropertyResponse
+    private function warmUpItemProperties(): void
     {
         $propertyRequest = new ItemPropertyRequest();
 
@@ -210,10 +215,10 @@ class RegistryService
             $properties = array_merge($propertyResponse->all(), $properties);
         }
 
-        return new ItemPropertyResponse(1, count($properties), true, $properties);
+        $this->registry->set('itemProperties', new ItemPropertyResponse(1, count($properties), true, $properties));
     }
 
-    private function getUnits(): UnitResponse
+    private function warmUpUnits(): void
     {
         $unitRequest = new UnitRequest();
 
@@ -224,10 +229,10 @@ class RegistryService
             $units = array_merge($unitResponse->all(), $units);
         }
 
-        return new UnitResponse(1, count($units), true, $units);
+        $this->registry->set('units', new UnitResponse(1, count($units), true, $units));
     }
 
-    private function getPropertySelections(): PropertySelectionResponse
+    private function warmUpPropertySelections(): void
     {
         $selectionsRequest = new PropertySelectionRequest();
 
@@ -238,6 +243,26 @@ class RegistryService
             $selections = array_merge($selectionsResponse->all(), $selections);
         }
 
-        return new PropertySelectionResponse(1, count($selections), true, $selections);
+        $this->registry->set(
+            'propertySelections',
+            new PropertySelectionResponse(1, count($selections), true, $selections)
+        );
+    }
+
+    private function warmUpPropertyGroups(): void
+    {
+        $propertyGroupRequest = new PropertyGroupRequest('names');
+
+        $propertyGroups = [];
+
+        foreach (Utils::sendIterableRequest($this->client, $propertyGroupRequest) as $response) {
+            $propertyGroupResponse = PropertyGroupParser::parse($response);
+            $propertyGroups = array_merge($propertyGroupResponse->all(), $propertyGroups);
+        }
+
+        $this->registry->set(
+            'propertyGroups',
+            new PropertyGroupResponse(1, count($propertyGroups), true, $propertyGroups)
+        );
     }
 }

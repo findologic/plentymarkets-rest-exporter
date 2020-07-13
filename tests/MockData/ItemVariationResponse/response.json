@@ -252,7 +252,7 @@
       "variationClients": [
         {
           "variationId": 1000,
-          "plentyId": 37811,
+          "plentyId": 1234,
           "createdAt": "2016-09-05T12:25:16+01:00"
         }
       ],
@@ -274,6 +274,15 @@
               "description": null,
               "createdAt": "2019-02-25T07:43:56+00:00",
               "updatedAt": "2019-02-25T08:08:10+00:00"
+            },
+            {
+              "id": 17,
+              "propertyRelationId": 9,
+              "lang": "DE",
+              "value": "de-Changes",
+              "description": null,
+              "createdAt": "2019-02-25T07:43:56+00:00",
+              "updatedAt": "2019-02-25T08:08:10+00:00"
             }
           ],
           "propertyRelation": {
@@ -283,6 +292,34 @@
             "position": 50,
             "createdAt": "2019-02-22T14:54:23+00:00",
             "updatedAt": "2019-02-22T14:54:23+00:00"
+          }
+        },
+        {
+          "id": 17,
+          "propertyId": 4,
+          "relationTypeIdentifier": "item",
+          "relationTargetId": 1000,
+          "selectionRelationId": null,
+          "createdAt": "2020-07-16T14:08:10+01:00",
+          "updatedAt": "2020-07-16T14:08:10+01:00",
+          "relationValues": [
+            {
+              "id": 25,
+              "propertyRelationId": 17,
+              "lang": "1",
+              "value": "7",
+              "description": null,
+              "createdAt": "2020-07-16T14:08:18+01:00",
+              "updatedAt": "2020-07-16T14:08:18+01:00"
+            }
+          ],
+          "propertyRelation": {
+            "id": 4,
+            "cast": "selection",
+            "typeIdentifier": "item",
+            "position": 50,
+            "createdAt": "2019-02-22T10:39:10+00:00",
+            "updatedAt": "2019-02-22T10:44:45+00:00"
           }
         }
       ],
@@ -673,7 +710,7 @@
           "propertyId": 2,
           "propertySelectionId": null,
           "valueInt": null,
-          "valueFloat": null,
+          "valueFloat": 123.45,
           "valueFile": null,
           "surcharge": 0,
           "updatedAt": "2019-07-11T08:04:55+01:00",
@@ -686,8 +723,8 @@
             "position": 50,
             "unit": "KGM",
             "propertyGroupId": null,
-            "backendName": "Second Property",
-            "valueType": "int",
+            "backendName": "Float Property",
+            "valueType": "float",
             "isSearchable": true,
             "isOderProperty": false,
             "isShownOnItemPage": true,
@@ -732,6 +769,39 @@
             "isShownAsAdditionalCosts": false,
             "updatedAt": "2018-06-04T07:17:35+01:00"
           }
+        },
+        {
+          "id": 88,
+          "itemId": 103,
+          "propertyId": 4,
+          "propertySelectionId": null,
+          "valueInt": null,
+          "valueFloat": null,
+          "valueFile": null,
+          "surcharge": 0,
+          "updatedAt": "2019-07-11T08:04:55+01:00",
+          "createdAt": "2019-07-11T08:04:55+01:00",
+          "variationId": 1001,
+          "names": [],
+          "propertySelection": [],
+          "property": {
+            "id": 3,
+            "position": 15,
+            "unit": "AA",
+            "propertyGroupId": 1,
+            "backendName": "PropertyWithAWeirdType",
+            "valueType": "wrongTypeJustToForceEmptyStringAsReturnValueForTestingPurposes",
+            "isSearchable": true,
+            "isOderProperty": false,
+            "isShownOnItemPage": true,
+            "isShownOnItemList": true,
+            "isShownAtCheckout": false,
+            "isShownInPdf": false,
+            "comment": "",
+            "surcharge": 0,
+            "isShownAsAdditionalCosts": false,
+            "updatedAt": "2018-06-04T07:17:35+01:00"
+          }
         }
       ],
       "variationBarcodes": [
@@ -745,11 +815,30 @@
       "variationClients": [
         {
           "variationId": 1001,
-          "plentyId": 37811,
+          "plentyId": 1234,
           "createdAt": "2016-09-05T12:25:16+01:00"
         }
       ],
-      "properties": [],
+      "properties": [
+        {
+          "id": 16,
+          "propertyId": 7,
+          "relationTypeIdentifier": "item",
+          "relationTargetId": 1001,
+          "selectionRelationId": null,
+          "createdAt": "2020-04-08T08:54:04+01:00",
+          "updatedAt": "2020-04-08T08:54:04+01:00",
+          "relationValues": [],
+          "propertyRelation": {
+            "id": 7,
+            "cast": "multiSelection",
+            "typeIdentifier": "item",
+            "position": 5,
+            "createdAt": "2020-04-07T10:48:55+01:00",
+            "updatedAt": "2020-04-07T10:48:55+01:00"
+          }
+        }
+      ],
       "itemImages": [
         {
           "id": 16,
@@ -1233,7 +1322,7 @@
       "variationClients": [
         {
           "variationId": 1002,
-          "plentyId": 37811,
+          "plentyId": 1234,
           "createdAt": "2016-09-05T12:25:16+01:00"
         }
       ],
@@ -1646,7 +1735,7 @@
       "variationClients": [
         {
           "variationId": 1003,
-          "plentyId": 37811,
+          "plentyId": 1234,
           "createdAt": "2016-09-05T12:25:16+01:00"
         }
       ],
@@ -1674,6 +1763,340 @@
           "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/105\/secondPreview\/105-buerostuhl-schwarz.jpg",
           "documentUploadPath": "v3b53of2xcyu\/item\/images\/105\/full\/105-buerostuhl-schwarz.jpg",
           "documentUploadPathPreview": "v3b53of2xcyu\/item\/images\/105\/preview\/105-buerostuhl-schwarz.jpg",
+          "documentUploadPreviewWidth": 0,
+          "documentUploadPreviewHeight": 0,
+          "availabilities": [
+            {
+              "imageId": 13,
+              "type": "mandant",
+              "value": 37811
+            },
+            {
+              "imageId": 13,
+              "type": "marketplace",
+              "value": 2.01
+            },
+            {
+              "imageId": 13,
+              "type": "marketplace",
+              "value": 2.02
+            },
+            {
+              "imageId": 13,
+              "type": "marketplace",
+              "value": 2.03
+            }
+          ],
+          "names": [
+            {
+              "imageId": 13,
+              "lang": "de",
+              "name": "",
+              "alternate": ""
+            }
+          ]
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": 1004,
+      "isMain": false,
+      "mainVariationId": null,
+      "itemId": 106,
+      "categoryVariationId": 1004,
+      "marketVariationId": 1004,
+      "clientVariationId": 1004,
+      "salesPriceVariationId": 1004,
+      "supplierVariationId": 1004,
+      "warehouseVariationId": 1004,
+      "position": 0,
+      "isActive": true,
+      "number": "number1004",
+      "model": "",
+      "externalId": "",
+      "parentVariationId": null,
+      "parentVariationQuantity": null,
+      "availability": 1,
+      "estimatedAvailableAt": null,
+      "purchasePrice": 0,
+      "createdAt": "2015-12-23T23:00:00+00:00",
+      "updatedAt": "2018-02-22T14:39:08+00:00",
+      "relatedUpdatedAt": "2018-02-22T14:39:34+00:00",
+      "priceCalculationId": null,
+      "picking": null,
+      "stockLimitation": 1,
+      "isVisibleIfNetStockIsPositive": true,
+      "isInvisibleIfNetStockIsNotPositive": true,
+      "isAvailableIfNetStockIsPositive": false,
+      "isUnavailableIfNetStockIsNotPositive": false,
+      "mainWarehouseId": 1,
+      "maximumOrderQuantity": 0,
+      "minimumOrderQuantity": null,
+      "intervalOrderQuantity": null,
+      "availableUntil": null,
+      "releasedAt": null,
+      "unitCombinationId": 1,
+      "name": null,
+      "weightG": 0,
+      "weightNetG": 0,
+      "widthMM": 100,
+      "lengthMM": 0,
+      "heightMM": 0,
+      "extraShippingCharge1": 0,
+      "extraShippingCharge2": 0,
+      "unitsContained": 1,
+      "palletTypeId": 24,
+      "packingUnits": 1,
+      "packingUnitTypeId": 0,
+      "transportationCosts": 0,
+      "storageCosts": 0,
+      "customs": 0,
+      "operatingCosts": 0,
+      "vatId": 0,
+      "bundleType": null,
+      "automaticClientVisibility": 0,
+      "isHiddenInCategoryList": false,
+      "defaultShippingCosts": null,
+      "mayShowUnitPrice": true,
+      "movingAveragePrice": null,
+      "propertyVariationId": "1004",
+      "automaticListVisibility": 3,
+      "isVisibleInListIfNetStockIsPositive": false,
+      "isInvisibleInListIfNetStockIsNotPositive": false,
+      "singleItemCount": 0,
+      "availabilityUpdatedAt": "2019-02-22T14:39:08+00:00",
+      "tagVariationId": "1004",
+      "hasCalculatedBundleWeight": null,
+      "hasCalculatedBundleNetWeight": null,
+      "hasCalculatedBundlePurchasePrice": null,
+      "hasCalculatedBundleMovingAveragePrice": null,
+      "salesRank": null,
+      "variationCategories": [
+        {
+          "variationId": 1004,
+          "categoryId": 20,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "variationSalesPrices": [
+        {
+          "variationId": 1004,
+          "salesPriceId": 1,
+          "price": 111.22,
+          "updatedAt": "2016-09-05T12:25:20+01:00",
+          "createdAt": "2016-09-05T12:25:20+01:00"
+        },
+        {
+          "variationId": 1004,
+          "salesPriceId": 2,
+          "price": 222.11,
+          "updatedAt": "2016-09-05T12:25:20+01:00",
+          "createdAt": "2016-09-05T12:25:20+01:00"
+        }
+      ],
+      "variationAttributeValues": [],
+      "variationProperties": [],
+      "variationBarcodes": [],
+      "variationClients": [
+        {
+          "variationId": 1004,
+          "plentyId": 1234,
+          "createdAt": "2016-09-05T12:25:16+01:00"
+        }
+      ],
+      "properties": [],
+      "itemImages": [
+        {
+          "id": 13,
+          "itemId": 106,
+          "type": "internal",
+          "fileType": "jpg",
+          "path": "S3:105:105-buerostuhl-schwarz.jpg",
+          "position": 0,
+          "lastUpdate": "2018-03-08 09:43:10",
+          "insert": "2013-12-09 14:32:49",
+          "md5Checksum": "",
+          "width": 0,
+          "height": 0,
+          "size": 0,
+          "storageProviderId": "2",
+          "md5ChecksumOriginal": "",
+          "cleanImageName": "105-buerostuhl-schwarz.jpg",
+          "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/105\/full\/105-buerostuhl-schwarz.jpg",
+          "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/105\/middle\/105-buerostuhl-schwarz.jpg",
+          "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/105\/preview\/105-buerostuhl-schwarz.jpg",
+          "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/105\/secondPreview\/105-buerostuhl-schwarz.jpg",
+          "documentUploadPath": "v3b53of2xcyu\/item\/images\/105\/full\/105-buerostuhl-schwarz.jpg",
+          "documentUploadPathPreview": "v3b53of2xcyu\/item\/images\/105\/preview\/105-buerostuhl-schwarz.jpg",
+          "documentUploadPreviewWidth": 0,
+          "documentUploadPreviewHeight": 0,
+          "availabilities": [
+            {
+              "imageId": 13,
+              "type": "mandant",
+              "value": 37811
+            },
+            {
+              "imageId": 13,
+              "type": "marketplace",
+              "value": 2.01
+            },
+            {
+              "imageId": 13,
+              "type": "marketplace",
+              "value": 2.02
+            },
+            {
+              "imageId": 13,
+              "type": "marketplace",
+              "value": 2.03
+            }
+          ],
+          "names": [
+            {
+              "imageId": 13,
+              "lang": "de",
+              "name": "",
+              "alternate": ""
+            }
+          ]
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": 1005,
+      "isMain": true,
+      "mainVariationId": null,
+      "itemId": 106,
+      "categoryVariationId": 1005,
+      "marketVariationId": 1005,
+      "clientVariationId": 1005,
+      "salesPriceVariationId": 1005,
+      "supplierVariationId": 1005,
+      "warehouseVariationId": 1005,
+      "position": 5,
+      "isActive": true,
+      "number": "nuuumber1005main",
+      "model": "",
+      "externalId": "",
+      "parentVariationId": null,
+      "parentVariationQuantity": null,
+      "availability": 1,
+      "estimatedAvailableAt": null,
+      "purchasePrice": 0,
+      "createdAt": "2014-12-10T23:00:00+00:00",
+      "updatedAt": "2019-02-10T14:39:08+00:00",
+      "relatedUpdatedAt": "2019-02-10T14:39:34+00:00",
+      "priceCalculationId": null,
+      "picking": null,
+      "stockLimitation": 1,
+      "isVisibleIfNetStockIsPositive": true,
+      "isInvisibleIfNetStockIsNotPositive": true,
+      "isAvailableIfNetStockIsPositive": false,
+      "isUnavailableIfNetStockIsNotPositive": false,
+      "mainWarehouseId": 1,
+      "maximumOrderQuantity": 0,
+      "minimumOrderQuantity": null,
+      "intervalOrderQuantity": null,
+      "availableUntil": null,
+      "releasedAt": null,
+      "unitCombinationId": 1,
+      "name": null,
+      "weightG": 0,
+      "weightNetG": 0,
+      "widthMM": 100,
+      "lengthMM": 0,
+      "heightMM": 0,
+      "extraShippingCharge1": 0,
+      "extraShippingCharge2": 0,
+      "unitsContained": 1,
+      "palletTypeId": 24,
+      "packingUnits": 1,
+      "packingUnitTypeId": 0,
+      "transportationCosts": 0,
+      "storageCosts": 0,
+      "customs": 0,
+      "operatingCosts": 0,
+      "vatId": 0,
+      "bundleType": null,
+      "automaticClientVisibility": 0,
+      "isHiddenInCategoryList": false,
+      "defaultShippingCosts": null,
+      "mayShowUnitPrice": true,
+      "movingAveragePrice": null,
+      "propertyVariationId": "1003",
+      "automaticListVisibility": 3,
+      "isVisibleInListIfNetStockIsPositive": false,
+      "isInvisibleInListIfNetStockIsNotPositive": false,
+      "singleItemCount": 0,
+      "availabilityUpdatedAt": "2019-02-10T14:39:08+00:00",
+      "tagVariationId": "1005",
+      "hasCalculatedBundleWeight": null,
+      "hasCalculatedBundleNetWeight": null,
+      "hasCalculatedBundlePurchasePrice": null,
+      "hasCalculatedBundleMovingAveragePrice": null,
+      "salesRank": null,
+      "variationCategories": [
+        {
+          "variationId": 1005,
+          "categoryId": 17,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "variationSalesPrices": [
+        {
+          "variationId": 1005,
+          "salesPriceId": 1,
+          "price": 987.65,
+          "updatedAt": "2016-09-05T12:25:20+01:00",
+          "createdAt": "2016-09-05T12:25:20+01:00"
+        },
+        {
+          "variationId": 1005,
+          "salesPriceId": 2,
+          "price": 567.89,
+          "updatedAt": "2016-09-05T12:25:20+01:00",
+          "createdAt": "2016-09-05T12:25:20+01:00"
+        }
+      ],
+      "variationAttributeValues": [],
+      "variationProperties": [],
+      "variationBarcodes": [],
+      "variationClients": [
+        {
+          "variationId": 106,
+          "plentyId": 1234,
+          "createdAt": "2016-09-05T12:25:16+01:00"
+        }
+      ],
+      "properties": [],
+      "itemImages": [
+        {
+          "id": 13,
+          "itemId": 106,
+          "type": "internal",
+          "fileType": "jpg",
+          "path": "S3:105:105-buerostuhl-schwarz.jpg",
+          "position": 0,
+          "lastUpdate": "2018-03-08 09:43:10",
+          "insert": "2013-12-09 14:32:49",
+          "md5Checksum": "",
+          "width": 0,
+          "height": 0,
+          "size": 0,
+          "storageProviderId": "2",
+          "md5ChecksumOriginal": "",
+          "cleanImageName": "105-buerostuhl-schwarz.jpg",
+          "url": "https:\/\/cdn03.plentymarkets.com\/main-variation-image.jpg",
+          "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/main-variation-middle-image.jpg",
+          "urlPreview": "https:\/\/cdn03.plentymarkets.com\/main-variation-preview-image.jpg",
+          "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/main-variation-secondpreview-image.jpg",
+          "documentUploadPath": "main-variation-image.jpg",
+          "documentUploadPathPreview": "main-variation-image.jpg",
           "documentUploadPreviewWidth": 0,
           "documentUploadPreviewHeight": 0,
           "availabilities": [
