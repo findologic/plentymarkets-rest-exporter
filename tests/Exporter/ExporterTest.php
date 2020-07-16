@@ -12,10 +12,16 @@ use FINDOLOGIC\Export\Data\Summary;
 use FINDOLOGIC\Export\Data\Url;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
-use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemVariationParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
@@ -99,6 +105,10 @@ class ExporterTest extends TestCase
         $this->itemVariationRequestMock = $this->getMockBuilder(ItemVariationRequest::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $this->itemVariationRequestMock->method('setPage')->willReturnSelf();
+        $this->itemVariationRequestMock->method('setItemId')->willReturnSelf();
+        $this->itemVariationRequestMock->method('setWith')->willReturnSelf();
+        $this->itemVariationRequestMock->method('setIsActive')->willReturnSelf();
         $this->fileExporterMock = $this->getMockBuilder(CsvFileExporter::class)
             ->setMethods(['serializeItemsToFile'])
             ->setConstructorArgs([100, []])
@@ -126,11 +136,24 @@ class ExporterTest extends TestCase
      */
     public function testExporterReturnsCorrectType(int $type, string $expected): void
     {
+        $webStore = new WebStore([
+            'id' => 1,
+            'type' => 'plentymarkets',
+            'storeIdentifier' => 12345,
+            'name' => 'French Test Store',
+            'pluginSetId' => 44,
+            'configuration' => ['defaultLanguage' => 'en']
+        ]);
+
+        $this->registryMock->method('get')->willReturn($webStore);
+
         $exporter = Exporter::buildInstance(
             $type,
             $this->defaultConfig,
             $this->loggerMock,
-            $this->loggerMock
+            $this->loggerMock,
+            null,
+            $this->registryMock
         );
 
         $this->assertInstanceOf($expected, $exporter);
@@ -151,21 +174,20 @@ class ExporterTest extends TestCase
 
     public function testExport()
     {
-        $exporter = $this->getDefaultExporter(Exporter::TYPE_CSV);
+        $itemResponse = $this->getMockResponse('ItemResponse/response.json');
+        $itemVariationResponse = $this->getMockResponse('ItemVariationResponse/response.json');
+        $variationCount = count(ItemVariationParser::parse($itemVariationResponse)->all());
 
         $webStore = new WebStore([
             'id' => 1,
             'type' => 'plentymarkets',
             'storeIdentifier' => 12345,
-            'name' => 'German Test Store',
+            'name' => 'English Test Store',
             'pluginSetId' => 44,
             'configuration' => ['displayItemName' => 1, 'defaultLanguage' => 'en']
         ]);
 
-        $this->registryMock->method('get')->willReturn($webStore);
-
-        $itemResponse = $this->getMockResponse('ItemResponse/response.json');
-        $itemVariationResponse = $this->getMockResponse('ItemVariationResponse/response.json');
+        $this->setupRegistryMock($webStore, $variationCount);
 
         $expectedItems = $this->getExpectedCsvItems();
 
@@ -175,12 +197,15 @@ class ExporterTest extends TestCase
             $expectedItems
         );
 
+        $exporter = $this->getDefaultExporter(Exporter::TYPE_CSV);
         $exporter->export();
     }
 
     public function testItAddsLanguageCodeToUrlWhenNonDefaultLanguageIsSelected()
     {
-        $exporter = $this->getDefaultExporter(Exporter::TYPE_CSV);
+        $itemResponse = $this->getMockResponse('ItemResponse/response.json');
+        $itemVariationResponse = $this->getMockResponse('ItemVariationResponse/response.json');
+        $variationCount = count(ItemVariationParser::parse($itemVariationResponse)->all());
 
         $webStore = new WebStore([
             'id' => 1,
@@ -191,10 +216,7 @@ class ExporterTest extends TestCase
             'configuration' => ['displayItemName' => 1, 'defaultLanguage' => 'fr', 'languageList' => 'fr,en']
         ]);
 
-        $this->registryMock->method('get')->willReturn($webStore);
-
-        $itemResponse = $this->getMockResponse('ItemResponse/response.json');
-        $itemVariationResponse = $this->getMockResponse('ItemVariationResponse/response.json');
+        $this->setupRegistryMock($webStore, $variationCount);
 
         $expectedItems = $this->getExpectedCsvItems();
         foreach ($expectedItems as $expectedItem) {
@@ -212,12 +234,15 @@ class ExporterTest extends TestCase
             $expectedItems
         );
 
+        $exporter = $this->getDefaultExporter(Exporter::TYPE_CSV);
         $exporter->export();
     }
 
     public function testItDoesNotAddTextsWhenDisplayItemNameIsNotSet()
     {
-        $exporter = $this->getDefaultExporter(Exporter::TYPE_CSV);
+        $itemResponse = $this->getMockResponse('ItemResponse/response.json');
+        $itemVariationResponse = $this->getMockResponse('ItemVariationResponse/response.json');
+        $variationCount = count(ItemVariationParser::parse($itemVariationResponse)->all());
 
         $webStore = new WebStore([
             'id' => 1,
@@ -228,10 +253,7 @@ class ExporterTest extends TestCase
             'configuration' => ['defaultLanguage' => 'en']
         ]);
 
-        $this->registryMock->method('get')->willReturn($webStore);
-
-        $itemResponse = $this->getMockResponse('ItemResponse/response.json');
-        $itemVariationResponse = $this->getMockResponse('ItemVariationResponse/response.json');
+        $this->setupRegistryMock($webStore, $variationCount);
 
         $expectedItems = $this->getExpectedCsvItems();
         foreach ($expectedItems as $expectedItem) {
@@ -247,6 +269,7 @@ class ExporterTest extends TestCase
             $expectedItems
         );
 
+        $exporter = $this->getDefaultExporter(Exporter::TYPE_CSV);
         $exporter->export();
     }
 
@@ -310,5 +333,46 @@ class ExporterTest extends TestCase
         $csvItem6->addDateAdded(new \DateTime('2014-12-24T00:00:00+00:00'));
 
         return [$csvItem1, $csvItem2, $csvItem3, $csvItem4, $csvItem5, $csvItem6];
+    }
+
+    private function setupRegistryMock(WebStore $webStore, int $variationsCount): void
+    {
+        $categoryResponse = $this->getMockResponse('CategoryResponse/response.json');
+        $categories = CategoryParser::parse($categoryResponse);
+
+        $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/response.json');
+        $salesPrices = SalesPriceParser::parse($salesPriceResponse);
+
+        $attributeResponse = $this->getMockResponse('AttributeResponse/response.json');
+        $attributes = AttributeParser::parse($attributeResponse);
+
+        $propertyResponse = $this->getMockResponse('PropertyResponse/response.json');
+        $properties = PropertyParser::parse($propertyResponse);
+
+        $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/response.json');
+        $itemProperties = ItemPropertyParser::parse($itemPropertyResponse);
+
+        $unitResponse = $this->getMockResponse('UnitResponse/response.json');
+        $units = UnitParser::parse($unitResponse);
+
+        $returnsQueue = [
+            $categories,
+            $salesPrices,
+            $attributes,
+            $itemProperties,
+            $properties,
+            $units,
+            $webStore
+        ];
+
+        for ($i = 0; $i < $variationsCount; $i++) {
+            $returnsQueue[] = $categories;
+            $returnsQueue[] = $attributes;
+        }
+
+        call_user_func_array(
+            [$this->registryMock->method('get'), 'willReturnOnConsecutiveCalls'],
+            $returnsQueue
+        );
     }
 }
