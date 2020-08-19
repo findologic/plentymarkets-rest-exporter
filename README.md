@@ -8,6 +8,7 @@
 1. [Synopsis](#synopsis)
 1. [Requirements](#requirements)
 1. [Installation](#installation)
+1. [Running the export](#running-the-export)
 1. [Development](#development)
    1. [Running the export](#running-the-export)
       1. [Using a shopkey to run the export](#using-a-shopkey-to-run-the-export)
@@ -16,7 +17,7 @@
 
 ## Synopsis
 
-This is a **work in progress** rewrite of the [findologic/plentymarkets-rest-export](https://github.com/findologic/plentymarkets-rest-export).
+This is a **work in progress** rewrite of the [findologic/plentymarkets-rest-export](https://github.com/findologic/plentymarkets-rest-export).  
 
 The Plentymarkets REST API is being called to get all necessary product data for
 FINDOLOGIC. The data is then wrapped to generate a FINDOLOGIC-consumable XML/CSV file. In the case of
@@ -26,10 +27,26 @@ XML this could be multiple files.
 
 * PHP >= 7.3
 * PHP JSON extension
+* Composer
 
 ## Installation
 
-Simply run `composer install`.
+1. Run `composer install` to install all required dependencies.
+1. Copy `config/config.dist.yml` to `config/config.yml`, and set the
+ configuration for the shop, you want to export the data from.
+
+## Running the export
+
+1. Run `composer export` or `bin/export`.
+1. When the export was successful, you may be able to find the exported CSV/XML file
+ in the `/export` directory.
+
+
+* If you have a shopkey, see [Using a shopkey to run the export](#using-a-shopkey-to-run-the-export).
+* If debug mode is true (inside `config/config.yml`), you may be able to find all requests/responses inside
+ of the `/debug` directory.
+
+If you want to debug, read more about [debugging the export](#debugging-the-export).
 
 ## Development
 
@@ -50,14 +67,6 @@ Simply run `composer install`.
 Running tests is as simple as it gets. Either run `composer test`,
  or use your IDE to run the tests. When running them with the IDE
  you may want to include `phpunit.xml.dist` as alternative configuration file.
-
-### Running the export
-
-1. Copy `config/config.dist.yml` to `config/config.yml`.
-1. Set all necessary configurations in `config/config.yml`.
-1. Run `composer export` or `bin/export`.
-
-Read more about [debugging the export](#debugging-the-export).
 
 #### Using a shopkey to run the export
 
@@ -93,4 +102,6 @@ If you want to debug the export, you can simply right-click `bin/export`
 inside of the IDE and select "*Debug 'export (PHP Script)'*".
 
 Setting the configuration option "debug" in your `config/config.yml` to `true`, will
-automatically create request/response files inside of the `debug` folder.
+automatically create request/response files inside of the `debug` folder.  
+If you no longer need them, they can be cleared anytime running `composer clear`,
+or `bin/clearExportFiles`.

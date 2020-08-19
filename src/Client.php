@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Debug\Debugger;
+use FINDOLOGIC\PlentyMarketsRestExporter\Debug\DebuggerInterface;
+use FINDOLOGIC\PlentyMarketsRestExporter\Debug\DummyDebugger;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
@@ -22,12 +25,12 @@ use Psr\Log\LoggerInterface;
 class Client
 {
     public const
-        METHOD_GET = 'GET',
-        METHOD_POST = 'POST';
-
-    public const
         PROTOCOL_HTTP = 'http',
         PROTOCOL_HTTPS = 'https';
+
+    public const
+        METHOD_GET = 'GET',
+        METHOD_POST = 'POST';
 
     private const
         PLENTY_SHORT_PERIOD_CALLS_HEADER = 'X-Plenty-Global-Short-Period-Calls-Left',
@@ -51,6 +54,9 @@ class Client
     /** @var DebuggerInterface */
     private $debugger;
 
+    /** @var string */
+    private $protocol = self::PROTOCOL_HTTPS;
+
     /** @var ResponseInterface Used for rate limiting. */
     private $lastResponse;
 
@@ -64,12 +70,18 @@ class Client
         GuzzleClient $httpClient,
         Config $config,
         ?LoggerInterface $internalLogger = null,
-        ?LoggerInterface $customerLogger = null
+        ?LoggerInterface $customerLogger = null,
+        ?DebuggerInterface $debugger = null
     ) {
         $this->client = $httpClient;
         $this->config = $config;
         $this->internalLogger = $internalLogger ?? new DummyLogger();
         $this->customerLogger = $customerLogger ?? new DummyLogger();
+        $this->debugger = $debugger ?? new DummyDebugger();
+
+        if ($this->config->isDebug()) {
+            $this->debugger = new Debugger();
+        }
     }
 
     public function send(Request $request): ResponseInterface
@@ -108,6 +120,8 @@ class Client
 
     private function handleResponse(RequestInterface $request, ResponseInterface $response): void
     {
+        $this->debugger->save($request, $response);
+
         switch ($response->getStatusCode()) {
             case 401:
                 throw new AuthorizationException('The REST client is not logged in.');
