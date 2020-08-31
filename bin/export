@@ -4,8 +4,8 @@
 declare(strict_types=1);
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Log4Php\Configurators\LoggerConfigurationAdapterXML;
@@ -56,7 +56,7 @@ if (isset ($argv[1]) && preg_match('/^[A-F0-9]{32}$/', $argv[1])) {
     }
 }
 
-/** @var XmlExporter $exporter */
+/** @var CsvExporter $exporter */
 $exporter = Exporter::buildInstance(Exporter::TYPE_CSV, $config, $internalLogger, $customerLogger);
 try {
     $exporter->export();
@@ -64,6 +64,7 @@ try {
     failExportWithExceptionInformation($internalLogger, $e);
 }
 
+$customerLogger->info(sprintf('The export took %s.', $exporter->getExportTime()));
 $customerLogger->info('The export was successful!');
 
 function getCustomerLoginConfiguration(string $customerLoginUri, string $shopkey): array

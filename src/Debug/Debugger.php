@@ -17,8 +17,14 @@ class Debugger implements DebuggerInterface
     /** @var string */
     private $debugDir;
 
-    public function __construct(string $debugDir = self::DEBUG_DIR)
-    {
+    /** @var int */
+    private $encodingOptions;
+
+    public function __construct(
+        string $debugDir = self::DEBUG_DIR,
+        $encodingOptions = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+    ) {
+        $this->encodingOptions = $encodingOptions;
         $this->debugDir = $debugDir;
     }
 
@@ -65,7 +71,7 @@ class Debugger implements DebuggerInterface
                 'headers' => $response->getHeaders(),
                 'rawResponse' => $rawResponse
             ]
-        ], JSON_PRETTY_PRINT);
+        ], $this->encodingOptions);
     }
 
     private function getRequestPath(RequestInterface $request): string

@@ -21,4 +21,6 @@ abstract class Wrapper
         ItemResponse $products,
         ItemVariationResponse $variations
     ): void;
+
+    abstract public function getExportPath(): string;
 }

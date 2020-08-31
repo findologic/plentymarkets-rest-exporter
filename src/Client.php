@@ -198,6 +198,15 @@ class Client
         $this->refreshToken = $data->refreshToken;
     }
 
+    public function getAccessToken(): string
+    {
+        if (!$this->accessToken) {
+            throw new \Exception('Login before you can get the accessToken.');
+        }
+
+        return $this->accessToken;
+    }
+
     /**
      * @codeCoverageIgnore Not yet implemented.
      */

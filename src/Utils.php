@@ -6,7 +6,11 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\RequestOptions;
+use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class Utils
 {
@@ -31,6 +35,47 @@ class Utils
         }
 
         return $responses;
+    }
+
+    public static function validateAndGetShopkey(?string $shopkey): ?string
+    {
+        if ($shopkey && !preg_match('/^[A-F0-9]{32}$/', $shopkey)) {
+            throw new InvalidArgumentException('Given shopkey does not match the shopkey format.');
+        }
+
+        return $shopkey;
+    }
+
+    /**
+     * When a shopkey is set, the customer-login route is used to fetch the import data. Otherwise the configuration
+     * of the given configPath is used.
+     *
+     * @param string|null $shopkey
+     * @param string $configPath
+     * @return Config
+     */
+    public static function getExportConfiguration(?string $shopkey, string $configPath): Config
+    {
+        $rawConfig = Yaml::parseFile($configPath);
+
+        $customerLoginUri = $rawConfig['customerLoginUri'] ?? null;
+        if ($shopkey && $customerLoginUri) {
+            return static::getCustomerLoginConfiguration($customerLoginUri, $shopkey);
+        }
+
+        return new Config($rawConfig);
+    }
+
+    private static function getCustomerLoginConfiguration(string $customerLoginUri, string $shopkey): Config
+    {
+        $client = new GuzzleClient();
+        $response = $client->get($customerLoginUri, [
+            RequestOptions::QUERY => ['shopkey' => $shopkey]
+        ]);
+
+        $rawData = json_decode($response->getBody()->__toString(), true);
+
+        return Config::parseByCustomerLoginResponse($rawData, true);
     }
 
     private static function parseIsLastPage(ResponseInterface $response): bool

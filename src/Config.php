@@ -9,6 +9,8 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter;
  */
 class Config
 {
+    public const DEFAULT_CONFIG_FILE = __DIR__ . '/../config/config.yml';
+
     /** @var string */
     private $domain;
 
@@ -54,7 +56,7 @@ class Config
 
     public static function parseByCustomerLoginResponse(array $data, bool $debug = false): self
     {
-        $shop = array_values($data)[0];
+        $shop = array_values($data)[0] ?? null;
 
         return new Config([
             'domain' => $shop['url'],

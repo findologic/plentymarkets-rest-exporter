@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 
+use Carbon\Carbon;
 use FINDOLOGIC\Export\Exporter as LibflexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
@@ -23,6 +24,8 @@ use Psr\Log\LoggerInterface;
 
 abstract class Exporter
 {
+    public const DEFAULT_LOCATION = __DIR__ . '/../../export';
+
     public const
         TYPE_CSV = 0,
         TYPE_XML = 1;
@@ -59,6 +62,12 @@ abstract class Exporter
 
     /** @var int */
     protected $offset = 0;
+
+    /** @var float */
+    protected $exportStartTime = 0;
+
+    /** @var float */
+    protected $exportEndTime = 0;
 
     public function __construct(
         LoggerInterface $internalLogger,
@@ -124,7 +133,7 @@ abstract class Exporter
         ?ItemRequest $itemRequest = null,
         ?ItemVariationRequest $itemVariationRequest = null,
         ?LibflexportExporter $fileExporter = null,
-        ?string $exportPath = __DIR__ . '/../../export'
+        ?string $exportPath = self::DEFAULT_LOCATION
     ): Exporter {
         switch ($type) {
             case self::TYPE_CSV:
@@ -159,8 +168,23 @@ abstract class Exporter
 
     public function export(): void
     {
+        $this->exportStartTime = microtime(true);
         $this->registryService->warmUp();
         $this->exportProducts();
+        $this->exportEndTime = microtime(true);
+    }
+
+    public function getExportTime(): string
+    {
+        $start = Carbon::createFromTimestamp($this->exportStartTime);
+        $end = Carbon::createFromTimestamp($this->exportEndTime);
+
+        return $end->diff($start)->format('%H:%I:%S');
+    }
+
+    public function getWrapper(): Wrapper
+    {
+        return $this->wrapper;
     }
 
     protected function exportProducts(): void
