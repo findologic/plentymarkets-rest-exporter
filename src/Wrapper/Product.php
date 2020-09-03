@@ -121,9 +121,9 @@ class Product
             $variation->processData();
 
             if ($variation->isMain()) {
-                $this->item->addImage($variation->getImage());
+                $this->item->addImage($variation->getImage()); // TODO In case a variation does not have an image, an exception is thrown. Please add a test for that.
                 $this->item->addSort($variation->getPosition());
-                $this->item->addPrice($variation->getPrice());
+                $this->item->addPrice($variation->getPrice()); // TODO Ensure that the item always has a price. In case it does not have a price, skip it.
                 $this->item->setInsteadPrice($variation->getInsteadPrice());
                 foreach ($variation->getGroups() as $group) {
                     $this->item->addUsergroup($group);

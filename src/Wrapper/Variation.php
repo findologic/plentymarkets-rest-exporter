@@ -163,7 +163,7 @@ class Variation
         return $this->barcodes;
     }
 
-    public function getPrice(): float
+    public function getPrice(): float //TODO This may return null if the price is 0
     {
         return $this->price;
     }
@@ -339,7 +339,7 @@ class Variation
         foreach ($tags as $tag) {
             if ($tag->getTagType() !== 'variation') {
                 // @codeCoverageIgnoreStart
-                continue;
+                continue; // TODO You may add a test where the tag type is something else than variation, and ensure that it is not set.
                 // @codeCoverageIgnoreEnd
             }
 
@@ -349,7 +349,7 @@ class Variation
 
             foreach ($tag->getTag()->getNames() as $tagName) {
                 if ($tagName->getTagLang() === strtolower($this->config->getLanguage())) {
-                    $correctTagName = $tagName->getTagName();
+                    $correctTagName = $tagName->getTagName(); // TODO Id rather name this translatedTagName, since "correct" does not really point out what it really contains. Like "correct" could be anything.
 
                     break;
                 }
@@ -379,7 +379,7 @@ class Variation
         }
     }
 
-    private function processVariationProperties(): void
+    private function processVariationProperties(): void // TODO Please rename processVariationProperties => processCharacteristics and processVariationSpecificProperties => processProperties. We had a lot of confusion about that in the past, since Plentymarkets were changing the names of these so often. Now they have agreed on characteristics for item properties and properties for variation properties.
     {
         $variationProperties = $this->variationEntity->getVariationProperties();
 
@@ -388,13 +388,13 @@ class Variation
 
             if ($itemProperty && !$itemProperty->isSearchable()) {
                 // @codeCoverageIgnoreStart
-                continue;
+                continue; // TODO Please rename processVariationProperties => processCharacteristics and processVariationSpecificProperties => processProperties. We had a lot of confusion about that in the past, since Plentymarkets were changing the names of these so often. Now they have agreed on characteristics for item properties and properties for variation properties.
                 // @codeCoverageIgnoreEnd
             }
 
             if ($itemProperty->getValueType() === 'empty' && !$itemProperty->getPropertyGroupId()) {
                 // @codeCoverageIgnoreStart
-                continue;
+                continue; // TODO testPropertiesOfTypeEmptyAndWithoutGroupIdAreNotExported
                 // @codeCoverageIgnoreEnd
             }
 
@@ -416,7 +416,7 @@ class Variation
         }
     }
 
-    private function processVariationSpecificProperties(): void
+    private function processVariationSpecificProperties(): void // TODO These methods were probably for the most part copies from the old implementation. Please try to restructure that a bit, since that code isn't really that well structured, when I look at it.
     {
         /** @var PropertyResponse $properties */
         if (!$properties = $this->registry->get('properties')) {
@@ -428,7 +428,7 @@ class Variation
         foreach ($this->variationEntity->getProperties() as $property) {
             if ($property->getRelationTypeIdentifier() != ItemVariationProperty::PROPERTY_TYPE_ITEM) {
                 // @codeCoverageIgnoreStart
-                continue;
+                continue; // TODO testPropertiesNotOfTypeItemAreNotExported
                 // @codeCoverageIgnoreEnd
             }
 
@@ -436,11 +436,11 @@ class Variation
 
             $value = null;
 
-            $cast = $property->getPropertyRelation()->getCast();
+            $cast = $property->getPropertyRelation()->getCast(); // TODO No need to add this to a local variable.
             switch ($cast) {
                 case 'empty':
                     // @codeCoverageIgnoreStart
-                    break;
+                    break; // TODO empty does not mean, it shouldn't be exported. Please have a look at the current implementation.
                     // @codeCoverageIgnoreEnd
                 case 'shortText':
                 case 'longText':
@@ -473,17 +473,18 @@ class Variation
                     break;
                 default:
                     // @codeCoverageIgnoreStart
-                    $value = $property['relationValues'][0]['value'] ?? null;
+                    $value = $property['relationValues'][0]['value'] ?? null; // TODO Add a test for this case.
+                    // TODO If there was a unit-test you would've immediately seen that you can not access $property['relationValues'], since $property is an object, and not an array.
                     // @codeCoverageIgnoreEnd
             }
 
             if ($propertyName == null || $value == "null" || $value == null || $value == '') {
                 // @codeCoverageIgnoreStart
-                continue; // Ignore empty properties.
+                continue; // Ignore empty properties. // TODO Add a test for this.
                 // @codeCoverageIgnoreEnd
             }
 
-            if (is_array($value)) {
+            if (is_array($value)) { //TODO This check is redundant. libflexport can handle multiple values for a single attribute anyway.
                 foreach ($value as $singleValue) {
                     $this->attributes[] = new Attribute($propertyName, [$singleValue]);
                 }
@@ -493,9 +494,9 @@ class Variation
         }
     }
 
-    private function getPropertyGroupForPropertyName(int $propertyGroupId): string
+    private function getPropertyGroupForPropertyName(int $propertyGroupId): string // TODO Make this nullable and just return null in case there are no property groups or there is no property group for the given id.
     {
-        if (!$this->propertyGroups) {
+        if (!$this->propertyGroups) { // TODO That check should only be done once and not for each and every variant.
             // @codeCoverageIgnoreStart
             return '';
             // @codeCoverageIgnoreEnd
@@ -504,7 +505,7 @@ class Variation
         /** @var PropertyGroup[] $properties */
         if (!$propertyGroup = $this->propertyGroups->findOne(['propertyGroupId' => $propertyGroupId])) {
             // @codeCoverageIgnoreStart
-            return '';
+            return ''; // TODO Make the method return value nullable and just return null in this case. Also add a test.
             // @codeCoverageIgnoreEnd
         }
 
@@ -517,7 +518,7 @@ class Variation
         return $propertyGroup->getBackendName();
     }
 
-    private function getPropertyValue(VariationProperty $variationProperty)
+    private function getPropertyValue(VariationProperty $variationProperty) // TODO Missing return type. I know that there should be several return values, in that case add them all to the docblock
     {
         $propertyType = $variationProperty->getProperty()->getValueType();
 
@@ -529,7 +530,7 @@ class Variation
                 // break omitted intentionally.
             case 'text':
                 // @codeCoverageIgnoreStart
-                // TODO: test when names structure becomes known
+                // TODO: The structure for names look something like this: ...
                 $names = $variationProperty->getNames();
                 if (!empty($names[strtoupper($this->config->getLanguage())])) {
                     $value = $names[strtoupper($this->config->getLanguage())];
@@ -538,7 +539,7 @@ class Variation
                 // @codeCoverageIgnoreEnd
             case 'selection':
                 // @codeCoverageIgnoreStart
-                // TODO: test when propertySelection structure becomes known
+                // TODO: A property selection looks something like that:...
                 foreach ($variationProperty->getPropertySelection() as $selection) {
                     if (strtoupper($selection['lang']) != $this->config->getLanguage()) {
                         continue;
@@ -556,7 +557,7 @@ class Variation
                 break;
             default:
                 // @codeCoverageIgnoreStart
-                $value = '';
+                $value = ''; // TODO Add a test case for that.
                 break;
                 // @codeCoverageIgnoreEnd
         }

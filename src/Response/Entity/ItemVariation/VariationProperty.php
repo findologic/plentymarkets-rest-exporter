@@ -177,7 +177,7 @@ class VariationProperty extends Entity
         $names = $this->getNames();
         if (!empty($names[strtoupper($lang)])) {
             // @codeCoverageIgnoreStart
-            $name = $names[strtoupper($lang)];
+            $name = $names[strtoupper($lang)]; // TODO Please add a test for that.
             // @codeCoverageIgnoreEnd
         }
 

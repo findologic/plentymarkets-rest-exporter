@@ -76,7 +76,7 @@ class PropertyResponse extends IterableResponse implements CollectionInterface, 
     {
         if (!$property = $this->findOne(['id' => $id])) {
             // @codeCoverageIgnoreStart
-            return null;
+            return null; // TODO In this class there are multiple @codeCoverageIgnoreStart. They seem like they could be easily tested. It also makes sense to test these, so we are sure no exception happens in that case.
             // @codeCoverageIgnoreEnd
         }
 
@@ -86,7 +86,7 @@ class PropertyResponse extends IterableResponse implements CollectionInterface, 
             }
         }
         // @codeCoverageIgnoreStart
-        return null;
+        return null; // TODO In this class there are multiple @codeCoverageIgnoreStart. They seem like they could be easily tested. It also makes sense to test these, so we are sure no exception happens in that case.
         // @codeCoverageIgnoreEnd
     }
 
@@ -94,7 +94,7 @@ class PropertyResponse extends IterableResponse implements CollectionInterface, 
     {
         if (!$property = $this->findOne(['id' => $id])) {
             // @codeCoverageIgnoreStart
-            return null;
+            return null; // TODO In this class there are multiple @codeCoverageIgnoreStart. They seem like they could be easily tested. It also makes sense to test these, so we are sure no exception happens in that case.
             // @codeCoverageIgnoreEnd
         }
 
@@ -113,7 +113,7 @@ class PropertyResponse extends IterableResponse implements CollectionInterface, 
         }
 
         // @codeCoverageIgnoreStart
-        return null;
+        return null; // TODO In this class there are multiple @codeCoverageIgnoreStart. They seem like they could be easily tested. It also makes sense to test these, so we are sure no exception happens in that case.
         // @codeCoverageIgnoreEnd
     }
 }
