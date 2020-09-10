@@ -338,24 +338,22 @@ class Variation
         $tagIds = [];
         foreach ($tags as $tag) {
             if ($tag->getTagType() !== 'variation') {
-                // @codeCoverageIgnoreStart
-                continue; // TODO You may add a test where the tag type is something else than variation, and ensure that it is not set.
-                // @codeCoverageIgnoreEnd
+                continue;
             }
 
             $tagIds[] = $tag->getTagId();
 
-            $correctTagName = $tag->getTag()->getTagName();
+            $translatedTagName = $tag->getTag()->getTagName();
 
             foreach ($tag->getTag()->getNames() as $tagName) {
                 if ($tagName->getTagLang() === strtolower($this->config->getLanguage())) {
-                    $correctTagName = $tagName->getTagName(); // TODO Id rather name this translatedTagName, since "correct" does not really point out what it really contains. Like "correct" could be anything.
+                    $translatedTagName = $tagName->getTagName();
 
                     break;
                 }
             }
 
-            $this->tags[] = new Keyword($correctTagName);
+            $this->tags[] = new Keyword($translatedTagName);
         }
 
         if ($tagIds) {
@@ -388,7 +386,7 @@ class Variation
 
             if ($itemProperty && !$itemProperty->isSearchable()) {
                 // @codeCoverageIgnoreStart
-                continue; // TODO Please rename processVariationProperties => processCharacteristics and processVariationSpecificProperties => processProperties. We had a lot of confusion about that in the past, since Plentymarkets were changing the names of these so often. Now they have agreed on characteristics for item properties and properties for variation properties.
+                continue; // TODO Add a unit-test for that. testPropertiesWhichAreNotSearchableAreNotExported
                 // @codeCoverageIgnoreEnd
             }
 
@@ -436,8 +434,7 @@ class Variation
 
             $value = null;
 
-            $cast = $property->getPropertyRelation()->getCast(); // TODO No need to add this to a local variable.
-            switch ($cast) {
+            switch ($property->getPropertyRelation()->getCast()) {
                 case 'empty':
                     // @codeCoverageIgnoreStart
                     break; // TODO empty does not mean, it shouldn't be exported. Please have a look at the current implementation.
@@ -504,9 +501,7 @@ class Variation
 
         /** @var PropertyGroup[] $properties */
         if (!$propertyGroup = $this->propertyGroups->findOne(['propertyGroupId' => $propertyGroupId])) {
-            // @codeCoverageIgnoreStart
             return ''; // TODO Make the method return value nullable and just return null in this case. Also add a test.
-            // @codeCoverageIgnoreEnd
         }
 
         foreach ($propertyGroup->getNames() as $name) {
@@ -518,7 +513,10 @@ class Variation
         return $propertyGroup->getBackendName();
     }
 
-    private function getPropertyValue(VariationProperty $variationProperty) // TODO Missing return type. I know that there should be several return values, in that case add them all to the docblock
+    /**
+     * @return float|int|string|null
+     */
+    private function getPropertyValue(VariationProperty $variationProperty)
     {
         $propertyType = $variationProperty->getProperty()->getValueType();
 

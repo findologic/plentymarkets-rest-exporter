@@ -382,7 +382,7 @@ class ItemVariationResponseTest extends TestCase
 
         $variationTags = $itemVariation->getTags();
         $this->assertIsArray($variationTags);
-        $this->assertCount(3, $variationTags);
+        $this->assertCount(4, $variationTags);
         /** @var VariationTag $variationTag */
         $variationTag = reset($variationTags);
         $this->assertEquals('1', $variationTag->getTagId());

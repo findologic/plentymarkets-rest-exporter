@@ -486,6 +486,35 @@
               }
             ]
           }
+        },
+        {
+          "tagId": "4",
+          "tagType": "someInvalidTagType",
+          "relationshipValue": "1011",
+          "relationshipUUID5": "",
+          "createdAt": "2019-04-30T14:37:00+01:00",
+          "updatedAt": "2019-04-30T14:37:00+01:00",
+          "tag": {
+            "id": 4,
+            "tagName": "Zeta Tage",
+            "color": "#771717",
+            "createdAt": "2019-04-30T14:35:16+01:00",
+            "updatedAt": "2019-04-30T14:35:16+01:00",
+            "names": [
+              {
+                "id": 10,
+                "tagId": "4",
+                "tagLang": "en",
+                "tagName": "This should not appear in the result"
+              },
+              {
+                "id": 11,
+                "tagId": "4",
+                "tagLang": "fr",
+                "tagName": "This should not appear in the result"
+              }
+            ]
+          }
         }
       ]
     },
