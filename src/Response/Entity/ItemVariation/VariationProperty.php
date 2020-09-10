@@ -6,6 +6,8 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationProperty\Name;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationProperty\PropertySelection;
 
 class VariationProperty extends Entity
 {
@@ -41,10 +43,10 @@ class VariationProperty extends Entity
     /** @var int */
     private $variationId;
 
-    /** @var array|mixed  */
+    /** @var Name[] */
     private $names = [];
 
-    /** @var array|mixed  */
+    /** @var PropertySelection[] */
     private $propertySelection = [];
 
     /** @var ItemProperty|null */
@@ -65,8 +67,19 @@ class VariationProperty extends Entity
         $this->updatedAt = (string)$data['updatedAt'];
         $this->createdAt = (string)$data['createdAt'];
         $this->variationId = (int)$data['variationId'];
-        $this->names = $data['names']; // Unknown structure - received only empty arrays
-        $this->propertySelection = $data['propertySelection']; // Unknown structure - received only empty arrays
+
+        // Undocumented - the properties may not match the received data exactly
+        if (!empty($data['names'])) {
+            foreach ($data['names'] as $name) {
+                $this->names[] = new Name($name);
+            }
+        }
+        // Undocumented - the properties may not match the received data exactly
+        if (!empty($data['propertySelection'])) {
+            foreach ($data['propertySelection'] as $propertySelection) {
+                $this->propertySelection[] = new PropertySelection($propertySelection);
+            }
+        }
 
         if (!empty($data['property'])) {
             $this->property = new ItemProperty($data['property']);
@@ -75,6 +88,16 @@ class VariationProperty extends Entity
 
     public function getData(): array
     {
+        $names = [];
+        foreach ($this->names as $name) {
+            $names[] = $name->getData();
+        }
+
+        $propertySelections = [];
+        foreach ($this->propertySelection as $propertySelection) {
+            $propertySelections[] = $propertySelection->getData();
+        }
+
         $data = [
             'id' => $this->id,
             'itemId' => $this->itemId,
@@ -87,8 +110,8 @@ class VariationProperty extends Entity
             'updatedAt' => $this->updatedAt,
             'createdAt' => $this->createdAt,
             'variationId' => $this->variationId,
-            'names' => $this->names,
-            'propertySelection' => $this->propertySelection
+            'names' => $names,
+            'propertySelection' => $propertySelections,
         ];
 
         if ($this->property) {
@@ -153,15 +176,21 @@ class VariationProperty extends Entity
         return $this->variationId;
     }
 
+    /**
+     * @return Name[]
+     */
     public function getNames(): array
     {
-        // Unknown structure - received only empty arrays
+        // Undocumented - the properties may not match the received data exactly
         return $this->names;
     }
 
-    public function getPropertySelection()
+    /**
+     * @return PropertySelection[]
+     */
+    public function getPropertySelection(): array
     {
-        // Unknown structure - received only empty arrays
+        // Undocumented - the properties may not match the received data exactly
         return $this->propertySelection;
     }
 
@@ -172,15 +201,14 @@ class VariationProperty extends Entity
 
     public function getPropertyName(string $lang): ?string
     {
-        $name = $this->getProperty()->getBackendName();
+        $value = $this->getProperty()->getBackendName();
 
-        $names = $this->getNames();
-        if (!empty($names[strtoupper($lang)])) {
-            // @codeCoverageIgnoreStart
-            $name = $names[strtoupper($lang)]; // TODO Please add a test for that.
-            // @codeCoverageIgnoreEnd
+        foreach ($this->getNames() as $name) {
+            if (strtoupper($name->getLang()) == strtoupper($lang)) {
+                return $name->getValue();
+            }
         }
 
-        return $name;
+        return $value;
     }
 }

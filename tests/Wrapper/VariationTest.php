@@ -17,6 +17,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Variation as VariationWrapper;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -96,9 +97,10 @@ class VariationTest extends TestCase
         $this->assertEquals(103, $wrapper->getItemId());
         $this->assertEquals(['3213213213213'], $wrapper->getBarcodes());
         $this->assertEquals(499.0, $wrapper->getPrice());
+        $this->assertEquals(560.0, $wrapper->getInsteadPrice());
 
         $attributes = $wrapper->getAttributes();
-        $this->assertCount(9, $attributes);
+        $this->assertCount(10, $attributes);
         $this->assertEquals('cat', $attributes[0]->getKey());
         $this->assertEquals(['Armchairs & Stools'], $attributes[0]->getValues());
         $this->assertEquals('cat_url', $attributes[1]->getKey());
@@ -110,5 +112,174 @@ class VariationTest extends TestCase
         $this->assertCount(1, $properties);
         $this->assertEquals('price_id', $properties[0]->getKey());
         $this->assertEquals(['' => '1'], $properties[0]->getAllValues());
+
+        $groups = $wrapper->getGroups();
+        $this->assertCount(1, $groups);
+        $this->assertEquals('0_', $groups[0]->getValue());
+
+        $tags = $wrapper->getTags();
+        $this->assertCount(2, $tags);
+        $this->assertEquals('aaaa', $tags[0]->getValue());
+        $this->assertEquals('', $tags[0]->getUsergroup());
+        $this->assertEquals('keyword', $tags[0]->getValueName());
+        $this->assertEquals('Zeta Tage', $tags[1]->getValue());
+        $this->assertEquals('', $tags[1]->getUsergroup());
+        $this->assertEquals('keyword', $tags[1]->getValueName());
+    }
+
+    public function testCharacteristicsWhichAreNotSearchableAreNotExported()
+    {
+        $response = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
+        $response = json_decode($response, true);
+        $response['entries'][1]['variationProperties'][0]['property']['isSearchable'] = false;
+        $response = json_encode($response);
+        $response = new Response(200, [], $response);
+        $variationEntities = ItemVariationParser::parse($response);
+        $variationEntity = $variationEntities->findOne(['id' => 1001]);
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(9, $wrapper->getAttributes());
+    }
+
+    public function testCharacteristicsOfTypeEmptyAndWithoutGroupIdAreNotExported()
+    {
+        $response = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
+        $response = json_decode($response, true);
+        $response['entries'][1]['variationProperties'][0]['property']['propertyGroupId'] = null;
+        $response['entries'][1]['variationProperties'][0]['property']['valueType'] = 'empty';
+        $response = json_encode($response);
+        $response = new Response(200, [], $response);
+        $variationEntities = ItemVariationParser::parse($response);
+        $variationEntity = $variationEntities->findOne(['id' => 1001]);
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(9, $wrapper->getAttributes());
+    }
+
+    public function testCharacteristicsOfTypeEmptyAndWithNonExistantGroupIdAreNotExported()
+    {
+        $response = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
+        $response = json_decode($response, true);
+        $response['entries'][1]['variationProperties'][0]['property']['propertyGroupId'] = 12321367891;
+        $response['entries'][1]['variationProperties'][0]['property']['valueType'] = 'empty';
+        $response = json_encode($response);
+        $response = new Response(200, [], $response);
+        $variationEntities = ItemVariationParser::parse($response);
+        $variationEntity = $variationEntities->findOne(['id' => 1001]);
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(9, $wrapper->getAttributes());
+    }
+
+    public function testPropertiesWithNoNameAreNotExported()
+    {
+        $rawResponse = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
+        $rawResponse = json_decode($rawResponse, true);
+        $rawResponse['entries'][1]['properties'][0]['propertyId'] = 1232136789;
+        $response = new Response(200, [], json_encode($rawResponse));
+        $variationEntities = ItemVariationParser::parse($response);
+        $variationEntity = $variationEntities->findOne(['id' => 1001]);
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(8, $wrapper->getAttributes());
+    }
+
+    public function testPropertiesWithNoValueAreNotExported()
+    {
+        $rawResponse = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
+        $rawResponse = json_decode($rawResponse, true);
+        $rawResponse['entries'][1]['properties'][0]['propertyRelation']['cast'] = 'shortText';
+        $rawResponse['entries'][1]['properties'][0]['relationValues'] = [];
+        $response = new Response(200, [], json_encode($rawResponse));
+        $variationEntities = ItemVariationParser::parse($response);
+        $variationEntity = $variationEntities->findOne(['id' => 1001]);
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(8, $wrapper->getAttributes());
+    }
+
+    public function testItExportsTheFirstValueOfPropertyIfPropertyTypeIsInvalid()
+    {
+        $rawResponse = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
+        $rawResponse = json_decode($rawResponse, true);
+        $rawResponse['entries'][1]['properties'][0]['propertyRelation']['cast'] = 'someRandomWrongType';
+        $rawResponse['entries'][1]['properties'][0]['relationValues'][] = [
+            'id' => 100,
+            'value' => 1000,
+            'propertyRelationId' => 10000,
+            'lang' => 'en',
+            'description' => 'description',
+            'createdAt' => '2020-02-02',
+            'updatedAt' => '2020-02-02'
+        ];
+        $response = new Response(200, [], json_encode($rawResponse));
+        $variationEntities = ItemVariationParser::parse($response);
+        $variationEntity = $variationEntities->findOne(['id' => 1001]);
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(9, $wrapper->getAttributes());
+        $this->assertEquals(['1000'], $wrapper->getAttributes()[8]->getValues());
+    }
+
+    public function testPropertiesNotOfTypeItemAreNotExported()
+    {
+        $rawResponse = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
+        $rawResponse = json_decode($rawResponse, true);
+        $rawResponse['entries'][1]['properties'][0]['relationTypeIdentifier'] = 'somethingOtherThanItem';
+        $response = new Response(200, [], json_encode($rawResponse));
+        $variationEntities = ItemVariationParser::parse($response);
+        $variationEntity = $variationEntities->findOne(['id' => 1001]);
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(8, $wrapper->getAttributes());
     }
 }

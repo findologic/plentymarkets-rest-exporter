@@ -116,8 +116,8 @@ class Variation
         $this->processGroups();
         $this->processTags();
         $this->processImages();
-        $this->processVariationProperties();
-        $this->processVariationSpecificProperties();
+        $this->processCharacteristics();
+        $this->processProperties();
     }
 
     public function isMain(): bool
@@ -163,7 +163,7 @@ class Variation
         return $this->barcodes;
     }
 
-    public function getPrice(): float //TODO This may return null if the price is 0
+    public function getPrice(): ?float
     {
         return $this->price;
     }
@@ -377,35 +377,31 @@ class Variation
         }
     }
 
-    private function processVariationProperties(): void // TODO Please rename processVariationProperties => processCharacteristics and processVariationSpecificProperties => processProperties. We had a lot of confusion about that in the past, since Plentymarkets were changing the names of these so often. Now they have agreed on characteristics for item properties and properties for variation properties.
+    private function processCharacteristics(): void
     {
-        $variationProperties = $this->variationEntity->getVariationProperties();
+        $characteristics = $this->variationEntity->getVariationProperties();
 
-        foreach ($variationProperties as $variationProperty) {
-            $itemProperty = $variationProperty->getProperty();
+        foreach ($characteristics as $characteristic) {
+            $characteristicProperty = $characteristic->getProperty();
 
-            if ($itemProperty && !$itemProperty->isSearchable()) {
-                // @codeCoverageIgnoreStart
-                continue; // TODO Add a unit-test for that. testPropertiesWhichAreNotSearchableAreNotExported
-                // @codeCoverageIgnoreEnd
+            if ($characteristicProperty && !$characteristicProperty->isSearchable()) {
+                continue;
             }
 
-            if ($itemProperty->getValueType() === 'empty' && !$itemProperty->getPropertyGroupId()) {
-                // @codeCoverageIgnoreStart
-                continue; // TODO testPropertiesOfTypeEmptyAndWithoutGroupIdAreNotExported
-                // @codeCoverageIgnoreEnd
+            if ($characteristicProperty->getValueType() === 'empty' && !$characteristicProperty->getPropertyGroupId()) {
+                continue;
             }
 
-            $value = $this->getPropertyValue($variationProperty);
+            $value = $this->getPropertyValue($characteristic);
             // If there is no value for the property, use its name as value and the group name as the property name.
             // Properties of type "empty" are a special case since they never have a value of their own.
-            if ($itemProperty->getValueType() === 'empty') {
-                $propertyName = $this->getPropertyGroupForPropertyName($itemProperty->getPropertyGroupId());
+            if ($characteristicProperty->getValueType() === 'empty') {
+                $propertyName = $this->getPropertyGroupForPropertyName($characteristicProperty->getPropertyGroupId());
             } elseif ($value === '') {
-                $propertyName = $this->getPropertyGroupForPropertyName($itemProperty->getPropertyGroupId());
-                $value = $variationProperty->getPropertyName($this->config->getLanguage());
+                $propertyName = $this->getPropertyGroupForPropertyName($characteristicProperty->getPropertyGroupId());
+                $value = $characteristic->getPropertyName($this->config->getLanguage());
             } else {
-                $propertyName = $variationProperty->getPropertyName($this->config->getLanguage());
+                $propertyName = $characteristic->getPropertyName($this->config->getLanguage());
             }
 
             if ($propertyName != null && $value != "null" && $value != null && $value != '') {
@@ -414,7 +410,7 @@ class Variation
         }
     }
 
-    private function processVariationSpecificProperties(): void // TODO These methods were probably for the most part copies from the old implementation. Please try to restructure that a bit, since that code isn't really that well structured, when I look at it.
+    private function processProperties(): void // TODO These methods were probably for the most part copies from the old implementation. Please try to restructure that a bit, since that code isn't really that well structured, when I look at it.
     {
         /** @var PropertyResponse $properties */
         if (!$properties = $this->registry->get('properties')) {
@@ -425,9 +421,7 @@ class Variation
 
         foreach ($this->variationEntity->getProperties() as $property) {
             if ($property->getRelationTypeIdentifier() != ItemVariationProperty::PROPERTY_TYPE_ITEM) {
-                // @codeCoverageIgnoreStart
-                continue; // TODO testPropertiesNotOfTypeItemAreNotExported
-                // @codeCoverageIgnoreEnd
+                continue;
             }
 
             $propertyName = $properties->getPropertyName($property->getPropertyId(), $this->config->getLanguage());
@@ -469,16 +463,12 @@ class Variation
                     );
                     break;
                 default:
-                    // @codeCoverageIgnoreStart
-                    $value = $property['relationValues'][0]['value'] ?? null; // TODO Add a test for this case.
-                    // TODO If there was a unit-test you would've immediately seen that you can not access $property['relationValues'], since $property is an object, and not an array.
-                    // @codeCoverageIgnoreEnd
+                    $relationValues = $property->getRelationValues();
+                    $value = count($relationValues) ? $relationValues[0]->getValue() : null;
             }
 
             if ($propertyName == null || $value == "null" || $value == null || $value == '') {
-                // @codeCoverageIgnoreStart
-                continue; // Ignore empty properties. // TODO Add a test for this.
-                // @codeCoverageIgnoreEnd
+                continue; // Ignore empty properties.
             }
 
             if (is_array($value)) { //TODO This check is redundant. libflexport can handle multiple values for a single attribute anyway.
@@ -491,17 +481,17 @@ class Variation
         }
     }
 
-    private function getPropertyGroupForPropertyName(int $propertyGroupId): string // TODO Make this nullable and just return null in case there are no property groups or there is no property group for the given id.
+    private function getPropertyGroupForPropertyName(int $propertyGroupId): ?string
     {
         if (!$this->propertyGroups) { // TODO That check should only be done once and not for each and every variant.
             // @codeCoverageIgnoreStart
-            return '';
+            return null;
             // @codeCoverageIgnoreEnd
         }
 
         /** @var PropertyGroup[] $properties */
-        if (!$propertyGroup = $this->propertyGroups->findOne(['propertyGroupId' => $propertyGroupId])) {
-            return ''; // TODO Make the method return value nullable and just return null in this case. Also add a test.
+        if (!$propertyGroup = $this->propertyGroups->findOne(['id' => $propertyGroupId])) {
+            return null;
         }
 
         foreach ($propertyGroup->getNames() as $name) {
@@ -527,26 +517,22 @@ class Variation
                 $value = $variationProperty->getProperty()->getBackendName();
                 // break omitted intentionally.
             case 'text':
-                // @codeCoverageIgnoreStart
-                // TODO: The structure for names look something like this: ...
                 $names = $variationProperty->getNames();
-                if (!empty($names[strtoupper($this->config->getLanguage())])) {
-                    $value = $names[strtoupper($this->config->getLanguage())];
-                }
-                break;
-                // @codeCoverageIgnoreEnd
-            case 'selection':
-                // @codeCoverageIgnoreStart
-                // TODO: A property selection looks something like that:...
-                foreach ($variationProperty->getPropertySelection() as $selection) {
-                    if (strtoupper($selection['lang']) != $this->config->getLanguage()) {
-                        continue;
+                foreach ($names as $name) {
+                    if (strtoupper($name->getLang()) == strtoupper($this->config->getLanguage())) {
+                        $value = $name->getValue();
+                        break;
                     }
-
-                    $value = $selection['name'];
                 }
                 break;
-                // @codeCoverageIgnoreEnd
+            case 'selection':
+                foreach ($variationProperty->getPropertySelection() as $selection) {
+                    if (strtoupper($selection->getLang()) == strtoupper($this->config->getLanguage())) {
+                        $value = $selection->getName();
+                        break;
+                    }
+                }
+                break;
             case 'int':
                 $value = $variationProperty->getValueInt();
                 break;
@@ -554,10 +540,8 @@ class Variation
                 $value = $variationProperty->getValueFloat();
                 break;
             default:
-                // @codeCoverageIgnoreStart
-                $value = ''; // TODO Add a test case for that.
+                $value = '';
                 break;
-                // @codeCoverageIgnoreEnd
         }
 
         return $value;

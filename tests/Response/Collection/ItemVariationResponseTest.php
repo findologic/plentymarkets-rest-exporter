@@ -263,7 +263,7 @@ class ItemVariationResponseTest extends TestCase
 
         $variationProperties = $itemVariation->getVariationProperties();
         $this->assertIsArray($variationProperties);
-        $this->assertCount(3, $variationProperties);
+        $this->assertCount(4, $variationProperties);
         /** @var VariationProperty $variationProperty */
         $variationProperty = reset($variationProperties);
         $this->assertEquals(4, $variationProperty->getId());
@@ -277,8 +277,22 @@ class ItemVariationResponseTest extends TestCase
         $this->assertEquals('2018-06-12T15:31:14+01:00', $variationProperty->getUpdatedAt());
         $this->assertEquals('2018-06-12T15:31:14+01:00', $variationProperty->getCreatedAt());
         $this->assertEquals(1000, $variationProperty->getVariationId());
-        $this->assertEquals([], $variationProperty->getNames());
-        $this->assertEquals([], $variationProperty->getPropertySelection());
+
+        $names = $variationProperty->getNames();
+        self::assertCount(2, $names);
+        $name = reset($names);
+        $this->assertEquals('named property', $name->getValue());
+        $this->assertEquals('en', $name->getLang());
+        $this->assertEquals(10, $name->getPropertyValueId());
+
+        $propertySelections = $variationProperty->getPropertySelection();
+        self::assertCount(1, $propertySelections);
+        $propertySelection = reset($propertySelections);
+        $this->assertEquals('en', $propertySelection->getLang());
+        $this->assertEquals(3, $propertySelection->getId());
+        $this->assertEquals('', $propertySelection->getDescription());
+        $this->assertEquals('Nice', $propertySelection->getName());
+        $this->assertEquals(1, $propertySelection->getPropertyId());
 
         /** @var ItemProperty $property */
         $property = $variationProperty->getProperty();

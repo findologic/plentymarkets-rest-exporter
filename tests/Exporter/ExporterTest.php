@@ -226,7 +226,7 @@ class ExporterTest extends TestCase
 
         $this->setupRegistryMock($webStore, $variationCount);
 
-        $expectedItems = $this->getExpectedCsvItems();
+        $expectedItems = $this->getExpectedCsvItems(true);
 
         $expectedItems[0]->addName('de1');
         $expectedItems[0]->addSummary('de-shortdescription');
@@ -240,6 +240,7 @@ class ExporterTest extends TestCase
         $expectedItems[0]->addAttribute(new Attribute('cat', ['Sessel & Hocker']));
         $expectedItems[0]->addAttribute(new Attribute('Description', ['de-Changes']));
         $expectedItems[0]->addAttribute(new Attribute('Size', ['Sehr Grob']));
+        $expectedItems[0]->addAttribute(new Attribute('Fourth Property', ['Also Nice']));
 
         $expectedItems[1]->addName('de-Brown armchair »New York« with real leather upholstery');
         $expectedItems[1]->addSummary('de-Upholstery: pigmented Napa leather (100% leather) Upholstery color: brown');
@@ -356,7 +357,7 @@ class ExporterTest extends TestCase
     /**
      * @return CSVItem[]
      */
-    private function getExpectedCsvItems(): array
+    private function getExpectedCsvItems(bool $translationFlag = false): array
     {
         $csvItem1 = $this->fileExporterMock->createItem(102);
         $csvItem1->addName('1');
@@ -372,11 +373,13 @@ class ExporterTest extends TestCase
         $csvItem1->addAttribute(new Attribute('cat_url', ['https://plentydemoshop.com/wohnzimmer/sessel-hocker/']));
         $csvItem1->addAttribute(new Attribute('Couch color', ['black']));
         $csvItem1->addAttribute(new Attribute('cat_id', ['1', '2', '3']));
-        $csvItem1->addAttribute(new Attribute('Test', ['123']));
-        $csvItem1->addAttribute(new Attribute('Second Property', ['3']));
         $csvItem1->addAttribute(new Attribute('Test Group', ['Third Property']));
         $csvItem1->addAttribute(new Attribute('Description', ['Changes']));
         $csvItem1->addAttribute(new Attribute('Size', ['Very Large']));
+        $csvItem1->addAttribute(new Attribute('Fourth Property', ['Nice']));
+        $name = $translationFlag ? 'something else' : 'something';
+        $csvItem1->addAttribute(new Attribute($name, [$name]));
+        $csvItem1->addAttribute(new Attribute($translationFlag ? 'named propertyy' : 'named property', ['123']));
         $csvItem1->addImage(new Image('https://images.com/middle/image.jpg'));
         $csvItem1->addUsergroup(new Usergroup('0_'));
         $csvItem1->addKeyword(new Keyword('aaaa'));
@@ -400,6 +403,7 @@ class ExporterTest extends TestCase
         $csvItem2->addAttribute(new Attribute('Test Group', ['Third Property', 'PropertyWithAWeirdType']));
         $csvItem2->addAttribute(new Attribute('test-multiselect-property', ['value2', 'value1']));
         $csvItem2->addAttribute(new Attribute('Float Property', ['123.45']));
+        $csvItem2->addAttribute(new Attribute('Test', [100]));
         $csvItem2->addImage(
             new Image('https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/103/middle/103-sessel-braun-1.jpg')
         );
