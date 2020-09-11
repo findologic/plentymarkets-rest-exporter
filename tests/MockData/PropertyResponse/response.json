@@ -1,6 +1,6 @@
 {
   "page": 1,
-  "totalsCount": 5,
+  "totalsCount": 6,
   "isLastPage": true,
   "entries": [
     {
@@ -738,6 +738,42 @@
           }
         }
       ],
+      "amazons": []
+    },
+    {
+      "id": 8,
+      "cast": "shortText",
+      "typeIdentifier": "item",
+      "position": 50,
+      "createdAt": "2019-02-22T14:54:23+00:00",
+      "updatedAt": "2019-02-22T14:54:23+00:00",
+      "propertyId": null,
+      "propertyGroupId": null,
+      "groups": [],
+      "availabilities": [],
+      "names": [
+        {
+          "id": 8,
+          "propertyId": 8,
+          "lang": "sdfghf",
+          "name": "Description",
+          "description": "Description",
+          "createdAt": "2019-02-22T14:54:23+00:00",
+          "updatedAt": "2019-02-22T14:54:23+00:00"
+        },
+        {
+          "id": 2131321654,
+          "propertyId": 8,
+          "lang": "ghffdgh",
+          "name": "Description",
+          "description": "Description",
+          "createdAt": "2019-02-22T14:54:23+00:00",
+          "updatedAt": "2019-02-22T14:54:23+00:00"
+        }
+      ],
+      "options": [],
+      "markets": [],
+      "selections": [],
       "amazons": []
     }
   ],

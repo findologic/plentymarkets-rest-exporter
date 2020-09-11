@@ -282,4 +282,83 @@ class VariationTest extends TestCase
 
         $this->assertCount(8, $wrapper->getAttributes());
     }
+
+    public function testPropertiesOfTypeSelectionWithNonexistantPropertyIdsAreNotExported()
+    {
+        $rawResponse = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
+        $rawResponse = json_decode($rawResponse, true);
+        $rawResponse['entries'][1]['properties'][0]['propertyRelation']['cast'] = 'selection';
+        $rawResponse['entries'][1]['properties'][0]['propertyId'] = 561894132654;
+        $rawResponse['entries'][1]['properties'][0]['relationValues'][] = [
+            'id' => 100,
+            'value' => 1000,
+            'propertyRelationId' => 10000,
+            'lang' => 'en',
+            'description' => 'description',
+            'createdAt' => '2020-02-02',
+            'updatedAt' => '2020-02-02'
+        ];
+        $response = new Response(200, [], json_encode($rawResponse));
+        $variationEntities = ItemVariationParser::parse($response);
+        $variationEntity = $variationEntities->findOne(['id' => 1001]);
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(8, $wrapper->getAttributes());
+    }
+
+    public function testPropertiesOfTypeSelectionWithNonexistantSelectedValueAreNotExported()
+    {
+        $rawResponse = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
+        $rawResponse = json_decode($rawResponse, true);
+        $rawResponse['entries'][1]['properties'][0]['propertyRelation']['cast'] = 'selection';
+        $rawResponse['entries'][1]['properties'][0]['relationValues'][] = [
+            'id' => 100,
+            'value' => 1000,
+            'propertyRelationId' => 10000,
+            'lang' => 'en',
+            'description' => 'description',
+            'createdAt' => '2020-02-02',
+            'updatedAt' => '2020-02-02'
+        ];
+        $response = new Response(200, [], json_encode($rawResponse));
+        $variationEntities = ItemVariationParser::parse($response);
+        $variationEntity = $variationEntities->findOne(['id' => 1001]);
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(8, $wrapper->getAttributes());
+    }
+
+    public function testPropertiesThatDontHaveANameInTheSelectedLanguageAreNotExported()
+    {
+        $rawResponse = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
+        $rawResponse = json_decode($rawResponse, true);
+        $rawResponse['entries'][1]['properties'][0]['propertyId'] = 8;
+        $response = new Response(200, [], json_encode($rawResponse));
+        $variationEntities = ItemVariationParser::parse($response);
+        $variationEntity = $variationEntities->findOne(['id' => 1001]);
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(8, $wrapper->getAttributes());
+    }
 }

@@ -75,9 +75,7 @@ class PropertyResponse extends IterableResponse implements CollectionInterface, 
     public function getPropertyName(int $id, string $lang): ?string
     {
         if (!$property = $this->findOne(['id' => $id])) {
-            // @codeCoverageIgnoreStart
-            return null; // TODO In this class there are multiple @codeCoverageIgnoreStart. They seem like they could be easily tested. It also makes sense to test these, so we are sure no exception happens in that case.
-            // @codeCoverageIgnoreEnd
+            return null;
         }
 
         foreach ($property->getNames() as $name) {
@@ -85,17 +83,13 @@ class PropertyResponse extends IterableResponse implements CollectionInterface, 
                 return $name->getName();
             }
         }
-        // @codeCoverageIgnoreStart
-        return null; // TODO In this class there are multiple @codeCoverageIgnoreStart. They seem like they could be easily tested. It also makes sense to test these, so we are sure no exception happens in that case.
-        // @codeCoverageIgnoreEnd
+        return null;
     }
 
     public function getPropertySelectionValue(int $id, int $selectionId, string $lang): ?string
     {
         if (!$property = $this->findOne(['id' => $id])) {
-            // @codeCoverageIgnoreStart
-            return null; // TODO In this class there are multiple @codeCoverageIgnoreStart. They seem like they could be easily tested. It also makes sense to test these, so we are sure no exception happens in that case.
-            // @codeCoverageIgnoreEnd
+            return null;
         }
 
         foreach ($property->getSelections() as $selection) {
@@ -112,8 +106,6 @@ class PropertyResponse extends IterableResponse implements CollectionInterface, 
             }
         }
 
-        // @codeCoverageIgnoreStart
-        return null; // TODO In this class there are multiple @codeCoverageIgnoreStart. They seem like they could be easily tested. It also makes sense to test these, so we are sure no exception happens in that case.
-        // @codeCoverageIgnoreEnd
+        return null;
     }
 }

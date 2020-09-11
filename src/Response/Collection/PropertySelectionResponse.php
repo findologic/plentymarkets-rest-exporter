@@ -74,7 +74,7 @@ class PropertySelectionResponse extends IterableResponse implements CollectionIn
 
     public function getPropertySelectionValues(int $id, string $lang): array
     {
-        $propertySelections = $this->find(['propertyId' => $id]); // TODO I think I implemented the find method with the intention that you can actually explicitly can get specific data.
+        $propertySelections = $this->find(['propertyId' => $id]);
         $values = [];
         foreach ($propertySelections as $propertySelection) {
             if (!$relation = $propertySelection->getRelation()) {
