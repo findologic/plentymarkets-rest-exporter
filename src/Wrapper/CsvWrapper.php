@@ -62,6 +62,10 @@ class CsvWrapper extends Wrapper
             );
             $item = $productWrapper->processProductData();
 
+            if (!$item) {
+                continue;
+            }
+
             $items[] = $item;
         }
 

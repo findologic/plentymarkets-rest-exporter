@@ -944,6 +944,24 @@
             "createdAt": "2020-04-07T10:48:55+01:00",
             "updatedAt": "2020-04-07T10:48:55+01:00"
           }
+        },
+        {
+          "id": 698746,
+          "propertyId": 9,
+          "relationTypeIdentifier": "item",
+          "relationTargetId": 1001,
+          "selectionRelationId": null,
+          "createdAt": "2020-04-08T08:54:04+01:00",
+          "updatedAt": "2020-04-08T08:54:04+01:00",
+          "relationValues": [],
+          "propertyRelation": {
+            "id": 9,
+            "cast": "empty",
+            "typeIdentifier": "item",
+            "position": 5,
+            "createdAt": "2020-04-07T10:48:55+01:00",
+            "updatedAt": "2020-04-07T10:48:55+01:00"
+          }
         }
       ],
       "itemImages": [

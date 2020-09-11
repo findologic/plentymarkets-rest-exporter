@@ -38,6 +38,9 @@ class Product
     /** @var Exporter */
     private $exporter;
 
+    /** @var bool */
+    private $hasPrice = false;
+
     public function __construct(
         Exporter $exporter,
         Config $config,
@@ -69,6 +72,10 @@ class Product
     public function processProductData(): ?Item
     {
         $this->processVariations();
+
+        if (!$this->hasPrice) {
+            return null;
+        }
 
         $this->setTexts();
 
@@ -121,9 +128,12 @@ class Product
             $variation->processData();
 
             if ($variation->isMain()) {
-                $this->item->addImage($variation->getImage()); // TODO In case a variation does not have an image, an exception is thrown. Please add a test for that.
+                $this->item->addImage($variation->getImage());
                 $this->item->addSort($variation->getPosition());
-                $this->item->addPrice($variation->getPrice()); // TODO Ensure that the item always has a price. In case it does not have a price, skip it.
+                if ($variation->getPrice()) {
+                    $this->item->addPrice($variation->getPrice());
+                    $this->hasPrice = true;
+                }
                 $this->item->setInsteadPrice($variation->getInsteadPrice());
                 foreach ($variation->getGroups() as $group) {
                     $this->item->addUsergroup($group);

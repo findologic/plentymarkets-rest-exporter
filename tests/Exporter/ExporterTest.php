@@ -354,6 +354,73 @@ class ExporterTest extends TestCase
         $exporter->export();
     }
 
+    public function testItDoesNotExportItemsWithNoPriceOnMainVariation()
+    {
+        $itemResponse = $this->getMockResponse('ItemResponse/response.json');
+        $rawResponse = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
+        $rawResponse = json_decode($rawResponse, true);
+        $rawResponse['entries'][0]['variationSalesPrices'] = [];
+        $itemVariationResponse = new Response(200, [], json_encode($rawResponse));
+        $variationCount = count(ItemVariationParser::parse($itemVariationResponse)->all());
+
+        $webStore = new WebStore([
+            'id' => 1,
+            'type' => 'plentymarkets',
+            'storeIdentifier' => 12345,
+            'name' => 'French Test Store',
+            'pluginSetId' => 44,
+            'configuration' => ['defaultLanguage' => 'en']
+        ]);
+
+        $this->setupRegistryMock($webStore, $variationCount);
+
+        $expectedItems = $this->getExpectedCsvItems();
+        array_shift($expectedItems);
+        foreach ($expectedItems as $expectedItem) {
+            $expectedItem->setSummary(new Summary());
+            $expectedItem->setDescription(new Description());
+            $expectedItem->setName(new Name());
+            $expectedItem->setUrl(new Url());
+        }
+
+        $this->clientMock->method('send')->willReturnOnConsecutiveCalls($itemResponse, $itemVariationResponse);
+        $this->fileExporterMock->expects($this->once())->method('serializeItemsToFile')->with(
+            'exportpath',
+            $expectedItems
+        );
+
+        $exporter = $this->getDefaultExporter(Exporter::TYPE_CSV);
+        $exporter->export();
+    }
+
+    public function testItThrowsAnExceptionWhenMainVariationHasNoImage()
+    {
+        $itemResponse = $this->getMockResponse('ItemResponse/response.json');
+        $rawResponse = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
+        $rawResponse = json_decode($rawResponse, true);
+        $rawResponse['entries'][0]['itemImages'] = [];
+        $itemVariationResponse = new Response(200, [], json_encode($rawResponse));
+        $variationCount = count(ItemVariationParser::parse($itemVariationResponse)->all());
+
+        $webStore = new WebStore([
+            'id' => 1,
+            'type' => 'plentymarkets',
+            'storeIdentifier' => 12345,
+            'name' => 'French Test Store',
+            'pluginSetId' => 44,
+            'configuration' => ['defaultLanguage' => 'en']
+        ]);
+
+        $this->setupRegistryMock($webStore, $variationCount);
+
+        $this->expectException(\TypeError::class);
+
+        $this->clientMock->method('send')->willReturnOnConsecutiveCalls($itemResponse, $itemVariationResponse);
+
+        $exporter = $this->getDefaultExporter(Exporter::TYPE_CSV);
+        $exporter->export();
+    }
+
     /**
      * @return CSVItem[]
      */
@@ -404,6 +471,8 @@ class ExporterTest extends TestCase
         $csvItem2->addAttribute(new Attribute('test-multiselect-property', ['value2', 'value1']));
         $csvItem2->addAttribute(new Attribute('Float Property', ['123.45']));
         $csvItem2->addAttribute(new Attribute('Test', [100]));
+        $prefix = $translationFlag ? 'de-' : '';
+        $csvItem2->addAttribute(new Attribute($prefix . 'Some group', [$prefix . 'Some property of empty type']));
         $csvItem2->addImage(
             new Image('https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/103/middle/103-sessel-braun-1.jpg')
         );
@@ -479,15 +548,7 @@ class ExporterTest extends TestCase
             'https://plentydemoshop.com/wohnzimmer/sessel-hocker/',
         ]));
 
-        $csvItem6 = $this->fileExporterMock->createItem(107);
-        $csvItem6->setSummary(new Summary());
-        $csvItem6->setDescription(new Description());
-        $csvItem6->setName(new Name());
-        $csvItem6->setUrl(new Url());
-        $csvItem6->addSalesFrequency(0);
-        $csvItem6->addDateAdded(new \DateTime('2014-12-24T00:00:00+00:00'));
-
-        return [$csvItem1, $csvItem2, $csvItem3, $csvItem4, $csvItem5, $csvItem6];
+        return [$csvItem1, $csvItem2, $csvItem3, $csvItem4, $csvItem5];
     }
 
     private function setupRegistryMock(WebStore $webStore, int $variationsCount): void

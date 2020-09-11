@@ -108,4 +108,21 @@ class PropertyResponse extends IterableResponse implements CollectionInterface, 
 
         return null;
     }
+
+    public function getPropertyGroupName(int $propertyId, string $lang): ?string
+    {
+        if (!$property = $this->findOne(['id' => $propertyId])) {
+            return null;
+        }
+
+        foreach ($property->getGroups() as $group) {
+            foreach ($group->getNames() as $name) {
+                if (strtoupper($name->getLang()) == strtoupper($lang)) {
+                    return $name->getName();
+                }
+            }
+        }
+
+        return null;
+    }
 }

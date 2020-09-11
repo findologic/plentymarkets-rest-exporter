@@ -430,9 +430,12 @@ class Variation
 
             switch ($property->getPropertyRelation()->getCast()) {
                 case 'empty':
-                    // @codeCoverageIgnoreStart
-                    break; // TODO empty does not mean, it shouldn't be exported. Please have a look at the current implementation.
-                    // @codeCoverageIgnoreEnd
+                    $value = $propertyName;
+                    $propertyName = $properties->getPropertyGroupName(
+                        $property->getPropertyId(),
+                        $this->config->getLanguage()
+                    );
+                    break;
                 case 'shortText':
                 case 'longText':
                     foreach ($property->getRelationValues() as $relationValue) {
@@ -468,10 +471,10 @@ class Variation
             }
 
             if ($propertyName == null || $value == "null" || $value == null || $value == '') {
-                continue; // Ignore empty properties.
+                continue;
             }
 
-            if (is_array($value)) { //TODO This check is redundant. libflexport can handle multiple values for a single attribute anyway.
+            if (is_array($value)) { // TODO This check is redundant. libflexport can handle multiple values for a single attribute anyway.
                 foreach ($value as $singleValue) {
                     $this->attributes[] = new Attribute($propertyName, [$singleValue]);
                 }

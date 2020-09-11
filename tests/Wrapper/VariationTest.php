@@ -100,7 +100,7 @@ class VariationTest extends TestCase
         $this->assertEquals(560.0, $wrapper->getInsteadPrice());
 
         $attributes = $wrapper->getAttributes();
-        $this->assertCount(10, $attributes);
+        $this->assertCount(11, $attributes);
         $this->assertEquals('cat', $attributes[0]->getKey());
         $this->assertEquals(['Armchairs & Stools'], $attributes[0]->getValues());
         $this->assertEquals('cat_url', $attributes[1]->getKey());
@@ -145,7 +145,7 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertCount(9, $wrapper->getAttributes());
+        $this->assertCount(10, $wrapper->getAttributes());
     }
 
     public function testCharacteristicsOfTypeEmptyAndWithoutGroupIdAreNotExported()
@@ -167,7 +167,7 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertCount(9, $wrapper->getAttributes());
+        $this->assertCount(10, $wrapper->getAttributes());
     }
 
     public function testCharacteristicsOfTypeEmptyAndWithNonExistantGroupIdAreNotExported()
@@ -189,7 +189,7 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertCount(9, $wrapper->getAttributes());
+        $this->assertCount(10, $wrapper->getAttributes());
     }
 
     public function testPropertiesWithNoNameAreNotExported()
@@ -209,7 +209,7 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertCount(8, $wrapper->getAttributes());
+        $this->assertCount(9, $wrapper->getAttributes());
     }
 
     public function testPropertiesWithNoValueAreNotExported()
@@ -230,7 +230,7 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertCount(8, $wrapper->getAttributes());
+        $this->assertCount(9, $wrapper->getAttributes());
     }
 
     public function testItExportsTheFirstValueOfPropertyIfPropertyTypeIsInvalid()
@@ -259,7 +259,7 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertCount(9, $wrapper->getAttributes());
+        $this->assertCount(10, $wrapper->getAttributes());
         $this->assertEquals(['1000'], $wrapper->getAttributes()[8]->getValues());
     }
 
@@ -280,7 +280,7 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertCount(8, $wrapper->getAttributes());
+        $this->assertCount(9, $wrapper->getAttributes());
     }
 
     public function testPropertiesOfTypeSelectionWithNonexistantPropertyIdsAreNotExported()
@@ -310,7 +310,7 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertCount(8, $wrapper->getAttributes());
+        $this->assertCount(9, $wrapper->getAttributes());
     }
 
     public function testPropertiesOfTypeSelectionWithNonexistantSelectedValueAreNotExported()
@@ -339,7 +339,7 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertCount(8, $wrapper->getAttributes());
+        $this->assertCount(9, $wrapper->getAttributes());
     }
 
     public function testPropertiesThatDontHaveANameInTheSelectedLanguageAreNotExported()
@@ -347,6 +347,28 @@ class VariationTest extends TestCase
         $rawResponse = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
         $rawResponse = json_decode($rawResponse, true);
         $rawResponse['entries'][1]['properties'][0]['propertyId'] = 8;
+        $response = new Response(200, [], json_encode($rawResponse));
+        $variationEntities = ItemVariationParser::parse($response);
+        $variationEntity = $variationEntities->findOne(['id' => 1001]);
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(9, $wrapper->getAttributes());
+    }
+
+    public function testPropertiesOfCastEmptyWithInvalidPropertyIdOrNoGroupNameInSelectedLanguageAreNotExported()
+    {
+        $rawResponse = file_get_contents(__DIR__ . '/../MockData/ItemVariationResponse/response.json');
+        $rawResponse = json_decode($rawResponse, true);
+        $rawResponse['entries'][1]['properties'][0]['propertyId'] = 10;
+        $rawResponse['entries'][1]['properties'][0]['propertyRelation']['cast'] = 'empty';
+        $rawResponse['entries'][1]['properties'][1]['propertyId'] = 89762168461;
         $response = new Response(200, [], json_encode($rawResponse));
         $variationEntities = ItemVariationParser::parse($response);
         $variationEntity = $variationEntities->findOne(['id' => 1001]);
