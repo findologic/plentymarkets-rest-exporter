@@ -514,8 +514,10 @@ class Variation
         return $value;
     }
 
-    private function getPropertyNameOfEmptyProperty(ItemVariationProperty $property, PropertyResponse $properties): ?string
-    {
+    private function getPropertyNameOfEmptyProperty(
+        ItemVariationProperty $property,
+        PropertyResponse $properties
+    ): ?string {
         return $properties->getPropertyGroupName(
             $property->getPropertyId(),
             $this->config->getLanguage()
