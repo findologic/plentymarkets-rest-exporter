@@ -382,9 +382,11 @@ class Variation
         $characteristics = $this->variationEntity->getVariationProperties();
 
         foreach ($characteristics as $characteristic) {
-            $characteristicProperty = $characteristic->getProperty();
+            if (!$characteristicProperty = $characteristic->getProperty()) {
+                continue;
+            }
 
-            if ($characteristicProperty && !$characteristicProperty->isSearchable()) {
+            if (!$characteristicProperty->isSearchable()) {
                 continue;
             }
 
@@ -410,14 +412,10 @@ class Variation
         }
     }
 
-    private function processProperties(): void // TODO These methods were probably for the most part copies from the old implementation. Please try to restructure that a bit, since that code isn't really that well structured, when I look at it.
+    private function processProperties(): void
     {
         /** @var PropertyResponse $properties */
-        if (!$properties = $this->registry->get('properties')) {
-            // @codeCoverageIgnoreStart
-            return;
-            // @codeCoverageIgnoreEnd
-        }
+        $properties = $this->registry->get('properties');
 
         foreach ($this->variationEntity->getProperties() as $property) {
             if ($property->getRelationTypeIdentifier() != ItemVariationProperty::PROPERTY_TYPE_ITEM) {
@@ -431,39 +429,17 @@ class Variation
             switch ($property->getPropertyRelation()->getCast()) {
                 case 'empty':
                     $value = $propertyName;
-                    $propertyName = $properties->getPropertyGroupName(
-                        $property->getPropertyId(),
-                        $this->config->getLanguage()
-                    );
+                    $propertyName = $this->getPropertyNameOfEmptyProperty($property, $properties);
                     break;
                 case 'shortText':
                 case 'longText':
-                    foreach ($property->getRelationValues() as $relationValue) {
-                        if (strtoupper($relationValue->getLang()) != strtoupper($this->config->getLanguage())) {
-                            continue;
-                        }
-
-                        $value = $relationValue->getValue();
-                    }
+                    $value = $this->getTextPropertyValue($property);
                     break;
                 case 'selection':
-                    if (!$relationValues = $property->getRelationValues()) {
-                        // @codeCoverageIgnoreStart
-                        break;
-                        // @codeCoverageIgnoreEnd
-                    }
-                    $selectionId = (int)reset($relationValues)->getValue();
-                    $value = $properties->getPropertySelectionValue(
-                        $property->getPropertyId(),
-                        $selectionId,
-                        $this->config->getLanguage()
-                    );
+                    $value = $this->getSelectionPropertyValue($property, $properties);
                     break;
                 case 'multiSelection':
-                    $value = $this->propertySelections->getPropertySelectionValues(
-                        $property->getPropertyId(),
-                        $this->config->getLanguage()
-                    );
+                    $value = $this->getMultiselectionPropertyValue($property);
                     break;
                 default:
                     $relationValues = $property->getRelationValues();
@@ -474,24 +450,12 @@ class Variation
                 continue;
             }
 
-            if (is_array($value)) { // TODO This check is redundant. libflexport can handle multiple values for a single attribute anyway.
-                foreach ($value as $singleValue) {
-                    $this->attributes[] = new Attribute($propertyName, [$singleValue]);
-                }
-            } else {
-                $this->attributes[] = new Attribute($propertyName, [$value]);
-            }
+            $this->attributes[] = new Attribute($propertyName, (array)$value);
         }
     }
 
     private function getPropertyGroupForPropertyName(int $propertyGroupId): ?string
     {
-        if (!$this->propertyGroups) { // TODO That check should only be done once and not for each and every variant.
-            // @codeCoverageIgnoreStart
-            return null;
-            // @codeCoverageIgnoreEnd
-        }
-
         /** @var PropertyGroup[] $properties */
         if (!$propertyGroup = $this->propertyGroups->findOne(['id' => $propertyGroupId])) {
             return null;
@@ -548,5 +512,50 @@ class Variation
         }
 
         return $value;
+    }
+
+    private function getPropertyNameOfEmptyProperty(ItemVariationProperty $property, PropertyResponse $properties): ?string
+    {
+        return $properties->getPropertyGroupName(
+            $property->getPropertyId(),
+            $this->config->getLanguage()
+        );
+    }
+
+    public function getTextPropertyValue(ItemVariationProperty $property): ?string
+    {
+        $value = null;
+
+        foreach ($property->getRelationValues() as $relationValue) {
+            if (strtoupper($relationValue->getLang()) != strtoupper($this->config->getLanguage())) {
+                continue;
+            }
+
+            $value = $relationValue->getValue();
+        }
+
+        return $value;
+    }
+
+    public function getSelectionPropertyValue(ItemVariationProperty $property, PropertyResponse $properties): ?string
+    {
+        if (!$relationValues = $property->getRelationValues()) {
+            return null;
+        }
+
+        $selectionId = (int)reset($relationValues)->getValue();
+        return $properties->getPropertySelectionValue(
+            $property->getPropertyId(),
+            $selectionId,
+            $this->config->getLanguage()
+        );
+    }
+
+    public function getMultiselectionPropertyValue(ItemVariationProperty $property): array
+    {
+        return $this->propertySelections->getPropertySelectionValues(
+            $property->getPropertyId(),
+            $this->config->getLanguage()
+        );
     }
 }
