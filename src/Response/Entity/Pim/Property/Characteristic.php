@@ -1,0 +1,157 @@
+<?php
+
+declare(strict_types=1);
+
+namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property;
+
+use DateTimeInterface;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
+
+class Characteristic extends Entity
+{
+    /** @var int */
+    private $id;
+
+    /** @var int */
+    private $propertyId;
+
+    /** @var int|null */
+    private $propertySelectionId;
+
+    /** @var int */
+    private $itemId;
+
+    /** @var int */
+    private $variationId;
+
+    /** @var int */
+    private $surcharge;
+
+    /** @var CharacteristicText[] */
+    private $valueTexts;
+
+    /** @var float|null */
+    private $valueFloat;
+
+    /** @var int|null */
+    private $valueInt;
+
+    /** @var string|null */
+    private $valueFile;
+
+    /** @var CharacteristicSelection[] */
+    private $propertySelections;
+
+    /** @var DateTimeInterface */
+    private $createdAt;
+
+    /** @var DateTimeInterface */
+    private $updatedAt;
+
+    public function __construct(array $data)
+    {
+        $this->id = $this->getIntProperty('id', $data);
+        $this->propertyId = $this->getIntProperty('propertyId', $data);
+        $this->propertySelectionId = $this->getIntProperty('propertySelectionId', $data);
+        $this->itemId = $this->getIntProperty('itemId', $data);
+        $this->variationId = $this->getIntProperty('variationId', $data);
+        $this->surcharge = $this->getIntProperty('surcharge', $data);
+        $this->valueTexts = $this->getEntities(CharacteristicText::class, 'valueTexts', $data);
+        $this->valueFloat = $this->getFloatProperty('valueFloat', $data);
+        $this->valueInt = $this->getIntProperty('valueInt', $data);
+        $this->valueFile = $this->getStringProperty('valueFile', $data);
+        $this->propertySelections = $this->getEntities(CharacteristicSelection::class, 'propertySelection', $data);
+        $this->createdAt = $this->getDateTimeProperty('createdAt', $data);
+        $this->updatedAt = $this->getDateTimeProperty('updatedAt', $data);
+    }
+
+    public function getData(): array
+    {
+        return [
+            'id' => $this->id,
+            'propertyId' => $this->propertyId,
+            'propertySelectionId' => $this->propertySelectionId,
+            'itemId' => $this->itemId,
+            'variationId' => $this->variationId,
+            'surcharge' => $this->surcharge,
+            'valueTexts' => $this->valueTexts,
+            'valueFloat' => $this->valueFloat,
+            'valueInt' => $this->valueInt,
+            'valueFile' => $this->valueFile,
+            'propertySelection' => $this->propertySelections,
+            'createdAt' => $this->createdAt,
+            'updatedAt' => $this->updatedAt,
+        ];
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getPropertyId(): int
+    {
+        return $this->propertyId;
+    }
+
+    public function getPropertySelectionId(): ?int
+    {
+        return $this->propertySelectionId;
+    }
+
+    public function getItemId(): int
+    {
+        return $this->itemId;
+    }
+
+    public function getVariationId(): int
+    {
+        return $this->variationId;
+    }
+
+    public function getSurcharge(): int
+    {
+        return $this->surcharge;
+    }
+
+    /**
+     * @return CharacteristicText[]
+     */
+    public function getValueTexts(): array
+    {
+        return $this->valueTexts;
+    }
+
+    public function getValueFloat(): ?float
+    {
+        return $this->valueFloat;
+    }
+
+    public function getValueInt(): ?int
+    {
+        return $this->valueInt;
+    }
+
+    public function getValueFile(): ?string
+    {
+        return $this->valueFile;
+    }
+
+    /**
+     * @return CharacteristicSelection[]
+     */
+    public function getPropertySelections(): array
+    {
+        return $this->propertySelections;
+    }
+
+    public function getCreatedAt(): DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+}

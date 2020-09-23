@@ -1,0 +1,31 @@
+{
+  "page": 1,
+  "totalsCount": 1,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 1,
+      "countryId": 10,
+      "taxIdNumber": "DE123456789",
+      "startedAt": "2013-01-01T00:00:00+00:00",
+      "locationId": 1,
+      "marginScheme": "none",
+      "isRestrictedToDigitalItems": false,
+      "isStandard": false,
+      "invalidFrom": "2030-01-01T00:00:00+00:00",
+      "createdAt": "2017-12-21T13:16:02+00:00",
+      "updatedAt": "2017-12-21T13:16:02+00:00",
+      "vatRates": [
+        {
+          "id": 0,
+          "name": "A",
+          "vatRate": 19.0
+        }
+      ]
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": "100"
+}

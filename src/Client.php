@@ -54,9 +54,6 @@ class Client
     /** @var DebuggerInterface */
     private $debugger;
 
-    /** @var string */
-    private $protocol = self::PROTOCOL_HTTPS;
-
     /** @var ResponseInterface Used for rate limiting. */
     private $lastResponse;
 
@@ -100,7 +97,9 @@ class Client
     {
         $uri = $request->getUri()->__toString();
         if ($request->getMethod() === self::METHOD_GET && !empty($params)) {
-            $uri .= sprintf('?%s', http_build_query($params));
+            $request = $request->withUri($request->getUri()->withQuery(''));
+
+            $uri .= sprintf('?%s', $this->getRequestOptions($request, $params)[RequestOptions::QUERY]);
         }
 
         $this->customerLogger->info(sprintf('Getting data from: %s', $uri));
@@ -254,21 +253,25 @@ class Client
         ));
     }
 
-    private function sanitizeQueryParams(array $params): array
+    private function sanitizeQueryParams(array $params): string
     {
         $sanitized = [];
         foreach ($params as $key => $value) {
             if (is_array($value)) {
                 // Plentymarkets REST API separates array parameters with ",".
-                $sanitized[$key] = implode(',', $value);
+                $sanitized[$key] = $key . '=' . implode(',', $value);
 
                 continue;
             }
 
-            $sanitized[$key] = $value;
+            if ($value === null) {
+                continue;
+            }
+
+            $sanitized[$key] = $key . '=' . $value;
         }
 
-        return $sanitized;
+        return implode('&', $sanitized);
     }
 
     private function getRequestOptions(GuzzleRequest $request, array $params): array
@@ -280,7 +283,7 @@ class Client
 
         switch ($request->getMethod()) {
             case self::METHOD_POST:
-                $options[RequestOptions::FORM_PARAMS] = $this->sanitizeQueryParams($params);
+                $options[RequestOptions::FORM_PARAMS] = $params;
                 break;
             case self::METHOD_GET:
                 $options[RequestOptions::QUERY] = $this->sanitizeQueryParams($params);

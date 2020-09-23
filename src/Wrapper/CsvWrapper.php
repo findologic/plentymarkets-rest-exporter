@@ -7,11 +7,12 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
-use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
+use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
+use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemVariationResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration as StoreConfiguration;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
+use Log4Php\Logger;
+use Psr\Log\LoggerInterface;
 
 class CsvWrapper extends Wrapper
 {
@@ -24,18 +25,29 @@ class CsvWrapper extends Wrapper
     /** @var Config */
     private $config;
 
-    /** @var Registry */
-    private $registry;
+    /** @var RegistryService */
+    private $registryService;
 
-    /** @var StoreConfiguration */
-    private $storeConfiguration;
+    /** @var LoggerInterface */
+    private $internalLogger;
 
-    public function __construct(string $path, Exporter $exporter, Config $config, Registry $registry)
-    {
+    /** @var LoggerInterface */
+    private $customerLogger;
+
+    public function __construct(
+        string $path,
+        Exporter $exporter,
+        Config $config,
+        RegistryService $registryService,
+        ?LoggerInterface $internalLogger,
+        ?LoggerInterface $customerLogger
+    ) {
         $this->exportPath = $path;
         $this->exporter = $exporter;
         $this->config = $config;
-        $this->registry = $registry;
+        $this->registryService = $registryService;
+        $this->internalLogger = $internalLogger ?? new DummyLogger();
+        $this->customerLogger = $customerLogger ?? new DummyLogger();
     }
 
     /**
@@ -45,22 +57,36 @@ class CsvWrapper extends Wrapper
         int $start,
         int $total,
         ItemResponse $products,
-        ItemVariationResponse $variations
+        PimVariationResponse $variations
     ): void {
         /** @var Item[] $items */
         $items = [];
         foreach ($products->all() as $product) {
-            $productVariations = $variations->find(['itemId' => $product->getId()]);
+            $productVariations = $variations->find([
+                'base' => [
+                    'itemId' => $product->getId()
+                ]
+            ]);
 
             $productWrapper = new Product(
                 $this->exporter,
                 $this->config,
-                $this->getStoreConfiguration(),
-                $this->registry,
+                $this->registryService->getWebStore()->getConfiguration(),
+                $this->registryService,
                 $product,
                 $productVariations
             );
             $item = $productWrapper->processProductData();
+
+            if (!$item) {
+                $this->customerLogger->warning(sprintf(
+                    'Product with id %d could not be exported. Reason: %s',
+                    $product->getId(),
+                    $productWrapper->getReason()
+                ));
+
+                continue;
+            }
 
             $items[] = $item;
         }
@@ -84,16 +110,5 @@ class CsvWrapper extends Wrapper
     public function getExportPath(): string
     {
         return $this->exportPath;
-    }
-
-    private function getStoreConfiguration(): StoreConfiguration
-    {
-        if (!$this->storeConfiguration) {
-            /** @var WebStore $webStore */
-            $webStore = $this->registry->get('webStore');
-            $this->storeConfiguration = $webStore->getConfiguration();
-        }
-
-        return $this->storeConfiguration;
     }
 }

@@ -1,9 +1,11 @@
 /.idea/
+/cache/
+!cache/.gitkeep
 /config/config.yml
 /coverage.xml
+/debug/
+!debug/.gitkeep
 /export/*.csv
 /export/*.xml
 /logs/*.log
 /vendor/
-/debug/
-!debug/.gitkeep

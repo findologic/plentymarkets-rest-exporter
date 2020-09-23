@@ -58,7 +58,7 @@ class ItemProperty extends Entity
     {
         $this->id = (int)$data['id'];
         $this->position = (int)$data['position'];
-        $this->propertyGroupId = !is_null($data['propertyGroupId']) ? (int)$data['propertyGroupId'] : null;
+        $this->propertyGroupId = $this->getIntProperty('propertyGroupId', $data);
         $this->unit = (string)$data['unit'];
         $this->backendName = (string)$data['backendName'];
         $this->comment = (string)$data['comment'];

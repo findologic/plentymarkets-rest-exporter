@@ -1,0 +1,181 @@
+{
+  "page": 1,
+  "totalsCount": 1,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 1,
+      "cast": "selection",
+      "typeIdentifier": "item",
+      "position": 0,
+      "createdAt": "2018-04-16T07:04:49+01:00",
+      "updatedAt": "2018-04-16T07:04:49+01:00",
+      "propertyId": "1",
+      "propertyGroupId": "1",
+      "groups": [
+        {
+          "id": 1,
+          "position": 0,
+          "createdAt": "2018-04-16T07:08:03+01:00",
+          "updatedAt": "2018-04-16T07:08:03+01:00",
+          "names": [
+            {
+              "id": 1,
+              "propertyGroupId": 1,
+              "lang": "en",
+              "name": "Attributes",
+              "description": "",
+              "createdAt": "2018-04-16T07:08:03+01:00",
+              "updatedAt": "2019-02-22T14:34:59+00:00"
+            },
+            {
+              "id": 3,
+              "propertyGroupId": 1,
+              "lang": "de",
+              "name": "ATt",
+              "description": "Ta",
+              "createdAt": "2019-02-22T14:01:58+00:00",
+              "updatedAt": "2019-02-22T14:01:58+00:00"
+            }
+          ],
+          "groupRelation": {
+            "propertyId": 1,
+            "propertyGroupId": 2
+          }
+        }
+      ],
+      "availabilities": [],
+      "names": [
+        {
+          "id": 1,
+          "propertyId": 1,
+          "lang": "en",
+          "name": "Color",
+          "description": "Color",
+          "createdAt": "2018-04-16T07:04:49+01:00",
+          "updatedAt": "2018-04-16T07:04:49+01:00"
+        }
+      ],
+      "options": [
+        {
+          "id": 2,
+          "propertyId": 1,
+          "typeOptionIdentifier": "display",
+          "createdAt": "2018-04-16T07:05:22+01:00",
+          "updatedAt": "2018-04-16T07:05:22+01:00"
+        },
+        {
+          "id": 128,
+          "propertyId": 1,
+          "typeOptionIdentifier": "displayOrder",
+          "createdAt": "2018-06-18T15:32:30+01:00",
+          "updatedAt": "2018-06-18T15:32:30+01:00"
+        },
+        {
+          "id": 129,
+          "propertyId": 1,
+          "typeOptionIdentifier": "displayOrder",
+          "createdAt": "2018-06-18T15:32:30+01:00",
+          "updatedAt": "2018-06-18T15:32:30+01:00"
+        },
+        {
+          "id": 132,
+          "propertyId": 1,
+          "typeOptionIdentifier": "referrers",
+          "createdAt": "2018-06-18T15:32:42+01:00",
+          "updatedAt": "2018-06-18T15:32:42+01:00"
+        }
+      ],
+      "markets": [],
+      "selections": [
+        {
+          "id": 1,
+          "propertyId": 1,
+          "position": 0,
+          "createdAt": "2018-04-16T07:05:34+01:00",
+          "updatedAt": "2018-04-16T07:05:34+01:00",
+          "relation": {
+            "id": 1,
+            "propertyId": 1,
+            "relationTypeIdentifier": null,
+            "relationTargetId": null,
+            "selectionRelationId": 1,
+            "createdAt": "2018-04-16T07:05:34+01:00",
+            "updatedAt": "2018-04-16T07:05:34+01:00",
+            "relationValues": [
+              {
+                "id": 1,
+                "propertyRelationId": 1,
+                "lang": "EN",
+                "value": "Red",
+                "description": "Red",
+                "createdAt": "2018-04-16T07:05:34+01:00",
+                "updatedAt": "2018-04-16T07:05:34+01:00"
+              },
+              {
+                "id": 14,
+                "propertyRelationId": 1,
+                "lang": "de",
+                "value": "Eee",
+                "description": "Reddd",
+                "createdAt": "2019-02-22T14:01:42+00:00",
+                "updatedAt": "2019-02-22T14:01:42+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "id": 2,
+          "propertyId": 1,
+          "position": 0,
+          "createdAt": "2018-04-16T07:05:48+01:00",
+          "updatedAt": "2018-04-16T07:05:48+01:00",
+          "relation": {
+            "id": 2,
+            "propertyId": 1,
+            "relationTypeIdentifier": null,
+            "relationTargetId": null,
+            "selectionRelationId": 2,
+            "createdAt": "2018-04-16T07:05:48+01:00",
+            "updatedAt": "2018-04-16T07:05:48+01:00",
+            "relationValues": [
+              {
+                "id": 2,
+                "propertyRelationId": 2,
+                "lang": "EN",
+                "value": "Blue",
+                "description": "Blue",
+                "createdAt": "2018-04-16T07:05:48+01:00",
+                "updatedAt": "2018-04-16T07:05:48+01:00"
+              },
+              {
+                "id": 13,
+                "propertyRelationId": 2,
+                "lang": "de",
+                "value": "Blue",
+                "description": "Blue",
+                "createdAt": "2019-02-22T14:01:33+00:00",
+                "updatedAt": "2019-02-22T14:01:33+00:00"
+              }
+            ]
+          }
+        }
+      ],
+      "amazons": [
+        {
+          "id": 2,
+          "propertyId": 1,
+          "platform": "de",
+          "category": "AutoAccessory",
+          "field": "item_name",
+          "createdAt": "2019-02-22T14:01:21+00:00",
+          "updatedAt": "2019-02-22T14:01:21+00:00"
+        }
+      ]
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100
+}

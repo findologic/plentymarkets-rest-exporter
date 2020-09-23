@@ -37,7 +37,7 @@ XML this could be multiple files.
 
 ## Running the export
 
-1. Run `composer export` or `bin/export`.
+1. Run `composer export` or `bin/console export:start`.
 1. When the export was successful, you may be able to find the exported CSV/XML file
  in the `/export` directory.
 

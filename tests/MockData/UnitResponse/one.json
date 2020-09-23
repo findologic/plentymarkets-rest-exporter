@@ -1,0 +1,31 @@
+{
+  "page": 1,
+  "totalsCount": 1,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 1,
+      "position": 1,
+      "unitOfMeasurement": "C62",
+      "isDecimalPlacesAllowed": false,
+      "updatedAt": "2016-09-05T12:24:57+01:00",
+      "createdAt": "2016-09-05T12:24:57+01:00",
+      "names": [
+        {
+          "unitId": 1,
+          "lang": "de",
+          "name": "St\u00fcck"
+        },
+        {
+          "unitId": 1,
+          "lang": "en",
+          "name": "piece"
+        }
+      ]
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100
+}

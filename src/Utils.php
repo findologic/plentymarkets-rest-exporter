@@ -46,6 +46,11 @@ class Utils
         return $shopkey;
     }
 
+    public static function isEmpty($value): bool
+    {
+        return $value == 'null' || $value == null || $value == '' || (is_string($value) && trim($value) === '');
+    }
+
     /**
      * When a shopkey is set, the customer-login route is used to fetch the import data. Otherwise the configuration
      * of the given configPath is used.

@@ -5,8 +5,11 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Command\ClearCacheCommand;
+use FINDOLOGIC\PlentyMarketsRestExporter\Command\ClearDataCommand;
 use FINDOLOGIC\PlentyMarketsRestExporter\Command\ClearDebugDirectoryCommand;
 use FINDOLOGIC\PlentyMarketsRestExporter\Command\ClearExportDirectoryCommand;
+use FINDOLOGIC\PlentyMarketsRestExporter\Command\ClearLogDirectoryCommand;
 use FINDOLOGIC\PlentyMarketsRestExporter\Command\ExportCommand;
 use FINDOLOGIC\PlentyMarketsRestExporter\Command\GenerateTokenCommand;
 use Symfony\Component\Console\Application;
@@ -14,8 +17,11 @@ use Symfony\Component\Console\Application;
 $application = new Application();
 
 $application->add(new ExportCommand());
+$application->add(new ClearCacheCommand());
+$application->add(new ClearDataCommand());
 $application->add(new ClearExportDirectoryCommand());
 $application->add(new ClearDebugDirectoryCommand());
+$application->add(new ClearLogDirectoryCommand());
 $application->add(new GenerateTokenCommand());
 
 $application->run();

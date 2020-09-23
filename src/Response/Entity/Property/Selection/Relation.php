@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation\RelationValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation\RelationValue;
 
 class Relation extends Entity
 {
@@ -15,7 +15,7 @@ class Relation extends Entity
     /** @var int */
     private $propertyId;
 
-    /** @var int|null */
+    /** @var string|null */
     private $relationTypeId;
 
     /** @var int|null */
@@ -38,13 +38,11 @@ class Relation extends Entity
         // Undocumented - the properties may not match the received data exactly
         $this->id = (int)$data['id'];
         $this->propertyId = (int)$data['propertyId'];
-        // Unknown type - received only null values
-        $this->relationTypeId = is_null($data['relationTypeIdentifier']) ? null : $data['relationTypeIdentifier'];
-        // Unknown type - received only null values.
-        $this->relationTargetId = is_null($data['relationTargetId']) ? null : $data['relationTargetId'];
-        $this->selectionRelationId = is_null($data['selectionRelationId']) ? null : (int)$data['selectionRelationId'];
-        $this->createdAt = (string)$data['createdAt'];
-        $this->updatedAt = (string)$data['updatedAt'];
+        $this->relationTypeId = $this->getStringProperty('relationTypeIdentifier', $data);
+        $this->relationTargetId = $this->getIntProperty('relationTargetId', $data);
+        $this->selectionRelationId = $this->getIntProperty('selectionRelationId', $data);
+        $this->createdAt = $this->getStringProperty('createdAt', $data);
+        $this->updatedAt = $this->getStringProperty('updatedAt', $data);
 
         if (!empty($data['relationValues'])) {
             foreach ($data['relationValues'] as $relationValue) {
@@ -82,7 +80,7 @@ class Relation extends Entity
         return $this->propertyId;
     }
 
-    public function getRelationTypeIdentifier(): ?int
+    public function getRelationTypeIdentifier(): ?string
     {
         return $this->relationTypeId;
     }

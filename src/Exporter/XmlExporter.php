@@ -10,9 +10,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemVariationRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\PimVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemVariationResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
 use Psr\Log\LoggerInterface;
 
 class XmlExporter extends Exporter
@@ -22,10 +22,9 @@ class XmlExporter extends Exporter
         LoggerInterface $customerLogger,
         Config $config,
         ?Client $client = null,
-        ?Registry $registry = null,
         ?RegistryService $registryService = null,
         ?ItemRequest $itemRequest = null,
-        ?ItemVariationRequest $itemVariationRequest = null,
+        ?PimVariationRequest $pimVariationRequest = null,
         ?LibflexportExporter $fileExporter = null
     ) {
         $internalLogger->debug('Using Plentymarkets XmlExporter for exporting.');
@@ -35,10 +34,9 @@ class XmlExporter extends Exporter
             $customerLogger,
             $config,
             $client,
-            $registry,
             $registryService,
             $itemRequest,
-            $itemVariationRequest,
+            $pimVariationRequest,
             $fileExporter
         );
     }
@@ -46,7 +44,7 @@ class XmlExporter extends Exporter
     /**
      * @codeCoverageIgnore
      */
-    protected function wrapData(int $totalCount, ItemResponse $products, ItemVariationResponse $variations): void
+    protected function wrapData(int $totalCount, ItemResponse $products, PimVariationResponse $variations): void
     {
         // TODO: Implement wrapData() method.
     }

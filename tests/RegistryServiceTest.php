@@ -11,6 +11,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
@@ -18,6 +19,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
@@ -98,6 +100,8 @@ class RegistryServiceTest extends TestCase
         ];
         $webStoreResponse = new Response(200, [], json_encode($webStoreResponseBody));
 
+        $parsedWebStoreResponse = WebStoreParser::parse($webStoreResponse);
+
         $categoryResponseBody = json_decode(
             $this->getMockResponse('CategoryResponse/response.json')->getBody()->__toString(),
             true
@@ -110,31 +114,34 @@ class RegistryServiceTest extends TestCase
         );
         $categoryResponse = new Response(200, [], json_encode($categoryResponseBody));
 
-        $vatResponse = $this->getMockResponse('VatResponse/response.json');
+        $vatResponse = $this->getMockResponse('VatResponse/one.json');
         $expectedVat = VatParser::parse($vatResponse);
 
-        $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/response.json');
+        $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/one.json');
         $expectedSalesPrice = SalesPriceParser::parse($salesPriceResponse);
 
-        $attributeResponse = $this->getMockResponse('AttributeResponse/response.json');
+        $attributeResponse = $this->getMockResponse('AttributeResponse/one.json');
         $expectedAttribute = AttributeParser::parse($attributeResponse);
 
-        $manufacturerResponse = $this->getMockResponse('ManufacturerResponse/response.json');
+        $manufacturerResponse = $this->getMockResponse('ManufacturerResponse/one.json');
         $expectedManufacturer = ManufacturerParser::parse($manufacturerResponse);
 
-        $propertyResponse = $this->getMockResponse('PropertyResponse/response.json');
+        $propertyResponse = $this->getMockResponse('PropertyResponse/one.json');
         $expectedProperties = PropertyParser::parse($propertyResponse);
 
-        $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/response.json');
+        $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/one.json');
         $expectedItemProperties = ItemPropertyParser::parse($itemPropertyResponse);
 
-        $unitResponse = $this->getMockResponse('UnitResponse/response.json');
+        $unitResponse = $this->getMockResponse('UnitResponse/one.json');
         $expectedUnits = UnitParser::parse($unitResponse);
 
         $propertySelectionResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
         $expectedPropertySelections = PropertySelectionParser::parse($propertySelectionResponse);
 
-        $this->clientMock->expects($this->exactly(10))
+        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
+        $expectedGroups = PropertyGroupParser::parse($propertyGroupResponse);
+
+        $this->clientMock->expects($this->exactly(11))
             ->method('send')
             ->willReturnOnConsecutiveCalls(
                 $webStoreResponse,
@@ -147,28 +154,38 @@ class RegistryServiceTest extends TestCase
                 $itemPropertyResponse,
                 $unitResponse,
                 $propertySelectionResponse,
+                $propertyGroupResponse,
             );
 
-        $this->registryMock->expects($this->exactly(10))
+        $registryKey = md5($this->defaultConfig->getDomain());
+
+        // This is called 12 times and not 11 times due to the fact that the defaultPrice uses the same response
+        // from "salesPrices".
+        $this->registryMock->expects($this->exactly(12))
             ->method('set')
             ->withConsecutive(
-                ['webStore', $expectedWebStore],
-                ['categories', $expectedCategories],
-                ['vat', $expectedVat],
-                ['salesPrices', $expectedSalesPrice],
-                ['attributes', $expectedAttribute],
-                ['manufacturers', $expectedManufacturer],
-                ['properties', $expectedProperties],
-                ['itemProperties', $expectedItemProperties],
-                ['units', $expectedUnits],
-                ['propertySelections', $expectedPropertySelections]
+                [$registryKey . '_allWebStores', $parsedWebStoreResponse],
+                [$registryKey . '_webStore', $expectedWebStore],
+                [$registryKey . '_vat_1', $expectedVat->first()],
+                [$registryKey . '_defaultPrice', $expectedSalesPrice->findOne([
+                    'type' => 'default'
+                ])],
+                [$registryKey . '_salesPrice_1', $expectedSalesPrice->first()],
+                [$registryKey . '_attribute_1', $expectedAttribute->first()],
+                [$registryKey . '_manufacturer_1', $expectedManufacturer->first()],
+                [$registryKey . '_property_1', $expectedProperties->first()],
+                [$registryKey . '_itemProperty_1', $expectedItemProperties->first()],
+                [$registryKey . '_unit_1', $expectedUnits->first()],
+                [$registryKey . '_propertySelections', $expectedPropertySelections],
+                [$registryKey . '_propertyGroup_1', $expectedGroups->first()],
+                [$registryKey . '_categories', $expectedCategories],
             );
 
         $this->registryMock->expects($this->any())
             ->method('get')
             ->willReturnOnConsecutiveCalls(
                 $expectedWebStore,
-                new CategoryResponse(1, 1, true, [1]),
+                new CategoryResponse(1, 1, true, []),
                 $expectedSalesPrice,
                 $expectedAttribute,
                 $expectedItemProperties,

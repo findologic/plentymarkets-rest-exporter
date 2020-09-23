@@ -15,7 +15,8 @@
         "vasily-kartashov/log4php": "^4.1",
         "ext-json": "*",
         "findologic/libflexport": "^2.7",
-        "nesbot/carbon": "^2.38"
+        "nesbot/carbon": "^2.38",
+        "symfony/cache": "^5.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0",
