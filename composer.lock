@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "32180b2fc84a70f87ab1eb4ba363e4d0",
+    "content-hash": "fdc36c83a80d7b0b31181ad30ed13024",
     "packages": [
         {
             "name": "findologic/libflexport",
