@@ -207,7 +207,8 @@ class Product
 
     protected function addManufacturer(): void
     {
-        if ($manufacturerId = $this->productEntity->getManufacturerId()) {
+        $manufacturerId = $this->productEntity->getManufacturerId();
+        if (!Utils::isEmpty($manufacturerId)) {
             $manufacturer = $this->registryService->getManufacturer($manufacturerId);
 
             if (Utils::isEmpty($manufacturer->getName())) {

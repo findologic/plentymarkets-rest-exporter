@@ -10,6 +10,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
@@ -103,9 +104,11 @@ class RegistryServiceTest extends TestCase
         $parsedWebStoreResponse = WebStoreParser::parse($webStoreResponse);
 
         $categoryResponseBody = json_decode(
-            $this->getMockResponse('CategoryResponse/response.json')->getBody()->__toString(),
+            $this->getMockResponse('CategoryResponse/one.json')->getBody()->__toString(),
             true
         );
+        $parsedCategoryResponse = CategoryParser::parse($this->getMockResponse('CategoryResponse/one.json'));
+
         $expectedCategories = new CategoryResponse(
             1,
             0,
@@ -117,7 +120,7 @@ class RegistryServiceTest extends TestCase
         $vatResponse = $this->getMockResponse('VatResponse/one.json');
         $expectedVat = VatParser::parse($vatResponse);
 
-        $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/one.json');
+        $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/rrp_normal_and_default.json');
         $expectedSalesPrice = SalesPriceParser::parse($salesPriceResponse);
 
         $attributeResponse = $this->getMockResponse('AttributeResponse/one.json');
@@ -159,18 +162,25 @@ class RegistryServiceTest extends TestCase
 
         $registryKey = md5($this->defaultConfig->getDomain());
 
-        // This is called 12 times and not 11 times due to the fact that the defaultPrice uses the same response
-        // from "salesPrices".
-        $this->registryMock->expects($this->exactly(12))
+        $this->registryMock->expects($this->exactly(15))
             ->method('set')
             ->withConsecutive(
                 [$registryKey . '_allWebStores', $parsedWebStoreResponse],
                 [$registryKey . '_webStore', $expectedWebStore],
+                [$registryKey . '_category_17', $parsedCategoryResponse->first()],
                 [$registryKey . '_vat_1', $expectedVat->first()],
                 [$registryKey . '_defaultPrice', $expectedSalesPrice->findOne([
                     'type' => 'default'
                 ])],
-                [$registryKey . '_salesPrice_1', $expectedSalesPrice->first()],
+                [$registryKey . '_salesPrice_1', $expectedSalesPrice->findOne([
+                    'type' => 'default'
+                ])],
+                [$registryKey . '_defaultRrpPrice', $expectedSalesPrice->findOne([
+                    'type' => 'rrp'
+                ])],
+                [$registryKey . '_salesPrice_2', $expectedSalesPrice->findOne([
+                    'type' => 'rrp'
+                ])],
                 [$registryKey . '_attribute_1', $expectedAttribute->first()],
                 [$registryKey . '_manufacturer_1', $expectedManufacturer->first()],
                 [$registryKey . '_property_1', $expectedProperties->first()],
@@ -234,5 +244,210 @@ class RegistryServiceTest extends TestCase
         $this->defaultConfig->setMultiShopId($expectedMultiShopId);
 
         $this->registryService->warmUp();
+    }
+
+    public function testGetWebStoreIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('WebStoreResponse/response.json');
+        $parsed = WebStoreParser::parse($rawResponse);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->exactly(2))
+            ->method('get')
+            ->withConsecutive(
+                [$key . '_webStore'],
+                [$key . '_allWebStores'],
+            )
+            ->willReturnOnConsecutiveCalls(
+                $parsed->first(),
+                $parsed
+            );
+
+        $this->assertEquals($parsed->first(), $this->registryService->getWebStore());
+        $this->assertEquals($parsed, $this->registryService->getAllWebStores());
+    }
+
+    public function testGetCategoryIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('CategoryResponse/one.json');
+        $parsed = CategoryParser::parse($rawResponse);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_category_17')
+            ->willReturn($parsed->first());
+
+        $this->assertEquals($parsed->first(), $this->registryService->getCategory(17));
+    }
+
+    public function testGetAttributeIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('AttributeResponse/one.json');
+        $parsed = AttributeParser::parse($rawResponse);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_attribute_1')
+            ->willReturnOnConsecutiveCalls($parsed->first());
+
+        $this->assertEquals($parsed->first(), $this->registryService->getAttribute(1));
+    }
+
+    public function testGetVatIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('VatResponse/one.json');
+        $parsed = VatParser::parse($rawResponse);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_vat_1')
+            ->willReturn($parsed->first());
+
+        $this->assertEquals($parsed->first(), $this->registryService->getVat(1));
+    }
+
+    public function testGetSalesPriceIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('SalesPriceResponse/one.json');
+        $parsed = SalesPriceParser::parse($rawResponse);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_salesPrice_1')
+            ->willReturn($parsed->first());
+
+        $this->assertEquals($parsed->first(), $this->registryService->getSalesPrice(1));
+    }
+
+    public function testGetManufacturerIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('ManufacturerResponse/one.json');
+        $parsed = ManufacturerParser::parse($rawResponse);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_manufacturer_1')
+            ->willReturn($parsed->first());
+
+        $this->assertEquals($parsed->first(), $this->registryService->getManufacturer(1));
+    }
+
+    public function testGetPropertyIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('PropertyResponse/one.json');
+        $parsed = PropertyParser::parse($rawResponse);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_property_1')
+            ->willReturn($parsed->first());
+
+        $this->assertEquals($parsed->first(), $this->registryService->getProperty(1));
+    }
+
+    public function testGetItemPropertyIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('ItemPropertyResponse/one.json');
+        $parsed = ItemPropertyParser::parse($rawResponse);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_itemProperty_1')
+            ->willReturn($parsed->first());
+
+        $this->assertEquals($parsed->first(), $this->registryService->getItemProperty(1));
+    }
+
+    public function testGetUnitIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('UnitResponse/one.json');
+        $parsed = UnitParser::parse($rawResponse);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_unit_1')
+            ->willReturn($parsed->first());
+
+        $this->assertEquals($parsed->first(), $this->registryService->getUnit(1));
+    }
+
+    public function testGetPropertySelectionsIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
+        $parsed = PropertySelectionParser::parse($rawResponse);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_propertySelections')
+            ->willReturn($parsed);
+
+        $this->assertEquals($parsed, $this->registryService->getPropertySelections());
+    }
+
+    public function testGetPropertyGroupIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
+        $parsed = PropertyGroupParser::parse($rawResponse);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_propertyGroup_1')
+            ->willReturn($parsed->first());
+
+        $this->assertEquals($parsed->first(), $this->registryService->getPropertyGroup(1));
+    }
+
+    public function testGetPriceIdIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('SalesPriceResponse/one.json');
+        $parsed = SalesPriceParser::parse($rawResponse);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_defaultPrice')
+            ->willReturn($parsed->first());
+
+        $this->assertEquals($parsed->first()->getId(), $this->registryService->getPriceId());
+    }
+
+    public function testGetRrpIdIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('SalesPriceResponse/response.json');
+        $parsed = SalesPriceParser::parse($rawResponse);
+        $expected = $parsed->findOne([
+            'type' => 'rrp'
+        ]);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_defaultRrpId')
+            ->willReturn($expected);
+
+        $this->assertEquals($expected->getId(), $this->registryService->getRrpId());
     }
 }

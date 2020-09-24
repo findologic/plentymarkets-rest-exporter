@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=7.3",
-        "guzzlehttp/guzzle": "^6.5",
+        "guzzlehttp/guzzle": "^7.1",
         "vasily-kartashov/log4php": "^4.1",
         "ext-json": "*",
         "findologic/libflexport": "^2.7",

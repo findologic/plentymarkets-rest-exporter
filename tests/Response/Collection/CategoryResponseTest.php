@@ -68,7 +68,7 @@ class CategoryResponseTest extends TestCase
                     'details' => [
                         'updatedBy' => 'Max Musterfrau',
                         'image' => null,
-                        'plentyId' => 34185,
+                        'plentyId' => 12345,
                         'name' => 'Bestellvorgang',
                         'nameUrl' => 'bestellvorgang'
                     ]

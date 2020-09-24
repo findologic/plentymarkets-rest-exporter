@@ -90,7 +90,7 @@ class Image extends Entity
         $this->hasLinkedVariations = $this->getBoolProperty('hasLinkedVariations', $data);
         $this->urlPreview = $this->getStringProperty('urlPreview', $data);
         $this->names = $this->getEntities(ImageName::class, 'names', $data);
-        $this->availabilities = $this->getEntities(ImageAvailability::class, 'availabilites', $data);
+        $this->availabilities = $this->getEntities(ImageAvailability::class, 'availabilities', $data);
         $this->type = $this->getStringProperty('type', $data);
         $this->size = $this->getIntProperty('size', $data);
         $this->storageProviderId = $this->getIntProperty('storageProviderId', $data);

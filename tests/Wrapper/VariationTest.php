@@ -7,7 +7,6 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemVariationParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;

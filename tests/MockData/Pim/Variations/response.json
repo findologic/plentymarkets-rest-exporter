@@ -50,11 +50,496 @@
       "bundleComponents": null,
       "clients": [
         {
-          "plentyId": 34185
+          "plentyId": 1234
         }
       ],
       "defaultCategories": null,
-      "images": [],
+      "images": [
+        {
+          "availabilities": [
+            {
+              "type": "marketplace",
+              "value": 139,
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 135
+            },
+            {
+              "imageId": 46,
+              "type": "marketplace",
+              "value": 110
+            },
+            {
+              "type": "marketplace",
+              "value": 115,
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "value": 120,
+              "imageId": 46
+            },
+            {
+              "imageId": 46,
+              "type": "marketplace",
+              "value": 133
+            },
+            {
+              "imageId": 46,
+              "value": -1,
+              "type": "listing"
+            },
+            {
+              "imageId": 46,
+              "value": 126,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "value": 124,
+              "imageId": 46
+            },
+            {
+              "imageId": 46,
+              "value": 111,
+              "type": "marketplace"
+            },
+            {
+              "value": 102,
+              "type": "marketplace",
+              "imageId": 46
+            },
+            {
+              "imageId": 46,
+              "value": 6,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 46,
+              "value": 5,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 46,
+              "value": 107,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 46,
+              "type": "marketplace",
+              "value": 121
+            },
+            {
+              "type": "marketplace",
+              "value": 134,
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 103
+            },
+            {
+              "imageId": 46,
+              "value": 119,
+              "type": "marketplace"
+            },
+            {
+              "value": -1,
+              "type": "mandant",
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "value": 108,
+              "imageId": 46
+            },
+            {
+              "value": 127,
+              "imageId": 46,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 117
+            },
+            {
+              "value": 109,
+              "type": "marketplace",
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 106
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 104
+            },
+            {
+              "imageId": 46,
+              "type": "marketplace",
+              "value": 122
+            },
+            {
+              "type": "marketplace",
+              "value": 131,
+              "imageId": 46
+            },
+            {
+              "imageId": 46,
+              "value": 114,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "value": 137,
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 116
+            },
+            {
+              "value": 118,
+              "type": "marketplace",
+              "imageId": 46
+            },
+            {
+              "value": 136,
+              "type": "marketplace",
+              "imageId": 46
+            },
+            {
+              "value": 3,
+              "imageId": 46,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": -1
+            },
+            {
+              "imageId": 46,
+              "type": "marketplace",
+              "value": 130
+            },
+            {
+              "type": "marketplace",
+              "value": 143,
+              "imageId": 46
+            },
+            {
+              "imageId": 46,
+              "type": "marketplace",
+              "value": 105
+            },
+            {
+              "type": "marketplace",
+              "value": 123,
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "value": 138,
+              "imageId": 46
+            },
+            {
+              "imageId": 46,
+              "value": 7,
+              "type": "marketplace"
+            },
+            {
+              "value": 4,
+              "type": "marketplace",
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 132
+            }
+          ],
+          "width": 716,
+          "height": 557,
+          "md5Checksum": "b0f935f9768b95eed376ae53b6e503b7",
+          "position": 0,
+          "url": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/full/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg",
+          "fileType": "jpg",
+          "urlMiddle": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/middle/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg",
+          "hasLinkedVariations": "1",
+          "itemId": 131,
+          "urlPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/preview/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg",
+          "id": 46,
+          "attributeValueImages": [],
+          "names": [
+            {
+              "name": "",
+              "imageId": 46,
+              "lang": "de",
+              "alternate": ""
+            }
+          ],
+          "type": "internal",
+          "createdAt": "2014-01-15T00:00:19+01:00",
+          "storageProviderId": "2",
+          "size": 40783,
+          "updatedAt": "2019-10-09T11:39:54+02:00",
+          "path": "S3:131:131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg",
+          "urlSecondPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/secondPreview/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg",
+          "md5ChecksumOriginal": "b0f935f9768b95eed376ae53b6e503b7"
+        },
+        {
+          "availabilities": [
+            {
+              "value": 111,
+              "imageId": 47,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 47,
+              "type": "mandant",
+              "value": -1
+            },
+            {
+              "imageId": 47,
+              "type": "marketplace",
+              "value": 108
+            },
+            {
+              "type": "marketplace",
+              "value": 110,
+              "imageId": 47
+            },
+            {
+              "type": "marketplace",
+              "value": 133,
+              "imageId": 47
+            },
+            {
+              "type": "listing",
+              "imageId": 47,
+              "value": -1
+            },
+            {
+              "value": 6,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "imageId": 47,
+              "value": 126,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "imageId": 47,
+              "value": 106
+            },
+            {
+              "imageId": 47,
+              "type": "marketplace",
+              "value": 122
+            },
+            {
+              "type": "marketplace",
+              "value": 137,
+              "imageId": 47
+            },
+            {
+              "imageId": 47,
+              "type": "marketplace",
+              "value": 107
+            },
+            {
+              "value": 121,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "imageId": 47,
+              "value": 143,
+              "type": "marketplace"
+            },
+            {
+              "value": 138,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 4,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 5,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "imageId": 47,
+              "value": 139,
+              "type": "marketplace"
+            },
+            {
+              "value": 124,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "type": "marketplace",
+              "imageId": 47,
+              "value": 103
+            },
+            {
+              "type": "marketplace",
+              "value": 123,
+              "imageId": 47
+            },
+            {
+              "value": 120,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 127,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 116,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 109,
+              "imageId": 47,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 47,
+              "value": 7,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 47,
+              "value": 132,
+              "type": "marketplace"
+            },
+            {
+              "value": 130,
+              "imageId": 47,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 47,
+              "type": "marketplace",
+              "value": 105
+            },
+            {
+              "imageId": 47,
+              "type": "marketplace",
+              "value": 135
+            },
+            {
+              "imageId": 47,
+              "type": "marketplace",
+              "value": 102
+            },
+            {
+              "type": "marketplace",
+              "value": 119,
+              "imageId": 47
+            },
+            {
+              "imageId": 47,
+              "value": 104,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "value": 117,
+              "imageId": 47
+            },
+            {
+              "type": "marketplace",
+              "value": 114,
+              "imageId": 47
+            },
+            {
+              "type": "marketplace",
+              "imageId": 47,
+              "value": 115
+            },
+            {
+              "value": -1,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "type": "marketplace",
+              "imageId": 47,
+              "value": 136
+            },
+            {
+              "value": 3,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 118,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 131,
+              "imageId": 47,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "imageId": 47,
+              "value": 134
+            }
+          ],
+          "hasLinkedVariations": "1",
+          "size": 34618,
+          "urlSecondPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/secondPreview/131-Zweisitzer-Amsterdam-at-Dawn-schwarz.jpg",
+          "names": [
+            {
+              "lang": "de",
+              "imageId": 47,
+              "name": "",
+              "alternate": ""
+            }
+          ],
+          "width": 716,
+          "md5ChecksumOriginal": "98d321021284e1254950c520c89149ae",
+          "attributeValueImages": [],
+          "position": 1,
+          "height": 557,
+          "storageProviderId": "2",
+          "urlPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/preview/131-Zweisitzer-Amsterdam-at-Dawn-schwarz.jpg",
+          "id": 47,
+          "url": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/full/131-Zweisitzer-Amsterdam-at-Dawn-schwarz.jpg",
+          "md5Checksum": "98d321021284e1254950c520c89149ae",
+          "fileType": "jpg",
+          "updatedAt": "2019-10-09T11:39:54+02:00",
+          "createdAt": "2014-01-15T00:00:20+01:00",
+          "urlMiddle": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/middle/131-Zweisitzer-Amsterdam-at-Dawn-schwarz.jpg",
+          "path": "S3:131:131-Zweisitzer-Amsterdam-at-Dawn-schwarz.jpg",
+          "itemId": 131,
+          "type": "internal"
+        }
+      ],
       "marketIdentNumbers": null,
       "markets": null,
       "salesPrices": [

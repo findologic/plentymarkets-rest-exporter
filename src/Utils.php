@@ -39,7 +39,11 @@ class Utils
 
     public static function validateAndGetShopkey(?string $shopkey): ?string
     {
-        if ($shopkey && !preg_match('/^[A-F0-9]{32}$/', $shopkey)) {
+        if (!$shopkey) {
+            return null;
+        }
+
+        if (!preg_match('/^[A-F0-9]{32}$/', $shopkey)) {
             throw new InvalidArgumentException('Given shopkey does not match the shopkey format.');
         }
 
@@ -57,23 +61,26 @@ class Utils
      *
      * @param string|null $shopkey
      * @param string $configPath
+     * @param GuzzleClient|null $client
      * @return Config
      */
-    public static function getExportConfiguration(?string $shopkey, string $configPath): Config
+    public static function getExportConfiguration(?string $shopkey, string $configPath, ?GuzzleClient $client): Config
     {
         $rawConfig = Yaml::parseFile($configPath);
 
         $customerLoginUri = $rawConfig['customerLoginUri'] ?? null;
         if ($shopkey && $customerLoginUri) {
-            return static::getCustomerLoginConfiguration($customerLoginUri, $shopkey);
+            return static::getCustomerLoginConfiguration($customerLoginUri, $shopkey, $client ?? new GuzzleClient());
         }
 
         return new Config($rawConfig);
     }
 
-    private static function getCustomerLoginConfiguration(string $customerLoginUri, string $shopkey): Config
-    {
-        $client = new GuzzleClient();
+    private static function getCustomerLoginConfiguration(
+        string $customerLoginUri,
+        string $shopkey,
+        GuzzleClient $client
+    ): Config {
         $response = $client->get($customerLoginUri, [
             RequestOptions::QUERY => ['shopkey' => $shopkey]
         ]);

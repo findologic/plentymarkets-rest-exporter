@@ -24,6 +24,8 @@ class ExporterTest extends TestCase
 {
     use ResponseHelper;
 
+    private const EXPORTER_LOCATION = '/tmp/rest-exporter/';
+
     /** @var Config */
     private $config;
 
@@ -114,6 +116,28 @@ class ExporterTest extends TestCase
         );
     }
 
+    /**
+     * @dataProvider exporterTypeProvider
+     */
+    public function testExportTimeIsReturned(int $type): void
+    {
+        $exporter = $this->getExporter($type);
+        $this->assertSame('00:00:00', $exporter->getExportTime());
+    }
+
+    /**
+     * @dataProvider exporterTypeProvider
+     */
+    public function testWrapperCanBeUsedToGetTheExportPath(int $type): void
+    {
+        if ($type === Exporter::TYPE_XML) {
+            $this->markTestSkipped('Skipped until XML is implemented.');
+        }
+
+        $exporter = $this->getExporter($type);
+        $this->assertSame(self::EXPORTER_LOCATION, $exporter->getWrapper()->getExportPath());
+    }
+
     protected function getExporter(int $type): Exporter
     {
         return Exporter::buildInstance(
@@ -126,7 +150,7 @@ class ExporterTest extends TestCase
             $this->itemRequestMock,
             $this->variationRequestMock,
             $this->fileExporterMock,
-            '/tmp/rest-exporter/'
+            self::EXPORTER_LOCATION
         );
     }
 
