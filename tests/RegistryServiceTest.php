@@ -162,7 +162,7 @@ class RegistryServiceTest extends TestCase
 
         $registryKey = md5($this->defaultConfig->getDomain());
 
-        $this->registryMock->expects($this->exactly(15))
+        $this->registryMock->expects($this->exactly(16))
             ->method('set')
             ->withConsecutive(
                 [$registryKey . '_allWebStores', $parsedWebStoreResponse],
@@ -180,6 +180,9 @@ class RegistryServiceTest extends TestCase
                 ])],
                 [$registryKey . '_salesPrice_2', $expectedSalesPrice->findOne([
                     'type' => 'rrp'
+                ])],
+                [$registryKey . '_salesPrice_3', $expectedSalesPrice->findOne([
+                    'type' => 'somethingElse'
                 ])],
                 [$registryKey . '_attribute_1', $expectedAttribute->first()],
                 [$registryKey . '_manufacturer_1', $expectedManufacturer->first()],

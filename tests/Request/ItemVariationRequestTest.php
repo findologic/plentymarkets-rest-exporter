@@ -62,7 +62,7 @@ class ItemVariationRequestTest extends TestCase
             ->setItemId([654, 456])
             ->setVariationTagId([888])
             ->setItemName('naaaaaaame')
-            ->setFlagOne('f1')
+            ->setFlagOne(null)
             ->setFlagTwo('f2')
             ->setStoreSpecial(1)
             ->setCategoryId(987)
@@ -88,7 +88,7 @@ class ItemVariationRequestTest extends TestCase
 
         // Query contains all parameters, that's why it seems so bloated.
         $expectedQuery = 'with=a,b,c&isActive=1&lang=laaaaaaaang&id=123,321&itemId=654,456&variationTagId=888&' .
-            'itemName=naaaaaaame&flagOne=f1&flagTwo=f2&storeSpecial=1&categoryId=987&isMain=&barcode=123123123&' .
+            'itemName=naaaaaaame&flagTwo=f2&storeSpecial=1&categoryId=987&isMain=&barcode=123123123&' .
             'numberExact=54654&numberFuzzy=564654&isBundle=1&plentyId=654&referrerId=111&supplierNumber=222&' .
             'sku=456-456&manufacturerId=444&updatedBetween=2222266666+58+9+8&createdBetween=78789454654&' .
             'relatedUpdatedBetween=888888aaaaaaaa&itemDescription=daskreebshum&stockWarehouseId=4564&supplierId=7987&' .
