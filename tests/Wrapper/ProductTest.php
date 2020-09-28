@@ -246,7 +246,7 @@ class ProductTest extends TestCase
             ->method('getManufacturerId')
             ->willReturn(1);
 
-        $this->variationEntityMocks[] = $variations->first();
+        $this->variationEntityMocks[] = $variations->findOne(['id' => 1004]);
 
         $product = $this->getProduct();
         $item = $product->processProductData();

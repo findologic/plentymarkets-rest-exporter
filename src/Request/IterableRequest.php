@@ -12,9 +12,6 @@ trait IterableRequest
     /** @var int */
     protected $page = 1;
 
-    /** @var int|null */
-    protected $itemsPerPage = null;
-
     public function getParams(): array
     {
         $params = parent::getParams();
@@ -38,13 +35,13 @@ trait IterableRequest
 
     public function setItemsPerPage(int $itemsPerPage): self
     {
-        $this->itemsPerPage = $itemsPerPage;
+        static::$ITEMS_PER_PAGE = $itemsPerPage;
 
         return $this;
     }
 
     public function getItemsPerPage(): int
     {
-        return $this->itemsPerPage;
+        return static::$ITEMS_PER_PAGE;
     }
 }

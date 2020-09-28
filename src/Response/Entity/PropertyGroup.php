@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
+use DateTimeInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertyGroup\Name;
 
 /**
@@ -26,7 +27,7 @@ class PropertyGroup extends Entity
     /** @var int|null */
     private $ottoComponent;
 
-    /** @var string|null */
+    /** @var DateTimeInterface|null */
     private $updatedAt;
 
     /** @var Name[] */
@@ -40,7 +41,7 @@ class PropertyGroup extends Entity
         $this->orderPropertyGroupingType = $this->getStringProperty('orderPropertyGroupingType', $data);
         $this->isSurchargePercental = $this->getBoolProperty('isSurchargePercental', $data, false);
         $this->ottoComponent = $this->getIntProperty('ottoComponent', $data);
-        $this->updatedAt = $this->getStringProperty('updatedAt', $data);
+        $this->updatedAt = $this->getDateTimeProperty('updatedAt', $data);
 
         if (!empty($data['names'])) {
             foreach ($data['names'] as $name) {
@@ -51,20 +52,25 @@ class PropertyGroup extends Entity
 
     public function getData(): array
     {
+        $data = [];
+
         $names = [];
         foreach ($this->names as $name) {
             $names[] = $name->getData();
         }
 
-        return [
+        if (!empty($names)) {
+            $data['names'] = $names;
+        }
+
+        return array_merge($data, [
             'id' => $this->id,
             'backendName' => $this->backendName,
             'orderPropertyGroupingType' => $this->orderPropertyGroupingType,
             'isSurchargePercental' => $this->isSurchargePercental,
             'ottoComponent' => $this->ottoComponent,
-            'updatedAt' => $this->updatedAt,
-            'names' => $names
-        ];
+            'updatedAt' => $this->updatedAt->format(DATE_ATOM),
+        ]);
     }
 
     public function getId(): int
@@ -92,7 +98,7 @@ class PropertyGroup extends Entity
         return $this->ottoComponent;
     }
 
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }

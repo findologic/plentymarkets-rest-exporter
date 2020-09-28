@@ -87,7 +87,7 @@
       "id": 11,
       "backendName": "stationär Maschinen",
       "orderPropertyGroupingType": "none",
-      "isSurchargePercental": false,
+      "isSurchargePercental": true,
       "ottoComponent": 0,
       "updatedAt": "2019-12-04T11:03:38+01:00"
     }
