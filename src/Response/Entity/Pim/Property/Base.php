@@ -210,6 +210,9 @@ class Base extends Entity
     /** @var BaseItemDetails */
     private $item;
 
+    /** @var Image[] */
+    private $images;
+
     public function __construct(array $data)
     {
         $this->isMain = $this->getBoolProperty('isMain', $data);
@@ -282,6 +285,7 @@ class Base extends Entity
         $this->propertiesInherited = $this->getBoolProperty('propertiesInherited', $data);
         $this->tagsInherited = $this->getBoolProperty('tagsInherited', $data);
         $this->item = $this->getEntity(BaseItemDetails::class, $data['item']);
+        $this->images = $this->getEntities(Image::class, 'images', $data);
     }
 
     public function getData(): array
@@ -689,5 +693,13 @@ class Base extends Entity
     public function getItem(): BaseItemDetails
     {
         return $this->item;
+    }
+
+    /**
+     * @return Image[]
+     */
+    public function getImages(): array
+    {
+        return $this->images;
     }
 }

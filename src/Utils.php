@@ -64,8 +64,11 @@ class Utils
      * @param GuzzleClient|null $client
      * @return Config
      */
-    public static function getExportConfiguration(?string $shopkey, string $configPath, ?GuzzleClient $client): Config
-    {
+    public static function getExportConfiguration(
+        ?string $shopkey,
+        string $configPath,
+        ?GuzzleClient $client = null
+    ): Config {
         $rawConfig = Yaml::parseFile($configPath);
 
         $customerLoginUri = $rawConfig['customerLoginUri'] ?? null;

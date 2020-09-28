@@ -40,14 +40,6 @@ class VariationTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $categoryResponse = $this->getMockResponse('CategoryResponse/response.json');
-        $categories = CategoryParser::parse($categoryResponse);
-
-        $attributeResponse = $this->getMockResponse('AttributeResponse/response.json');
-        $attributes = AttributeParser::parse($attributeResponse);
-
-        $this->registryMock->method('get')->willReturnOnConsecutiveCalls($categories, $attributes);
-
         $this->defaultConfig = $this->getDefaultConfig();
         $this->defaultConfig->setLanguage('en');
     }
@@ -103,5 +95,55 @@ class VariationTest extends TestCase
         $this->assertCount(1, $properties);
         $this->assertEquals('price_id', $properties[0]->getKey());
         $this->assertEquals(['' => '0'], $properties[0]->getAllValues());
+    }
+
+    public function testChildCategoriesAreProperlyBuilt(): void
+    {
+        $categoryResponse = $this->getMockResponse('CategoryResponse/category_with_parent.json');
+        $categories = CategoryParser::parse($categoryResponse);
+
+        $this->registryServiceMock->expects($this->exactly(2))->method('getCategory')
+            ->willReturnOnConsecutiveCalls(
+                $categories->findOne(['hasChildren' => false]),
+                $categories->findOne(['hasChildren' => true]),
+            );
+
+        $itemVariationResponse = $this->getMockResponse('Pim/Variations/response.json');
+        $variationEntities = PimVariationsParser::parse($itemVariationResponse);
+        $variationEntity = $variationEntities->first();
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryServiceMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(2, $wrapper->getAttributes());
+        // Attribute "cat".
+        $this->assertSame('Living Room_Armchairs & Stools', $wrapper->getAttributes()[0]->getValues()[0]);
+        // Attribute "cat_url".
+        $this->assertSame('/living-room/armchairs-stools/', $wrapper->getAttributes()[1]->getValues()[0]);
+    }
+
+    public function testTagsAreProperlyProcessed(): void
+    {
+        $itemVariationResponse = $this->getMockResponse('Pim/Variations/variation_with_tags.json');
+        $variationEntities = PimVariationsParser::parse($itemVariationResponse);
+        $variationEntity = $variationEntities->first();
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryServiceMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(1, $wrapper->getAttributes());
+        $this->assertSame('1', $wrapper->getAttributes()[0]->getValues()[0]);
+        $this->assertCount(1, $wrapper->getTags());
+        $this->assertSame('I am a Tag', $wrapper->getTags()[0]->getValue());
     }
 }

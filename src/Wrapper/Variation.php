@@ -275,7 +275,7 @@ class Variation
 
         foreach ($this->variationEntity->getSalesPrices() as $variationSalesPrice) {
             $price = $variationSalesPrice->getPrice();
-            if ($variationSalesPrice->getPrice() === 0) {
+            if ($variationSalesPrice->getPrice() == 0) {
                 continue;
             }
 
@@ -351,7 +351,7 @@ class Variation
 
     private function processImages(): void
     {
-        $images = $this->variationEntity->getImages();
+        $images = array_merge($this->variationEntity->getImages(), $this->variationEntity->getBase()->getImages());
 
         foreach ($images as $image) {
             $imageAvailabilities = $image->getAvailabilities();
