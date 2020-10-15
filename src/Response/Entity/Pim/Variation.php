@@ -88,7 +88,6 @@ class Variation extends Entity
         $this->salesPrices = $this->getEntities(SalesPrice::class, 'salesPrices', $data);
         $this->properties = $this->getEntities(Property::class, 'properties', $data);
         $this->tags = $this->getEntities(Tag::class, 'tags', $data);
-        $this->characteristics = $this->getEntities(Characteristic::class, 'characteristics', $data);
         $this->images = $this->getEntities(Image::class, 'images', $data);
         $this->base = $this->getEntity(Base::class, $data['base']);
     }
@@ -104,7 +103,6 @@ class Variation extends Entity
             'salesPrices' => $this->salesPrices,
             'properties' => $this->properties,
             'tags' => $this->tags,
-            'characteristics' => $this->characteristics,
             'images' => $this->images,
             'base' => $this->base,
         ];
@@ -169,14 +167,6 @@ class Variation extends Entity
     public function getTags(): array
     {
         return $this->tags;
-    }
-
-    /**
-     * @return Characteristic[]
-     */
-    public function getCharacteristics(): array
-    {
-        return $this->characteristics;
     }
 
     /**

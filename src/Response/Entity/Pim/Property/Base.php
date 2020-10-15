@@ -27,7 +27,7 @@ class Base extends Entity
     /** @var string */
     private $number;
 
-    /** @var string */
+    /** @var string|null */
     private $model;
 
     /** @var string */
@@ -210,6 +210,9 @@ class Base extends Entity
     /** @var BaseItemDetails */
     private $item;
 
+    /** @var Characteristic[] */
+    private $characteristics;
+
     /** @var Image[] */
     private $images;
 
@@ -285,6 +288,7 @@ class Base extends Entity
         $this->propertiesInherited = $this->getBoolProperty('propertiesInherited', $data);
         $this->tagsInherited = $this->getBoolProperty('tagsInherited', $data);
         $this->item = $this->getEntity(BaseItemDetails::class, $data['item']);
+        $this->characteristics = $this->getEntities(Characteristic::class, 'characteristics', $data);
         $this->images = $this->getEntities(Image::class, 'images', $data);
     }
 
@@ -390,7 +394,7 @@ class Base extends Entity
         return $this->number;
     }
 
-    public function getModel(): string
+    public function getModel(): ?string
     {
         return $this->model;
     }
@@ -693,6 +697,14 @@ class Base extends Entity
     public function getItem(): BaseItemDetails
     {
         return $this->item;
+    }
+
+    /**
+     * @return Characteristic[]
+     */
+    public function getCharacteristics(): array
+    {
+        return $this->characteristics;
     }
 
     /**

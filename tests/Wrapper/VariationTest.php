@@ -7,9 +7,11 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Variation as VariationWrapper;
@@ -145,5 +147,45 @@ class VariationTest extends TestCase
         $this->assertSame('1', $wrapper->getAttributes()[0]->getValues()[0]);
         $this->assertCount(1, $wrapper->getTags());
         $this->assertSame('I am a Tag', $wrapper->getTags()[0]->getValue());
+    }
+
+    public function characteristicsNotAvailableForSearchProvider(): array
+    {
+        $nonSearchable = $this->getMockResponse('ItemPropertyResponse/not_available_for_search.json');
+        $nonSearchableProperties = ItemPropertyParser::parse($nonSearchable);
+
+        $emptyNoGroup = $this->getMockResponse('ItemPropertyResponse/is_empty_without_group.json');
+        $emptyNoGroupProperties = ItemPropertyParser::parse($emptyNoGroup);
+
+        return [
+            'is not searchable' => [
+                'itemProperty' => $nonSearchableProperties->first(),
+            ],
+            'is empty and has no group' => [
+                'itemProperty' => $emptyNoGroupProperties->first(),
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider characteristicsNotAvailableForSearchProvider
+     */
+    public function testCharacteristicsNotAvailableForSearchAreIgnored(ItemProperty $itemProperty): void
+    {
+        $itemVariationResponse = $this->getMockResponse('Pim/Variations/variation_with_characteristic.json');
+        $variationEntities = PimVariationsParser::parse($itemVariationResponse);
+        $variationEntity = $variationEntities->first();
+
+        $this->registryServiceMock->expects($this->once())->method('getItemProperty')
+            ->willReturn($itemProperty);
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryServiceMock,
+            $variationEntity
+        );
+        $wrapper->processData();
+
+        $this->assertEmpty($wrapper->getAttributes());
     }
 }

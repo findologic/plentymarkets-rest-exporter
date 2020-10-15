@@ -146,6 +146,7 @@ class Product
 
     protected function processVariations(): int
     {
+        $hasImage = false;
         $variationsProcessed = 0;
         foreach ($this->variationEntities as $variationEntity) {
             if (!$this->shouldExportVariation($variationEntity)) {
@@ -156,8 +157,9 @@ class Product
             $variation->processData();
 
             if ($variation->isMain()) {
-                if ($variation->getImage()) {
+                if ($variation->getImage() && !$hasImage) {
                     $this->item->addImage($variation->getImage());
+                    $hasImage = true;
                 }
                 $this->item->addSort($variation->getPosition());
                 $this->item->addPrice($variation->getPrice());

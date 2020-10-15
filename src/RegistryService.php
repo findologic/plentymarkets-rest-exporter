@@ -154,7 +154,7 @@ class RegistryService
         return $property;
     }
 
-    public function getItemProperty(int $id): ItemProperty
+    public function getItemProperty(int $id): ?ItemProperty
     {
         /** @var ItemProperty $itemProperty */
         $itemProperty = $this->get(sprintf('itemProperty_%d', $id));
@@ -194,12 +194,16 @@ class RegistryService
         return $this->config->getPriceId() ?? $defaultSalesPrice->getId();
     }
 
-    public function getRrpId(): int
+    public function getRrpId(): ?int
     {
         /** @var SalesPrice $defaultRrpId */
         $defaultRrpId = $this->get('defaultRrpId');
 
-        return $this->config->getRrpId() ?? $defaultRrpId->getId();
+        if ($rrpId = $this->config->getRrpId()) {
+            return $rrpId;
+        }
+
+        return $defaultRrpId ? $defaultRrpId->getId() : null;
     }
 
     private function fetchWebStores(): void
