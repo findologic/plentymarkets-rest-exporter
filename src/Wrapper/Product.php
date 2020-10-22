@@ -9,6 +9,7 @@ use Carbon\CarbonInterface;
 use DateTime;
 use FINDOLOGIC\Export\Data\Attribute;
 use FINDOLOGIC\Export\Data\Item;
+use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Ordernumber;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
@@ -139,6 +140,9 @@ class Product
             if (trim($texts->getDescription()) !== '') {
                 $this->item->addDescription($texts->getDescription());
             }
+            if (trim($texts->getKeywords()) !== '') {
+                $this->item->addKeyword(new Keyword($texts->getKeywords()));
+            }
 
             $this->item->addUrl($this->buildProductUrl($texts->getUrlPath()));
         }
@@ -148,6 +152,9 @@ class Product
     {
         $hasImage = false;
         $variationsProcessed = 0;
+        $prices = [];
+        $insteadPrices = [];
+        $orderNumbers = [];
         foreach ($this->variationEntities as $variationEntity) {
             if (!$this->shouldExportVariation($variationEntity)) {
                 continue;
@@ -156,27 +163,49 @@ class Product
             $variation = new Variation($this->config, $this->registryService, $variationEntity);
             $variation->processData();
 
-            if ($variation->isMain()) {
-                if ($variation->getImage() && !$hasImage) {
-                    $this->item->addImage($variation->getImage());
-                    $hasImage = true;
-                }
-                $this->item->addSort($variation->getPosition());
-                $this->item->addPrice($variation->getPrice());
-                $this->item->setInsteadPrice($variation->getInsteadPrice());
-                foreach ($variation->getGroups() as $group) {
-                    $this->item->addUsergroup($group);
-                }
-                $this->item->setAllKeywords($variation->getTags());
+            if ($variationsProcessed === 0) {
+                $this->item->setTaxRate($variation->getVatRate());
             }
 
-            $this->addOrdernumbers($variation);
+            if ($variation->getImage() && !$hasImage) {
+                $this->item->addImage($variation->getImage());
+                $hasImage = true;
+            }
+
+            $this->item->setAllUsergroups($variation->getGroups());
+
+            foreach ($variation->getTags() as $tag) {
+                $this->item->addKeyword($tag);
+            }
+
+            if ($variation->isMain() || !$this->item->getSort()->getValues()) {
+                $this->item->addSort($variation->getPosition());
+            }
+
+            $orderNumbers = array_merge($orderNumbers, $this->getVariationOrdernumbers($variation));
 
             foreach ($variation->getAttributes() as $attribute) {
                 $this->item->addMergedAttribute($attribute);
             }
 
+            $prices[] = $variation->getPrice();
+            $insteadPrices[] = $variation->getInsteadPrice();
+
             $variationsProcessed++;
+        }
+
+        if ($prices) {
+            $this->item->addPrice(min($prices));
+        }
+
+        if ($insteadPrices) {
+            $this->item->setInsteadPrice(min($insteadPrices));
+        }
+
+        $orderNumbers = array_unique($orderNumbers);
+
+        foreach ($orderNumbers as $orderNumber) {
+            $this->addOrdernumber($orderNumber);
         }
 
         return $variationsProcessed;
@@ -283,18 +312,21 @@ class Product
         return (in_array(strtoupper($this->config->getLanguage()), $availableLanguages));
     }
 
-    private function addOrdernumbers(Variation $variation): void
+    private function getVariationOrdernumbers(Variation $variation): array
     {
         $orderNumberGetters = ['number', 'model', 'id', 'itemId'];
+        $orderNumbers = [];
 
         foreach ($orderNumberGetters as $field) {
             $getter = 'get' . ucfirst($field);
-            $this->addOrdernumber((string)$variation->{$getter}());
+            $orderNumbers[] = (string)$variation->{$getter}();
         }
 
         foreach ($variation->getBarcodes() as $barcode) {
-            $this->addOrdernumber($barcode);
+            $orderNumbers[] = $barcode;
         }
+
+        return $orderNumbers;
     }
 
     private function addOrdernumber(string $ordernumber)

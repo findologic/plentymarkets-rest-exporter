@@ -27,7 +27,7 @@ trait CharacteristicAware
     public function processCharacteristics(): void
     {
         foreach ($this->variationEntity->getBase()->getCharacteristics() as $characteristic) {
-            $itemProperty = $this->registryService->getItemProperty($characteristic->getId());
+            $itemProperty = $this->registryService->getItemProperty($characteristic->getPropertyId());
             if (!$this->shouldProcessCharacteristic($itemProperty)) {
                 continue;
             }

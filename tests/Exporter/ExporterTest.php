@@ -11,6 +11,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PimVariationRequest;
@@ -64,6 +65,10 @@ class ExporterTest extends TestCase
         $this->fileExporterMock = $this->getMockBuilder(LibFlexportExporter::class)
             ->disableOriginalConstructor()
             ->getMock();
+
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $standardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
+        $this->registryServiceMock->expects($this->any())->method('getStandardVat')->willReturn($standardVat);
     }
 
     public function exporterTypeProvider(): array

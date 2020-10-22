@@ -10,6 +10,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
@@ -225,6 +226,10 @@ class ProductTest extends TestCase
             ->method('getManufacturer')
             ->willReturn($manufacturers->first());
 
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $standardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
+        $this->registryServiceMock->expects($this->once())->method('getStandardVat')->willReturn($standardVat);
+
         $text = new Text([
             'lang' => 'de',
             'name1' => $expectedName,
@@ -283,6 +288,10 @@ class ProductTest extends TestCase
             ->willReturn(['de', 'en']);
 
         $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
+
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $standardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
+        $this->registryServiceMock->expects($this->once())->method('getStandardVat')->willReturn($standardVat);
 
         $text = new Text([
             'lang' => $expectedLanguagePrefix,

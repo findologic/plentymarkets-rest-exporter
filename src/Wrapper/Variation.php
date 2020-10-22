@@ -81,6 +81,9 @@ class Variation
     /** @var Image */
     protected $image;
 
+    /** @var float */
+    protected $vatRate;
+
     public function __construct(
         Config $config,
         RegistryService $registryService,
@@ -106,6 +109,7 @@ class Variation
         $this->processImages();
         $this->processCharacteristics();
         $this->processProperties();
+        $this->processVatRate();
     }
 
     public function isMain(): bool
@@ -204,6 +208,14 @@ class Variation
     public function getImage(): ?Image
     {
         return $this->image;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVatRate(): float
+    {
+        return $this->vatRate;
     }
 
     private function processIdentifiers(): void
@@ -359,6 +371,17 @@ class Variation
 
                     return;
                 }
+            }
+        }
+    }
+
+    private function processVatRate(): void
+    {
+        foreach ($this->registryService->getStandardVat()->getVatRates() as $vatRate) {
+            if ($vatRate->getId() == $this->vatId) {
+                $this->vatRate = $vatRate->getVatRate();
+                
+                return;
             }
         }
     }
