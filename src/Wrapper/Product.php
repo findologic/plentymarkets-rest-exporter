@@ -167,12 +167,14 @@ class Product
                 $this->item->setTaxRate($variation->getVatRate());
             }
 
-            if ($variation->getImage() && !$hasImage) {
+            if (!$hasImage && $variation->getImage()) {
                 $this->item->addImage($variation->getImage());
                 $hasImage = true;
             }
 
-            $this->item->setAllUsergroups($variation->getGroups());
+            foreach ($variation->getGroups() as $group) {
+                $this->item->addUsergroup($group);
+            }
 
             foreach ($variation->getTags() as $tag) {
                 $this->item->addKeyword($tag);

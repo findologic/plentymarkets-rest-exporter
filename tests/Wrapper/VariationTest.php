@@ -9,6 +9,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
@@ -187,5 +188,50 @@ class VariationTest extends TestCase
         $wrapper->processData();
 
         $this->assertEmpty($wrapper->getAttributes());
+    }
+
+    public function testTaxRateIsSet(): void
+    {
+        $itemVariationResponse = $this->getMockResponse('Pim/Variations/response.json');
+        $variationEntities = PimVariationsParser::parse($itemVariationResponse);
+        $variationEntity = $variationEntities->first();
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryServiceMock,
+            $variationEntity
+        );
+
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $standardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
+        $this->registryServiceMock->expects($this->any())->method('getStandardVat')->willReturn($standardVat);
+
+        $wrapper->processData();
+
+        $this->assertEquals($wrapper->getVatRate(), 19);
+    }
+
+    public function testTaxRateIsNotSetIfVariationUsesANonStandardVatId(): void
+    {
+        $itemVariationResponse = $this->getResponseAsArray('Pim/Variations/response.json');
+        $itemVariationResponse['entries'][0]['base']['vatId'] = 10;
+        $itemVariationResponse = $this->createResponseFromArray($itemVariationResponse);
+        $variationEntities = PimVariationsParser::parse($itemVariationResponse);
+        $variationEntity = $variationEntities->first();
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryServiceMock,
+            $variationEntity
+        );
+
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $standardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
+        $this->registryServiceMock->expects($this->any())->method('getStandardVat')->willReturn($standardVat);
+
+        $wrapper->processData();
+
+        $this->expectException(\TypeError::class);
+        $wrapper->getVatRate();
     }
 }
