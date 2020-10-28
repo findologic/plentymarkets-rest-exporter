@@ -605,7 +605,7 @@
         "storageCosts": 0,
         "customs": 0,
         "operatingCosts": 0,
-        "vatId": 1,
+        "vatId": 0,
         "bundleType": null,
         "automaticClientVisibility": 0,
         "automaticListVisibility": 3,
