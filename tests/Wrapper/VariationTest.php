@@ -18,6 +18,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Variation as VariationWrapper;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 class VariationTest extends TestCase
 {
@@ -213,9 +214,9 @@ class VariationTest extends TestCase
 
     public function testTaxRateIsNotSetIfVariationUsesANonStandardVatId(): void
     {
-        $itemVariationResponse = $this->getResponseAsArray('Pim/Variations/response.json');
-        $itemVariationResponse['entries'][0]['base']['vatId'] = 10;
-        $itemVariationResponse = $this->createResponseFromArray($itemVariationResponse);
+        $this->expectException(TypeError::class);
+
+        $itemVariationResponse = $this->getMockResponse('Pim/Variations/variation_with_nonstandard_vat.json');
         $variationEntities = PimVariationsParser::parse($itemVariationResponse);
         $variationEntity = $variationEntities->first();
 
@@ -230,8 +231,6 @@ class VariationTest extends TestCase
         $this->registryServiceMock->expects($this->any())->method('getStandardVat')->willReturn($standardVat);
 
         $wrapper->processData();
-
-        $this->expectException(\TypeError::class);
         $wrapper->getVatRate();
     }
 }

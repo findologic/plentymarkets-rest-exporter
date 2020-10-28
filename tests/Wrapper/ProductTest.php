@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 
 use Carbon\Carbon;
+use DateTime;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
@@ -267,7 +268,7 @@ class ProductTest extends TestCase
             $item->getUrl()->getValues()['']
         );
         $this->assertTrue(
-            \DateTime::createFromFormat(\DateTime::ISO8601, $item->getDateAdded()->getValues()['']) !== false
+            DateTime::createFromFormat(DateTime::ISO8601, $item->getDateAdded()->getValues()['']) !== false
         );
     }
 
@@ -340,17 +341,7 @@ class ProductTest extends TestCase
     {
         $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
 
-        $variationResponse = $this->getResponseAsArray('Pim/Variations/response.json');
-        $entries = array_slice($variationResponse['entries'], 0, 3);
-        $entries[0]['base']['isMain'] = false;
-        $entries[0]['base']['position'] = 1;
-        $entries[1]['base']['isMain'] = true;
-        $entries[1]['base']['position'] = 2;
-        $entries[2]['base']['isMain'] = false;
-        $entries[2]['base']['position'] = 3;
-        $variationResponse['entries'] = $entries;
-        $variationResponse =  $this->createResponseFromArray($variationResponse);
-
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_sort_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
 
@@ -368,69 +359,7 @@ class ProductTest extends TestCase
     {
         $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
 
-        $variationResponse = $this->getResponseAsArray('Pim/Variations/response.json');
-        $entries = array_slice($variationResponse['entries'], 0, 2);
-        $entries[0]['tags'] = [
-            [
-                'tagId' => 1,
-                'tag' => [
-                    'tagName' => 'tag1',
-                    'createdAt' => '2019-03-19 14:07:52',
-                    'updatedAt' => '2020-03-03 15:30:19',
-                    'names' => [
-                        [
-                            'id' => 1,
-                            'tagId' => 1,
-                            'tagLang' => 'de',
-                            'tagName' => 'de tag 1'
-                        ],
-                        [
-                            'id' => 2,
-                            'tagId' => 1,
-                            'tagLang' => 'en',
-                            'tagName' => 'en tag 1'
-                        ]
-                    ]
-                ]
-            ],
-            [
-                'tagId' => 2,
-                'tag' => [
-                    'tagName' => 'tag2',
-                    'createdAt' => '2019-03-19 14:07:52',
-                    'updatedAt' => '2020-03-03 15:30:19',
-                    'names' => [
-                        [
-                            'id' => 3,
-                            'tagId' => 2,
-                            'tagLang' => 'de',
-                            'tagName' => 'de tag 2'
-                        ],
-                    ]
-                ]
-            ]
-        ];
-        $entries[1]['tags'] = [
-            [
-                'tagId' => 3,
-                'tag' => [
-                    'tagName' => 'tag3',
-                    'createdAt' => '2019-03-19 14:07:52',
-                    'updatedAt' => '2020-03-03 15:30:19',
-                    'names' => [
-                        [
-                            'id' => 5,
-                            'tagId' => 3,
-                            'tagLang' => 'de',
-                            'tagName' => 'de tag 3'
-                        ],
-                    ]
-                ]
-            ]
-        ];
-        $variationResponse['entries'] = $entries;
-        $variationResponse = $this->createResponseFromArray($variationResponse);
-
+        $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_tags.json');
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
 
@@ -476,23 +405,7 @@ class ProductTest extends TestCase
     {
         $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
 
-        $variationResponse = $this->getResponseAsArray('Pim/Variations/response.json');
-        $entries = array_slice($variationResponse['entries'], 0, 3);
-        $entries[0]['salesPrices'][0]['salesPriceId'] = 0;
-        $entries[0]['salesPrices'][0]['price'] = 100;
-        $entries[0]['salesPrices'][1]['salesPriceId'] = 1;
-        $entries[0]['salesPrices'][1]['price'] = 150;
-        $entries[1]['salesPrices'][0]['salesPriceId'] = 0;
-        $entries[1]['salesPrices'][0]['price'] = 50;
-        $entries[1]['salesPrices'][1]['salesPriceId'] = 1;
-        $entries[1]['salesPrices'][1]['price'] = 100;
-        $entries[2]['salesPrices'][0]['salesPriceId'] = 0;
-        $entries[2]['salesPrices'][0]['price'] = 250;
-        $entries[2]['salesPrices'][1]['salesPriceId'] = 1;
-        $entries[2]['salesPrices'][1]['price'] = 300;
-        $variationResponse['entries'] = $entries;
-        $variationResponse = $this->createResponseFromArray($variationResponse);
-
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_lowest_price_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
 
@@ -513,21 +426,7 @@ class ProductTest extends TestCase
     {
         $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
 
-        $variationResponse = $this->getResponseAsArray('Pim/Variations/response.json');
-        $entries = array_slice($variationResponse['entries'], 0, 3);
-        $image = $entries[0]['images'][0];
-        $image['availabilities'] = [['type' => Availability::STORE, 'value' => 139, 'imageId' => 46]];
-        $entries[0]['images'] = [];
-        $entries[0]['base']['images'] = [];
-        $image['urlMiddle'] = 'FirstAvailableImage.jpg';
-        $entries[1]['images'] = [$image];
-        $entries[1]['base']['images'] = [];
-        $image['urlMiddle'] = 'FirstAvailableImage.jpg';
-        $entries[2]['images'] = [$image];
-        $entries[2]['base']['images'] = [];
-        $variationResponse['entries'] = $entries;
-        $variationResponse = $this->createResponseFromArray($variationResponse);
-
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_image_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
 
@@ -544,14 +443,7 @@ class ProductTest extends TestCase
     {
         $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
 
-        $variationResponse = $this->getResponseAsArray('Pim/Variations/response.json');
-        $entries = array_slice($variationResponse['entries'], 0, 3);
-        $entries[0]['clients'] = [['plentyId' => 1234]];
-        $entries[1]['clients'] = [['plentyId' => 2345]];
-        $entries[2]['clients'] = [['plentyId' => 3456]];
-        $variationResponse['entries'] = $entries;
-        $variationResponse = $this->createResponseFromArray($variationResponse);
-
+        $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_different_clients.json');
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
 
@@ -568,25 +460,11 @@ class ProductTest extends TestCase
         $this->assertEquals('0_,1_', $columnValues[13]);
     }
 
-    public function testOrderNumbersAreSetFromAllVariations()
+    public function testOrdernumbersAreSetFromAllVariations()
     {
         $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
 
-        $variationResponse = $this->getResponseAsArray('Pim/Variations/response.json');
-        $entries = array_slice($variationResponse['entries'], 0, 2);
-        $entries[0]['base']['number'] = 1;
-        $entries[0]['base']['model'] = 11;
-        $entries[0]['base']['itemId'] = 111;
-        $entries[0]['id'] = 1111;
-        $entries[0]['barcodes'] = [['barcodeId' => 1, 'code' => 11111], ['barcodeId' => 1, 'code' => 111111]];
-        $entries[1]['base']['number'] = 2;
-        $entries[1]['base']['model'] = 22;
-        $entries[1]['base']['itemId'] = 222;
-        $entries[1]['id'] = 2222;
-        $entries[1]['barcodes'] = [['barcodeId' => 3, 'code' => 22222], ['barcodeId' => 4, 'code' => 222222]];
-        $variationResponse['entries'] = $entries;
-        $variationResponse = $this->createResponseFromArray($variationResponse);
-
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_ordernumber_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
 
@@ -607,18 +485,7 @@ class ProductTest extends TestCase
     {
         $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
 
-        $variationResponse = $this->getResponseAsArray('Pim/Variations/response.json');
-        $entries = array_slice($variationResponse['entries'], 0, 3);
-        $attribute = $entries[0]['attributeValues'][0];
-        $attribute['attributeId'] = 2;
-        $attribute['attributeValue']['backendName'] = 'valueeeee';
-        $entries[1]['attributeValues'] = [$attribute];
-        $attribute['attributeId'] = 1;
-        $attribute['attributeValue']['backendName'] = '2121asdsdf';
-        $entries[2]['attributeValues'] = [$attribute];
-        $variationResponse['entries'] = $entries;
-        $variationResponse = $this->createResponseFromArray($variationResponse);
-
+        $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_attribute_values.json');
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
 

@@ -154,7 +154,7 @@ class Product
         $variationsProcessed = 0;
         $prices = [];
         $insteadPrices = [];
-        $orderNumbers = [];
+        $ordernumbers = [];
         foreach ($this->variationEntities as $variationEntity) {
             if (!$this->shouldExportVariation($variationEntity)) {
                 continue;
@@ -184,7 +184,7 @@ class Product
                 $this->item->addSort($variation->getPosition());
             }
 
-            $orderNumbers = array_merge($orderNumbers, $this->getVariationOrdernumbers($variation));
+            $ordernumbers = array_merge($ordernumbers, $this->getVariationOrdernumbers($variation));
 
             foreach ($variation->getAttributes() as $attribute) {
                 $this->item->addMergedAttribute($attribute);
@@ -204,10 +204,10 @@ class Product
             $this->item->setInsteadPrice(min($insteadPrices));
         }
 
-        $orderNumbers = array_unique($orderNumbers);
+        $ordernumbers = array_unique($ordernumbers);
 
-        foreach ($orderNumbers as $orderNumber) {
-            $this->addOrdernumber($orderNumber);
+        foreach ($ordernumbers as $ordernumber) {
+            $this->addOrdernumber($ordernumber);
         }
 
         return $variationsProcessed;
@@ -316,19 +316,19 @@ class Product
 
     private function getVariationOrdernumbers(Variation $variation): array
     {
-        $orderNumberGetters = ['number', 'model', 'id', 'itemId'];
-        $orderNumbers = [];
+        $ordernumberGetters = ['number', 'model', 'id', 'itemId'];
+        $ordernumbers = [];
 
-        foreach ($orderNumberGetters as $field) {
+        foreach ($ordernumberGetters as $field) {
             $getter = 'get' . ucfirst($field);
-            $orderNumbers[] = (string)$variation->{$getter}();
+            $ordernumbers[] = (string)$variation->{$getter}();
         }
 
         foreach ($variation->getBarcodes() as $barcode) {
-            $orderNumbers[] = $barcode;
+            $ordernumbers[] = $barcode;
         }
 
-        return $orderNumbers;
+        return $ordernumbers;
     }
 
     private function addOrdernumber(string $ordernumber)
