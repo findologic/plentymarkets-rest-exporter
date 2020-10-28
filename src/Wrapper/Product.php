@@ -163,10 +163,6 @@ class Product
             $variation = new Variation($this->config, $this->registryService, $variationEntity);
             $variation->processData();
 
-            if ($variationsProcessed === 0) {
-                $this->item->setTaxRate($variation->getVatRate());
-            }
-
             if (!$hasImage && $variation->getImage()) {
                 $this->item->addImage($variation->getImage());
                 $hasImage = true;
@@ -194,6 +190,11 @@ class Product
             $insteadPrices[] = $variation->getInsteadPrice();
 
             $variationsProcessed++;
+        }
+
+        // VatRate should be set from the last variation, therefore this code outside the foreach loop
+        if (isset($variation) && $variation->getVatRate() !== null) {
+            $this->item->setTaxRate($variation->getVatRate());
         }
 
         if ($prices) {

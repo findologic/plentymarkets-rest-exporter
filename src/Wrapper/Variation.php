@@ -211,10 +211,7 @@ class Variation
         return $this->image;
     }
 
-    /**
-     * @return float
-     */
-    public function getVatRate(): float
+    public function getVatRate(): ?float
     {
         return $this->vatRate;
     }

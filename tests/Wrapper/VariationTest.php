@@ -191,9 +191,9 @@ class VariationTest extends TestCase
         $this->assertEmpty($wrapper->getAttributes());
     }
 
-    public function testTaxRateIsSet(): void
+    public function testTaxRateIsTakenFromTheLastVariation(): void
     {
-        $itemVariationResponse = $this->getMockResponse('Pim/Variations/response.json');
+        $itemVariationResponse = $this->getMockResponse('Pim/Variations/variations_with_different_vat_ids.json');
         $variationEntities = PimVariationsParser::parse($itemVariationResponse);
         $variationEntity = $variationEntities->first();
 
@@ -209,13 +209,11 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertEquals($wrapper->getVatRate(), 19);
+        $this->assertEquals($wrapper->getVatRate(), 7);
     }
 
     public function testTaxRateIsNotSetIfVariationUsesANonStandardVatId(): void
     {
-        $this->expectException(TypeError::class);
-
         $itemVariationResponse = $this->getMockResponse('Pim/Variations/variation_with_nonstandard_vat.json');
         $variationEntities = PimVariationsParser::parse($itemVariationResponse);
         $variationEntity = $variationEntities->first();
@@ -231,6 +229,6 @@ class VariationTest extends TestCase
         $this->registryServiceMock->expects($this->any())->method('getStandardVat')->willReturn($standardVat);
 
         $wrapper->processData();
-        $wrapper->getVatRate();
+        $this->assertEquals(0, $wrapper->getVatRate());
     }
 }
