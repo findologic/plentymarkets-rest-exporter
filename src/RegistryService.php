@@ -26,6 +26,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertySelectionRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\SalesPriceRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\UnitRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\VatRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\StandardVatRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\WebStoreResponse;
@@ -126,6 +127,14 @@ class RegistryService
     {
         /** @var VatConfiguration $vat */
         $vat = $this->get(sprintf('vat_%d', $id));
+
+        return $vat;
+    }
+
+    public function getStandardVat(): VatConfiguration
+    {
+        /** @var VatConfiguration $vat */
+        $vat = $this->get('standardVat');
 
         return $vat;
     }
@@ -260,6 +269,12 @@ class RegistryService
                 $this->set('vat_' . $vat->getId(), $vat);
             }
         }
+
+        $standardVatRequest = new StandardVatRequest($this->getWebStore()->getId());
+        $standardVatResponse = $this->client->send($standardVatRequest);
+        $standardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
+
+        $this->set('standardVat', $standardVat);
     }
 
     private function fetchSalesPrices(): void

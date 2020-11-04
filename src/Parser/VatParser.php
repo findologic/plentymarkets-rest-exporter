@@ -34,4 +34,11 @@ class VatParser extends Parser
             (int)$response['itemsPerPage']
         );
     }
+
+    public static function parseSingleEntityResponse(ResponseInterface $rawResponse): VatConfiguration
+    {
+        $response = self::unserializeJsonResponse($rawResponse);
+
+        return new VatConfiguration($response);
+    }
 }

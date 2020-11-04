@@ -5,21 +5,26 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 
 use Carbon\Carbon;
+use DateTime;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage\Availability;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Base;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Product;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -61,6 +66,10 @@ class ProductTest extends TestCase
         $this->registryServiceMock = $this->getMockBuilder(RegistryService::class)
             ->disableOriginalConstructor()
             ->getMock();
+
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $standardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
+        $this->registryServiceMock->expects($this->any())->method('getStandardVat')->willReturn($standardVat);
     }
 
     public function testProductWithoutVariationsIsNotExported(): void
@@ -258,6 +267,9 @@ class ProductTest extends TestCase
             'https://plenty-testshop.de/' . $expectedUrlPath . '/a-0',
             $item->getUrl()->getValues()['']
         );
+        $this->assertTrue(
+            DateTime::createFromFormat(DateTime::ISO8601, $item->getDateAdded()->getValues()['']) !== false
+        );
     }
 
     public function testLanguagePrefixIsAddedToUrlInCaseLanguageIsAvailableButNotDefaultLanguage(): void
@@ -323,6 +335,177 @@ class ProductTest extends TestCase
             'https://plenty-testshop.de/' . $expectedLanguagePrefix . '/' . $expectedUrlPath . '/a-0',
             $item->getUrl()->getValues()['']
         );
+    }
+
+    public function testSortIsSetByTheMainVariation(): void
+    {
+        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_sort_test.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
+        $webStores = WebStoreParser::parse($rawWebStores);
+        $this->registryServiceMock->expects($this->any())->method('getAllWebStores')->willReturn($webStores);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertEquals($item->getSort()->getValues(), ['' => 2]);
+    }
+
+    public function testKeywordsAreSetFromAllVariations(): void
+    {
+        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_tags.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $text = new Text([
+            'lang' => 'de',
+            'name1' => 'Pretty awesome name!',
+            'name2' => 'wrong',
+            'name3' => 'wrong',
+            'shortDescription' => 'Easy, transparent, sexy',
+            'metaDescription' => 'my father gave me a small loan of a million dollar.',
+            'description' => 'That is the best item, and I am a bit longer text.',
+            'technicalData' => 'Interesting technical information.',
+            'urlPath' => 'urlPath',
+            'keywords' => 'keywords from product'
+        ]);
+
+        $this->itemMock->expects($this->once())
+            ->method('getTexts')
+            ->willReturn([$text]);
+
+        $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
+        $webStores = WebStoreParser::parse($rawWebStores);
+        $this->registryServiceMock->expects($this->any())->method('getAllWebStores')->willReturn($webStores);
+
+        $this->storeConfigurationMock->expects($this->any())
+            ->method('getDisplayItemName')
+            ->willReturn(1);
+
+        $this->storeConfigurationMock->expects($this->any())
+            ->method('getDefaultLanguage')
+            ->willReturn('de');
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        // TODO: check item's keyword property directly once keywords getter is implemented
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+        $this->assertEquals('de tag 1,de tag 2,de tag 3,keywords from product', $columnValues[12]);
+    }
+
+    public function testPriceAndInsteadPriceIsSetByLowestValues(): void
+    {
+        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_lowest_price_test.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
+        $webStores = WebStoreParser::parse($rawWebStores);
+        $this->registryServiceMock->expects($this->any())->method('getAllWebStores')->willReturn($webStores);
+
+        $this->registryServiceMock->expects($this->any())->method('getRrpId')->willReturn(1);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertEquals($item->getPrice()->getValues(), ['' => 50]);
+        $this->assertEquals($item->getInsteadPrice(), 100);
+    }
+
+    public function testImageOfFirstVariationIsUsed(): void
+    {
+        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_image_test.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        // TODO: check item's images property directly once images getter is implemented
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+        $this->assertEquals('FirstAvailableImage.jpg', $columnValues[10]);
+    }
+
+    public function testGroupsAreSetFromAllVariations()
+    {
+        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_different_clients.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
+        $webStores = WebStoreParser::parse($rawWebStores);
+        $this->registryServiceMock->expects($this->any())->method('getAllWebStores')->willReturn($webStores);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        // TODO: check item's groups property directly once groups getter is implemented
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+        $this->assertEquals('0_,1_', $columnValues[13]);
+    }
+
+    public function testOrdernumbersAreSetFromAllVariations()
+    {
+        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_ordernumber_test.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
+        $webStores = WebStoreParser::parse($rawWebStores);
+        $this->registryServiceMock->expects($this->any())->method('getAllWebStores')->willReturn($webStores);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        // TODO: check item's order numbers property directly once order numbers getter is implemented
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+        $this->assertEquals('1|11|1111|111|11111|111111|2|22|2222|222|22222|222222', $columnValues[1]);
+    }
+
+    public function testAttributesAreSetFromAllVariations()
+    {
+        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_attribute_values.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $attributeResponse = $this->getMockResponse('AttributeResponse/response.json');
+        $attributes = AttributeParser::parse($attributeResponse);
+        $attributes = $attributes->all();
+        array_unshift($attributes, $attributes[0]);
+
+        $this->registryServiceMock->expects($this->exactly(3))
+            ->method('getAttribute')
+            ->withConsecutive([1], [2], [1])
+            ->willReturnOnConsecutiveCalls(...$attributes);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        // TODO: check item's attributes property directly once attributes getter is implemented
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+        $this->assertEquals('Couch+color=purple&Couch+color=valueeeee&Test=2121asdsdf', $columnValues[11]);
     }
 
     private function getProduct(): Product

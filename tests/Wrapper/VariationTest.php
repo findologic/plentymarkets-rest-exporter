@@ -9,6 +9,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
@@ -17,6 +18,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Variation as VariationWrapper;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 class VariationTest extends TestCase
 {
@@ -187,5 +189,46 @@ class VariationTest extends TestCase
         $wrapper->processData();
 
         $this->assertEmpty($wrapper->getAttributes());
+    }
+
+    public function testTaxRateIsTakenFromTheLastVariation(): void
+    {
+        $itemVariationResponse = $this->getMockResponse('Pim/Variations/variations_with_different_vat_ids.json');
+        $variationEntities = PimVariationsParser::parse($itemVariationResponse);
+        $variationEntity = $variationEntities->first();
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryServiceMock,
+            $variationEntity
+        );
+
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $standardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
+        $this->registryServiceMock->expects($this->any())->method('getStandardVat')->willReturn($standardVat);
+
+        $wrapper->processData();
+
+        $this->assertEquals($wrapper->getVatRate(), 7);
+    }
+
+    public function testTaxRateIsNotSetIfVariationUsesANonStandardVatId(): void
+    {
+        $itemVariationResponse = $this->getMockResponse('Pim/Variations/variation_with_nonstandard_vat.json');
+        $variationEntities = PimVariationsParser::parse($itemVariationResponse);
+        $variationEntity = $variationEntities->first();
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryServiceMock,
+            $variationEntity
+        );
+
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $standardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
+        $this->registryServiceMock->expects($this->any())->method('getStandardVat')->willReturn($standardVat);
+
+        $wrapper->processData();
+        $this->assertEquals(0, $wrapper->getVatRate());
     }
 }

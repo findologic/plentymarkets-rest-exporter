@@ -12,6 +12,7 @@ use FINDOLOGIC\Export\Data\Usergroup;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage\Availability;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
@@ -81,6 +82,9 @@ class Variation
     /** @var Image */
     protected $image;
 
+    /** @var float */
+    protected $vatRate;
+
     public function __construct(
         Config $config,
         RegistryService $registryService,
@@ -106,6 +110,7 @@ class Variation
         $this->processImages();
         $this->processCharacteristics();
         $this->processProperties();
+        $this->processVatRate();
     }
 
     public function isMain(): bool
@@ -204,6 +209,11 @@ class Variation
     public function getImage(): ?Image
     {
         return $this->image;
+    }
+
+    public function getVatRate(): ?float
+    {
+        return $this->vatRate;
     }
 
     private function processIdentifiers(): void
@@ -351,6 +361,7 @@ class Variation
     {
         $images = array_merge($this->variationEntity->getImages(), $this->variationEntity->getBase()->getImages());
 
+        /** @var ItemImage $image */
         foreach ($images as $image) {
             $imageAvailabilities = $image->getAvailabilities();
             foreach ($imageAvailabilities as $imageAvailability) {
@@ -359,6 +370,17 @@ class Variation
 
                     return;
                 }
+            }
+        }
+    }
+
+    private function processVatRate(): void
+    {
+        foreach ($this->registryService->getStandardVat()->getVatRates() as $vatRate) {
+            if ($vatRate->getId() == $this->vatId) {
+                $this->vatRate = $vatRate->getVatRate();
+
+                return;
             }
         }
     }

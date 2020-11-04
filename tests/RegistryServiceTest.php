@@ -120,6 +120,9 @@ class RegistryServiceTest extends TestCase
         $vatResponse = $this->getMockResponse('VatResponse/one.json');
         $expectedVat = VatParser::parse($vatResponse);
 
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $expectedStandardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
+
         $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/rrp_normal_and_default.json');
         $expectedSalesPrice = SalesPriceParser::parse($salesPriceResponse);
 
@@ -144,12 +147,13 @@ class RegistryServiceTest extends TestCase
         $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
         $expectedGroups = PropertyGroupParser::parse($propertyGroupResponse);
 
-        $this->clientMock->expects($this->exactly(11))
+        $this->clientMock->expects($this->exactly(12))
             ->method('send')
             ->willReturnOnConsecutiveCalls(
                 $webStoreResponse,
                 $categoryResponse,
                 $vatResponse,
+                $standardVatResponse,
                 $salesPriceResponse,
                 $attributeResponse,
                 $manufacturerResponse,
@@ -162,13 +166,14 @@ class RegistryServiceTest extends TestCase
 
         $registryKey = md5($this->defaultConfig->getDomain());
 
-        $this->registryMock->expects($this->exactly(16))
+        $this->registryMock->expects($this->exactly(17))
             ->method('set')
             ->withConsecutive(
                 [$registryKey . '_allWebStores', $parsedWebStoreResponse],
                 [$registryKey . '_webStore', $expectedWebStore],
                 [$registryKey . '_category_17', $parsedCategoryResponse->first()],
                 [$registryKey . '_vat_1', $expectedVat->first()],
+                [$registryKey . '_standardVat', $expectedStandardVat],
                 [$registryKey . '_defaultPrice', $expectedSalesPrice->findOne([
                     'type' => 'default'
                 ])],
@@ -197,6 +202,7 @@ class RegistryServiceTest extends TestCase
         $this->registryMock->expects($this->any())
             ->method('get')
             ->willReturnOnConsecutiveCalls(
+                $expectedWebStore,
                 $expectedWebStore,
                 new CategoryResponse(1, 1, true, []),
                 $expectedSalesPrice,

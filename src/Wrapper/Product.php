@@ -9,6 +9,7 @@ use Carbon\CarbonInterface;
 use DateTime;
 use FINDOLOGIC\Export\Data\Attribute;
 use FINDOLOGIC\Export\Data\Item;
+use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Ordernumber;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
@@ -139,6 +140,9 @@ class Product
             if (trim($texts->getDescription()) !== '') {
                 $this->item->addDescription($texts->getDescription());
             }
+            if (trim($texts->getKeywords()) !== '') {
+                $this->item->addKeyword(new Keyword($texts->getKeywords()));
+            }
 
             $this->item->addUrl($this->buildProductUrl($texts->getUrlPath()));
         }
@@ -148,6 +152,9 @@ class Product
     {
         $hasImage = false;
         $variationsProcessed = 0;
+        $prices = [];
+        $insteadPrices = [];
+        $ordernumbers = [];
         foreach ($this->variationEntities as $variationEntity) {
             if (!$this->shouldExportVariation($variationEntity)) {
                 continue;
@@ -156,27 +163,52 @@ class Product
             $variation = new Variation($this->config, $this->registryService, $variationEntity);
             $variation->processData();
 
-            if ($variation->isMain()) {
-                if ($variation->getImage() && !$hasImage) {
-                    $this->item->addImage($variation->getImage());
-                    $hasImage = true;
-                }
-                $this->item->addSort($variation->getPosition());
-                $this->item->addPrice($variation->getPrice());
-                $this->item->setInsteadPrice($variation->getInsteadPrice());
-                foreach ($variation->getGroups() as $group) {
-                    $this->item->addUsergroup($group);
-                }
-                $this->item->setAllKeywords($variation->getTags());
+            if (!$hasImage && $variation->getImage()) {
+                $this->item->addImage($variation->getImage());
+                $hasImage = true;
             }
 
-            $this->addOrdernumbers($variation);
+            foreach ($variation->getGroups() as $group) {
+                $this->item->addUsergroup($group);
+            }
+
+            foreach ($variation->getTags() as $tag) {
+                $this->item->addKeyword($tag);
+            }
+
+            if ($variation->isMain() || !$this->item->getSort()->getValues()) {
+                $this->item->addSort($variation->getPosition());
+            }
+
+            $ordernumbers = array_merge($ordernumbers, $this->getVariationOrdernumbers($variation));
 
             foreach ($variation->getAttributes() as $attribute) {
                 $this->item->addMergedAttribute($attribute);
             }
 
+            $prices[] = $variation->getPrice();
+            $insteadPrices[] = $variation->getInsteadPrice();
+
             $variationsProcessed++;
+        }
+
+        // VatRate should be set from the last variation, therefore this code outside the foreach loop
+        if (isset($variation) && $variation->getVatRate() !== null) {
+            $this->item->setTaxRate($variation->getVatRate());
+        }
+
+        if ($prices) {
+            $this->item->addPrice(min($prices));
+        }
+
+        if ($insteadPrices) {
+            $this->item->setInsteadPrice(min($insteadPrices));
+        }
+
+        $ordernumbers = array_unique($ordernumbers);
+
+        foreach ($ordernumbers as $ordernumber) {
+            $this->addOrdernumber($ordernumber);
         }
 
         return $variationsProcessed;
@@ -283,18 +315,21 @@ class Product
         return (in_array(strtoupper($this->config->getLanguage()), $availableLanguages));
     }
 
-    private function addOrdernumbers(Variation $variation): void
+    private function getVariationOrdernumbers(Variation $variation): array
     {
-        $orderNumberGetters = ['number', 'model', 'id', 'itemId'];
+        $ordernumberGetters = ['number', 'model', 'id', 'itemId'];
+        $ordernumbers = [];
 
-        foreach ($orderNumberGetters as $field) {
+        foreach ($ordernumberGetters as $field) {
             $getter = 'get' . ucfirst($field);
-            $this->addOrdernumber((string)$variation->{$getter}());
+            $ordernumbers[] = (string)$variation->{$getter}();
         }
 
         foreach ($variation->getBarcodes() as $barcode) {
-            $this->addOrdernumber($barcode);
+            $ordernumbers[] = $barcode;
         }
+
+        return $ordernumbers;
     }
 
     private function addOrdernumber(string $ordernumber)
