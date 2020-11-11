@@ -264,7 +264,7 @@ class ProductTest extends TestCase
         $this->assertSame($expectedSummary, $item->getSummary()->getValues()['']);
         $this->assertSame($expectedDescription, $item->getDescription()->getValues()['']);
         $this->assertSame(
-            'https://plenty-testshop.de/' . $expectedUrlPath . '/a-0',
+            'https://plenty-testshop.de/' . $expectedUrlPath . '_0_0',
             $item->getUrl()->getValues()['']
         );
         $this->assertTrue(
@@ -332,7 +332,7 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         $this->assertSame(
-            'https://plenty-testshop.de/' . $expectedLanguagePrefix . '/' . $expectedUrlPath . '/a-0',
+            'https://plenty-testshop.de/' . $expectedLanguagePrefix . '/' . $expectedUrlPath . '_0_0',
             $item->getUrl()->getValues()['']
         );
     }

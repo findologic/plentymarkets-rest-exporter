@@ -272,12 +272,13 @@ class Product
     private function buildProductUrl(string $urlPath): string
     {
         return sprintf(
-            '%s://%s%s/%s/a-%s',
+            '%s://%s%s/%s_%s_%s',
             $this->config->getProtocol(),
             $this->config->getDomain(),
             $this->getLanguageUrlPrefix(),
             trim($urlPath, '/'),
-            $this->productEntity->getId()
+            $this->productEntity->getId(),
+            $this->productEntity->getMainVariationId()
         );
     }
 
