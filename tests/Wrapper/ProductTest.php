@@ -508,6 +508,59 @@ class ProductTest extends TestCase
         $this->assertEquals('Couch+color=purple&Couch+color=valueeeee&Test=2121asdsdf', $columnValues[11]);
     }
 
+    public function testSetsSalesFrequencyAsZeroIfSortBySalesIsNotConfigured()
+    {
+        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_attribute_values.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $this->storeConfigurationMock->expects($this->once())->method('getItemSortByMonthlySales')->willReturn(0);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertEquals(['' => 0], $item->getSalesFrequency()->getValues());
+    }
+
+    public function testSetSalesFrequencyByPositionIfSortBySalesIsConfigured()
+    {
+        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_different_positions.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $this->storeConfigurationMock->expects($this->once())->method('getItemSortByMonthlySales')->willReturn(1);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertEquals(['' => 5], $item->getSalesFrequency()->getValues());
+    }
+
+    /**
+     * For this test the first item in the response is a non-main variation with the higher position
+     * The second variation is main with lower position.
+     * This test makes sure that the highest position is used and not from simply from the last or main variation
+     */
+    public function testUsesHighestPositionForSalesFrequency()
+    {
+        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_different_positions.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = array_slice($variations->all(), 0, 2);
+
+        $this->storeConfigurationMock->expects($this->once())->method('getItemSortByMonthlySales')->willReturn(1);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertEquals(['' => 1], $item->getSalesFrequency()->getValues());
+    }
+
     private function getProduct(): Product
     {
         return new Product(
