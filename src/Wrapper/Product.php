@@ -177,7 +177,7 @@ class Product
             }
 
             if ($variation->isMain() || !$this->item->getSort()->getValues()) {
-                $this->item->addSort($variation->getPosition());
+                $this->item->addSort($variation->getPosition() ?? 0);
             }
 
             $ordernumbers = array_merge($ordernumbers, $this->getVariationOrdernumbers($variation));

@@ -98,7 +98,7 @@ class ExportCommand extends Command
         try {
             $exporter->export();
         } catch (Throwable $e) {
-            $io->error(sprintf('Something went wrong. Message: %s', $e->getMessage()));
+            $io->error(sprintf('Something went wrong. Message: %s: %s', get_class($e), $e->getMessage()));
             $this->internalLogger->trace($e->getTraceAsString());
 
             return Command::FAILURE;

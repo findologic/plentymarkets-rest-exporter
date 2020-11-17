@@ -34,7 +34,7 @@ class Variation
     /** @var bool */
     protected $isMain;
 
-    /** @var int */
+    /** @var int|null */
     protected $position;
 
     /** @var int */
@@ -118,7 +118,7 @@ class Variation
         return $this->isMain;
     }
 
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
         return $this->position;
     }
@@ -218,6 +218,7 @@ class Variation
 
     private function processIdentifiers(): void
     {
+        $this->variationEntity->getBase()->getPosition();
         $this->number = $this->variationEntity->getBase()->getNumber();
         $this->model = $this->variationEntity->getBase()->getModel();
         $this->id = $this->variationEntity->getId();
