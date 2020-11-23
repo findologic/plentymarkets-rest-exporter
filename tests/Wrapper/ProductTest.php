@@ -255,6 +255,9 @@ class ProductTest extends TestCase
             ->method('getManufacturerId')
             ->willReturn(1);
 
+        $this->itemMock->method('getId')->willReturn(10);
+        $this->itemMock->method('getMainVariationId')->willReturn(20);
+
         $this->variationEntityMocks[] = $variations->findOne(['id' => 1004]);
 
         $product = $this->getProduct();
@@ -264,7 +267,7 @@ class ProductTest extends TestCase
         $this->assertSame($expectedSummary, $item->getSummary()->getValues()['']);
         $this->assertSame($expectedDescription, $item->getDescription()->getValues()['']);
         $this->assertSame(
-            'https://plenty-testshop.de/' . $expectedUrlPath . '/a-0',
+            'https://plenty-testshop.de/' . $expectedUrlPath . '_10_20',
             $item->getUrl()->getValues()['']
         );
         $this->assertTrue(
@@ -332,7 +335,7 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         $this->assertSame(
-            'https://plenty-testshop.de/' . $expectedLanguagePrefix . '/' . $expectedUrlPath . '/a-0',
+            'https://plenty-testshop.de/' . $expectedLanguagePrefix . '/' . $expectedUrlPath . '_0_0',
             $item->getUrl()->getValues()['']
         );
     }
