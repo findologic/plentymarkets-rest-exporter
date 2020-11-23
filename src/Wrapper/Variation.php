@@ -76,9 +76,6 @@ class Variation
     /** @var Keyword[] */
     protected $tags = [];
 
-    /** @var int|null */
-    protected $salesRank;
-
     /** @var Image */
     protected $image;
 
@@ -196,14 +193,6 @@ class Variation
     public function getTags(): array
     {
         return $this->tags;
-    }
-
-    public function getSalesRank(): ?int
-    {
-        // @codeCoverageIgnoreStart
-        // TODO: test when becomes relevant
-        return $this->salesRank;
-        // @codeCoverageIgnoreEnd
     }
 
     public function getImage(): ?Image

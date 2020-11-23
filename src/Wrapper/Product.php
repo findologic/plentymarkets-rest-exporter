@@ -96,7 +96,6 @@ class Product
 
         $this->setTexts();
 
-        $this->item->addSalesFrequency(0);
         $this->item->addDateAdded(new DateTime($this->productEntity->getCreatedAt()));
         $this->addManufacturer();
         $this->addFreeTextFields();
@@ -155,6 +154,8 @@ class Product
         $prices = [];
         $insteadPrices = [];
         $ordernumbers = [];
+        $highestPosition = 0;
+
         foreach ($this->variationEntities as $variationEntity) {
             if (!$this->shouldExportVariation($variationEntity)) {
                 continue;
@@ -176,9 +177,11 @@ class Product
                 $this->item->addKeyword($tag);
             }
 
+            $position = $variation->getPosition();
             if ($variation->isMain() || !$this->item->getSort()->getValues()) {
                 $this->item->addSort($variation->getPosition());
             }
+            $highestPosition = $position > $highestPosition ? $position : $highestPosition;
 
             $ordernumbers = array_merge($ordernumbers, $this->getVariationOrdernumbers($variation));
 
@@ -206,10 +209,12 @@ class Product
         }
 
         $ordernumbers = array_unique($ordernumbers);
-
         foreach ($ordernumbers as $ordernumber) {
             $this->addOrdernumber($ordernumber);
         }
+
+        $salesFrequency = $this->storeConfiguration->getItemSortByMonthlySales() ? $highestPosition : 0;
+        $this->item->addSalesFrequency($salesFrequency);
 
         return $variationsProcessed;
     }
