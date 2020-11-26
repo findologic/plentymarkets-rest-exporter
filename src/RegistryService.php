@@ -115,7 +115,7 @@ class RegistryService
         return $category;
     }
 
-    public function getAttribute(int $id): Attribute
+    public function getAttribute(int $id): ?Attribute
     {
         /** @var Attribute $attribute */
         $attribute = $this->get(sprintf('attribute_%d', $id));
@@ -187,7 +187,7 @@ class RegistryService
         return $propertySelection;
     }
 
-    public function getPropertyGroup(int $id): PropertyGroup
+    public function getPropertyGroup(int $id): ?PropertyGroup
     {
         /** @var PropertyGroup $propertyGroup */
         $propertyGroup = $this->get(sprintf('propertyGroup_%d', $id));

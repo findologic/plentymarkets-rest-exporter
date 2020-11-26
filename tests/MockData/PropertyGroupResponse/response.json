@@ -9,7 +9,15 @@
       "orderPropertyGroupingType": "none",
       "isSurchargePercental": false,
       "ottoComponent": 0,
-      "updatedAt": "2015-02-12T10:47:49+01:00"
+      "updatedAt": "2015-02-12T10:47:49+01:00",
+      "names": [
+        {
+          "propertyGroupId": 1,
+          "lang": "en",
+          "name": "My package",
+          "description": ""
+        }
+      ]
     },
     {
       "id": 2,

@@ -459,4 +459,40 @@ class RegistryServiceTest extends TestCase
 
         $this->assertEquals($expected->getId(), $this->registryService->getRrpId());
     }
+
+    public function testGetRrpIdIsFetchedFromConfigIfSet(): void
+    {
+        $rawResponse = $this->getMockResponse('SalesPriceResponse/response.json');
+        $parsed = SalesPriceParser::parse($rawResponse);
+        $default = $parsed->findOne([
+            'type' => 'rrp'
+        ]);
+
+        $expectedRrpId = 69;
+
+        $this->defaultConfig->setRrpId($expectedRrpId);
+
+        $key = md5($this->defaultConfig->getDomain());
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_defaultRrpId')
+            ->willReturn($default);
+
+        $this->assertEquals($expectedRrpId, $this->registryService->getRrpId());
+    }
+
+    public function testGetStandardVat(): void
+    {
+        $rawResponse = $this->getMockResponse('VatResponse/response.json');
+        $parsed = VatParser::parse($rawResponse);
+        $standard = $parsed->first();
+
+        $key = md5($this->defaultConfig->getDomain());
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_standardVat')
+            ->willReturn($standard);
+
+        $this->assertEquals($standard, $this->registryService->getStandardVat());
+    }
 }

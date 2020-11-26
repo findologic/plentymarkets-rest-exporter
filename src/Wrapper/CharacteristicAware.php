@@ -57,7 +57,7 @@ trait CharacteristicAware
         $value = $this->getCharacteristicValue($itemProperty, $characteristic);
         if (Utils::isEmpty($value)) {
             $name = $this->getTranslatedPropertyGroupName($itemProperty->getPropertyGroupId());
-            $value = $this->getCharacteristicName($characteristic, $itemProperty->getBackendName());
+            $value = $this->getCharacteristicName($itemProperty, $itemProperty->getBackendName());
 
             if (Utils::isEmpty($name) || Utils::isEmpty($value)) {
                 return null;
@@ -66,7 +66,7 @@ trait CharacteristicAware
             return new Attribute($name, (array)$value);
         }
 
-        $name = $this->getCharacteristicName($characteristic, $itemProperty->getBackendName());
+        $name = $this->getCharacteristicName($itemProperty, $itemProperty->getBackendName());
         if (Utils::isEmpty($name) || Utils::isEmpty($value)) {
             return null;
         }
@@ -123,26 +123,27 @@ trait CharacteristicAware
         }
     }
 
-    protected function getCharacteristicName(Characteristic $characteristic, ?string $default): ?string
-    {
-        foreach ($characteristic->getValueTexts() as $text) {
-            if ($text->getLang() !== $this->config->getLanguage()) {
+    protected function getCharacteristicName(
+        ItemProperty $itemProperty,
+        ?string $default
+    ): ?string {
+        foreach ($itemProperty->getNames() as $name) {
+            if ($name->getLang() !== $this->config->getLanguage()) {
                 continue;
             }
 
-            return $text->getValue();
+            return $name->getName();
         }
 
         return $default;
     }
 
-    protected function getTranslatedPropertyGroupName(?int $propertyGroupId): string
+    protected function getTranslatedPropertyGroupName(?int $propertyGroupId): ?string
     {
-        if (!$propertyGroupId) {
-            return '';
+        if (!$propertyGroupId || !$propertyGroup = $this->registryService->getPropertyGroup($propertyGroupId)) {
+            return null;
         }
 
-        $propertyGroup = $this->registryService->getPropertyGroup($propertyGroupId);
         foreach ($propertyGroup->getNames() as $name) {
             if (strtoupper($name->getLang()) === strtoupper($this->config->getLanguage())) {
                 return $name->getName();
