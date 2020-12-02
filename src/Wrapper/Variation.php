@@ -82,6 +82,12 @@ class Variation
     /** @var float */
     protected $vatRate;
 
+    /** @var string|null */
+    protected $baseUnit;
+
+    /** @var string|null */
+    protected $packageSize;
+
     public function __construct(
         Config $config,
         RegistryService $registryService,
@@ -108,6 +114,7 @@ class Variation
         $this->processCharacteristics();
         $this->processProperties();
         $this->processVatRate();
+        $this->processUnits();
     }
 
     public function isMain(): bool
@@ -205,6 +212,16 @@ class Variation
         return $this->vatRate;
     }
 
+    public function getBaseUnit(): ?string
+    {
+        return $this->baseUnit;
+    }
+
+    public function getPackageSize(): ?string
+    {
+        return $this->packageSize;
+    }
+
     private function processIdentifiers(): void
     {
         $this->number = $this->variationEntity->getBase()->getNumber();
@@ -263,12 +280,9 @@ class Variation
 
     private function processPrices(): void
     {
-        $priceId = $this->registryService->getPriceId();
         $insteadPriceId = $this->registryService->getRrpId();
 
-        $priceIdProperty = new Property('price_id');
-        $priceIdProperty->addValue((string)$priceId);
-        $this->properties[] = $priceIdProperty;
+        $priceId = $this->registryService->getPriceId();
 
         foreach ($this->variationEntity->getSalesPrices() as $variationSalesPrice) {
             $price = $variationSalesPrice->getPrice();
@@ -370,6 +384,21 @@ class Variation
                 $this->vatRate = $vatRate->getVatRate();
 
                 return;
+            }
+        }
+    }
+
+    private function processUnits(): void
+    {
+        $unitData = $this->variationEntity->getUnit();
+
+        $this->packageSize = $unitData->getContent();
+
+        if ($unitEntity = $this->registryService->getUnit($unitData->getUnitId())) {
+            foreach ($unitEntity->getNames() as $name) {
+                if (strtolower($name->getLang()) == (strtolower($this->config->getLanguage()))) {
+                    $this->baseUnit = $name->getName();
+                }
             }
         }
     }

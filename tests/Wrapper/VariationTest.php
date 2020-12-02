@@ -9,6 +9,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
@@ -64,6 +65,14 @@ class VariationTest extends TestCase
             ->method('getAttribute')
             ->willReturn($parsedAttributeResponse->first());
 
+        $unitResponse = $this->getMockResponse('UnitResponse/response.json');
+        $parsedAttributeResponse = UnitParser::parse($unitResponse);
+
+        $this->registryServiceMock->expects($this->any())
+            ->method('getUnit')
+            ->with(4)
+            ->willReturn($parsedAttributeResponse->findOne(['id' => 4]));
+
         $itemVariationResponse = $this->getMockResponse('Pim/Variations/response.json');
         $variationEntities = PimVariationsParser::parse($itemVariationResponse);
         $variationEntity = $variationEntities->first();
@@ -85,6 +94,8 @@ class VariationTest extends TestCase
         $this->assertEquals(106, $wrapper->getItemId());
         $this->assertEquals(['3213213213213'], $wrapper->getBarcodes());
         $this->assertEquals(279, $wrapper->getPrice());
+        $this->assertEquals('milligram', $wrapper->getBaseUnit());
+        $this->assertEquals('1000', $wrapper->getPackageSize());
 
         $attributes = $wrapper->getAttributes();
         $this->assertCount(3, $attributes);
@@ -94,11 +105,6 @@ class VariationTest extends TestCase
         $this->assertEquals(['/wohnzimmer/sessel-hocker/'], $attributes[1]->getValues());
         $this->assertEquals('Couch color', $attributes[2]->getKey());
         $this->assertEquals(['purple'], $attributes[2]->getValues());
-
-        $properties = $wrapper->getProperties();
-        $this->assertCount(1, $properties);
-        $this->assertEquals('price_id', $properties[0]->getKey());
-        $this->assertEquals(['' => '0'], $properties[0]->getAllValues());
     }
 
     public function testChildCategoriesAreProperlyBuilt(): void

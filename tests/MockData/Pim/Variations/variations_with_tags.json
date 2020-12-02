@@ -621,7 +621,11 @@
       "comments": null,
       "id": 1004,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -869,7 +873,11 @@
       "comments": null,
       "id": 1005,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,

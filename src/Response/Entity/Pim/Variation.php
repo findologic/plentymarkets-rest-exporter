@@ -15,6 +15,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Image;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\SalesPrice;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Tag;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Unit;
 
 class Variation extends Entity
 {
@@ -66,8 +67,8 @@ class Variation extends Entity
     /** @var null Unknown data */
     private $timestamps = null;
 
-    /** @var null Unknown data */
-    private $unit = null;
+    /** @var Unit */
+    private $unit ;
 
     /** @var Characteristic[] */
     private $characteristics;
@@ -90,6 +91,7 @@ class Variation extends Entity
         $this->tags = $this->getEntities(Tag::class, 'tags', $data);
         $this->images = $this->getEntities(Image::class, 'images', $data);
         $this->base = $this->getEntity(Base::class, $data['base']);
+        $this->unit = $this->getEntity(Unit::class, $data['unit']);
     }
 
     public function getData(): array
@@ -183,5 +185,13 @@ class Variation extends Entity
     public function getBase(): Base
     {
         return $this->base;
+    }
+
+    /**
+     * @return Unit
+     */
+    public function getUnit(): Unit
+    {
+        return $this->unit;
     }
 }

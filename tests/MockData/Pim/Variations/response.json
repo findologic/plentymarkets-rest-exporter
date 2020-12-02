@@ -560,7 +560,11 @@
       "comments": null,
       "id": 1004,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -780,7 +784,11 @@
       "comments": null,
       "id": 1005,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -3289,7 +3297,11 @@
       "comments": null,
       "id": 1006,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -3704,7 +3716,11 @@
       "comments": null,
       "id": 1007,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -4119,7 +4135,11 @@
       "comments": null,
       "id": 1008,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -4534,7 +4554,11 @@
       "comments": null,
       "id": 1009,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -4949,7 +4973,11 @@
       "comments": null,
       "id": 1010,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -5380,7 +5408,11 @@
       "comments": null,
       "id": 1011,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -5795,7 +5827,11 @@
       "comments": null,
       "id": 1013,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -6210,7 +6246,11 @@
       "comments": null,
       "id": 1014,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -8646,7 +8686,11 @@
       "comments": null,
       "id": 1015,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -9061,7 +9105,11 @@
       "comments": null,
       "id": 1016,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -9476,7 +9524,11 @@
       "comments": null,
       "id": 1017,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -9891,7 +9943,11 @@
       "comments": null,
       "id": 1018,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -10306,7 +10362,11 @@
       "comments": null,
       "id": 1019,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -12644,7 +12704,11 @@
       "comments": null,
       "id": 1020,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -13059,7 +13123,11 @@
       "comments": null,
       "id": 1021,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -13474,7 +13542,11 @@
       "comments": null,
       "id": 1022,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -13889,7 +13961,11 @@
       "comments": null,
       "id": 1023,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -14304,7 +14380,11 @@
       "comments": null,
       "id": 1024,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -14719,7 +14799,11 @@
       "comments": null,
       "id": 1025,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -15134,7 +15218,11 @@
       "comments": null,
       "id": 1026,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -15549,7 +15637,11 @@
       "comments": null,
       "id": 1027,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -16030,7 +16122,11 @@
       "comments": null,
       "id": 1028,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -17225,7 +17321,11 @@
       "comments": null,
       "id": 1064,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": false,
         "mainVariationId": 1029,
@@ -18156,7 +18256,11 @@
       "comments": null,
       "id": 1063,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": false,
         "mainVariationId": 1029,
@@ -19087,7 +19191,11 @@
       "comments": null,
       "id": 1066,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": false,
         "mainVariationId": 1030,
@@ -20018,7 +20126,11 @@
       "comments": null,
       "id": 1065,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": false,
         "mainVariationId": 1030,
@@ -20675,7 +20787,11 @@
       "comments": null,
       "id": 1031,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -21332,7 +21448,11 @@
       "comments": null,
       "id": 1032,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -23877,7 +23997,11 @@
       "comments": null,
       "id": 1033,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -24409,7 +24533,11 @@
       "comments": null,
       "id": 1070,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": false,
         "mainVariationId": 1069,
@@ -24644,7 +24772,11 @@
       "comments": null,
       "id": 1071,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": true,
         "mainVariationId": null,
@@ -24899,7 +25031,11 @@
       "comments": null,
       "id": 1072,
       "timestamps": null,
-      "unit": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
       "base": {
         "isMain": false,
         "mainVariationId": 1071,
