@@ -67,8 +67,8 @@ class Variation extends Entity
     /** @var null Unknown data */
     private $timestamps = null;
 
-    /** @var Unit */
-    private $unit ;
+    /** @var Unit|null */
+    private $unit = null;
 
     /** @var Characteristic[] */
     private $characteristics;
@@ -91,7 +91,9 @@ class Variation extends Entity
         $this->tags = $this->getEntities(Tag::class, 'tags', $data);
         $this->images = $this->getEntities(Image::class, 'images', $data);
         $this->base = $this->getEntity(Base::class, $data['base']);
-        $this->unit = $this->getEntity(Unit::class, $data['unit']);
+        if ($unit = $data['unit'] ?? null) {
+            $this->unit = $this->getEntity(Unit::class, $unit);
+        }
     }
 
     public function getData(): array
@@ -187,10 +189,7 @@ class Variation extends Entity
         return $this->base;
     }
 
-    /**
-     * @return Unit
-     */
-    public function getUnit(): Unit
+    public function getUnit(): ?Unit
     {
         return $this->unit;
     }

@@ -390,7 +390,9 @@ class Variation
 
     private function processUnits(): void
     {
-        $unitData = $this->variationEntity->getUnit();
+        if (!$unitData = $this->variationEntity->getUnit()) {
+            return;
+        }
 
         $this->packageSize = $unitData->getContent();
 
