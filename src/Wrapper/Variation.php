@@ -396,7 +396,7 @@ class Variation
 
         if ($unitEntity = $this->registryService->getUnit($unitData->getUnitId())) {
             foreach ($unitEntity->getNames() as $name) {
-                if (strtolower($name->getLang()) == (strtolower($this->config->getLanguage()))) {
+                if (strtolower($name->getLang()) === (strtolower($this->config->getLanguage()))) {
                     $this->baseUnit = $name->getName();
                 }
             }

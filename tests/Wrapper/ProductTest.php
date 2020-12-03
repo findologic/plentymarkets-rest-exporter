@@ -209,6 +209,8 @@ class ProductTest extends TestCase
         $expectedUrlPath = 'awesome-url-path/somewhere-in-the-store';
         $expectedPriceId = 11;
         $expectedMainVariationId = 20;
+        $expectedBaseUnit = 'Stück';
+        $expectedPackageSize = '1000';
 
         $this->exporterMock = $this->getExporter();
 
@@ -290,8 +292,8 @@ class ProductTest extends TestCase
         $columnValues = explode("\t", $line);
         $this->assertSame((string)$expectedPriceId, $columnValues[18]);
         $this->assertSame((string)$expectedMainVariationId, $columnValues[19]);
-        $this->assertSame('Stück', $columnValues[20]);
-        $this->assertSame('1000', $columnValues[21]);
+        $this->assertSame($expectedBaseUnit, $columnValues[20]);
+        $this->assertSame($expectedPackageSize, $columnValues[21]);
 
         $this->assertTrue(
             DateTime::createFromFormat(DateTime::ISO8601, $item->getDateAdded()->getValues()['']) !== false

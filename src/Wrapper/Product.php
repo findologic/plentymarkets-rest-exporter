@@ -189,11 +189,11 @@ class Product
                 $this->item->addKeyword($tag);
             }
 
-            if ($packageSize === null) {
+            if (!$packageSize) {
                 $packageSize = $variation->getPackageSize();
             }
 
-            if ($baseUnit === null) {
+            if (!$baseUnit) {
                 $baseUnit = $variation->getBaseUnit();
             }
 
