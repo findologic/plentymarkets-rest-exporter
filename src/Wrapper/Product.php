@@ -89,6 +89,9 @@ class Product
         }
 
         $variationCount = $this->processVariations();
+        if ($variationCount === 0 && $this->config->isExportUnavailableVariations()) {
+            $variationCount = $this->processVariations(false);
+        }
         if ($variationCount === 0) {
             $this->reason = 'All assigned variations are not exportable (inactive, no longer available, etc.)';
 
@@ -157,7 +160,7 @@ class Product
         }
     }
 
-    protected function processVariations(): int
+    protected function processVariations(bool $checkAvailability = true): int
     {
         $hasImage = false;
         $variationsProcessed = 0;
@@ -169,7 +172,7 @@ class Product
         $packageSize = null;
 
         foreach ($this->variationEntities as $variationEntity) {
-            if (!$this->shouldExportVariation($variationEntity)) {
+            if (!$this->shouldExportVariation($variationEntity, $checkAvailability)) {
                 continue;
             }
 
@@ -251,7 +254,7 @@ class Product
         return $variationsProcessed;
     }
 
-    protected function shouldExportVariation(PimVariation $variation): bool
+    protected function shouldExportVariation(PimVariation $variation, bool $checkAvailability = true): bool
     {
         if (!$variation->getBase()->isActive()) {
             return false;
@@ -267,7 +270,7 @@ class Product
             return false;
         }
 
-        if ($this->config->getAvailabilityId() !== null) {
+        if ($checkAvailability && $this->config->getAvailabilityId() !== null) {
             if ($variation->getBase()->getAvailability() === $this->config->getAvailabilityId()) {
                 return false;
             }

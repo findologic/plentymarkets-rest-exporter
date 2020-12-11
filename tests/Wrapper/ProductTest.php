@@ -166,30 +166,15 @@ class ProductTest extends TestCase
         );
     }
 
-    public function testProductWithVariationsConfigAvailabilityIdIsNotExported(): void
+    public function testProductWithAllVariationsMatchingConfigurationAvailabilityIdAreNotExported()
     {
-        $configAvailabilityId = 7;
-        $this->config->setAvailabilityId($configAvailabilityId);
+        $this->exporterMock = $this->getExporter();
 
-        $variationMock = $this->getMockBuilder(Variation::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->config->setAvailabilityId(5);
 
-        $baseMock = $this->getMockBuilder(Base::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $variationMock->expects($this->exactly(4))->method('getBase')->willReturn($baseMock);
-        $baseMock->expects($this->once())->method('isActive')
-            ->willReturn(true);
-        $baseMock->expects($this->once())->method('getAutomaticListVisibility')
-            ->willReturn(3);
-        $baseMock->expects($this->once())->method('getAvailableUntil')
-            ->willReturn(Carbon::now()->addSeconds(5));
-        $baseMock->expects($this->once())->method('getAvailability')
-            ->willReturn($configAvailabilityId);
-
-        $this->variationEntityMocks[] = $variationMock;
+        $rawVariations = $this->getMockResponse('Pim/Variations/variations_with_5_for_availability_id.json');
+        $variations = PimVariationsParser::parse($rawVariations);
+        $this->variationEntityMocks = $variations->all();
 
         $product = $this->getProduct();
         $item = $product->processProductData();
@@ -199,6 +184,50 @@ class ProductTest extends TestCase
             'All assigned variations are not exportable (inactive, no longer available, etc.)',
             $product->getReason()
         );
+    }
+
+    public function testProductWithAllVariationsMatchingConfigurationAvailabilityAreExportedIfConfiguredToDoSo()
+    {
+        $this->exporterMock = $this->getExporter();
+
+        $this->config->setAvailabilityId(5);
+        $this->config->setExportUnavailableVariations(true);
+
+        $rawVariations = $this->getMockResponse('Pim/Variations/variations_with_5_for_availability_id.json');
+        $variations = PimVariationsParser::parse($rawVariations);
+        $this->variationEntityMocks = $variations->all();
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertNotNull($item);
+        // TODO: check item's orderNumbers directly once order numbers getter is implemented
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+        $this->assertEquals('S-000813-C|modeeeel|1004|106|3213213213213|101|1005|107', $columnValues[1]);
+    }
+
+    public function testMatchingAvailabilityExportSettingDoesNotOverrideOtherVariationExportabilityChecks()
+    {
+        $this->exporterMock = $this->getExporter();
+
+        $this->config->setAvailabilityId(5);
+        $this->config->setExportUnavailableVariations(true);
+
+        $rawVariations = $this->getMockResponse(
+            'Pim/Variations/variations_with_5_for_availability_id_and_mixed_status.json'
+        );
+        $variations = PimVariationsParser::parse($rawVariations);
+        $this->variationEntityMocks = $variations->all();
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertNotNull($item);
+        // TODO: check item's orderNumbers directly once order numbers getter is implemented
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+        $this->assertEquals('101|1005|107', $columnValues[1]);
     }
 
     public function testProductIsSuccessfullyWrapped(): void
