@@ -342,7 +342,7 @@ class Variation
 
         $tagIds = [];
         foreach ($tags as $tag) {
-            if (!$this->canProcessTag($tag, $storeId)) {
+            if (!$this->shouldProcessTag($tag, $storeId)) {
                 continue;
             }
 
@@ -366,11 +366,11 @@ class Variation
         }
     }
 
-    private function canProcessTag(Tag $tag, int $storeId): bool
+    private function shouldProcessTag(Tag $tag, int $storeId): bool
     {
         if (!$clients = $tag->getTagData()->getClients()) {
             return false;
-        };
+        }
 
         foreach ($clients as $client) {
             if ($client->getPlentyId() === $storeId) {
