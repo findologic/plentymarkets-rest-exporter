@@ -14,6 +14,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Variation as VariationWrapper;
@@ -137,9 +138,15 @@ class VariationTest extends TestCase
         $this->assertSame('/living-room/armchairs-stools/', $wrapper->getAttributes()[1]->getValues()[0]);
     }
 
-    public function testTagsAreProperlyProcessed(): void
+    public function testTagsAreExportedOnlyForTheSelectedStore(): void
     {
-        $itemVariationResponse = $this->getMockResponse('Pim/Variations/variation_with_tags.json');
+        $webStoreMock = $this->getMockBuilder(WebStore::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $webStoreMock->method('getStoreIdentifier')->willReturn(34185);
+        $this->registryServiceMock->method('getWebStore')->willReturn($webStoreMock);
+
+        $itemVariationResponse = $this->getMockResponse('Pim/Variations/variation_with_different_tag_clients.json');
         $variationEntities = PimVariationsParser::parse($itemVariationResponse);
         $variationEntity = $variationEntities->first();
 
@@ -153,8 +160,9 @@ class VariationTest extends TestCase
 
         $this->assertCount(1, $wrapper->getAttributes());
         $this->assertSame('1', $wrapper->getAttributes()[0]->getValues()[0]);
-        $this->assertCount(1, $wrapper->getTags());
-        $this->assertSame('I am a Tag', $wrapper->getTags()[0]->getValue());
+        $this->assertCount(2, $wrapper->getTags());
+        $this->assertSame('en-tag-1', $wrapper->getTags()[0]->getValue());
+        $this->assertSame('en-tag-2', $wrapper->getTags()[1]->getValue());
     }
 
     public function characteristicsNotAvailableForSearchProvider(): array
