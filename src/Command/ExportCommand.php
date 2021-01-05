@@ -97,7 +97,8 @@ class ExportCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $shopkey = Utils::validateAndGetShopkey($input->getArgument('shopkey'));
-        $config = Utils::getExportConfiguration($shopkey, Config::DEFAULT_CONFIG_FILE, $this->client);
+        $configLocation = getenv('CONFIG_LOCATION') ?? Config::DEFAULT_CONFIG_FILE;
+        $config = Utils::getExportConfiguration($shopkey, $configLocation, $this->client);
 
         $exporterType = (int)$input->getOption('type');
         $this->exporter = $this->getExporter($exporterType, $config);
@@ -148,7 +149,7 @@ class ExportCommand extends Command
             return true;
         }
 
-        $exportFileLocation = getenv('export_location') ?? Exporter::DEFAULT_LOCATION;
+        $exportFileLocation = getenv('EXPORT_LOCATION') ?? Exporter::DEFAULT_LOCATION;
         $isCsvExporter = $exporterType === Exporter::TYPE_CSV;
         if (!$isCsvExporter || !file_exists($exportFileLocation . '/findologic.csv')) {
             return true;

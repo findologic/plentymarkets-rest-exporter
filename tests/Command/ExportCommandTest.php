@@ -18,12 +18,15 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Yaml\Yaml;
 
 class ExportCommandTest extends TestCase
 {
     use ResponseHelper;
 
     private const EXPORT_LOCATION = '/tmp/export-command-test';
+    private const CONFIG_DIR_LOCATION = '/tmp/export-command-config';
+    private const CONFIG_FILE_LOCATION = self::CONFIG_DIR_LOCATION . '/config.yml';
 
     private $application;
 
@@ -48,8 +51,15 @@ class ExportCommandTest extends TestCase
         if (!is_dir(self::EXPORT_LOCATION)) {
             mkdir(self::EXPORT_LOCATION);
         }
+        if (!is_dir(self::CONFIG_DIR_LOCATION)) {
+            mkdir(self::CONFIG_DIR_LOCATION);
+        }
 
-        putenv(sprintf('export_location=%s', self::EXPORT_LOCATION));
+        putenv(sprintf('EXPORT_LOCATION=%s', self::EXPORT_LOCATION));
+        putenv(sprintf('CONFIG_LOCATION=%s', self::CONFIG_FILE_LOCATION));
+
+        $defaultConfig = Yaml::parseFile(__DIR__ . '/../../config/config.dist.yml');
+        file_put_contents(self::CONFIG_FILE_LOCATION, Yaml::dump($defaultConfig));
 
         $this->application = new Application();
         $this->command = new ExportCommand();
@@ -60,9 +70,12 @@ class ExportCommandTest extends TestCase
     {
         parent::tearDown();
 
+        // PHP is really bad at deleting files recursively. Therefore we go the system approach.
         if (is_dir(self::EXPORT_LOCATION)) {
-            // PHP is really bad at deleting files recursively. Therefore we go the system approach.
             exec(sprintf('rm -rf "%s"', self::EXPORT_LOCATION));
+        }
+        if (is_dir(self::CONFIG_DIR_LOCATION)) {
+            exec(sprintf('rm -rf "%s"', self::CONFIG_DIR_LOCATION));
         }
     }
 
