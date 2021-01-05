@@ -35,7 +35,7 @@ class Name extends Entity
             'id' => $this->id,
             'tagId' => $this->tagId,
             'tagLang' => $this->tagLang,
-            'tagName' => $this->tagName
+            'tagName' => $this->tagName,
         ];
     }
 

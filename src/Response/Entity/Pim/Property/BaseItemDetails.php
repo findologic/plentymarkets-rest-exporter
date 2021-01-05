@@ -243,12 +243,11 @@ class BaseItemDetails extends Entity
             $freeTextFields['free' . $fieldNumber] = $this->{'free' . $fieldNumber};
         }
 
-        return [
+        return array_merge([
             'id' => $this->id,
             'position' => $this->position,
-            'addCmsPage' => $this->addCmsPage,
+            'add_cms_page' => $this->addCmsPage,
             'condition' => $this->condition,
-            $freeTextFields,
             'gimahhot' => $this->gimahhot,
             'storeSpecial' => $this->storeSpecial,
             'ownerId' => $this->ownerId,
@@ -265,6 +264,7 @@ class BaseItemDetails extends Entity
             'ebayPresetId' => $this->ebayPresetId,
             'ebayCategory' => $this->ebayCategory,
             'ebayCategory2' => $this->ebayCategory2,
+            'ebayStoreCategory' => $this->ebayStoreCategory,
             'ebayStoreCategory2' => $this->ebayStoreCategory2,
             'rakutenCategoryId' => $this->rakutenCategoryId,
             'flagOne' => $this->flagOne,
@@ -283,7 +283,7 @@ class BaseItemDetails extends Entity
             'inactive' => $this->inactive,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
-        ];
+        ], $freeTextFields);
     }
 
     public function getId(): int

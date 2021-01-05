@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 
+use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client;
@@ -159,7 +160,33 @@ class UtilsTest extends TestCase
     /**
      * @dataProvider configCallsCustomerLoginProvider
      */
-    public function testCustomerLoginIsCalledIfConfigDoesAllowIt(
+    public function testCustomerLoginIsCalledIfConfigDoesAllowsItAndFailsWhenResponseIsInvalid(
+        array $rawConfig,
+        ?string $shopkey,
+        string $expectedDomain
+    ): void {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Something went wrong while tying to fetch the importer data');
+
+        file_put_contents(self::CONFIG_PATH, Yaml::dump($rawConfig));
+
+        $this->clientMock->expects($this->once())
+            ->method('get')
+            ->willReturn($this->getMockResponse('CustomerLoginResponse/invalid_response.json'));
+
+        $config = Utils::getExportConfiguration(
+            $shopkey,
+            self::CONFIG_PATH,
+            $this->clientMock
+        );
+
+        $this->assertSame($expectedDomain, $config->getDomain());
+    }
+
+    /**
+     * @dataProvider configCallsCustomerLoginProvider
+     */
+    public function testCustomerLoginIsCalledIfConfigDoesAllowsIt(
         array $rawConfig,
         ?string $shopkey,
         string $expectedDomain

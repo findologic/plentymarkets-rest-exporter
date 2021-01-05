@@ -23,7 +23,7 @@ class Barcode extends Entity
     public function getData(): array
     {
         return [
-            'id' => $this->id,
+            'barcodeId' => $this->id,
             'code' => $this->code,
         ];
     }

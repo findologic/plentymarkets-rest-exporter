@@ -19,7 +19,7 @@ class ImageAvailability extends Entity
 
     public function __construct(array $data)
     {
-        $this->id = $this->getIntProperty('id', $data);
+        $this->id = $this->getIntProperty('imageId', $data);
         $this->value = $this->getIntProperty('value', $data);
         $this->type = $this->getStringProperty('type', $data);
     }
@@ -27,7 +27,7 @@ class ImageAvailability extends Entity
     public function getData(): array
     {
         return [
-            'id' => $this->id,
+            'imageId' => $this->id,
             'value' => $this->value,
             'type' => $this->type,
         ];

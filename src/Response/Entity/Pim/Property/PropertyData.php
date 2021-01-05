@@ -58,7 +58,7 @@ class PropertyData extends Entity
             'names' => $this->names,
             'position' => $this->position,
             'typeIdentifier' => $this->typeIdentifier,
-            'cast' => $this->id,
+            'cast' => $this->cast,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
         ];

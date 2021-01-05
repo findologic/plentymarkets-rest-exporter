@@ -12,7 +12,7 @@ class Base extends Entity
     /** @var bool */
     private $isMain;
 
-    /** @var int */
+    /** @var int|null */
     private $mainVariationId;
 
     /** @var int */
@@ -42,7 +42,7 @@ class Base extends Entity
     /** @var float */
     private $purchasePrice;
 
-    /** @var float */
+    /** @var float|null */
     private $movingAveragePrice;
 
     /** @var string|null */
@@ -78,10 +78,10 @@ class Base extends Entity
     /** @var int */
     private $maximumOrderQuantity;
 
-    /** @var int */
+    /** @var int|null */
     private $minimumOrderQuantity;
 
-    /** @var int */
+    /** @var int|null */
     private $intervalOrderQuantity;
 
     /** @var DateTimeInterface|null */
@@ -90,7 +90,7 @@ class Base extends Entity
     /** @var DateTimeInterface|null */
     private $releasedAt;
 
-    /** @var string */
+    /** @var string|null */
     private $name;
 
     /** @var int */
@@ -235,12 +235,18 @@ class Base extends Entity
         $this->isVisibleIfNetStockIsPositive = $this->getBoolProperty('isVisibleIfNetStockIsPositive', $data);
         $this->isInvisibleIfNetStockIsNotPositive = $this->getBoolProperty('isInvisibleIfNetStockIsNotPositive', $data);
         $this->isAvailableIfNetStockIsPositive = $this->getBoolProperty('isAvailableIfNetStockIsPositive', $data);
-        $this->isUnavailableIfNetStockIsNotPositive = $this
-            ->getBoolProperty('isUnavailableIfNetStockIsNotPositive', $data);
-        $this->isVisibleInListIfNetStockIsPositive = $this
-            ->getBoolProperty('isVisibleInListIfNetStockIsPositive', $data);
-        $this->isInvisibleInListIfNetStockIsNotPositive = $this
-            ->getBoolProperty('isInvisibleInListIfNetStockIsNotPositive', $data);
+        $this->isUnavailableIfNetStockIsNotPositive = $this->getBoolProperty(
+            'isUnavailableIfNetStockIsNotPositive',
+            $data
+        );
+        $this->isVisibleInListIfNetStockIsPositive = $this->getBoolProperty(
+            'isVisibleInListIfNetStockIsPositive',
+            $data
+        );
+        $this->isInvisibleInListIfNetStockIsNotPositive = $this->getBoolProperty(
+            'isInvisibleInListIfNetStockIsNotPositive',
+            $data
+        );
         $this->mainWarehouseId = $this->getIntProperty('mainWarehouseId', $data);
         $this->maximumOrderQuantity = $this->getIntProperty('maximumOrderQuantity', $data);
         $this->minimumOrderQuantity = $this->getIntProperty('minimumOrderQuantity', $data);
@@ -276,8 +282,10 @@ class Base extends Entity
         $this->hasCalculatedBundleWeight = $this->getBoolProperty('hasCalculatedBundleWeight', $data);
         $this->hasCalculatedBundleNetWeight = $this->getBoolProperty('hasCalculatedBundleNetWeight', $data);
         $this->hasCalculatedBundlePurchasePrice = $this->getBoolProperty('hasCalculatedBundlePurchasePrice', $data);
-        $this->hasCalculatedBundleMovingAveragePrice = $this
-            ->getBoolProperty('hasCalculatedBundleMovingAveragePrice', $data);
+        $this->hasCalculatedBundleMovingAveragePrice = $this->getBoolProperty(
+            'hasCalculatedBundleMovingAveragePrice',
+            $data
+        );
         $this->customsTariffNumber = $this->getIntProperty('customsTariffNumber', $data);
         $this->categoriesInherited = $this->getBoolProperty('categoriesInherited', $data);
         $this->referrerInherited = $this->getBoolProperty('referrerInherited', $data);
@@ -322,6 +330,7 @@ class Base extends Entity
             'availableUntil' => $this->availableUntil,
             'releasedAt' => $this->releasedAt,
             'name' => $this->name,
+            'picking' => $this->picking,
             'weightG' => $this->weightG,
             'weightNetG' => $this->weightNetG,
             'widthMM' => $this->widthMM,
@@ -369,7 +378,7 @@ class Base extends Entity
         return $this->isMain;
     }
 
-    public function getMainVariationId(): int
+    public function getMainVariationId(): ?int
     {
         return $this->mainVariationId;
     }
@@ -419,7 +428,7 @@ class Base extends Entity
         return $this->purchasePrice;
     }
 
-    public function getMovingAveragePrice(): float
+    public function getMovingAveragePrice(): ?float
     {
         return $this->movingAveragePrice;
     }
@@ -479,12 +488,12 @@ class Base extends Entity
         return $this->maximumOrderQuantity;
     }
 
-    public function getMinimumOrderQuantity(): int
+    public function getMinimumOrderQuantity(): ?int
     {
         return $this->minimumOrderQuantity;
     }
 
-    public function getIntervalOrderQuantity(): int
+    public function getIntervalOrderQuantity(): ?int
     {
         return $this->intervalOrderQuantity;
     }
@@ -499,7 +508,7 @@ class Base extends Entity
         return $this->releasedAt;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -609,7 +618,7 @@ class Base extends Entity
         return $this->defaultShippingCosts;
     }
 
-    public function isMayShowUnitPrice(): bool
+    public function mayShowUnitPrice(): bool
     {
         return $this->mayShowUnitPrice;
     }
@@ -629,22 +638,22 @@ class Base extends Entity
         return $this->singleItemCount;
     }
 
-    public function getHasCalculatedBundleWeight(): ?bool
+    public function hasCalculatedBundleWeight(): ?bool
     {
         return $this->hasCalculatedBundleWeight;
     }
 
-    public function getHasCalculatedBundleNetWeight(): ?bool
+    public function hasCalculatedBundleNetWeight(): ?bool
     {
         return $this->hasCalculatedBundleNetWeight;
     }
 
-    public function getHasCalculatedBundlePurchasePrice(): ?bool
+    public function hasCalculatedBundlePurchasePrice(): ?bool
     {
         return $this->hasCalculatedBundlePurchasePrice;
     }
 
-    public function getHasCalculatedBundleMovingAveragePrice(): ?bool
+    public function hasCalculatedBundleMovingAveragePrice(): ?bool
     {
         return $this->hasCalculatedBundleMovingAveragePrice;
     }

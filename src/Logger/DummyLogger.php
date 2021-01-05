@@ -82,4 +82,12 @@ class DummyLogger implements LoggerInterface
     {
         // Dummy implementation.
     }
+
+    /**
+     * @codeCoverageIgnore Logger without implementation needs no tests.
+     */
+    public function trace($message, array $context = [])
+    {
+        // Dummy implementation.
+    }
 }

@@ -65,10 +65,13 @@ class ConfigTest extends TestCase
                 'export_username' => $expectedUsername,
                 'export_password' => $expectedPassword,
                 'language' => $expectedLanguage,
-                'multishop_id' => $expectedMultiShopId,
-                'availability_id' => $expectedAvailabilityId,
-                'price_id' => $expectedPriceId,
-                'rrp_id' => $expectedRrpId
+                'plentymarkets' => [
+                    'multishop_id' => $expectedMultiShopId,
+                    'availability_id' => $expectedAvailabilityId,
+                    'price_id' => $expectedPriceId,
+                    'rrp_id' => $expectedRrpId,
+                    'exporter' => 'REST'
+                ],
             ]
         ];
 

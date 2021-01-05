@@ -2577,47 +2577,7 @@
           }
         }
       ],
-      "tags": [
-        {
-          "tagId": 1,
-          "tag": {
-            "createdAt": "2019-03-19 14:07:52",
-            "updatedAt": "2020-03-03 15:30:19",
-            "names": [
-              {
-                "id": 1,
-                "tagId": "1",
-                "tagLang": "de",
-                "tagName": "i am a tag"
-              },
-              {
-                "id": 2,
-                "tagId": "1",
-                "tagLang": "en",
-                "tagName": "I am a Tag"
-              },
-              {
-                "id": 3,
-                "tagId": "1",
-                "tagLang": "fr",
-                "tagName": "Le france"
-              }
-            ],
-            "clients": [
-              {
-                "id": 1,
-                "tagId": 1,
-                "plentyId": 34185,
-                "createdAt": "2020-08-19 12:48:35",
-                "updatedAt": "2020-08-19 12:48:35"
-              }
-            ],
-            "id": 1,
-            "tagName": "i am a tag",
-            "color": "#ffffff"
-          }
-        }
-      ],
+      "tags": [],
       "comments": null,
       "id": 1004,
       "timestamps": null,

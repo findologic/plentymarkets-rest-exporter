@@ -41,7 +41,7 @@ class PropertyOption extends Entity
     {
         return [
             'id' => $this->id,
-            'values' => $this->values,
+            'propertyOptionValues' => $this->values,
             'propertyId' => $this->propertyId,
             'typeOptionIdentifier' => $this->typeOptionIdentifier,
             'updatedAt' => $this->updatedAt,

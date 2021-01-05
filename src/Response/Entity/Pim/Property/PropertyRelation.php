@@ -51,7 +51,7 @@ class PropertyRelation extends Entity
             'id' => $this->id,
             'propertyId' => $this->propertyId,
             'relationTargetId' => $this->relationTargetId,
-            'values' => $this->values,
+            'relationValues' => $this->values,
             'relationTypeIdentifier' => $this->relationTypeIdentifier,
             'selectionRelationId' => $this->selectionRelationId,
             'createdAt' => $this->createdAt,

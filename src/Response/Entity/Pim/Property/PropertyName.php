@@ -47,7 +47,7 @@ class PropertyName extends Entity
             'id' => $this->id,
             'propertyId' => $this->propertyId,
             'lang' => $this->lang,
-            'value' => $this->value,
+            'name' => $this->value,
             'description' => $this->description,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,

@@ -27,7 +27,7 @@ class Category extends Entity
     public function getData(): array
     {
         return [
-            'id' => $this->id,
+            'categoryId' => $this->id,
             'position' => $this->position,
             'isNeckermannPrimary' => $this->isNeckermannPrimary,
         ];

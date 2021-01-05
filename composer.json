@@ -46,7 +46,7 @@
     "scripts": {
         "lint": "./vendor/bin/phpcs --standard=phpcs.xml .",
         "fix": "./vendor/bin/phpcbf --standard=phpcs.xml .",
-        "test": "phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml",
+        "test": "XDEBUG_MODE=coverage phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml",
         "export": "bin/export",
         "clear": "bin/clearDebugFiles"
     },

@@ -16,12 +16,14 @@ use Symfony\Component\Console\Application;
 
 $application = new Application();
 
-$application->add(new ExportCommand());
-$application->add(new ClearCacheCommand());
-$application->add(new ClearDataCommand());
-$application->add(new ClearExportDirectoryCommand());
-$application->add(new ClearDebugDirectoryCommand());
-$application->add(new ClearLogDirectoryCommand());
-$application->add(new GenerateTokenCommand());
+$application->addCommands([
+    new ExportCommand(),
+    new ClearCacheCommand(),
+    new ClearDataCommand(),
+    new ClearExportDirectoryCommand(),
+    new ClearDebugDirectoryCommand(),
+    new ClearLogDirectoryCommand(),
+    new GenerateTokenCommand(),
+]);
 
 $application->run();
