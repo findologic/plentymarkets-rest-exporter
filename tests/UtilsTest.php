@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 
 use Exception;
+use FINDOLOGIC\Export\Helpers\DataHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client;
@@ -204,6 +205,37 @@ class UtilsTest extends TestCase
         );
 
         $this->assertSame($expectedDomain, $config->getDomain());
+    }
+
+    public function isEmptyDataProvider(): array
+    {
+        return [
+            'non-empty string returns false' => ['asdf', false],
+            'non-zero number returns false' => [1, false],
+            'true returns true' => [true, true],
+            'false returns true' => [false, true],
+            'zero returns true' => [0, true],
+            'null returns true' => [null, true],
+            'null as string returns true' => ['null', true],
+            'empty string returns true' => ['', true],
+            'all whitespace string returns true' => ['       ', true],
+            'string above character limit returns true' => [
+                str_repeat('0', DataHelper::ATTRIBUTE_CHARACTER_LIMIT + 1),
+                true
+            ],
+            'string exactly at character limit returns false' => [
+                str_repeat('0', DataHelper::ATTRIBUTE_CHARACTER_LIMIT),
+                false
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider isEmptyDataProvider
+     */
+    public function testIsEmpty($value, bool $expected)
+    {
+        $this->assertSame($expected, Utils::isEmpty($value));
     }
 
     private function getDefaultRawConfig(array $overrides = []): array

@@ -108,6 +108,34 @@ class VariationTest extends TestCase
         $this->assertEquals(['' => '0'], $properties[0]->getAllValues());
     }
 
+    public function testAttributesOverLengthLimitAreNotExported(): void
+    {
+        $attributeResponse = $this->getMockResponse('AttributeResponse/response.json');
+        $parsedAttributeResponse = AttributeParser::parse($attributeResponse);
+
+        $this->registryServiceMock->expects($this->any())
+            ->method('getAttribute')
+            ->willReturnOnConsecutiveCalls(
+                $parsedAttributeResponse->first(),
+                $parsedAttributeResponse->findOne(['id' => 2])
+            );
+
+        $variationEntity = $this->getVariationEntity(
+            'Pim/Variations/variation_with_one_attribute_over_length_limit.json'
+        );
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryServiceMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $attributes = $wrapper->getAttributes();
+        $this->assertCount(2, $attributes);
+    }
+
     public function testChildCategoriesAreProperlyBuilt(): void
     {
         $categoryResponse = $this->getMockResponse('CategoryResponse/category_with_parent.json');
