@@ -56,7 +56,7 @@ class Utils
         return $value == 'null' ||
             $value == null ||
             $value == '' ||
-            (is_string($value) && (trim($value) === '' || mb_strlen($value) > DataHelper::ATTRIBUTE_CHARACTER_LIMIT));
+            (is_string($value) && !static::validateStringLength($value));
     }
 
     /**
@@ -100,5 +100,10 @@ class Utils
     private static function parseIsLastPage(ResponseInterface $response): bool
     {
         return json_decode($response->getBody()->__toString(), true)['isLastPage'];
+    }
+
+    private static function validateStringLength(string $value): bool
+    {
+        return trim($value) !== '' && mb_strlen($value) <= DataHelper::ATTRIBUTE_CHARACTER_LIMIT;
     }
 }

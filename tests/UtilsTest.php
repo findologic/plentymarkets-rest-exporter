@@ -210,20 +210,20 @@ class UtilsTest extends TestCase
     public function isEmptyDataProvider(): array
     {
         return [
-            'non-empty string returns false' => ['asdf', false],
-            'non-zero number returns false' => [1, false],
-            'true returns true' => [true, true],
-            'false returns true' => [false, true],
-            'zero returns true' => [0, true],
-            'null returns true' => [null, true],
-            'null as string returns true' => ['null', true],
-            'empty string returns true' => ['', true],
-            'all whitespace string returns true' => ['       ', true],
-            'string above character limit returns true' => [
+            'non-empty string is considered not empty' => ['asdf', false],
+            'non-zero number is considered not empty' => [1, false],
+            'true is considered empty' => [true, true],
+            'false is considered empty' => [false, true],
+            'zero is considered empty' => [0, true],
+            'null is considered empty' => [null, true],
+            'null as string is considered empty' => ['null', true],
+            'empty string is considered empty' => ['', true],
+            'all whitespace string is considered empty' => ['       ', true],
+            'string above character limit is considered empty' => [
                 str_repeat('0', DataHelper::ATTRIBUTE_CHARACTER_LIMIT + 1),
                 true
             ],
-            'string exactly at character limit returns false' => [
+            'string exactly at character is not considered empty' => [
                 str_repeat('0', DataHelper::ATTRIBUTE_CHARACTER_LIMIT),
                 false
             ]
@@ -233,7 +233,7 @@ class UtilsTest extends TestCase
     /**
      * @dataProvider isEmptyDataProvider
      */
-    public function testIsEmpty($value, bool $expected)
+    public function testIsEmpty($value, bool $expected): void
     {
         $this->assertSame($expected, Utils::isEmpty($value));
     }
