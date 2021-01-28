@@ -25,7 +25,7 @@ use Psr\Log\LoggerInterface;
 
 abstract class Exporter
 {
-    public const DEFAULT_LOCATION = __DIR__ . '/../../export';
+    public const DEFAULT_LOCATION = __DIR__ . '/../../var/export';
 
     public const
         TYPE_CSV = 0,
@@ -130,15 +130,17 @@ abstract class Exporter
         ?ItemRequest $itemRequest = null,
         ?PimVariationRequest $pimVariationRequest = null,
         ?LibflexportExporter $fileExporter = null,
-        ?string $exportPath = self::DEFAULT_LOCATION
+        ?string $exportPath = null
     ): Exporter {
+        $usedPath = $exportPath ?? Utils::env('EXPORT_DIR', self::DEFAULT_LOCATION);
+
         switch ($type) {
             case self::TYPE_CSV:
                 return new CsvExporter(
                     $internalLogger,
                     $customerLogger,
                     $config,
-                    $exportPath,
+                    $usedPath,
                     $client,
                     $registryService,
                     $itemRequest,

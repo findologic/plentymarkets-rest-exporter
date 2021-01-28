@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Amazon;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Option;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Amazon;
 
 class Property extends Entity
 {

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Command;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
@@ -31,7 +30,7 @@ class GenerateTokenCommand extends Command
             'shopkey',
             InputArgument::OPTIONAL,
             'Optionally add the shopkey of a specific service. Note that this requires' .
-            ' the config "customerLoginUri" to be set in config/config.yml.',
+            ' the env variable "CUSTOMER_LOGIN_URL" to be set in .env.local.',
         );
     }
 
@@ -40,7 +39,7 @@ class GenerateTokenCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $shopkey = Utils::validateAndGetShopkey($input->getArgument('shopkey'));
-        $config = Utils::getExportConfiguration($shopkey, Config::DEFAULT_CONFIG_FILE);
+        $config = Utils::getExportConfiguration($shopkey);
 
         $io->writeln(sprintf('Generating token for service %s...', $config->getDomain()));
 

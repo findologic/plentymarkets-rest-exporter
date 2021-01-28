@@ -11,8 +11,6 @@ use Exception;
  */
 class Config
 {
-    public const DEFAULT_CONFIG_FILE = __DIR__ . '/../config/config.yml';
-
     /** @var string */
     private $domain;
 
@@ -74,6 +72,21 @@ class Config
             'priceId' => $plentyConfig['price_id'],
             'rrpId' => $plentyConfig['rrp_id'],
             'debug' => $debug
+        ]);
+    }
+
+    public static function fromEnvironment(): Config
+    {
+        return new Config([
+            'domain' => Utils::env('EXPORT_DOMAIN'),
+            'username' => Utils::env('EXPORT_USERNAME'),
+            'password' => Utils::env('EXPORT_PASSWORD'),
+            'language' => Utils::env('EXPORT_LANGUAGE'),
+            'multiShopId' => (int)Utils::env('EXPORT_MULTISHOP_ID'),
+            'availabilityId' => (int)Utils::env('EXPORT_AVAILABILITY_ID'),
+            'priceId' => (int)Utils::env('EXPORT_PRICE_ID'),
+            'rrpId' => (int)Utils::env('EXPORT_RRP_ID'),
+            'debug' => (bool)Utils::env('DEBUG')
         ]);
     }
 

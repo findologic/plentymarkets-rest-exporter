@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Debug;
 
 use Exception;
+use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class Debugger implements DebuggerInterface
 {
     private const
-        DEBUG_DIR = __DIR__ . '/../../debug',
+        DEBUG_DIR = __DIR__ . '/../../var/debug',
         DEBUG_EXTENSION = 'json';
 
     /** @var string */
@@ -21,11 +22,11 @@ class Debugger implements DebuggerInterface
     private $encodingOptions;
 
     public function __construct(
-        string $debugDir = self::DEBUG_DIR,
+        ?string $debugDir = null,
         $encodingOptions = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
     ) {
         $this->encodingOptions = $encodingOptions;
-        $this->debugDir = $debugDir;
+        $this->debugDir = $debugDir ?? Utils::env('DEBUG_DIR', self::DEBUG_DIR);
     }
 
     public function save(RequestInterface $request, ResponseInterface $response): void

@@ -15,7 +15,7 @@ use Symfony\Component\Cache\CacheItem;
  */
 class Registry
 {
-    public const CACHE_DIR = __DIR__ . '/../cache/';
+    public const CACHE_DIR = __DIR__ . '/../var/cache/';
 
     private const CACHE_LIFETIME = 60 * 60 * 24;
 
@@ -24,7 +24,11 @@ class Registry
 
     public function __construct(?AbstractAdapter $cache = null)
     {
-        $this->cache = $cache ?? new FilesystemAdapter('', self::CACHE_LIFETIME, self::CACHE_DIR);
+        $this->cache = $cache ?? new FilesystemAdapter(
+            '',
+            self::CACHE_LIFETIME,
+            Utils::env('CACHE_DIR', self::CACHE_DIR)
+        );
     }
 
     /**
