@@ -13,6 +13,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
@@ -26,6 +27,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Variation as VariationWrapper;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 class VariationTest extends TestCase
 {
@@ -67,9 +69,17 @@ class VariationTest extends TestCase
         $attributeResponse = $this->getMockResponse('AttributeResponse/one.json');
         $parsedAttributeResponse = AttributeParser::parse($attributeResponse);
 
+        $unitResponse = $this->getMockResponse('UnitResponse/response.json');
+        $parsedUnitResponse = UnitParser::parse($unitResponse);
+
         $this->registryServiceMock->expects($this->any())
             ->method('getAttribute')
             ->willReturn($parsedAttributeResponse->first());
+
+        $this->registryServiceMock->expects($this->any())
+            ->method('getUnit')
+            ->with(4)
+            ->willReturn($parsedUnitResponse->findOne(['id' => 4]));
 
         $variationEntity = $this->getVariationEntity('Pim/Variations/response.json');
 
@@ -90,6 +100,8 @@ class VariationTest extends TestCase
         $this->assertEquals(106, $wrapper->getItemId());
         $this->assertEquals(['3213213213213'], $wrapper->getBarcodes());
         $this->assertEquals(279, $wrapper->getPrice());
+        $this->assertEquals('milligram', $wrapper->getBaseUnit());
+        $this->assertEquals('1000', $wrapper->getPackageSize());
 
         $attributes = $wrapper->getAttributes();
         $this->assertCount(4, $attributes);
@@ -103,9 +115,7 @@ class VariationTest extends TestCase
         $this->assertEquals(['1'], $attributes[3]->getValues());
 
         $properties = $wrapper->getProperties();
-        $this->assertCount(1, $properties);
-        $this->assertEquals('price_id', $properties[0]->getKey());
-        $this->assertEquals(['' => '0'], $properties[0]->getAllValues());
+        $this->assertEmpty($properties);
     }
 
     public function testChildCategoriesAreProperlyBuilt(): void

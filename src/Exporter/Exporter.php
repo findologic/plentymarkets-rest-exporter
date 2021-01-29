@@ -241,7 +241,7 @@ abstract class Exporter
             'properties.property',
             'salesPrices',
             'tags.tag',
-            'units.unit',
+            'unit'
         ];
     }
 }

@@ -31,7 +31,8 @@ class CsvExporter extends Exporter
         $internalLogger->debug('Using Plentymarkets CsvExporter for exporting.');
 
         if (!$fileExporter) {
-            $fileExporter = LibflexportExporter::create(LibflexportExporter::TYPE_CSV, 100);
+            $properties = ['price_id', 'variation_id', 'base_unit', 'package_size'];
+            $fileExporter = LibflexportExporter::create(LibflexportExporter::TYPE_CSV, 100, $properties);
         }
 
         parent::__construct(

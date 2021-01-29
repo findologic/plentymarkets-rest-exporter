@@ -171,7 +171,7 @@ class RegistryService
         return $itemProperty;
     }
 
-    public function getUnit(int $id): Unit
+    public function getUnit(int $id): ?Unit
     {
         /** @var Unit $unit */
         $unit = $this->get(sprintf('unit_%d', $id));
