@@ -4,27 +4,27 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0829b0451915d1b285e94fae36f7c9cb",
+    "content-hash": "4a67cba36bd83f4a6db0677b69a391ea",
     "packages": [
         {
             "name": "findologic/libflexport",
-            "version": "v2.7.0",
+            "version": "v2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/findologic/libflexport.git",
-                "reference": "3401f7562e021aeefe8e88a788287bd60094714d"
+                "reference": "7669467a15985e84bac001c5f40a47e45f4b3a9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/findologic/libflexport/zipball/3401f7562e021aeefe8e88a788287bd60094714d",
-                "reference": "3401f7562e021aeefe8e88a788287bd60094714d",
+                "url": "https://api.github.com/repos/findologic/libflexport/zipball/7669467a15985e84bac001c5f40a47e45f4b3a9b",
+                "reference": "7669467a15985e84bac001c5f40a47e45f4b3a9b",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-mbstring": "*",
                 "findologic/xml-export-schema": "^1.4",
-                "php": "^7.1"
+                "php": "^7.1|^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^7.5|^8.5|^9.0",

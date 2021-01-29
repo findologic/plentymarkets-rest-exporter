@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 
 use Exception;
+use FINDOLOGIC\Export\Helpers\DataHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\DirectoryAware;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
@@ -192,6 +193,37 @@ class UtilsTest extends TestCase
         );
 
         $this->assertSame($expectedDomain, $config->getDomain());
+    }
+
+    public function isEmptyDataProvider(): array
+    {
+        return [
+            'non-empty string is considered not empty' => ['asdf', false],
+            'non-zero number is considered not empty' => [1, false],
+            'true is considered empty' => [true, true],
+            'false is considered empty' => [false, true],
+            'zero is considered empty' => [0, true],
+            'null is considered empty' => [null, true],
+            'null as string is considered empty' => ['null', true],
+            'empty string is considered empty' => ['', true],
+            'all whitespace string is considered empty' => ['       ', true],
+            'string above character limit is considered empty' => [
+                str_repeat('0', DataHelper::ATTRIBUTE_CHARACTER_LIMIT + 1),
+                true
+            ],
+            'string exactly at character is not considered empty' => [
+                str_repeat('0', DataHelper::ATTRIBUTE_CHARACTER_LIMIT),
+                false
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider isEmptyDataProvider
+     */
+    public function testIsEmpty($value, bool $expected): void
+    {
+        $this->assertSame($expected, Utils::isEmpty($value));
     }
 
     public function testEnvBooleanStringsValuesAreCastedIntoBooleanValues(): void

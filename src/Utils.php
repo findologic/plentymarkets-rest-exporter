@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
+use FINDOLOGIC\Export\Helpers\DataHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
 use GuzzleHttp\Client as GuzzleClient;
@@ -51,7 +52,10 @@ class Utils
 
     public static function isEmpty($value): bool
     {
-        return $value == 'null' || $value == null || $value == '' || (is_string($value) && trim($value) === '');
+        return $value == 'null' ||
+            $value == null ||
+            $value == '' ||
+            (is_string($value) && !static::validateStringLength($value));
     }
 
     /**
@@ -116,5 +120,10 @@ class Utils
     private static function parseIsLastPage(ResponseInterface $response): bool
     {
         return json_decode($response->getBody()->__toString(), true)['isLastPage'];
+    }
+
+    private static function validateStringLength(string $value): bool
+    {
+        return trim($value) !== '' && mb_strlen($value) <= DataHelper::ATTRIBUTE_CHARACTER_LIMIT;
     }
 }
