@@ -8,6 +8,7 @@ use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Command\ExportCommand;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
+use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\DirectoryAware;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client;
@@ -23,6 +24,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 class ExportCommandTest extends TestCase
 {
     use ResponseHelper;
+    use DirectoryAware;
 
     private $application;
 
@@ -44,12 +46,10 @@ class ExportCommandTest extends TestCase
     {
         parent::setUp();
 
-        if (!is_dir(Utils::env('EXPORT_DIR'))) {
-            mkdir(Utils::env('EXPORT_DIR'));
-        }
-        if (!is_dir(Utils::env('LOG_DIR'))) {
-            mkdir(Utils::env('LOG_DIR'));
-        }
+        $this->createDirectories([
+            Utils::env('EXPORT_DIR'),
+            Utils::env('LOG_DIR')
+        ]);
 
         $this->application = new Application();
         $this->command = new ExportCommand();
@@ -60,13 +60,10 @@ class ExportCommandTest extends TestCase
     {
         parent::tearDown();
 
-        // PHP is really bad at deleting files recursively. Therefore we go the system approach.
-        if (is_dir(Utils::env('EXPORT_DIR'))) {
-            exec(sprintf('rm -rf "%s"', Utils::env('EXPORT_DIR')));
-        }
-        if (is_dir(Utils::env('LOG_DIR'))) {
-            exec(sprintf('rm -rf "%s"', Utils::env('LOG_DIR')));
-        }
+        $this->deleteDirectories([
+            Utils::env('EXPORT_DIR'),
+            Utils::env('LOG_DIR')
+        ]);
     }
 
     public function testCommandFailsWhenUsingWrongFormattedShopkey(): void

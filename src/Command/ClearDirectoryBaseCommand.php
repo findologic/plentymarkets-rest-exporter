@@ -31,19 +31,16 @@ abstract class ClearDirectoryBaseCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $directories = $this->finder->depth('== 0')->directories()->in($this->directory);
-        if ($directories->count() === 0) {
-            $io->note('Nothing to clear.');
+        foreach (['directories', 'files'] as $type) {
+            $directories = $this->finder->depth('== 0')->{$type}()->in($this->directory);
 
-            return Command::SUCCESS;
-        }
+            foreach ($directories as $directory) {
+                $path = $directory->getRealPath();
 
-        foreach ($directories as $directory) {
-            $path = $directory->getRealPath();
-
-            if ($this->filesystem->exists($path)) {
-                $io->writeln(sprintf(' - Directory %s will be removed...', $path));
-                $this->filesystem->remove($path);
+                if ($this->filesystem->exists($path)) {
+                    $io->writeln(sprintf(' - Directory %s will be removed...', $path));
+                    $this->filesystem->remove($path);
+                }
             }
         }
 
