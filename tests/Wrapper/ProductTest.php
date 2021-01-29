@@ -20,6 +20,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Base;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
@@ -405,6 +406,12 @@ class ProductTest extends TestCase
         $this->itemMock->expects($this->once())
             ->method('getTexts')
             ->willReturn([$text]);
+
+        $webStoreMock = $this->getMockBuilder(WebStore::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $webStoreMock->method('getStoreIdentifier')->willReturn(34185);
+        $this->registryServiceMock->method('getWebStore')->willReturn($webStoreMock);
 
         $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
         $webStores = WebStoreParser::parse($rawWebStores);

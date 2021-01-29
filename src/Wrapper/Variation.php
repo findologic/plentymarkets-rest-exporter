@@ -14,6 +14,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage\Availability;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Tag;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 
@@ -337,9 +338,14 @@ class Variation
     private function processTags(): void
     {
         $tags = $this->variationEntity->getTags();
+        $storeId = $this->registryService->getWebStore()->getStoreIdentifier();
 
         $tagIds = [];
         foreach ($tags as $tag) {
+            if (!$this->shouldProcessTag($tag, $storeId)) {
+                continue;
+            }
+
             $tagIds[] = $tag->getId();
 
             $tagName = $tag->getTagData()->getName();
@@ -358,6 +364,21 @@ class Variation
         if ($tagIds) {
             $this->attributes[] = new Attribute('cat_id', $tagIds);
         }
+    }
+
+    private function shouldProcessTag(Tag $tag, int $storeId): bool
+    {
+        if (!$clients = $tag->getTagData()->getClients()) {
+            return false;
+        }
+
+        foreach ($clients as $client) {
+            if ($client->getPlentyId() === $storeId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function processImages(): void
