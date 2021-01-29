@@ -39,9 +39,4 @@ trait IterableRequest
 
         return $this;
     }
-
-    public function getItemsPerPage(): int
-    {
-        return static::$ITEMS_PER_PAGE;
-    }
 }

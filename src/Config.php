@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
+use Exception;
+
 /**
  * Holds Plentymarkets-relevant configuration from the customer-login.
  */
 class Config
 {
-    public const DEFAULT_CONFIG_FILE = __DIR__ . '/../config/config.yml';
-
     /** @var string */
     private $domain;
 
@@ -60,17 +60,38 @@ class Config
     public static function parseByCustomerLoginResponse(array $data, bool $debug = false): self
     {
         $shop = array_values($data)[0] ?? null;
+        if (!$shop || !isset($shop['plentymarkets'])) {
+            throw new Exception('Something went wrong while tying to fetch the importer data');
+        }
 
+        $plentyConfig = $shop['plentymarkets'];
         return new Config([
             'domain' => $shop['url'],
             'username' => $shop['export_username'],
             'password' => $shop['export_password'],
             'language' => $shop['language'],
-            'multiShopId' => $shop['multishop_id'],
-            'availabilityId' => $shop['availability_id'],
-            'priceId' => $shop['price_id'],
-            'rrpId' => $shop['rrp_id'],
+            'multiShopId' => $plentyConfig['multishop_id'],
+            'availabilityId' => $plentyConfig['availability_id'],
+            'priceId' => $plentyConfig['price_id'],
+            'rrpId' => $plentyConfig['rrp_id'],
+            'exportUnavailableVariations' => $plentyConfig['exportUnavailableVariations'],
             'debug' => $debug
+        ]);
+    }
+
+    public static function fromEnvironment(): Config
+    {
+        return new Config([
+            'domain' => Utils::env('EXPORT_DOMAIN'),
+            'username' => Utils::env('EXPORT_USERNAME'),
+            'password' => Utils::env('EXPORT_PASSWORD'),
+            'language' => Utils::env('EXPORT_LANGUAGE'),
+            'multiShopId' => (int)Utils::env('EXPORT_MULTISHOP_ID'),
+            'availabilityId' => (int)Utils::env('EXPORT_AVAILABILITY_ID'),
+            'priceId' => (int)Utils::env('EXPORT_PRICE_ID'),
+            'rrpId' => (int)Utils::env('EXPORT_RRP_ID'),
+            'exportUnavailableVariations' => (bool)Utils::env('EXPORT_UNAVAILABLE_VARIATIONS'),
+            'debug' => (bool)Utils::env('DEBUG')
         ]);
     }
 

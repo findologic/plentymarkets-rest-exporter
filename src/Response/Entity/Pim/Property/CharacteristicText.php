@@ -27,7 +27,7 @@ class CharacteristicText extends Entity
     public function getData(): array
     {
         return [
-            'id' => $this->id,
+            'valueId' => $this->id,
             'value' => $this->value,
             'lang' => $this->lang,
         ];

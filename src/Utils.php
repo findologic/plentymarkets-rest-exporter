@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
+use FINDOLOGIC\Export\Helpers\DataHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\RequestOptions;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\Yaml\Yaml;
 
 class Utils
 {
@@ -52,7 +52,10 @@ class Utils
 
     public static function isEmpty($value): bool
     {
-        return $value == 'null' || $value == null || $value == '' || (is_string($value) && trim($value) === '');
+        return $value == 'null' ||
+            $value == null ||
+            $value == '' ||
+            (is_string($value) && !static::validateStringLength($value));
     }
 
     /**
@@ -60,23 +63,44 @@ class Utils
      * of the given configPath is used.
      *
      * @param string|null $shopkey
-     * @param string $configPath
      * @param GuzzleClient|null $client
      * @return Config
      */
     public static function getExportConfiguration(
         ?string $shopkey,
-        string $configPath,
         ?GuzzleClient $client = null
     ): Config {
-        $rawConfig = Yaml::parseFile($configPath);
-
-        $customerLoginUri = $rawConfig['customerLoginUri'] ?? null;
+        $customerLoginUri = static::env('CUSTOMER_LOGIN_URL');
         if ($shopkey && $customerLoginUri) {
             return static::getCustomerLoginConfiguration($customerLoginUri, $shopkey, $client ?? new GuzzleClient());
         }
 
-        return new Config($rawConfig);
+        return Config::fromEnvironment();
+    }
+
+    /**
+     * Gets a value from the environment. If that environment variable is not set or does not contain
+     * a value, such as "NULL", default may be returned.
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public static function env(string $key, $default = null)
+    {
+        if (!isset($_ENV[$key]) || (is_string($_ENV[$key]) && static::isEmpty(mb_strtolower($_ENV[$key])))) {
+            return $default;
+        }
+
+        if ($_ENV[$key] === 'true') {
+            return true;
+        }
+
+        if ($_ENV[$key] === 'false') {
+            return false;
+        }
+
+        return $_ENV[$key];
     }
 
     private static function getCustomerLoginConfiguration(
@@ -96,5 +120,10 @@ class Utils
     private static function parseIsLastPage(ResponseInterface $response): bool
     {
         return json_decode($response->getBody()->__toString(), true)['isLastPage'];
+    }
+
+    private static function validateStringLength(string $value): bool
+    {
+        return trim($value) !== '' && mb_strlen($value) <= DataHelper::ATTRIBUTE_CHARACTER_LIMIT;
     }
 }

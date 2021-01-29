@@ -35,10 +35,7 @@ class ClearDataCommand extends Command
             $input = new ArrayInput([]);
 
             $io->writeln(sprintf('Running %s...', $commandName));
-            $exitCode = $command->run($input, $output);
-            if ($exitCode !== Command::SUCCESS) {
-                $io->error(sprintf('Something went wrong while executing "%s".', $commandName));
-            }
+            $command->run($input, $output);
         }
 
         $io->success('All data has been cleared successfully.');

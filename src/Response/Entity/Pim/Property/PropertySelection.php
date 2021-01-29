@@ -73,4 +73,9 @@ class PropertySelection extends Entity
     {
         return $this->createdAt;
     }
+
+    public function getUpdatedAt(): ?DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
 }

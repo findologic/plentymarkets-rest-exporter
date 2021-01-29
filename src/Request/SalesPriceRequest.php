@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Request;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequest;
-
 class SalesPriceRequest extends Request implements IterableRequestInterface
 {
     use IterableRequest;

@@ -33,8 +33,8 @@ class TagName extends Entity
         return [
             'id' => $this->id,
             'tagId' => $this->tagId,
-            'lang' => $this->lang,
-            'name' => $this->name,
+            'tagLang' => $this->lang,
+            'tagName' => $this->name,
         ];
     }
 

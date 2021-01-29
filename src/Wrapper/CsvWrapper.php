@@ -11,7 +11,6 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
-use Log4Php\Logger;
 use Psr\Log\LoggerInterface;
 
 class CsvWrapper extends Wrapper

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Command;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client as GuzzleClient;
@@ -19,6 +18,16 @@ class GenerateTokenCommand extends Command
 {
     protected static $defaultName = 'generate:token';
 
+    /** @var GuzzleClient|null */
+    private $client;
+
+    public function __construct(GuzzleClient $client = null)
+    {
+        parent::__construct();
+
+        $this->client = $client;
+    }
+
     protected function configure()
     {
         $this->setDescription('Generates a bearer token that can be used for manually sending requests.')
@@ -31,7 +40,7 @@ class GenerateTokenCommand extends Command
             'shopkey',
             InputArgument::OPTIONAL,
             'Optionally add the shopkey of a specific service. Note that this requires' .
-            ' the config "customerLoginUri" to be set in config/config.yml.',
+            ' the env variable "CUSTOMER_LOGIN_URL" to be set in .env.local.',
         );
     }
 
@@ -40,11 +49,11 @@ class GenerateTokenCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $shopkey = Utils::validateAndGetShopkey($input->getArgument('shopkey'));
-        $config = Utils::getExportConfiguration($shopkey, Config::DEFAULT_CONFIG_FILE);
+        $config = Utils::getExportConfiguration($shopkey);
 
         $io->writeln(sprintf('Generating token for service %s...', $config->getDomain()));
 
-        $client = new Client(new GuzzleClient(), $config);
+        $client = new Client($this->client ?? new GuzzleClient(), $config);
 
         // Send some request, so we are automatically logged in.
         $request = new WebStoreRequest();
@@ -52,7 +61,7 @@ class GenerateTokenCommand extends Command
 
         $io->title('Bearer Token:');
         $io->writeln($client->getAccessToken());
-        $io->success('The access token was successfully generated.');
+        $io->success('The token was successfully generated.');
 
         return Command::SUCCESS;
     }

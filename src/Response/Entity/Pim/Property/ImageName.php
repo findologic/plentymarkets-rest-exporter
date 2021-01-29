@@ -31,7 +31,7 @@ class ImageName extends Entity
     public function getData(): array
     {
         return [
-            'id' => $this->id,
+            'imageId' => $this->id,
             'lang' => $this->lang,
             'name' => $this->name,
             'alternate' => $this->alternate,

@@ -23,7 +23,7 @@ class SalesPrice extends Entity
     public function getData(): array
     {
         return [
-            'id' => $this->id,
+            'salesPriceId' => $this->id,
             'price' => $this->price,
         ];
     }

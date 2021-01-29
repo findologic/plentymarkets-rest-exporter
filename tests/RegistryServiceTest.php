@@ -7,30 +7,24 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
-use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\VatConfiguration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use GuzzleHttp\Psr7\Response;
-use InvalidArgumentException;
 use Log4Php\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -458,5 +452,41 @@ class RegistryServiceTest extends TestCase
             ->willReturn($expected);
 
         $this->assertEquals($expected->getId(), $this->registryService->getRrpId());
+    }
+
+    public function testGetRrpIdIsFetchedFromConfigIfSet(): void
+    {
+        $rawResponse = $this->getMockResponse('SalesPriceResponse/response.json');
+        $parsed = SalesPriceParser::parse($rawResponse);
+        $default = $parsed->findOne([
+            'type' => 'rrp'
+        ]);
+
+        $expectedRrpId = 69;
+
+        $this->defaultConfig->setRrpId($expectedRrpId);
+
+        $key = md5($this->defaultConfig->getDomain());
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_defaultRrpId')
+            ->willReturn($default);
+
+        $this->assertEquals($expectedRrpId, $this->registryService->getRrpId());
+    }
+
+    public function testGetStandardVat(): void
+    {
+        $rawResponse = $this->getMockResponse('VatResponse/response.json');
+        $parsed = VatParser::parse($rawResponse);
+        $standard = $parsed->first();
+
+        $key = md5($this->defaultConfig->getDomain());
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_standardVat')
+            ->willReturn($standard);
+
+        $this->assertEquals($standard, $this->registryService->getStandardVat());
     }
 }

@@ -30,7 +30,7 @@ class Property extends Entity
     public function getData(): array
     {
         return [
-            'id' => $this->id,
+            'propertyId' => $this->id,
             'values' => $this->values,
             'property' => $this->propertyData,
         ];

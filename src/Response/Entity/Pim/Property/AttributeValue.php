@@ -77,7 +77,7 @@ class AttributeValue extends Entity
             'position' => $this->position,
             'image' => $this->image,
             'comment' => $this->comment,
-            'names' => $this->names,
+            'valueNames' => $this->names,
             'backendName' => $this->backendName,
             'amazonValue' => $this->amazonValue,
             'ottoValue' => $this->ottoValue,

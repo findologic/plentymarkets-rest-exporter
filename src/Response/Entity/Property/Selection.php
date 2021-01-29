@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Property;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation;
 
 class Selection extends Entity
 {

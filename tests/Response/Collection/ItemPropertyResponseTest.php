@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
 
@@ -90,5 +88,21 @@ class ItemPropertyResponseTest extends TestCase
         $this->assertEquals(false, $property->isShownAsAdditionalCosts());
         $this->assertEquals(0.0, $property->getSurcharge());
         $this->assertEquals('2019-02-22T13:57:13+00:00', $property->getUpdatedAt());
+    }
+
+    public function testPropertyNamesWillBeUsedWhenAvailable(): void
+    {
+        $responseData = $this->getMockResponse('ItemPropertyResponse/is_text.json');
+        $rawResponse = json_decode((string)$responseData->getBody(), true);
+
+        $property = ItemPropertyParser::parse($responseData)->first();
+        $name = $property->getNames()[0];
+
+        $this->assertEquals(2, $name->getPropertyId());
+        $this->assertEquals('de', $name->getLang());
+        $this->assertEquals('Kettenlänge', $name->getName());
+        $this->assertEquals('', $name->getDescription());
+
+        $this->assertEquals($rawResponse['entries'][0]['names'][0], $name->getData());
     }
 }

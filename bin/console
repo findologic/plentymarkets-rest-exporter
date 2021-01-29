@@ -13,15 +13,21 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Command\ClearLogDirectoryCommand;
 use FINDOLOGIC\PlentyMarketsRestExporter\Command\ExportCommand;
 use FINDOLOGIC\PlentyMarketsRestExporter\Command\GenerateTokenCommand;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Dotenv\Dotenv;
+
+$dotenv = new DotEnv();
+$dotenv->loadEnv(dirname(__DIR__) . '/.env');
 
 $application = new Application();
 
-$application->add(new ExportCommand());
-$application->add(new ClearCacheCommand());
-$application->add(new ClearDataCommand());
-$application->add(new ClearExportDirectoryCommand());
-$application->add(new ClearDebugDirectoryCommand());
-$application->add(new ClearLogDirectoryCommand());
-$application->add(new GenerateTokenCommand());
+$application->addCommands([
+    new ExportCommand(),
+    new ClearCacheCommand(),
+    new ClearDataCommand(),
+    new ClearExportDirectoryCommand(),
+    new ClearDebugDirectoryCommand(),
+    new ClearLogDirectoryCommand(),
+    new GenerateTokenCommand(),
+]);
 
 $application->run();
