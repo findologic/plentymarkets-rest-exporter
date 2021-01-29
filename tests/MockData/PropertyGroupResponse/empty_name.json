@@ -1,0 +1,27 @@
+{
+  "page": 1,
+  "totalsCount": 1,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 1,
+      "backendName": "",
+      "orderPropertyGroupingType": "none",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2015-02-12T10:47:49+01:00",
+      "names": [
+        {
+          "propertyGroupId": 1,
+          "lang": "en",
+          "name": "",
+          "description": ""
+        }
+      ]
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 50
+}

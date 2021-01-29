@@ -1,0 +1,19 @@
+{
+  "page": 1,
+  "totalsCount": 11,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 1,
+      "backendName": "Mein Paket",
+      "orderPropertyGroupingType": "none",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2015-02-12T10:47:49+01:00"
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 11,
+  "itemsPerPage": 50
+}

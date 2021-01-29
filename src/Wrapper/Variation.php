@@ -5,156 +5,117 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 
 use FINDOLOGIC\Export\Data\Attribute;
+use FINDOLOGIC\Export\Data\Image;
+use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Property;
+use FINDOLOGIC\Export\Data\Usergroup;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
-use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\AttributeResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation;
+use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage\Availability;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Tag;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
+use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 
 class Variation
 {
+    use CharacteristicAware;
+    use PropertyAware;
+
     /** @var Config */
-    private $config;
+    protected $config;
 
-    /** @var Registry */
-    private $registry;
+    /** @var RegistryService */
+    protected $registryService;
 
-    /** @var ItemVariation */
-    private $variationEntity;
+    /** @var PimVariation */
+    protected $variationEntity;
 
     /** @var bool */
-    private $isMain;
+    protected $isMain;
 
     /** @var int */
-    private $position;
+    protected $position;
 
     /** @var int */
-    private $vatId;
+    protected $vatId;
 
     /** @var string */
-    private $number;
+    protected $number;
 
-    /** @var string */
-    private $model;
-
-    /** @var int */
-    private $id;
+    /** @var string|null */
+    protected $model;
 
     /** @var int */
-    private $itemId;
+    protected $id;
+
+    /** @var int */
+    protected $itemId;
 
     /** @var string[] */
-    private $barcodes = [];
+    protected $barcodes = [];
+
+    /** @var float */
+    protected $price = 0.0;
+
+    /** @var float */
+    protected $insteadPrice = 0.0;
 
     /** @var array */
-    private $prices = [];
+    protected $prices = [];
 
     /** @var Attribute[] */
-    private $attributes = [];
+    protected $attributes = [];
 
     /** @var Property[] */
-    private $properties = [];
+    protected $properties = [];
+
+    /** @var Usergroup[] */
+    protected $groups = [];
+
+    /** @var Keyword[] */
+    protected $tags = [];
+
+    /** @var Image */
+    protected $image;
+
+    /** @var float */
+    protected $vatRate;
+
+    /** @var string|null */
+    protected $baseUnit;
+
+    /** @var string|null */
+    protected $packageSize;
 
     public function __construct(
         Config $config,
-        Registry $registry,
-        ItemVariation $variationEntity
+        RegistryService $registryService,
+        PimVariation $variationEntity
     ) {
         $this->config = $config;
         $this->variationEntity = $variationEntity;
-        $this->registry = $registry;
+        $this->registryService = $registryService;
     }
 
     public function processData(): void
     {
-        $this->isMain = $this->variationEntity->isMain();
-        $this->position = $this->variationEntity->getPosition();
-        $this->vatId = $this->variationEntity->getVatId();
+        $this->isMain = $this->variationEntity->getBase()->isMain();
+        $this->position = $this->variationEntity->getBase()->getPosition();
+        $this->vatId = $this->variationEntity->getBase()->getVatId();
 
         $this->processIdentifiers();
         $this->processCategories();
         $this->processPrices();
         $this->processAttributes();
-    }
-
-    private function processIdentifiers(): void
-    {
-        $this->number = $this->variationEntity->getNumber();
-        $this->model = $this->variationEntity->getModel();
-        $this->id = $this->variationEntity->getId();
-        $this->itemId = $this->variationEntity->getItemId();
-
-        foreach ($this->variationEntity->getVariationBarcodes() as $barcode) {
-            $this->barcodes[] = $barcode->getCode();
-        }
-    }
-
-    private function processCategories(): void
-    {
-        /** @var CategoryResponse $categories */
-        $categories = $this->registry->get('categories');
-
-        if (!$categories) {
-            // @codeCoverageIgnoreStart
-            return;
-            // @codeCoverageIgnoreEnd
-        }
-
-        $variationCategories = $this->variationEntity->getVariationCategories();
-        foreach ($variationCategories as $variationCategory) {
-            $category = $categories->findOne(['id' => $variationCategory->getCategoryId()]);
-
-            if (!$category) {
-                continue;
-            }
-
-            foreach ($category->getDetails() as $categoryDetail) {
-                if (strtoupper($categoryDetail->getLang()) !== strtoupper($this->config->getLanguage())) {
-                    continue;
-                }
-
-                $this->attributes[] = new Attribute('cat', [$categoryDetail->getName()]);
-                $this->attributes[] = new Attribute('cat_url', [$categoryDetail->getPreviewUrl()]);
-            }
-        }
-    }
-
-    private function processPrices(): void
-    {
-        $priceIdProperty = new Property('price_id');
-        foreach ($this->variationEntity->getVariationSalesPrices() as $variationSalesPrice) {
-            $this->prices[] = $variationSalesPrice->getPrice();
-            if (!$priceIdProperty->getAllValues()) {
-                $priceIdProperty->addValue((string)$variationSalesPrice->getSalesPriceId());
-            }
-        }
-
-        $this->properties[] = $priceIdProperty;
-    }
-
-    private function processAttributes(): void
-    {
-        /** @var AttributeResponse $attributes */
-        $attributes = $this->registry->get('attributes');
-
-        if (!$attributes) {
-            // @codeCoverageIgnoreStart
-            return;
-            // @codeCoverageIgnoreEnd
-        }
-
-        foreach ($this->variationEntity->getVariationAttributeValues() as $variationAttributeValue) {
-            $attribute = $attributes->findOne(['id' => $variationAttributeValue->getAttributeId()]);
-            if (!$attribute) {
-                continue;
-            }
-
-            $this->attributes[] = new Attribute(
-                $variationAttributeValue->getAttribute()->getBackendName(),
-                [$variationAttributeValue->getAttributeValue()->getBackendName()]
-            );
-        }
+        $this->processGroups();
+        $this->processTags();
+        $this->processImages();
+        $this->processCharacteristics();
+        $this->processProperties();
+        $this->processVatRate();
+        $this->processUnits();
     }
 
     public function isMain(): bool
@@ -177,7 +138,7 @@ class Variation
         return $this->number;
     }
 
-    public function getModel(): string
+    public function getModel(): ?string
     {
         return $this->model;
     }
@@ -200,12 +161,14 @@ class Variation
         return $this->barcodes;
     }
 
-    /**
-     * @return float[]
-     */
-    public function getPrices(): array
+    public function getPrice(): float
     {
-        return $this->prices;
+        return $this->price;
+    }
+
+    public function getInsteadPrice(): float
+    {
+        return (float)$this->insteadPrice;
     }
 
     /**
@@ -222,5 +185,244 @@ class Variation
     public function getProperties(): array
     {
         return $this->properties;
+    }
+
+    /**
+     * @return Usergroup[]
+     */
+    public function getGroups(): array
+    {
+        return $this->groups;
+    }
+
+    /**
+     * @return Keyword[]
+     */
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function getVatRate(): ?float
+    {
+        return $this->vatRate;
+    }
+
+    public function getBaseUnit(): ?string
+    {
+        return $this->baseUnit;
+    }
+
+    public function getPackageSize(): ?string
+    {
+        return $this->packageSize;
+    }
+
+    private function processIdentifiers(): void
+    {
+        $this->number = $this->variationEntity->getBase()->getNumber();
+        $this->model = $this->variationEntity->getBase()->getModel();
+        $this->id = $this->variationEntity->getId();
+        $this->itemId = $this->variationEntity->getBase()->getItemId();
+
+        foreach ($this->variationEntity->getBarcodes() as $barcode) {
+            $this->barcodes[] = $barcode->getCode();
+        }
+    }
+
+    private function processCategories(): void
+    {
+        $variationCategories = $this->variationEntity->getCategories();
+        foreach ($variationCategories as $variationCategory) {
+            $category = $this->registryService->getCategory($variationCategory->getId());
+
+            if (!$category) {
+                continue;
+            }
+
+            foreach ($category->getDetails() as $categoryDetail) {
+                if (strtoupper($categoryDetail->getLang()) !== strtoupper($this->config->getLanguage())) {
+                    continue;
+                }
+
+                $this->attributes[] = new Attribute('cat', [$this->buildCategoryPath($category)]);
+                $this->attributes[] = new Attribute(
+                    'cat_url',
+                    [parse_url($categoryDetail->getPreviewUrl(), PHP_URL_PATH)]
+                );
+            }
+        }
+    }
+
+    private function buildCategoryPath(Category $category): string
+    {
+        $path = [];
+        foreach ($category->getDetails() as $categoryDetail) {
+            if (strtoupper($categoryDetail->getLang()) !== strtoupper($this->config->getLanguage())) {
+                continue;
+            }
+
+            if ($category->getParentCategoryId() !== null) {
+                $path[] = $this->buildCategoryPath(
+                    $this->registryService->getCategory($category->getParentCategoryId())
+                );
+            }
+
+            $path[] = $categoryDetail->getName();
+        }
+
+        return implode('_', $path);
+    }
+
+    private function processPrices(): void
+    {
+        $insteadPriceId = $this->registryService->getRrpId();
+
+        $priceId = $this->registryService->getPriceId();
+
+        foreach ($this->variationEntity->getSalesPrices() as $variationSalesPrice) {
+            $price = $variationSalesPrice->getPrice();
+            if ($variationSalesPrice->getPrice() == 0) {
+                continue;
+            }
+
+            if ($variationSalesPrice->getId() === $priceId) {
+                // Always take the lowest price.
+                if ($price < $this->price || $this->price === 0.0) {
+                    $this->price = $price;
+                }
+            }
+
+            if ($variationSalesPrice->getId() === $insteadPriceId) {
+                $this->insteadPrice = $price;
+            }
+        }
+    }
+
+    private function processAttributes(): void
+    {
+        foreach ($this->variationEntity->getAttributeValues() as $variationAttributeValue) {
+            $attribute = $this->registryService->getAttribute($variationAttributeValue->getId());
+            if (!$attribute) {
+                continue;
+            }
+
+            $emptyName = Utils::isEmpty($attribute->getBackendName());
+            if ($emptyName || Utils::isEmpty($variationAttributeValue->getValue()->getBackendName())) {
+                continue;
+            }
+
+            $this->attributes[] = new Attribute(
+                $attribute->getBackendName(),
+                [$variationAttributeValue->getValue()->getBackendName()]
+            );
+        }
+    }
+
+    private function processGroups(): void
+    {
+        $stores = $this->registryService->getAllWebStores();
+        $variationClients = $this->variationEntity->getClients();
+        foreach ($variationClients as $variationClient) {
+            if ($store = $stores->getWebStoreByStoreIdentifier($variationClient->getPlentyId())) {
+                $this->groups[] = new Usergroup($store->getId() . '_');
+            }
+        }
+    }
+
+    private function processTags(): void
+    {
+        $tags = $this->variationEntity->getTags();
+        $storeId = $this->registryService->getWebStore()->getStoreIdentifier();
+
+        $tagIds = [];
+        foreach ($tags as $tag) {
+            if (!$this->shouldProcessTag($tag, $storeId)) {
+                continue;
+            }
+
+            $tagIds[] = $tag->getId();
+
+            $tagName = $tag->getTagData()->getName();
+
+            foreach ($tag->getTagData()->getNames() as $translatedTag) {
+                if ($translatedTag->getLang() === strtolower($this->config->getLanguage())) {
+                    $tagName = $translatedTag->getName();
+
+                    break;
+                }
+            }
+
+            $this->tags[] = new Keyword($tagName);
+        }
+
+        if ($tagIds) {
+            $this->attributes[] = new Attribute('cat_id', $tagIds);
+        }
+    }
+
+    private function shouldProcessTag(Tag $tag, int $storeId): bool
+    {
+        if (!$clients = $tag->getTagData()->getClients()) {
+            return false;
+        }
+
+        foreach ($clients as $client) {
+            if ($client->getPlentyId() === $storeId) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function processImages(): void
+    {
+        $images = array_merge($this->variationEntity->getImages(), $this->variationEntity->getBase()->getImages());
+
+        /** @var ItemImage $image */
+        foreach ($images as $image) {
+            $imageAvailabilities = $image->getAvailabilities();
+            foreach ($imageAvailabilities as $imageAvailability) {
+                if ($imageAvailability->getType() === Availability::STORE) {
+                    $this->image = new Image($image->getUrlMiddle());
+
+                    return;
+                }
+            }
+        }
+    }
+
+    private function processVatRate(): void
+    {
+        foreach ($this->registryService->getStandardVat()->getVatRates() as $vatRate) {
+            if ($vatRate->getId() == $this->vatId) {
+                $this->vatRate = $vatRate->getVatRate();
+
+                return;
+            }
+        }
+    }
+
+    private function processUnits(): void
+    {
+        if (!$unitData = $this->variationEntity->getUnit()) {
+            return;
+        }
+
+        $this->packageSize = $unitData->getContent();
+
+        if ($unitEntity = $this->registryService->getUnit($unitData->getUnitId())) {
+            foreach ($unitEntity->getNames() as $name) {
+                if (strtolower($name->getLang()) === (strtolower($this->config->getLanguage()))) {
+                    $this->baseUnit = $name->getName();
+                }
+            }
+        }
     }
 }

@@ -26,7 +26,9 @@ class RegistryTest extends TestCase
 
         $registry = new Registry();
         $registry->set('webstore', $expectedWebStoreResponse);
-        $this->assertSame($registry->get('webstore'), $expectedWebStoreResponse);
+        // Using assertEquals, instead of assertSame since objects that are serialized and then unserialized,
+        // do not reference the same object.
+        $this->assertEquals($registry->get('webstore'), $expectedWebStoreResponse);
 
         $this->assertNull($registry->get('non-existent'));
     }

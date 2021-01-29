@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Debug\Debugger;
+use FINDOLOGIC\PlentyMarketsRestExporter\Debug\DebuggerInterface;
+use FINDOLOGIC\PlentyMarketsRestExporter\Debug\DummyDebugger;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
@@ -22,12 +25,12 @@ use Psr\Log\LoggerInterface;
 class Client
 {
     public const
-        METHOD_GET = 'GET',
-        METHOD_POST = 'POST';
-
-    public const
         PROTOCOL_HTTP = 'http',
         PROTOCOL_HTTPS = 'https';
+
+    public const
+        METHOD_GET = 'GET',
+        METHOD_POST = 'POST';
 
     private const
         PLENTY_SHORT_PERIOD_CALLS_HEADER = 'X-Plenty-Global-Short-Period-Calls-Left',
@@ -64,12 +67,18 @@ class Client
         GuzzleClient $httpClient,
         Config $config,
         ?LoggerInterface $internalLogger = null,
-        ?LoggerInterface $customerLogger = null
+        ?LoggerInterface $customerLogger = null,
+        ?DebuggerInterface $debugger = null
     ) {
         $this->client = $httpClient;
         $this->config = $config;
         $this->internalLogger = $internalLogger ?? new DummyLogger();
         $this->customerLogger = $customerLogger ?? new DummyLogger();
+        $this->debugger = $debugger ?? new DummyDebugger();
+
+        if ($this->config->isDebug()) {
+            $this->debugger = new Debugger();
+        }
     }
 
     public function send(Request $request): ResponseInterface
@@ -88,7 +97,9 @@ class Client
     {
         $uri = $request->getUri()->__toString();
         if ($request->getMethod() === self::METHOD_GET && !empty($params)) {
-            $uri .= sprintf('?%s', http_build_query($params));
+            $request = $request->withUri($request->getUri()->withQuery(''));
+
+            $uri .= sprintf('?%s', $this->getRequestOptions($request, $params)[RequestOptions::QUERY]);
         }
 
         $this->customerLogger->info(sprintf('Getting data from: %s', $uri));
@@ -108,6 +119,8 @@ class Client
 
     private function handleResponse(RequestInterface $request, ResponseInterface $response): void
     {
+        $this->debugger->save($request, $response);
+
         switch ($response->getStatusCode()) {
             case 401:
                 throw new AuthorizationException('The REST client is not logged in.');
@@ -184,6 +197,15 @@ class Client
         $this->refreshToken = $data->refreshToken;
     }
 
+    public function getAccessToken(): string
+    {
+        if (!$this->accessToken) {
+            throw new \Exception('Login before you can get the accessToken.');
+        }
+
+        return $this->accessToken;
+    }
+
     /**
      * @codeCoverageIgnore Not yet implemented.
      */
@@ -231,21 +253,25 @@ class Client
         ));
     }
 
-    private function sanitizeQueryParams(array $params): array
+    private function sanitizeQueryParams(array $params): string
     {
         $sanitized = [];
         foreach ($params as $key => $value) {
             if (is_array($value)) {
                 // Plentymarkets REST API separates array parameters with ",".
-                $sanitized[$key] = implode(',', $value);
+                $sanitized[$key] = $key . '=' . implode(',', $value);
 
                 continue;
             }
 
-            $sanitized[$key] = $value;
+            if ($value === null) {
+                continue;
+            }
+
+            $sanitized[$key] = $key . '=' . $value;
         }
 
-        return $sanitized;
+        return implode('&', $sanitized);
     }
 
     private function getRequestOptions(GuzzleRequest $request, array $params): array
@@ -257,7 +283,7 @@ class Client
 
         switch ($request->getMethod()) {
             case self::METHOD_POST:
-                $options[RequestOptions::FORM_PARAMS] = $this->sanitizeQueryParams($params);
+                $options[RequestOptions::FORM_PARAMS] = $params;
                 break;
             case self::METHOD_GET:
                 $options[RequestOptions::QUERY] = $this->sanitizeQueryParams($params);

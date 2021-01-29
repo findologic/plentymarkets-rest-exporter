@@ -8,6 +8,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Availability extends Entity
 {
+    public const STORE = 'mandant';
+
     /** @var int */
     private $imageId;
 

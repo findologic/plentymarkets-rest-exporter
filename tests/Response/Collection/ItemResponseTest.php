@@ -6,7 +6,6 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
@@ -169,32 +168,5 @@ class ItemResponseTest extends TestCase
         $this->assertEquals('techdata', $text->getTechnicalData());
         $this->assertEquals('urlpath', $text->getUrlPath());
         $this->assertEquals('keywords', $text->getKeywords());
-    }
-
-    public function testPropertyGettersReturnDefaultValueWhenPropertyIsNotFoundAndCastTypesCorrectly()
-    {
-        $item = $this->itemResponse->first();
-
-        $data = [
-            'float1' => '12.10',
-            'string1' => 456,
-            'bool1' => 'false',
-            'int1' => '10',
-            'null1' => null
-        ];
-
-        $this->assertSame(12.10, $item->getFloatProperty('float1', $data));
-        $this->assertSame('456', $item->getStringProperty('string1', $data));
-        $this->assertSame(false, $item->getBoolProperty('bool1', $data));
-        $this->assertSame(10, $item->getIntProperty('int1', $data));
-        $this->assertSame(null, $item->getFloatProperty('float2', $data));
-        $this->assertSame(null, $item->getStringProperty('string2', $data));
-        $this->assertSame(null, $item->getBoolProperty('bool2', $data));
-        $this->assertSame(null, $item->getIntProperty('int2', $data));
-        $this->assertSame(10.12, $item->getFloatProperty('float2', $data, 10.12));
-        $this->assertSame('string', $item->getStringProperty('string2', $data, 'string'));
-        $this->assertSame(false, $item->getBoolProperty('bool2', $data, false));
-        $this->assertSame(12, $item->getIntProperty('int2', $data, 12));
-        $this->assertSame(123, $item->getIntProperty('null1', $data, 123));
     }
 }

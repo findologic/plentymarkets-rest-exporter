@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Property as SelectionProperty;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation;
 
 class Property extends Relation
 {
+    public const PROPERTY_TYPE_ITEM = 'item';
+
     /** @var SelectionProperty|null */
     private $propertyRelation;
 

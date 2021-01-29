@@ -1,0 +1,94 @@
+{
+  "page": 1,
+  "totalsCount": 1,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 1,
+      "position": 0,
+      "minimumOrderQuantity": 1,
+      "type": "default",
+      "isCustomerPrice": false,
+      "isDisplayedByDefault": true,
+      "isLiveConversion": false,
+      "createdAt": "2016-09-05 12:24:53",
+      "updatedAt": "2016-09-06 10:02:02",
+      "interval": "none",
+      "names": [
+        {
+          "salesPriceId": 1,
+          "lang": "de",
+          "nameInternal": "Preis",
+          "nameExternal": "Preis",
+          "createdAt": "2016-09-05T12:24:53+01:00",
+          "updatedAt": "2016-09-05T13:46:34+01:00"
+        },
+        {
+          "salesPriceId": 1,
+          "lang": "en",
+          "nameInternal": "Price",
+          "nameExternal": "Price",
+          "createdAt": "2016-09-05T12:24:53+01:00",
+          "updatedAt": "2016-09-05T13:46:34+01:00"
+        }
+      ],
+      "accounts": [],
+      "countries": [
+        {
+          "salesPriceId": 1,
+          "countryId": -1,
+          "createdAt": "2016-09-06T10:02:05+01:00",
+          "updatedAt": "2016-09-06T10:02:05+01:00"
+        }
+      ],
+      "currencies": [
+        {
+          "salesPriceId": 1,
+          "currency": "-1",
+          "createdAt": "2016-09-06T10:02:05+01:00",
+          "updatedAt": "2016-09-06T10:02:05+01:00"
+        }
+      ],
+      "customerClasses": [
+        {
+          "salesPriceId": 1,
+          "customerClassId": -1,
+          "createdAt": "2016-09-06T10:02:02+01:00",
+          "updatedAt": "2016-09-06T10:02:02+01:00"
+        }
+      ],
+      "referrers": [
+        {
+          "salesPriceId": 1,
+          "referrerId": 0,
+          "createdAt": "2016-09-06T10:02:04+01:00",
+          "updatedAt": "2016-09-06T10:02:04+01:00"
+        },
+        {
+          "salesPriceId": 1,
+          "referrerId": 1,
+          "createdAt": "2016-09-06T10:02:04+01:00",
+          "updatedAt": "2016-09-06T10:02:04+01:00"
+        },
+        {
+          "salesPriceId": 1,
+          "referrerId": 3,
+          "createdAt": "2016-09-06T10:02:03+01:00",
+          "updatedAt": "2016-09-06T10:02:03+01:00"
+        }
+      ],
+      "clients": [
+        {
+          "salesPriceId": 1,
+          "plentyId": -1,
+          "createdAt": "2016-09-06T10:02:02+01:00",
+          "updatedAt": "2016-09-06T10:02:02+01:00"
+        }
+      ]
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100
+}

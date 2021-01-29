@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 
 use Carbon\Carbon;
+use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
@@ -252,5 +253,36 @@ class ClientTest extends TestCase
         $client->send($request);
 
         $this->assertEqualsWithDelta($expectedRateLimitedTime->timestamp, Carbon::now()->timestamp, 2);
+    }
+
+    public function testGetAccessTokenThrowsExceptionInCaseNoAuthenticationHasBeenMadeYet(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Login before you can get the accessToken.');
+
+        $client = $this->getDefaultClient();
+        $client->getAccessToken();
+    }
+
+    public function testAccessTokenIsReturnedInCaseItHasBeenGenerated(): void
+    {
+        $this->config->setDebug(true);
+        $client = $this->getDefaultClient();
+        $expectedLoginRequest = new GuzzleRequest('POST', sprintf('https://%s/rest/login', $this->config->getDomain()));
+        $expectedWebStoreRequest = $this->getDefaultRequest();
+
+        $this->guzzleClientMock->expects($this->exactly(2))
+            ->method('send')
+            ->withConsecutive([$expectedLoginRequest], [$expectedWebStoreRequest])
+            ->willReturnOnConsecutiveCalls(
+                $this->getMockResponse('LoginResponse/response.json'),
+                $this->getMockResponse('WebStoreResponse/response.json')
+            );
+
+        $request = new WebStoreRequest();
+
+        $client->send($request);
+
+        $this->assertSame('access token', $client->getAccessToken());
     }
 }

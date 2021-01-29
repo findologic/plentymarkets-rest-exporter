@@ -10,8 +10,13 @@ trait ResponseHelper
 {
     public function getMockResponse(string $file): Response
     {
-        $response = file_get_contents(__DIR__ . '/../MockData/' . $file);
+        $response = $this->getFileContents($file);
 
         return new Response(200, [], $response);
+    }
+
+    private function getFileContents(string $file): string
+    {
+        return file_get_contents(__DIR__ . '/../MockData/' . $file);
     }
 }

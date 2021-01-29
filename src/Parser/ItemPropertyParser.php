@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\Parser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;

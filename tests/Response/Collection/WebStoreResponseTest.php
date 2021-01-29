@@ -189,8 +189,8 @@ class WebStoreResponseTest extends TestCase
         $webStoreResponse = WebStoreParser::parse($this->getMockResponse('WebStoreResponse/response.json'));
         $webStore = $webStoreResponse->first();
 
-        $this->assertCount(1, $webStoreResponse->getWebStores());
-        $this->assertCount(1, $webStoreResponse->all());
+        $this->assertCount(2, $webStoreResponse->getWebStores());
+        $this->assertCount(2, $webStoreResponse->all());
         $this->assertSame($webStoreResponse->getWebStores(), $webStoreResponse->all());
         $this->assertEquals($expectedWebStore, $webStore);
         $this->assertEquals($expectedWebStore, $webStoreResponse->getWebStoreByStoreIdentifier(1234));

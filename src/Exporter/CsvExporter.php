@@ -7,12 +7,11 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 use FINDOLOGIC\Export\Exporter as LibflexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
-use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
-use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemVariationRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\PimVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemVariationResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\CsvWrapper;
 use Psr\Log\LoggerInterface;
 
@@ -24,16 +23,16 @@ class CsvExporter extends Exporter
         Config $config,
         string $exportPath,
         ?Client $client = null,
-        ?Registry $registry = null,
         ?RegistryService $registryService = null,
-        ?ItemRequest $itemRequest = null,
-        ?ItemVariationRequest $itemVariationRequest = null,
+        ?ItemRequest $pimRequest = null,
+        ?PimVariationRequest $pimVariationRequest = null,
         ?LibflexportExporter $fileExporter = null
     ) {
         $internalLogger->debug('Using Plentymarkets CsvExporter for exporting.');
 
         if (!$fileExporter) {
-            $fileExporter = LibflexportExporter::create(LibflexportExporter::TYPE_CSV, 100);
+            $properties = ['price_id', 'variation_id', 'base_unit', 'package_size'];
+            $fileExporter = LibflexportExporter::create(LibflexportExporter::TYPE_CSV, 100, $properties);
         }
 
         parent::__construct(
@@ -41,10 +40,9 @@ class CsvExporter extends Exporter
             $customerLogger,
             $config,
             $client,
-            $registry,
             $registryService,
-            $itemRequest,
-            $itemVariationRequest,
+            $pimRequest,
+            $pimVariationRequest,
             $fileExporter
         );
 
@@ -52,16 +50,18 @@ class CsvExporter extends Exporter
             $exportPath,
             $this->fileExporter,
             $this->config,
-            $this->registry
+            $this->registryService,
+            $this->internalLogger,
+            $this->customerLogger
         );
     }
 
     /**
      * @param int $totalCount
      * @param ItemResponse $products
-     * @param ItemVariationResponse $variations
+     * @param PimVariationResponse $variations
      */
-    protected function wrapData(int $totalCount, ItemResponse $products, ItemVariationResponse $variations): void
+    protected function wrapData(int $totalCount, ItemResponse $products, PimVariationResponse $variations): void
     {
         $this->wrapper->wrap($this->offset, $totalCount, $products, $variations);
     }

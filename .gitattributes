@@ -1,0 +1,13 @@
+/.github/              export-ignore
+/bin/                  export-ignore
+/cache/                export-ignore
+/config/               export-ignore
+/debug/                export-ignore
+/export/               export-ignore
+/logs/                 export-ignore
+/tests/                export-ignore
+
+.gitattributes         export-ignore
+.gitignore             export-ignore
+phpcs.xml              export-ignore
+phpunit.xml.dist       export-ignore

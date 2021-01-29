@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty\Name;
+
 class ItemProperty extends Entity
 {
     /** @var int */
@@ -54,11 +56,14 @@ class ItemProperty extends Entity
     /** @var string */
     private $updatedAt;
 
+    /** @var Name[] */
+    private $names;
+
     public function __construct(array $data)
     {
         $this->id = (int)$data['id'];
         $this->position = (int)$data['position'];
-        $this->propertyGroupId = !is_null($data['propertyGroupId']) ? (int)$data['propertyGroupId'] : null;
+        $this->propertyGroupId = $this->getIntProperty('propertyGroupId', $data);
         $this->unit = (string)$data['unit'];
         $this->backendName = (string)$data['backendName'];
         $this->comment = (string)$data['comment'];
@@ -72,6 +77,7 @@ class ItemProperty extends Entity
         $this->isShownAsAdditionalCosts = (bool)$data['isShownAsAdditionalCosts'];
         $this->surcharge = (float)$data['surcharge'];
         $this->updatedAt = (string)$data['updatedAt'];
+        $this->names = $this->getEntities(Name::class, 'names', $data);
     }
 
     public function getData(): array
@@ -174,5 +180,13 @@ class ItemProperty extends Entity
     public function getUpdatedAt(): string
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return Name[]
+     */
+    public function getNames(): array
+    {
+        return $this->names;
     }
 }
