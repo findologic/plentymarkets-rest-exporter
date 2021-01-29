@@ -41,6 +41,9 @@ class Config
     /** @var bool */
     private $debug = false;
 
+    /** @var bool  */
+    private $exportUnavailableVariations = false;
+
     public function __construct(array $rawConfig = [])
     {
         foreach ($rawConfig as $configKey => $configValue) {
@@ -196,5 +199,15 @@ class Config
     public function getProtocol(): string
     {
         return $this->protocol;
+    }
+
+    public function isExportUnavailableVariations(): bool
+    {
+        return $this->exportUnavailableVariations;
+    }
+
+    public function setExportUnavailableVariations(bool $exportUnavailableVariations): void
+    {
+        $this->exportUnavailableVariations = $exportUnavailableVariations;
     }
 }
