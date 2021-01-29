@@ -88,6 +88,14 @@ class Utils
             return $default;
         }
 
+        if ($_ENV[$key] === 'true') {
+            return true;
+        }
+
+        if ($_ENV[$key] === 'false') {
+            return false;
+        }
+
         return $_ENV[$key];
     }
 

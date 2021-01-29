@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 
 use Exception;
+use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\DirectoryAware;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client;
@@ -15,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 class UtilsTest extends TestCase
 {
     use ResponseHelper;
+    use DirectoryAware;
 
     private const TEMP_PATH = '/tmp/rest-export';
     private const CONFIG_PATH = self::TEMP_PATH . '/config.yml';
@@ -25,7 +27,7 @@ class UtilsTest extends TestCase
 
     public function setUp(): void
     {
-        mkdir(self::TEMP_PATH, 0777, true);
+        $this->createDirectories([self::TEMP_PATH]);
 
         $this->clientMock = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
@@ -190,5 +192,18 @@ class UtilsTest extends TestCase
         );
 
         $this->assertSame($expectedDomain, $config->getDomain());
+    }
+
+    public function testEnvBooleanStringsValuesAreCastedIntoBooleanValues(): void
+    {
+        $_ENV['TRUE_VALUE'] = 'true';
+        $_ENV['FALSE_VALUE'] = 'false';
+
+        $this->assertTrue(Utils::env('TRUE_VALUE'));
+        $this->assertFalse(Utils::env('FALSE_VALUE'));
+
+        // Reset test, so nothing is left from this test, when running a new test.
+        unset($_ENV['TRUE_VALUE']);
+        unset($_ENV['FALSE_VALUE']);
     }
 }

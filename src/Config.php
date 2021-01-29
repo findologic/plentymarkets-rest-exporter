@@ -41,6 +41,9 @@ class Config
     /** @var bool */
     private $debug = false;
 
+    /** @var bool  */
+    private $exportUnavailableVariations = false;
+
     public function __construct(array $rawConfig = [])
     {
         foreach ($rawConfig as $configKey => $configValue) {
@@ -71,6 +74,7 @@ class Config
             'availabilityId' => $plentyConfig['availability_id'],
             'priceId' => $plentyConfig['price_id'],
             'rrpId' => $plentyConfig['rrp_id'],
+            'exportUnavailableVariations' => $plentyConfig['exportUnavailableVariations'],
             'debug' => $debug
         ]);
     }
@@ -86,6 +90,7 @@ class Config
             'availabilityId' => (int)Utils::env('EXPORT_AVAILABILITY_ID'),
             'priceId' => (int)Utils::env('EXPORT_PRICE_ID'),
             'rrpId' => (int)Utils::env('EXPORT_RRP_ID'),
+            'exportUnavailableVariations' => (bool)Utils::env('EXPORT_UNAVAILABLE_VARIATIONS'),
             'debug' => (bool)Utils::env('DEBUG')
         ]);
     }
@@ -215,5 +220,15 @@ class Config
     public function getProtocol(): string
     {
         return $this->protocol;
+    }
+
+    public function isExportUnavailableVariations(): bool
+    {
+        return $this->exportUnavailableVariations;
+    }
+
+    public function setExportUnavailableVariations(bool $exportUnavailableVariations): void
+    {
+        $this->exportUnavailableVariations = $exportUnavailableVariations;
     }
 }
