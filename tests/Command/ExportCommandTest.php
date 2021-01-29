@@ -47,6 +47,9 @@ class ExportCommandTest extends TestCase
         if (!is_dir(Utils::env('EXPORT_DIR'))) {
             mkdir(Utils::env('EXPORT_DIR'));
         }
+        if (!is_dir(Utils::env('LOG_DIR'))) {
+            mkdir(Utils::env('LOG_DIR'));
+        }
 
         $this->application = new Application();
         $this->command = new ExportCommand();
@@ -60,6 +63,9 @@ class ExportCommandTest extends TestCase
         // PHP is really bad at deleting files recursively. Therefore we go the system approach.
         if (is_dir(Utils::env('EXPORT_DIR'))) {
             exec(sprintf('rm -rf "%s"', Utils::env('EXPORT_DIR')));
+        }
+        if (is_dir(Utils::env('LOG_DIR'))) {
+            exec(sprintf('rm -rf "%s"', Utils::env('LOG_DIR')));
         }
     }
 
