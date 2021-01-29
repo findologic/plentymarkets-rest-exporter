@@ -11,7 +11,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
-abstract class ClearDirectoryCommand extends Command
+abstract class ClearDirectoryBaseCommand extends Command
 {
     private $filesystem;
     private $finder;

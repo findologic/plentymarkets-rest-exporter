@@ -76,8 +76,10 @@ class ExportCommandTest extends TestCase
 
     public function testExportDoesNotStartWhenFileAlreadyExists(): void
     {
-        $this->setUpCommandMocks();
+        $this->createTestLog();
+        $this->command = new ExportCommand();
         $this->createTestCsv();
+        $this->setUpCommandMocks();
 
         $commandTester = new CommandTester($this->command);
         $commandTester->execute([
@@ -158,5 +160,10 @@ class ExportCommandTest extends TestCase
     private function createTestCsv(string $data = 'important data'): void
     {
         file_put_contents(Utils::env('EXPORT_DIR') . '/findologic.csv', $data);
+    }
+
+    private function createTestLog(string $data = 'This is a logline'): void
+    {
+        file_put_contents(Utils::env('LOG_DIR') . '/import.log', $data);
     }
 }

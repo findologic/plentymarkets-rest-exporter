@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Command;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
-class ClearCacheCommand extends ClearDirectoryCommand
+class ClearCacheCommand extends ClearDirectoryBaseCommand
 {
     protected static $defaultName = 'cache:clear';
 
@@ -15,7 +16,7 @@ class ClearCacheCommand extends ClearDirectoryCommand
     {
         parent::__construct($name, $fileSystem, $finder);
 
-        $this->setDirectory(__DIR__ . '/../../cache');
+        $this->setDirectory(Utils::env('CACHE_DIR', __DIR__ . '/../../var/cache'));
     }
 
     protected function configure()

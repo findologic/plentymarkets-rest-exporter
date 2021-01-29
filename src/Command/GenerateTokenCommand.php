@@ -18,6 +18,16 @@ class GenerateTokenCommand extends Command
 {
     protected static $defaultName = 'generate:token';
 
+    /** @var GuzzleClient|null */
+    private $client;
+
+    public function __construct(GuzzleClient $client = null)
+    {
+        parent::__construct();
+
+        $this->client = $client;
+    }
+
     protected function configure()
     {
         $this->setDescription('Generates a bearer token that can be used for manually sending requests.')
@@ -43,7 +53,7 @@ class GenerateTokenCommand extends Command
 
         $io->writeln(sprintf('Generating token for service %s...', $config->getDomain()));
 
-        $client = new Client(new GuzzleClient(), $config);
+        $client = new Client($this->client ?? new GuzzleClient(), $config);
 
         // Send some request, so we are automatically logged in.
         $request = new WebStoreRequest();
@@ -51,7 +61,7 @@ class GenerateTokenCommand extends Command
 
         $io->title('Bearer Token:');
         $io->writeln($client->getAccessToken());
-        $io->success('The access token was successfully generated.');
+        $io->success('The token was successfully generated.');
 
         return Command::SUCCESS;
     }
