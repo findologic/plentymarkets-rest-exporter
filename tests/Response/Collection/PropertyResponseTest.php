@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertyResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Amazon;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group\GroupRelation;

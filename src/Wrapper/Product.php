@@ -11,6 +11,7 @@ use FINDOLOGIC\Export\Data\Attribute;
 use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Ordernumber;
+use FINDOLOGIC\Export\Data\Property;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
@@ -88,6 +89,9 @@ class Product
         }
 
         $variationCount = $this->processVariations();
+        if ($variationCount === 0 && $this->config->isExportUnavailableVariations()) {
+            $variationCount = $this->processVariations(false);
+        }
         if ($variationCount === 0) {
             $this->reason = 'All assigned variations are not exportable (inactive, no longer available, etc.)';
 
@@ -99,6 +103,15 @@ class Product
         $this->item->addDateAdded(new DateTime($this->productEntity->getCreatedAt()));
         $this->addManufacturer();
         $this->addFreeTextFields();
+
+        $variationIdProperty = new Property('variation_id');
+        $variationIdProperty->addValue((string)$this->productEntity->getMainVariationId());
+        $this->item->addProperty($variationIdProperty);
+
+        $priceId = $this->registryService->getPriceId();
+        $priceIdProperty = new Property('price_id');
+        $priceIdProperty->addValue((string)$priceId);
+        $this->item->addProperty($priceIdProperty);
 
         return $this->item;
     }
@@ -147,7 +160,7 @@ class Product
         }
     }
 
-    protected function processVariations(): int
+    protected function processVariations(bool $checkAvailability = true): int
     {
         $hasImage = false;
         $variationsProcessed = 0;
@@ -155,9 +168,11 @@ class Product
         $insteadPrices = [];
         $ordernumbers = [];
         $highestPosition = 0;
+        $baseUnit = null;
+        $packageSize = null;
 
         foreach ($this->variationEntities as $variationEntity) {
-            if (!$this->shouldExportVariation($variationEntity)) {
+            if (!$this->shouldExportVariation($variationEntity, $checkAvailability)) {
                 continue;
             }
 
@@ -175,6 +190,14 @@ class Product
 
             foreach ($variation->getTags() as $tag) {
                 $this->item->addKeyword($tag);
+            }
+
+            if (!$packageSize) {
+                $packageSize = $variation->getPackageSize();
+            }
+
+            if (!$baseUnit) {
+                $baseUnit = $variation->getBaseUnit();
             }
 
             $position = $variation->getPosition();
@@ -216,10 +239,22 @@ class Product
         $salesFrequency = $this->storeConfiguration->getItemSortByMonthlySales() ? $highestPosition : 0;
         $this->item->addSalesFrequency($salesFrequency);
 
+        if ($baseUnit) {
+            $baseUnitProperty = new Property('base_unit');
+            $baseUnitProperty->addValue((string)$baseUnit);
+            $this->item->addProperty($baseUnitProperty);
+        }
+
+        if ($packageSize) {
+            $packageSizeProperty = new Property('package_size');
+            $packageSizeProperty->addValue((string)$packageSize);
+            $this->item->addProperty($packageSizeProperty);
+        }
+
         return $variationsProcessed;
     }
 
-    protected function shouldExportVariation(PimVariation $variation): bool
+    protected function shouldExportVariation(PimVariation $variation, bool $checkAvailability = true): bool
     {
         if (!$variation->getBase()->isActive()) {
             return false;
@@ -235,7 +270,7 @@ class Product
             return false;
         }
 
-        if ($this->config->getAvailabilityId() !== null) {
+        if ($checkAvailability && $this->config->getAvailabilityId() !== null) {
             if ($variation->getBase()->getAvailability() === $this->config->getAvailabilityId()) {
                 return false;
             }

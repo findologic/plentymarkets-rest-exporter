@@ -8,8 +8,6 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client;
-use GuzzleHttp\RequestOptions;
-use InvalidArgumentException;
 use Log4Php\Configurators\LoggerConfigurationAdapterXML;
 use Log4Php\Logger;
 use Psr\Log\LoggerInterface;
@@ -21,12 +19,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Yaml\Yaml;
 use Throwable;
 
 class ExportCommand extends Command
 {
-    private const IMPORT_LOG_PATH = __DIR__ . '/../../logs/import.log';
+    private const IMPORT_LOG_PATH = __DIR__ . '/../../var/log';
+    private const IMPORT_LOG_FILE_NAME = 'import.log';
 
     private const LOGGER_CONFIG = __DIR__ . '/../../config/logger.xml';
 
@@ -69,7 +67,7 @@ class ExportCommand extends Command
             'shopkey',
             InputArgument::OPTIONAL,
             'Optionally add the shopkey of a specific service. Note that this requires' .
-            ' the config "customerLoginUri" to be set in config/config.yml.',
+            ' the env variable "CUSTOMER_LOGIN_URL" to be set in .env.local.',
         );
 
         $this->addOption(
@@ -97,8 +95,7 @@ class ExportCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $shopkey = Utils::validateAndGetShopkey($input->getArgument('shopkey'));
-        $configLocation = getenv('CONFIG_LOCATION') ?? Config::DEFAULT_CONFIG_FILE;
-        $config = Utils::getExportConfiguration($shopkey, $configLocation, $this->client);
+        $config = Utils::getExportConfiguration($shopkey, $this->client);
 
         $exporterType = (int)$input->getOption('type');
         $this->exporter = $this->getExporter($exporterType, $config);
@@ -128,14 +125,16 @@ class ExportCommand extends Command
 
     private function configureLoggers(): void
     {
+        $logPath = Utils::env('LOG_DIR', self::IMPORT_LOG_PATH);
+        $logFile = sprintf('%s/%s', $logPath, self::IMPORT_LOG_FILE_NAME);
         // Empty log before each new import.
-        if (file_exists(self::IMPORT_LOG_PATH)) {
-            file_put_contents(self::IMPORT_LOG_PATH, '');
+        if (file_exists($logFile)) {
+            file_put_contents($logFile, '');
         }
 
         $configurationAdapter = new LoggerConfigurationAdapterXML();
         $configuration = $configurationAdapter->convert(self::LOGGER_CONFIG);
-        $configuration['appenders']['default']['params']['file'] = self::IMPORT_LOG_PATH;
+        $configuration['appenders']['default']['params']['file'] = $logFile;
 
         Logger::configure($configuration);
     }
@@ -149,7 +148,7 @@ class ExportCommand extends Command
             return true;
         }
 
-        $exportFileLocation = getenv('EXPORT_LOCATION') ?? Exporter::DEFAULT_LOCATION;
+        $exportFileLocation = Utils::env('EXPORT_DIR', Exporter::DEFAULT_LOCATION);
         $isCsvExporter = $exporterType === Exporter::TYPE_CSV;
         if (!$isCsvExporter || !file_exists($exportFileLocation . '/findologic.csv')) {
             return true;

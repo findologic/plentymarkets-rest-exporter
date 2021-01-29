@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Command;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
-class ClearExportDirectoryCommand extends ClearDirectoryCommand
+class ClearExportDirectoryCommand extends ClearDirectoryBaseCommand
 {
     protected static $defaultName = 'clear:export';
 
@@ -15,7 +16,7 @@ class ClearExportDirectoryCommand extends ClearDirectoryCommand
     {
         parent::__construct($name, $fileSystem, $finder);
 
-        $this->setDirectory(__DIR__ . '/../../export');
+        $this->setDirectory(Utils::env('EXPORT_DIR', __DIR__ . '/../../var/export'));
     }
 
     protected function configure()

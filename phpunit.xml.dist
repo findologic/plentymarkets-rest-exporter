@@ -9,7 +9,7 @@
         convertWarningsToExceptions="true"
         processIsolation="false"
         stopOnFailure="false"
-        bootstrap="vendor/autoload.php"
+        bootstrap="tests/bootstrap.php"
 >
     <testsuites>
         <testsuite name="FINDOLOGIC exporter for exporting product data via the plentymarkets REST API">

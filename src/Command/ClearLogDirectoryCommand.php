@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Command;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
-class ClearLogDirectoryCommand extends ClearDirectoryCommand
+class ClearLogDirectoryCommand extends ClearDirectoryBaseCommand
 {
     protected static $defaultName = 'clear:logs';
 
@@ -15,7 +16,7 @@ class ClearLogDirectoryCommand extends ClearDirectoryCommand
     {
         parent::__construct($name, $fileSystem, $finder);
 
-        $this->setDirectory(__DIR__ . '/../../logs');
+        $this->setDirectory(Utils::env('LOG_DIR', __DIR__ . '/../../var/log'));
     }
 
     protected function configure()

@@ -556,68 +556,7 @@
       "supplier": null,
       "warehouses": null,
       "properties": [],
-      "tags": [
-        {
-          "tagId": 1,
-          "tag": {
-            "createdAt": "2019-03-19 14:07:52",
-            "updatedAt": "2020-03-03 15:30:19",
-            "names": [
-              {
-                "id": 1,
-                "tagId": "1",
-                "tagLang": "de",
-                "tagName": "de tag 1"
-              },
-              {
-                "id": 2,
-                "tagId": "1",
-                "tagLang": "en",
-                "tagName": "en tag 1"
-              }
-            ],
-            "clients": [
-              {
-                "id": 1,
-                "tagId": 1,
-                "plentyId": 34185,
-                "createdAt": "2020-08-19 12:48:35",
-                "updatedAt": "2020-08-19 12:48:35"
-              }
-            ],
-            "id": 1,
-            "tagName": "tag1",
-            "color": "#ffffff"
-          }
-        },
-        {
-          "tagId": 2,
-          "tag": {
-            "createdAt": "2019-03-19 14:07:52",
-            "updatedAt": "2020-03-03 15:30:19",
-            "names": [
-              {
-                "id": 3,
-                "tagId": "2",
-                "tagLang": "de",
-                "tagName": "de tag 2"
-              }
-            ],
-            "clients": [
-              {
-                "id": 1,
-                "tagId": 1,
-                "plentyId": 34185,
-                "createdAt": "2020-08-19 12:48:35",
-                "updatedAt": "2020-08-19 12:48:35"
-              }
-            ],
-            "id": 1,
-            "tagName": "tag2",
-            "color": "#ffffff"
-          }
-        }
-      ],
+      "tags": [],
       "comments": null,
       "id": 1004,
       "timestamps": null,
@@ -635,7 +574,7 @@
         "number": "S-000813-C",
         "model": "modeeeel",
         "externalId": "",
-        "availability": 1,
+        "availability": 5,
         "estimatedAvailableAt": null,
         "purchasePrice": 0,
         "movingAveragePrice": null,
@@ -841,35 +780,7 @@
       "supplier": null,
       "warehouses": null,
       "properties": [],
-      "tags": [
-        {
-          "tagId": 3,
-          "tag": {
-            "createdAt": "2019-03-19 14:07:52",
-            "updatedAt": "2020-03-03 15:30:19",
-            "names": [
-              {
-                "id": 4,
-                "tagId": "3",
-                "tagLang": "de",
-                "tagName": "de tag 3"
-              }
-            ],
-            "clients": [
-              {
-                "id": 1,
-                "tagId": 1,
-                "plentyId": 34185,
-                "createdAt": "2020-08-19 12:48:35",
-                "updatedAt": "2020-08-19 12:48:35"
-              }
-            ],
-            "id": 1,
-            "tagName": "tag3",
-            "color": "#ffffff"
-          }
-        }
-      ],
+      "tags": [],
       "comments": null,
       "id": 1005,
       "timestamps": null,
@@ -887,7 +798,7 @@
         "number": "101",
         "model": "",
         "externalId": "",
-        "availability": 1,
+        "availability": 5,
         "estimatedAvailableAt": null,
         "purchasePrice": 0,
         "movingAveragePrice": null,

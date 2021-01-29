@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Command;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
-class ClearDebugDirectoryCommand extends ClearDirectoryCommand
+class ClearDebugDirectoryCommand extends ClearDirectoryBaseCommand
 {
     protected static $defaultName = 'clear:debug';
 
@@ -15,7 +16,7 @@ class ClearDebugDirectoryCommand extends ClearDirectoryCommand
     {
         parent::__construct($name, $fileSystem, $finder);
 
-        $this->setDirectory(__DIR__ . '/../../debug');
+        $this->setDirectory(Utils::env('DEBUG_DIR', __DIR__ . '/../../var/debug'));
     }
 
     protected function configure()

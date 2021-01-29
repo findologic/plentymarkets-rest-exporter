@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 use DateTime;
 use DateTimeInterface;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class CategoryDetails extends Entity
 {

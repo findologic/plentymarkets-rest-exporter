@@ -6,18 +6,18 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 
 use Exception;
 use FINDOLOGIC\Export\Helpers\DataHelper;
+use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\DirectoryAware;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Yaml\Yaml;
 
 class UtilsTest extends TestCase
 {
     use ResponseHelper;
+    use DirectoryAware;
 
     private const TEMP_PATH = '/tmp/rest-export';
     private const CONFIG_PATH = self::TEMP_PATH . '/config.yml';
@@ -28,7 +28,7 @@ class UtilsTest extends TestCase
 
     public function setUp(): void
     {
-        mkdir(self::TEMP_PATH, 0777, true);
+        $this->createDirectories([self::TEMP_PATH]);
 
         $this->clientMock = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
@@ -105,18 +105,12 @@ class UtilsTest extends TestCase
 
         return [
             'config has no customerLoginUri set' => [
-                'rawConfig' => $this->getDefaultRawConfig([
-                    'domain' => $expectedDomain,
-                    'customerLoginUri' => null,
-                ]),
+                'customerLoginUri' => null,
                 'shopkey' => self::VALID_SHOPKEY,
                 'expectedDomain' => $expectedDomain,
             ],
             'config has customerLoginUri set, but no shopkey provided' => [
-                'rawConfig' => $this->getDefaultRawConfig([
-                    'domain' => $expectedDomain,
-                    'customerLoginUri' => 'https://customer-login.com',
-                ]),
+                'customerLoginUri' => 'https://customer-login.com',
                 'shopkey' => null,
                 'expectedDomain' => $expectedDomain,
             ],
@@ -127,17 +121,16 @@ class UtilsTest extends TestCase
      * @dataProvider configDoesNotCallCustomerLoginProvider
      */
     public function testCustomerLoginIsNotCalledIfConfigDoesNotAllowIt(
-        array $rawConfig,
+        ?string $customerLoginUrl,
         ?string $shopkey,
         string $expectedDomain
     ): void {
-        file_put_contents(self::CONFIG_PATH, Yaml::dump($rawConfig));
+        $_ENV['CUSTOMER_LOGIN_URL'] = $customerLoginUrl;
 
         $this->clientMock->expects($this->never())->method('get');
 
         $config = Utils::getExportConfiguration(
             $shopkey,
-            self::CONFIG_PATH,
             $this->clientMock
         );
 
@@ -148,10 +141,7 @@ class UtilsTest extends TestCase
     {
         return [
             'config has customerLoginUri and shopkey set' => [
-                'rawConfig' => $this->getDefaultRawConfig([
-                    'domain' => 'https://that-should-not-be-used.com',
-                    'customerLoginUri' => 'https://customer-login.com',
-                ]),
+                'customerLoginUrl' => 'https://customer-login.com',
                 'shopkey' => self::VALID_SHOPKEY,
                 'expectedDomain' => 'blubbergurken.io',
             ],
@@ -162,14 +152,14 @@ class UtilsTest extends TestCase
      * @dataProvider configCallsCustomerLoginProvider
      */
     public function testCustomerLoginIsCalledIfConfigDoesAllowsItAndFailsWhenResponseIsInvalid(
-        array $rawConfig,
+        ?string $customerLoginUrl,
         ?string $shopkey,
         string $expectedDomain
     ): void {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Something went wrong while tying to fetch the importer data');
 
-        file_put_contents(self::CONFIG_PATH, Yaml::dump($rawConfig));
+        $_ENV['CUSTOMER_LOGIN_URL'] = $customerLoginUrl;
 
         $this->clientMock->expects($this->once())
             ->method('get')
@@ -177,7 +167,6 @@ class UtilsTest extends TestCase
 
         $config = Utils::getExportConfiguration(
             $shopkey,
-            self::CONFIG_PATH,
             $this->clientMock
         );
 
@@ -188,11 +177,11 @@ class UtilsTest extends TestCase
      * @dataProvider configCallsCustomerLoginProvider
      */
     public function testCustomerLoginIsCalledIfConfigDoesAllowsIt(
-        array $rawConfig,
+        ?string $customerLoginUrl,
         ?string $shopkey,
         string $expectedDomain
     ): void {
-        file_put_contents(self::CONFIG_PATH, Yaml::dump($rawConfig));
+        $_ENV['CUSTOMER_LOGIN_URL'] = $customerLoginUrl;
 
         $this->clientMock->expects($this->once())
             ->method('get')
@@ -200,7 +189,6 @@ class UtilsTest extends TestCase
 
         $config = Utils::getExportConfiguration(
             $shopkey,
-            self::CONFIG_PATH,
             $this->clientMock
         );
 
@@ -238,21 +226,16 @@ class UtilsTest extends TestCase
         $this->assertSame($expected, Utils::isEmpty($value));
     }
 
-    private function getDefaultRawConfig(array $overrides = []): array
+    public function testEnvBooleanStringsValuesAreCastedIntoBooleanValues(): void
     {
-        $config = [
-            'username' => 'Findologic',
-            'password' => 'verySecure12',
-            'domain' => 'findologic.plentymarkets-cloud02.com',
-            'multiShopId' => 0,
-            'availabilityId' => null,
-            'priceId' => 1,
-            'rrpId' => 2,
-            'language' => 'DE',
-            'debug' => false,
-            'customerLoginUri' => null,
-        ];
+        $_ENV['TRUE_VALUE'] = 'true';
+        $_ENV['FALSE_VALUE'] = 'false';
 
-        return array_merge($config, $overrides);
+        $this->assertTrue(Utils::env('TRUE_VALUE'));
+        $this->assertFalse(Utils::env('FALSE_VALUE'));
+
+        // Reset test, so nothing is left from this test, when running a new test.
+        unset($_ENV['TRUE_VALUE']);
+        unset($_ENV['FALSE_VALUE']);
     }
 }

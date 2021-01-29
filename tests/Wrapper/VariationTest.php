@@ -13,6 +13,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
@@ -21,6 +22,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty as Charact
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property as PropertyEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertyGroup;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Variation as VariationWrapper;
@@ -67,9 +69,17 @@ class VariationTest extends TestCase
         $attributeResponse = $this->getMockResponse('AttributeResponse/one.json');
         $parsedAttributeResponse = AttributeParser::parse($attributeResponse);
 
+        $unitResponse = $this->getMockResponse('UnitResponse/response.json');
+        $parsedUnitResponse = UnitParser::parse($unitResponse);
+
         $this->registryServiceMock->expects($this->any())
             ->method('getAttribute')
             ->willReturn($parsedAttributeResponse->first());
+
+        $this->registryServiceMock->expects($this->any())
+            ->method('getUnit')
+            ->with(4)
+            ->willReturn($parsedUnitResponse->findOne(['id' => 4]));
 
         $variationEntity = $this->getVariationEntity('Pim/Variations/response.json');
 
@@ -90,22 +100,20 @@ class VariationTest extends TestCase
         $this->assertEquals(106, $wrapper->getItemId());
         $this->assertEquals(['3213213213213'], $wrapper->getBarcodes());
         $this->assertEquals(279, $wrapper->getPrice());
+        $this->assertEquals('milligram', $wrapper->getBaseUnit());
+        $this->assertEquals('1000', $wrapper->getPackageSize());
 
         $attributes = $wrapper->getAttributes();
-        $this->assertCount(4, $attributes);
+        $this->assertCount(3, $attributes);
         $this->assertEquals('cat', $attributes[0]->getKey());
         $this->assertEquals(['Armchairs & Stools'], $attributes[0]->getValues());
         $this->assertEquals('cat_url', $attributes[1]->getKey());
         $this->assertEquals(['/wohnzimmer/sessel-hocker/'], $attributes[1]->getValues());
         $this->assertEquals('Couch color', $attributes[2]->getKey());
         $this->assertEquals(['purple'], $attributes[2]->getValues());
-        $this->assertEquals('cat_id', $attributes[3]->getKey());
-        $this->assertEquals(['1'], $attributes[3]->getValues());
 
         $properties = $wrapper->getProperties();
-        $this->assertCount(1, $properties);
-        $this->assertEquals('price_id', $properties[0]->getKey());
-        $this->assertEquals(['' => '0'], $properties[0]->getAllValues());
+        $this->assertEmpty($properties);
     }
 
     public function testAttributesOverLengthLimitAreNotExported(): void
@@ -133,7 +141,7 @@ class VariationTest extends TestCase
         $wrapper->processData();
 
         $attributes = $wrapper->getAttributes();
-        $this->assertCount(2, $attributes);
+        $this->assertCount(1, $attributes);
     }
 
     public function testChildCategoriesAreProperlyBuilt(): void
@@ -157,18 +165,24 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertCount(3, $wrapper->getAttributes());
+        $this->assertCount(2, $wrapper->getAttributes());
         // Attribute "cat".
         $this->assertSame('Living Room_Armchairs & Stools', $wrapper->getAttributes()[0]->getValues()[0]);
         // Attribute "cat_url".
         $this->assertSame('/living-room/armchairs-stools/', $wrapper->getAttributes()[1]->getValues()[0]);
-        // Attribute "cat_id" for tags.
-        $this->assertSame('1', $wrapper->getAttributes()[2]->getValues()[0]);
     }
 
     public function testTagsAreProperlyProcessed(): void
     {
-        $variationEntity = $this->getVariationEntity('Pim/Variations/variation_with_tags.json');
+        $webStoreMock = $this->getMockBuilder(WebStore::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $webStoreMock->method('getStoreIdentifier')->willReturn(34185);
+        $this->registryServiceMock->method('getWebStore')->willReturn($webStoreMock);
+
+        $itemVariationResponse = $this->getMockResponse('Pim/Variations/variation_with_different_tag_clients.json');
+        $variationEntities = PimVariationsParser::parse($itemVariationResponse);
+        $variationEntity = $variationEntities->first();
 
         $wrapper = new VariationWrapper(
             $this->defaultConfig,
@@ -180,8 +194,9 @@ class VariationTest extends TestCase
 
         $this->assertCount(1, $wrapper->getAttributes());
         $this->assertSame('1', $wrapper->getAttributes()[0]->getValues()[0]);
-        $this->assertCount(1, $wrapper->getTags());
-        $this->assertSame('I am a Tag', $wrapper->getTags()[0]->getValue());
+        $this->assertCount(2, $wrapper->getTags());
+        $this->assertSame('en-tag-1', $wrapper->getTags()[0]->getValue());
+        $this->assertSame('en-tag-2', $wrapper->getTags()[1]->getValue());
     }
 
     public function characteristicsNotAvailableForSearchProvider(): array

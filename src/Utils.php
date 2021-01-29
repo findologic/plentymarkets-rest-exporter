@@ -11,7 +11,6 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\RequestOptions;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\Yaml\Yaml;
 
 class Utils
 {
@@ -64,23 +63,44 @@ class Utils
      * of the given configPath is used.
      *
      * @param string|null $shopkey
-     * @param string $configPath
      * @param GuzzleClient|null $client
      * @return Config
      */
     public static function getExportConfiguration(
         ?string $shopkey,
-        string $configPath,
         ?GuzzleClient $client = null
     ): Config {
-        $rawConfig = Yaml::parseFile($configPath);
-
-        $customerLoginUri = $rawConfig['customerLoginUri'] ?? null;
+        $customerLoginUri = static::env('CUSTOMER_LOGIN_URL');
         if ($shopkey && $customerLoginUri) {
             return static::getCustomerLoginConfiguration($customerLoginUri, $shopkey, $client ?? new GuzzleClient());
         }
 
-        return new Config($rawConfig);
+        return Config::fromEnvironment();
+    }
+
+    /**
+     * Gets a value from the environment. If that environment variable is not set or does not contain
+     * a value, such as "NULL", default may be returned.
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public static function env(string $key, $default = null)
+    {
+        if (!isset($_ENV[$key]) || (is_string($_ENV[$key]) && static::isEmpty(mb_strtolower($_ENV[$key])))) {
+            return $default;
+        }
+
+        if ($_ENV[$key] === 'true') {
+            return true;
+        }
+
+        if ($_ENV[$key] === 'false') {
+            return false;
+        }
+
+        return $_ENV[$key];
     }
 
     private static function getCustomerLoginConfiguration(

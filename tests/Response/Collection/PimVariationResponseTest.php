@@ -15,6 +15,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Image;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\SalesPrice;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Tag;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Unit;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
@@ -359,6 +360,14 @@ class PimVariationResponseTest extends TestCase
         unset($actualBaseItem['createdAt']);
         unset($actualBaseItem['updatedAt']);
         $this->assertEquals($expectedBaseItem, $actualBaseItem);
+
+        $unit = $variation->getUnit();
+        $this->assertInstanceOf(Unit::class, $unit);
+
+        $this->assertEquals($rawVariation['unit'], $unit->getData());
+        $this->assertSame(4, $unit->getUnitId());
+        $this->assertSame(321123, $unit->getUnitCombinationId());
+        $this->assertSame('1000', $unit->getContent());
     }
 
     public function testTextCharacteristicDataCanBeFetched(): void

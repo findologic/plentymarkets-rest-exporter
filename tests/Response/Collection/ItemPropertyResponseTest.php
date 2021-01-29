@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
 
