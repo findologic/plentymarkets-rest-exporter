@@ -48,7 +48,7 @@ class Registry
 
     /**
      * @param string $key
-     * @return Entity|Response|null
+     * @return mixed
      */
     public function get(string $key)
     {

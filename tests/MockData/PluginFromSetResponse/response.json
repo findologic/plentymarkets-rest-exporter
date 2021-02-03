@@ -1,0 +1,896 @@
+[
+  {
+    "id": 5,
+    "name": "IO",
+    "last_build_production": null,
+    "last_build_stage": null,
+    "created_at": "2018-04-03 12:41:59",
+    "updated_at": "2018-04-16 08:47:02",
+    "position": "0",
+    "activeProductive": true,
+    "activeStage": true,
+    "inStage": true,
+    "inProductive": true,
+    "type": "template",
+    "version": "5.0.20",
+    "description": "Basic php functions for plentymarkets shop designs",
+    "namespace": "IO",
+    "author": "plentysystems AG",
+    "keywords": [
+      "plentymarkets",
+      "plugins",
+      "layout",
+      "template"
+    ],
+    "require": [],
+    "runOnBuild": [
+      "IO\\Migrations\\ItemWishListMigration_0_0_1",
+      "IO\\Migrations\\UserDataHashTableMigration_0_0_1",
+      "IO\\Migrations\\UserDataHashTableMigration_0_0_2",
+      "IO\\Migrations\\PageNotFoundConfigMigration_0_0_1"
+    ],
+    "checkOnBuild": [],
+    "authorIcon": "",
+    "pluginIcon": "",
+    "isConnectedWithGit": true,
+    "dependencies": [],
+    "javaScriptFiles": [],
+    "containers": [],
+    "dataProviders": [],
+    "source": "git",
+    "updateInformation": {
+      "hasUpdate": false,
+      "updateVariationId": null,
+      "updateVersion": null
+    },
+    "isClosedSource": false,
+    "license": "AGPL-3.0",
+    "shortDescription": {
+      "de": "PHP-Grundfunktionen f\u00fcr plentymarkets Template-Plugins",
+      "en": "Basic PHP functions for plentymarkets template plugins"
+    },
+    "categories": [
+      "3885"
+    ],
+    "price": 0,
+    "email": "sales@plentymarkets.com",
+    "phone": "+49 561 98 681 100",
+    "marketplaceName": {
+      "de": "IO",
+      "en": "IO"
+    },
+    "subscriptionInformation": [],
+    "versionStage": "",
+    "versionProductive": "",
+    "marketplaceVariations": [],
+    "webhookUrl": "",
+    "isExternalTool": false,
+    "directDownloadLinks": [],
+    "forwardLink": "",
+    "notInstalledRequirements": [],
+    "notActiveStageRequirements": [],
+    "notActiveProductiveRequirements": [],
+    "pluginSetIds": [
+      "13"
+    ],
+    "installed": true,
+    "branch": null,
+    "commit": null,
+    "pluginSetEntries": [
+      {
+        "id": 196,
+        "pluginId": "5",
+        "pluginSetId": "13",
+        "createdAt": "2020-12-14T13:14:24+00:00",
+        "updatedAt": "2020-12-14T13:15:43+00:00",
+        "deleted_at": null,
+        "branchName": null,
+        "position": "0",
+        "commit": "7ea4b7605c760ce81de1dd527e8a421485773c0f"
+      }
+    ],
+    "repository": {
+      "id": 129,
+      "remoteUrl": "https:\/\/github.com\/plentymarkets\/plugin-io",
+      "username": "user",
+      "branch": "",
+      "webhookToken": "sdfgfhlknkl",
+      "autoFetch": "0",
+      "createdAt": "2020-05-29 13:36:09",
+      "updatedAt": "2020-05-29 13:36:09"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Ceres",
+    "last_build_production": null,
+    "last_build_stage": null,
+    "created_at": "2018-04-03 12:38:44",
+    "updated_at": "2018-04-16 08:47:02",
+    "position": "1",
+    "activeProductive": true,
+    "activeStage": true,
+    "inStage": true,
+    "inProductive": true,
+    "type": "template",
+    "version": "5.0.20",
+    "description": "This is the official Ceres plugin developed by plentymarkets. Ceres is the default template plugin for plentymarkets 7 online stores.",
+    "namespace": "Ceres",
+    "author": "plentysystems AG",
+    "keywords": [
+      "plentymarkets",
+      "plugins",
+      "layout",
+      "template",
+      "ceres"
+    ],
+    "require": {
+      "IO": "~5.0.10"
+    },
+    "runOnBuild": [
+      "Ceres\\Migrations\\WebshopSettingsMigration_0_0_1",
+      "Ceres\\Migrations\\ConfigPropertiesMigration_0_0_1",
+      "Ceres\\Migrations\\Migration_2018_07_06_001_RebuildShopBuilderHomepage",
+      "Ceres\\Wizard\\ShopWizard\\Migrations\\CreateShopWizardPreviewConfigTable",
+      "Ceres\\Wizard\\ShopWizard\\Migrations\\UpdateShopWizardPreviewTableWebstoreId"
+    ],
+    "checkOnBuild": [],
+    "authorIcon": "",
+    "pluginIcon": "",
+    "isConnectedWithGit": true,
+    "dependencies": [],
+    "javaScriptFiles": [],
+    "containers": [
+      {
+        "key": "Ceres::Template.Style",
+        "name": "Template: Style",
+        "description": "Add style to Ceres with a theme plugin."
+      },
+      {
+        "key": "Ceres::Template.StyleOverwrite",
+        "name": "Template: Override style",
+        "description": "Override the default CSS file of Ceres."
+      },
+      {
+        "key": "Ceres::Script.Loader",
+        "name": "Script loader: Register\/load JS",
+        "description": "Register scripts, events and other JS related items."
+      },
+      {
+        "key": "Ceres::Script.AfterScriptsLoaded",
+        "name": "Script loader: After scripts loaded",
+        "description": "Load scripts, events and other JS related items, e.g. Vue components, after frameworks and scripts have been initialised."
+      },
+      {
+        "key": "Ceres::PageDesign.AfterOpeningBodyTag",
+        "name": "Page Design: After opening HTML body tag",
+        "description": "Add content after the opening HTML body tag."
+      },
+      {
+        "key": "Ceres::StaticPages.CancellationRights",
+        "name": "Static Pages: Cancellation rights",
+        "description": "Add additional content on the cancellation rights page."
+      },
+      {
+        "key": "Ceres::StaticPages.CancellationForm",
+        "name": "Static Pages: Cancellation form",
+        "description": "Add additional content on the cancellation form page."
+      },
+      {
+        "key": "Ceres::StaticPages.LegalDisclosure",
+        "name": "Static Pages: Legal disclosure",
+        "description": "Add additional content on the legal disclosure page."
+      },
+      {
+        "key": "Ceres::StaticPages.PrivacyPolicy",
+        "name": "Static Pages: Privacy policy",
+        "description": "Add additional content on the privacy policy page."
+      },
+      {
+        "key": "Ceres::StaticPages.TermsAndConditions",
+        "name": "Static Pages: Terms and conditions",
+        "description": "Add additional content on the terms and conditions page."
+      },
+      {
+        "key": "Ceres::StaticPages.PageNotFound",
+        "name": "Static Pages: Page not found (deprecated)",
+        "description": "Add additional content on the 404 page."
+      },
+      {
+        "key": "Ceres::Homepage",
+        "name": "Override homepage",
+        "description": "Override the complete homepage."
+      },
+      {
+        "key": "Ceres::Homepage.Container1",
+        "name": "Homepage: Container 1 (deprecated)",
+        "description": "Replace the image slider of the homepage."
+      },
+      {
+        "key": "Ceres::Homepage.Container2",
+        "name": "Homepage: Container 2 (deprecated)",
+        "description": "Replace the upper item preview of the homepage."
+      },
+      {
+        "key": "Ceres::Homepage.Container3",
+        "name": "Homepage: Container 3 (deprecated)",
+        "description": "Replace the lower item preview of the homepage."
+      },
+      {
+        "key": "Ceres::Homepage.Container4",
+        "name": "Homepage: Container 4 (deprecated)",
+        "description": "Replace the first category preview of the homepage."
+      },
+      {
+        "key": "Ceres::Homepage.Container5",
+        "name": "Homepage: Container 5 (deprecated)",
+        "description": "Replace the second category preview of the homepage."
+      },
+      {
+        "key": "Ceres::Homepage.Container6",
+        "name": "Homepage: Container 6 (deprecated)",
+        "description": "Replace the first list of items of the homepage."
+      },
+      {
+        "key": "Ceres::Homepage.Container7",
+        "name": "Homepage: Container 7 (deprecated)",
+        "description": "Replace the third category preview of the homepage."
+      },
+      {
+        "key": "Ceres::Homepage.Container8",
+        "name": "Homepage: Container 8 (deprecated)",
+        "description": "Replace the fourth category preview of the homepage."
+      },
+      {
+        "key": "Ceres::Homepage.Container9",
+        "name": "Homepage: Container 9 (deprecated)",
+        "description": "Replace the second list of items of the homepage."
+      },
+      {
+        "key": "Ceres::Homepage.Container10",
+        "name": "Homepage: Container 10 (deprecated)",
+        "description": "Add additional content on the homepage."
+      },
+      {
+        "key": "Ceres::Homepage.PaymentMethods",
+        "name": "Homepage: Payment method container (deprecated)",
+        "description": "Add a logo of the payment method to the payment methods on the homepage."
+      },
+      {
+        "key": "Ceres::Homepage.Shipping",
+        "name": "Homepage: Shipping method container (deprecated)",
+        "description": "Add a logo of the shipping method to the shipping methods on the homepage."
+      },
+      {
+        "key": "Ceres::Homepage.Certified",
+        "name": "Homepage: Certified container (deprecated)",
+        "description": "Add a \"Certified by\" logo to the container on the homepage."
+      },
+      {
+        "key": "Ceres::Header",
+        "name": "Header: Override header",
+        "description": "Override the complete header of all pages."
+      },
+      {
+        "key": "Ceres::Header.LeftSide",
+        "name": "Header: Left header container",
+        "description": "Add content to the container on the left in the header."
+      },
+      {
+        "key": "Ceres::Footer",
+        "name": "Footer: Override footer",
+        "description": "Override the complete footer of all pages."
+      },
+      {
+        "key": "Ceres::Footer.RowOne",
+        "name": "Footer: Row 1 container (deprecated)",
+        "description": "Add content to the first row of the footer."
+      },
+      {
+        "key": "Ceres::Footer.RowTwo",
+        "name": "Footer: Row 2 container (deprecated)",
+        "description": "Add content to the second row of the footer."
+      },
+      {
+        "key": "Ceres::Footer.RowThree",
+        "name": "Footer: Row 3 container (deprecated)",
+        "description": "Add content to the third row of the footer."
+      },
+      {
+        "key": "Ceres::SingleItem.BeforePrice",
+        "name": "Single item: Before price (deprecated)",
+        "description": "Add content before the item price in the single item view."
+      },
+      {
+        "key": "Ceres::SingleItem.AfterPrice",
+        "name": "Single item: After price (deprecated)",
+        "description": "Add content after the item price in the single item view."
+      },
+      {
+        "key": "Ceres::SingleItem.BeforeAddToBasket",
+        "name": "Single item: Before \"Add to shopping cart\" button",
+        "description": "Add content before the 'Add to shopping cart' button in the single item view."
+      },
+      {
+        "key": "Ceres::SingleItem.AfterAddToBasket",
+        "name": "Single item: After \"Add to shopping cart\" button",
+        "description": "Add content after the 'Add to shopping cart' button in the single item view."
+      },
+      {
+        "key": "Ceres::SingleItem.AdditionalContentAfterAddToBasket",
+        "name": "Single item: Additional content after \"Add to shopping cart\" button (deprecated)",
+        "description": "Add additional content after the 'Add to shopping cart' button in the single item view."
+      },
+      {
+        "key": "Ceres::SingleItem.AdditionalContentAfterVAT",
+        "name": "Single item: Additional content after \"VAT\" information (deprecated)",
+        "description": "Add additional content after the 'VAT' information in the single item view."
+      },
+      {
+        "key": "Ceres::SingleItem.AddDetailTabs",
+        "name": "Single item: Add detail tabs (deprecated)",
+        "description": "Add additional tabs to the tab menu in the single item view."
+      },
+      {
+        "key": "Ceres::SingleItem.AddDetailTabsContent",
+        "name": "Single item: Add content to detail tabs (deprecated)",
+        "description": "Add content to the detail tabs in the single item view."
+      },
+      {
+        "key": "Ceres::SingleItem.ItemListContainer",
+        "name": "Single item: Container for item lists (deprecated)",
+        "description": "Add item lists in the single item view."
+      },
+      {
+        "key": "Ceres::SingleItem.FeedbackContainer",
+        "name": "Single item: Container for customer feedback (deprecated)",
+        "description": "Add customer feedback in the single item view."
+      },
+      {
+        "key": "Ceres::SingleItem.ImageCarousel",
+        "name": "Single item: Override image carousel",
+        "description": "Override the image carousel on the single item."
+      },
+      {
+        "key": "Ceres::SingleItem.AfterScriptsLoaded",
+        "name": "Single item: After scripts loaded",
+        "description": "Load scripts, events and other Javascript related items, such as Vue components, after frameworks and scripts have been initialised on the single item view."
+      },
+      {
+        "key": "Ceres::SingleItem.Styles",
+        "name": "Single item: Styles",
+        "description": "Load CSS in the head after all other styles have been loaded."
+      },
+      {
+        "key": "Ceres::BasketTotals.BeforeItemSum",
+        "name": "Shopping cart: Before \"Value of items\"",
+        "description": "Add content before the value of items in the Total column of the shopping cart."
+      },
+      {
+        "key": "Ceres::BasketTotals.AfterItemSum",
+        "name": "Shopping cart: After \"Value of items\"",
+        "description": "Add content after the value of items in the Total column of the shopping cart."
+      },
+      {
+        "key": "Ceres::BasketTotals.BeforeShippingCosts",
+        "name": "Shopping cart: Before \"Shipping\"",
+        "description": "Add content before the shipping costs in the Total column of the shopping cart."
+      },
+      {
+        "key": "Ceres::BasketTotals.AfterShippingCosts",
+        "name": "Shopping cart: After \"Shipping\"",
+        "description": "Add content after the shipping costs in the Total column of the shopping cart."
+      },
+      {
+        "key": "Ceres::BasketTotals.BeforeVat",
+        "name": "Shopping cart: Before \"VAT\"",
+        "description": "Add content before the VAT in the Total column of the shopping cart."
+      },
+      {
+        "key": "Ceres::BasketTotals.AfterVat",
+        "name": "Shopping cart: After \"VAT\"",
+        "description": "Add content after the VAT in the Total column of the shopping cart."
+      },
+      {
+        "key": "Ceres::BasketTotals.BeforeTotalSum",
+        "name": "Shopping cart: Before \"Total\"",
+        "description": "Add content before the total sum in the Total column of the shopping cart."
+      },
+      {
+        "key": "Ceres::BasketTotals.AfterTotalSum",
+        "name": "Shopping cart: After \"Total\"",
+        "description": "Add content before the total sum in the Total column of the shopping cart."
+      },
+      {
+        "key": "Ceres::BasketList.BeforeItem",
+        "name": "Shopping cart items list: Before item",
+        "description": "Add content before the item in the Items list of the shopping cart."
+      },
+      {
+        "key": "Ceres::BasketList.AfterItem",
+        "name": "Shopping cart items list: After item",
+        "description": "Add content after the item in the Items list of the shopping cart."
+      },
+      {
+        "key": "Ceres::Basket.BeforeBasketTotals",
+        "name": "Shopping cart: Before basket totals",
+        "description": "Add content before the basket totals in the shopping cart."
+      },
+      {
+        "key": "Ceres::Basket.AfterBasketTotals",
+        "name": "Shopping cart: After basket totals",
+        "description": "Add content after the basket totals in the shopping cart."
+      },
+      {
+        "key": "Ceres::Basket.BeforeCoupon",
+        "name": "Shopping cart: Before the coupon input (deprecated)",
+        "description": "Add content before the Coupon input field in the shopping cart."
+      },
+      {
+        "key": "Ceres::Basket.BeforeCheckoutButton",
+        "name": "Shopping cart: Before \"Checkout\" button (deprecated)",
+        "description": "Add content before the 'Checkout' button in the shopping cart."
+      },
+      {
+        "key": "Ceres::Basket.AfterCheckoutButton",
+        "name": "Shopping cart: After \"Checkout\" button (deprecated)",
+        "description": "Add content after the 'Checkout' button in the shopping cart."
+      },
+      {
+        "key": "Ceres::Basket.ExtendOverlayButtons",
+        "name": "Shopping cart overlay: Extend buttons",
+        "description": "Add additional content to the 'add to basket overlay' buttons."
+      },
+      {
+        "key": "Ceres::BasketPreview.BeforeBasketTotals",
+        "name": "Shopping cart preview: Before basket totals",
+        "description": "Add content before the basket totals in the shopping cart preview."
+      },
+      {
+        "key": "Ceres::BasketPreview.AfterBasketTotals",
+        "name": "Shopping cart preview: After basket totals",
+        "description": "Add content after the basket totals in the shopping cart preview."
+      },
+      {
+        "key": "Ceres::BasketPreview.BeforeCheckoutButton",
+        "name": "Shopping cart preview: Before \"Checkout\" button",
+        "description": "Add content before the 'Checkout' button in the shopping cart preview."
+      },
+      {
+        "key": "Ceres::BasketPreview.AfterCheckoutButton",
+        "name": "Shopping cart preview: After \"Checkout\" button",
+        "description": "Add content after the 'Checkout' button in the shopping cart preview."
+      },
+      {
+        "key": "Ceres::Checkout",
+        "name": "Checkout: Override checkout",
+        "description": "Override the complete checkout page.",
+        "multiple": false
+      },
+      {
+        "key": "Ceres::Checkout.AddressLists",
+        "name": "Checkout: Override address controls (deprecated)",
+        "description": "Override the invoice and delivery address controls in the checkout.",
+        "multiple": false
+      },
+      {
+        "key": "Ceres::Checkout.BillingAddress",
+        "name": "Checkout: Override invoice address control",
+        "description": "Override the invoice address control in the checkout. The containers 'Before invoice address' and 'After invoice address' will also be overridden.",
+        "multiple": false
+      },
+      {
+        "key": "Ceres::Checkout.BeforeBillingAddress",
+        "name": "Checkout: Before invoice address",
+        "description": "Add content before the invoice address control in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.AfterBillingAddress",
+        "name": "Checkout: After invoice address",
+        "description": "Add content after the invoice address control in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.ShippingAddress",
+        "name": "Checkout: Override shipping address control",
+        "description": "Override the shipping address control in the checkout. The containers 'Before shipping address' and 'After shipping address' will also be overridden.",
+        "multiple": false
+      },
+      {
+        "key": "Ceres::Checkout.BeforeShippingAddress",
+        "name": "Checkout: Before shipping address",
+        "description": "Add content before the shipping address control in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.AfterShippingAddress",
+        "name": "Checkout: After shipping address",
+        "description": "Add content after the shipping address control in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.ShippingProfileList",
+        "name": "Checkout: Override shipping method",
+        "description": "Override the list of shipping methods in the checkout. The containers 'Before shipping method' and 'After shipping method' will also be overridden."
+      },
+      {
+        "key": "Ceres::Checkout.BeforeShippingProfileList",
+        "name": "Checkout: Before shipping method",
+        "description": "Add content before the list of shipping methods in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.AfterShippingProfileList",
+        "name": "Checkout: After shipping method",
+        "description": "Add content after the list of shipping methods in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.PaymentList",
+        "name": "Checkout: Override payment method",
+        "description": "Override the list of payment methods in the checkout. The containers 'Before payment method' and 'After payment method' will also be overridden."
+      },
+      {
+        "key": "Ceres::Checkout.BeforePaymentList",
+        "name": "Checkout: Before payment method",
+        "description": "Add content before the list of payment methods in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.AfterPaymentList",
+        "name": "Checkout: After payment method",
+        "description": "Add content after the list of payment methods in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.OptIns",
+        "name": "Checkout: Opt-ins",
+        "description": "Add content to opt-in checkboxes in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.BeforeBasketTotals",
+        "name": "Checkout: Before basket totals",
+        "description": "Add content before the basket totals in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.AfterBasketTotals",
+        "name": "Checkout: After basket totals",
+        "description": "Add content after the basket totals in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.PlaceOrder",
+        "name": "Checkout: Override \"Order now\" button (deprecated)",
+        "description": "Override the 'Order now' button in the checkout. The containers 'Before Order now button' and 'After Order now button' will also be overridden."
+      },
+      {
+        "key": "Ceres::Checkout.BeforePlaceOrder",
+        "name": "Checkout: Before \"Order now\" button",
+        "description": "Add content before the 'Order now' button in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.AfterPlaceOrder",
+        "name": "Checkout: After \"Order now\" button",
+        "description": "Add content after the 'Order now' button in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.CustomAddressField",
+        "name": "Checkout: Address field container",
+        "description": "Add content, e.g. one or multiple custom address fields, at the bottom of the address form."
+      },
+      {
+        "key": "Ceres::Checkout.AfterScriptsLoaded",
+        "name": "Checkout: After scripts loaded",
+        "description": "Load scripts, events and other Javascript related items, such as Vue components, after frameworks and scripts have been initialised in the checkout."
+      },
+      {
+        "key": "Ceres::Checkout.Styles",
+        "name": "Checkout: Styles",
+        "description": "Load CSS in the head after all other styles have been loaded."
+      },
+      {
+        "key": "Ceres::Checkout.Headline",
+        "name": "Checkout: Override headline (deprecated)",
+        "description": "Override the default headline in the checkout."
+      },
+      {
+        "key": "Ceres::OrderConfirmation.Override",
+        "name": "Order confirmation: Override order confirmation (deprecated)",
+        "description": "Override the complete order confirmation page.",
+        "multiple": false
+      },
+      {
+        "key": "Ceres::OrderConfirmation.BeforeOrderDetails",
+        "name": "Order confirmation: Before order details (deprecated)",
+        "description": "Add content before the order details on the order confirmation page.",
+        "multiple": false
+      },
+      {
+        "key": "Ceres::OrderConfirmation.AdditionalShippingInformation",
+        "name": "Order confirmation: Additional shipping information",
+        "description": "Add additional shipping information to the order details on the order confirmation page."
+      },
+      {
+        "key": "Ceres::OrderConfirmation.AdditionalPaymentInformation",
+        "name": "Order confirmation: Additional payment information",
+        "description": "Add additional payment information on the order confirmation page."
+      },
+      {
+        "key": "Ceres::OrderConfirmation.GrossNetReplace",
+        "name": "Order confirmation: Override gross\/net prices",
+        "description": "Override the gross\/net prices on the order confirmation page.",
+        "multiple": false
+      },
+      {
+        "key": "Ceres::OrderConfirmation.AddContentAfterConfirmationThanks",
+        "name": "Order confirmation: Additional content after order confirmation thank you message (deprecated)",
+        "description": "Additional content after confirmation message on the order confirmation page."
+      },
+      {
+        "key": "Ceres::OrderConfirmation.AfterTotals",
+        "name": "Order confirmation: Add content after totals (deprecated)",
+        "description": "Add content after totals on the order confirmation page."
+      },
+      {
+        "key": "Ceres::OrderConfirmation.AddContentAfterOrderDetailsRow",
+        "name": "Order confirmation: Add content before 'Back to Homepage' link (deprecated)",
+        "description": "Add content before the 'Back to Homepage' link"
+      },
+      {
+        "key": "Ceres::MyAccount.OrderHistoryPaymentInformation",
+        "name": "My account: Additional payment information",
+        "description": "Add additional payment information after the order information on the My account page."
+      },
+      {
+        "key": "Ceres::MyAccount.OrderReturnHistoryItem",
+        "name": "My account: Additional order return information (deprecated)",
+        "description": "Add additional information after the order return details."
+      },
+      {
+        "key": "Ceres::CategoryItem.BeforePrices",
+        "name": "Category item list: Before prices container",
+        "description": "Add content before the prices in the category item view."
+      },
+      {
+        "key": "Ceres::CategoryItem.AfterPrices",
+        "name": "Category item list: After prices container",
+        "description": "Add content after the prices in the category item view."
+      },
+      {
+        "key": "Ceres::CategoryItem.SideNavBarBottom",
+        "name": "Category item list: Container below side navigation",
+        "description": "Add content below the side navigation bar in the category item view."
+      },
+      {
+        "key": "Ceres::Login.AdditionalContentAfterButtons",
+        "name": "Login: Container below the buttons (deprecated)",
+        "description": "Add content below the buttons in the login view."
+      },
+      {
+        "key": "Ceres::LoginOverlay.ExtendOverlayButtons",
+        "name": "Login overlay: Container in a row with the buttons",
+        "description": "Add content in the login overlay."
+      },
+      {
+        "key": "Ceres::RegistrationOverlay.ExtendOverlayButtons",
+        "name": "Registration overlay: Container in a row with the buttons",
+        "description": "Add content in the registration overlay."
+      },
+      {
+        "key": "Ceres::Search.Filter",
+        "name": "Search: Override search filters",
+        "description": "Override search filters in item lists and search results."
+      },
+      {
+        "key": "Ceres::Search.SearchBar",
+        "name": "Search: Override the search bar",
+        "description": "Override the search bar in the header."
+      }
+    ],
+    "dataProviders": [
+      {
+        "key": "Ceres\\Containers\\CeresItemListContainer1",
+        "name": "First item list",
+        "description": "Display a configurable list of items in your online store"
+      },
+      {
+        "key": "Ceres\\Containers\\CeresItemListContainer2",
+        "name": "Second item list",
+        "description": "Display a configurable list of items in your online store"
+      },
+      {
+        "key": "Ceres\\Containers\\CeresItemListContainer3",
+        "name": "Third item list",
+        "description": "Display a configurable list of items in your online store"
+      }
+    ],
+    "source": "git",
+    "updateInformation": {
+      "hasUpdate": false,
+      "updateVariationId": null,
+      "updateVersion": null
+    },
+    "isClosedSource": false,
+    "license": "AGPL-3.0",
+    "shortDescription": {
+      "de": "Das offizielle, von plentymarkets entwickelte Template-Plugin. Ceres ist das Standard-Template f\u00fcr plentymarkets 7 Webshops. ",
+      "en": "The official template plugin developed by plentymarkets. Ceres is the default template for plentymarkets 7 online stores."
+    },
+    "categories": [
+      "3885"
+    ],
+    "price": 0,
+    "email": "sales@plentymarkets.com",
+    "phone": "+49 561 98 681 100",
+    "marketplaceName": {
+      "de": "Ceres",
+      "en": "Ceres"
+    },
+    "subscriptionInformation": [],
+    "versionStage": "",
+    "versionProductive": "",
+    "marketplaceVariations": [],
+    "webhookUrl": "",
+    "isExternalTool": false,
+    "directDownloadLinks": [],
+    "forwardLink": "",
+    "notInstalledRequirements": [],
+    "notActiveStageRequirements": [],
+    "notActiveProductiveRequirements": [],
+    "pluginSetIds": [
+      "13"
+    ],
+    "installed": true,
+    "branch": null,
+    "commit": null,
+    "pluginSetEntries": [
+      {
+        "id": 197,
+        "pluginId": "4",
+        "pluginSetId": "13",
+        "createdAt": "2020-12-14T13:15:13+00:00",
+        "updatedAt": "2020-12-14T15:09:58+00:00",
+        "deleted_at": null,
+        "branchName": null,
+        "position": "1",
+        "commit": "97d417d3952251273bbbe6880118bb2a96ba7433"
+      }
+    ],
+    "repository": {
+      "id": 128,
+      "remoteUrl": "https:\/\/github.com\/plentymarkets\/plugin-ceres",
+      "username": "user",
+      "branch": "",
+      "webhookToken": "sadf5456f46465",
+      "autoFetch": "0",
+      "createdAt": "2020-05-29 13:34:18",
+      "updatedAt": "2020-05-29 13:34:18"
+    }
+  },
+  {
+    "id": 15,
+    "name": "Findologic",
+    "last_build_production": null,
+    "last_build_stage": null,
+    "created_at": "2019-03-05 11:53:09",
+    "updated_at": "2019-03-05 11:53:09",
+    "position": "2",
+    "activeProductive": true,
+    "activeStage": false,
+    "inStage": false,
+    "inProductive": false,
+    "type": "template",
+    "version": "3.3.0",
+    "description": "The official Findologic plugin for plentymarkets Ceres.",
+    "namespace": "Findologic",
+    "author": "FINDOLOGIC GmbH",
+    "keywords": [],
+    "require": {
+      "Ceres": "~5.0",
+      "IO": "~5.0"
+    },
+    "runOnBuild": [],
+    "checkOnBuild": [],
+    "authorIcon": "",
+    "pluginIcon": "",
+    "isConnectedWithGit": true,
+    "dependencies": {
+      "findologic\/http_request2": "2.3.1"
+    },
+    "javaScriptFiles": [],
+    "containers": [
+      {
+        "key": "Findologic::CategoryItem.Promotion",
+        "name": "Category item list: Add content to main container",
+        "description": "Provides content for promotion banners (search and category pages only)",
+        "multiple": false
+      },
+      {
+        "key": "Findologic::CategoryItem.SmartDidYouMean",
+        "name": "Category item list: Add alternative searchwords to the search page title",
+        "description": "Adds the Smart Did-You-Mean data right beneath the search page title",
+        "multiple": false
+      }
+    ],
+    "dataProviders": [
+      {
+        "key": "Findologic\\Containers\\SearchFilterContainer",
+        "name": "Filters",
+        "description": "Display Findologic filters",
+        "defaultLayoutContainer": "Ceres::Search.Filter"
+      },
+      {
+        "key": "Findologic\\Containers\\SearchBarContainer",
+        "name": "Search Bar",
+        "description": "Display search bar customized for Findologic",
+        "defaultLayoutContainer": "Ceres::Search.SearchBar"
+      },
+      {
+        "key": "Findologic\\Containers\\PromotionContainer",
+        "name": "Promotion",
+        "description": "Display promotion banner",
+        "defaultLayoutContainer": "Findologic::CategoryItem.Promotion"
+      },
+      {
+        "key": "Findologic\\Containers\\SmartDidYouMeanContainer",
+        "name": "Smart Did-You-Mean",
+        "description": "Display Smart Did-You-Mean info for the current search",
+        "defaultLayoutContainer": "Findologic::CategoryItem.SmartDidYouMean"
+      }
+    ],
+    "source": "git",
+    "updateInformation": {
+      "hasUpdate": false,
+      "updateVariationId": null,
+      "updateVersion": null
+    },
+    "isClosedSource": false,
+    "license": "AGPL-3.0",
+    "shortDescription": {
+      "de": "Das offizielle Findologic plugin f\u00fcr plentymarkets Ceres",
+      "en": "The official Findologic plugin for plentymarkets Ceres."
+    },
+    "categories": [
+      "4090"
+    ],
+    "price": 0,
+    "email": "plugins@findologic.com",
+    "phone": "+43 662 45 67 08",
+    "marketplaceName": {
+      "de": "Findologic - Search & Navigation Platform",
+      "en": "Findologic - Search & Navigation Platform"
+    },
+    "subscriptionInformation": [],
+    "versionStage": "",
+    "versionProductive": "",
+    "marketplaceVariations": [],
+    "webhookUrl": "",
+    "isExternalTool": false,
+    "directDownloadLinks": [],
+    "forwardLink": "",
+    "notInstalledRequirements": [],
+    "notActiveStageRequirements": [],
+    "notActiveProductiveRequirements": [],
+    "pluginSetIds": [
+      "13"
+    ],
+    "installed": true,
+    "branch": null,
+    "commit": null,
+    "pluginSetEntries": [
+      {
+        "id": 199,
+        "pluginId": "15",
+        "pluginSetId": "13",
+        "createdAt": "2021-01-27T11:19:15+00:00",
+        "updatedAt": "2021-02-02T14:25:29+00:00",
+        "deleted_at": null,
+        "branchName": "branchname",
+        "position": "2",
+        "commit": "0d5efe17a8e51b2478641631d926d1fffc25a63f"
+      }
+    ],
+    "repository": {
+      "id": 130,
+      "remoteUrl": "https:\/\/github.com\/findologic\/plugin-plentymarkets-ceres-api",
+      "username": "github-user",
+      "branch": "",
+      "webhookToken": "1231321564dfs4g6sd1g",
+      "autoFetch": "0",
+      "createdAt": "2021-01-27 11:18:50",
+      "updatedAt": "2021-01-27 11:18:50"
+    }
+  }
+]

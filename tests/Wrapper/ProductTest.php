@@ -276,6 +276,16 @@ class ProductTest extends TestCase
             ->method('getUnit')
             ->willReturn($units->first());
 
+        $this->registryServiceMock->expects($this->once())
+            ->method('getPluginConfigurations')
+            ->willReturn(
+                [
+                    'Ceres' => [
+                        'global.enableOldUrlPattern' => false
+                    ]
+                ]
+            );
+
         $this->registryServiceMock->method('getPriceId')->willReturn($expectedPriceId);
 
         $text = new Text([
@@ -351,6 +361,16 @@ class ProductTest extends TestCase
             ->willReturn(['de', 'en']);
 
         $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
+
+        $this->registryServiceMock->expects($this->once())
+            ->method('getPluginConfigurations')
+            ->willReturn(
+                [
+                    'Ceres' => [
+                        'global.enableOldUrlPattern' => false
+                    ]
+                ]
+            );
 
         $text = new Text([
             'lang' => $expectedLanguagePrefix,
@@ -621,6 +641,114 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         $this->assertEquals(['' => 1], $item->getSalesFrequency()->getValues());
+    }
+
+    public function testCallistoUrlFormatIsUsedWhenCeresConfigCouldNotBeFetched(): void
+    {
+        $expectedUrlPath = 'awesome-url-path/somewhere-in-the-store';
+
+        $this->exporterMock = $this->getExporter();
+
+        $rawVariation = $this->getMockResponse('Pim/Variations/response.json');
+        $variations = PimVariationsParser::parse($rawVariation);
+
+        $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
+        $webStores = WebStoreParser::parse($rawWebStores);
+
+        $this->storeConfigurationMock->expects($this->exactly(2))
+            ->method('getDisplayItemName')
+            ->willReturn(1);
+
+        $this->storeConfigurationMock->expects($this->once())->method('getDefaultLanguage')
+            ->willReturn('de');
+
+        $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
+        $this->registryServiceMock->expects($this->once())->method('getPluginConfigurations')->willReturn([]);
+
+        $text = new Text([
+            'lang' => 'de',
+            'name1' => 'Pretty awesome name!',
+            'name2' => 'wrong',
+            'name3' => 'wrong',
+            'shortDescription' => 'Easy, transparent, sexy',
+            'metaDescription' => 'my father gave me a small loan of a million dollar.',
+            'description' => 'That is the best item, and I am a bit longer text.',
+            'technicalData' => 'Interesting technical information.',
+            'urlPath' => $expectedUrlPath,
+            'keywords' => 'get me out',
+        ]);
+
+        $this->itemMock->expects($this->once())
+            ->method('getTexts')
+            ->willReturn([$text]);
+
+        $this->variationEntityMocks[] = $variations->first();
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertSame(
+            'https://plenty-testshop.de/' . $expectedUrlPath . '/a-0',
+            $item->getUrl()->getValues()['']
+        );
+    }
+
+    public function testCallistoUrlFormatIsUsedWhenConfiguredToDoSo(): void
+    {
+        $expectedUrlPath = 'awesome-url-path/somewhere-in-the-store';
+
+        $this->exporterMock = $this->getExporter();
+
+        $rawVariation = $this->getMockResponse('Pim/Variations/response.json');
+        $variations = PimVariationsParser::parse($rawVariation);
+
+        $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
+        $webStores = WebStoreParser::parse($rawWebStores);
+
+        $this->storeConfigurationMock->expects($this->exactly(2))
+            ->method('getDisplayItemName')
+            ->willReturn(1);
+
+        $this->storeConfigurationMock->expects($this->once())->method('getDefaultLanguage')
+            ->willReturn('de');
+
+        $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
+        $this->registryServiceMock->expects($this->once())
+            ->method('getPluginConfigurations')
+            ->willReturn(
+                [
+                    'Ceres' => [
+                        'global.enableOldUrlPattern' => true
+                    ]
+                ]
+            );
+
+        $text = new Text([
+            'lang' => 'de',
+            'name1' => 'Pretty awesome name!',
+            'name2' => 'wrong',
+            'name3' => 'wrong',
+            'shortDescription' => 'Easy, transparent, sexy',
+            'metaDescription' => 'my father gave me a small loan of a million dollar.',
+            'description' => 'That is the best item, and I am a bit longer text.',
+            'technicalData' => 'Interesting technical information.',
+            'urlPath' => $expectedUrlPath,
+            'keywords' => 'get me out',
+        ]);
+
+        $this->itemMock->expects($this->once())
+            ->method('getTexts')
+            ->willReturn([$text]);
+
+        $this->variationEntityMocks[] = $variations->first();
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertSame(
+            'https://plenty-testshop.de/' . $expectedUrlPath . '/a-0',
+            $item->getUrl()->getValues()['']
+        );
     }
 
     private function getProduct(): Product

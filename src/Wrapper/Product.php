@@ -311,6 +311,17 @@ class Product
 
     private function buildProductUrl(string $urlPath): string
     {
+        if ($this->shouldUseCallistoUrl()) {
+            return sprintf(
+                '%s://%s%s/%s/a-%s',
+                $this->config->getProtocol(),
+                $this->config->getDomain(),
+                $this->getLanguageUrlPrefix(),
+                trim($urlPath, '/'),
+                $this->productEntity->getId()
+            );
+        }
+
         return sprintf(
             '%s://%s%s/%s_%s_%s',
             $this->config->getProtocol(),
@@ -320,6 +331,17 @@ class Product
             $this->productEntity->getId(),
             $this->productEntity->getMainVariationId()
         );
+    }
+
+    private function shouldUseCallistoUrl(): bool
+    {
+        $configs = $this->registryService->getPluginConfigurations();
+
+        if (!isset($configs['Ceres']['global.enableOldUrlPattern'])) {
+            return true;
+        }
+
+        return filter_var($configs['Ceres']['global.enableOldUrlPattern'], FILTER_VALIDATE_BOOLEAN);
     }
 
     /**

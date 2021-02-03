@@ -141,7 +141,17 @@ class RegistryServiceTest extends TestCase
         $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
         $expectedGroups = PropertyGroupParser::parse($propertyGroupResponse);
 
-        $this->clientMock->expects($this->exactly(12))
+        $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
+
+        $pluginConfigurationResponse = $this->getMockResponse('PluginConfigurationResponse/sample.json');
+        $expectedPluginConfigurations = [
+            'Findologic' => [
+                'config.config2' => 'non default value',
+                'config.config1' => 'default value'
+            ]
+        ];
+
+        $this->clientMock->expects($this->exactly(14))
             ->method('send')
             ->willReturnOnConsecutiveCalls(
                 $webStoreResponse,
@@ -156,11 +166,13 @@ class RegistryServiceTest extends TestCase
                 $unitResponse,
                 $propertySelectionResponse,
                 $propertyGroupResponse,
+                $pluginSetPluginsResponse,
+                $pluginConfigurationResponse
             );
 
         $registryKey = md5($this->defaultConfig->getDomain());
 
-        $this->registryMock->expects($this->exactly(17))
+        $this->registryMock->expects($this->exactly(18))
             ->method('set')
             ->withConsecutive(
                 [$registryKey . '_allWebStores', $parsedWebStoreResponse],
@@ -190,12 +202,14 @@ class RegistryServiceTest extends TestCase
                 [$registryKey . '_unit_1', $expectedUnits->first()],
                 [$registryKey . '_propertySelections', $expectedPropertySelections],
                 [$registryKey . '_propertyGroup_1', $expectedGroups->first()],
-                [$registryKey . '_categories', $expectedCategories],
+                [$registryKey . '_pluginConfigurations', $expectedPluginConfigurations],
+                [$registryKey . '_categories', $expectedPluginConfigurations],
             );
 
         $this->registryMock->expects($this->any())
             ->method('get')
             ->willReturnOnConsecutiveCalls(
+                $expectedWebStore,
                 $expectedWebStore,
                 $expectedWebStore,
                 new CategoryResponse(1, 1, true, []),
@@ -247,6 +261,69 @@ class RegistryServiceTest extends TestCase
         $this->defaultConfig->setMultiShopId($expectedMultiShopId);
 
         $this->registryService->warmUp();
+    }
+
+    public function testMissingPluginConfigurationPermissionsAreLoggedAndAllowTheExportToContinue(): void
+    {
+        $expectedWebStore = new WebStore([
+            'id' => 0,
+            'type' => 'plentymarkets',
+            'storeIdentifier' => 12345,
+            'name' => 'Test Store',
+            'pluginSetId' => 44,
+            'configuration' => []
+        ]);
+
+        $this->registryMock->method('get')->willReturnOnConsecutiveCalls($expectedWebStore);
+
+        $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
+
+        $this->clientMock->method('send')->will(
+            $this->onConsecutiveCalls(
+                $pluginSetPluginsResponse,
+                $this->throwException(new \Exception('The REST client does not have access rights for method asdasd')),
+            )
+        );
+
+        $this->loggerMock->expects($this->once())->method('error')->with(
+            'Required permissions \'Plugins > Configurations > Show\' have not been granted. ' .
+            'Product-URLs will be exported in Callisto format!'
+        );
+
+        $registryKey = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())->method('set')->with($registryKey . '_pluginConfigurations', []);
+
+        $this->registryService->fetchPluginConfigurations();
+    }
+
+    public function testUnknownPluginConfigurationFetchErrorsAreNotHandled(): void
+    {
+        $expectedWebStore = new WebStore([
+            'id' => 0,
+            'type' => 'plentymarkets',
+            'storeIdentifier' => 12345,
+            'name' => 'Test Store',
+            'pluginSetId' => 44,
+            'configuration' => []
+        ]);
+
+        $this->registryMock->method('get')->willReturnOnConsecutiveCalls($expectedWebStore);
+
+        $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
+
+        $exception = new \Exception('Some unknown error message');
+
+        $this->clientMock->method('send')->will(
+            $this->onConsecutiveCalls(
+                $pluginSetPluginsResponse,
+                $this->throwException($exception),
+            )
+        );
+
+        $this->expectExceptionObject($exception);
+
+        $this->registryService->fetchPluginConfigurations();
     }
 
     public function testGetWebStoreIsProperlyFetchedFromRegistry(): void
@@ -488,5 +565,17 @@ class RegistryServiceTest extends TestCase
             ->willReturn($standard);
 
         $this->assertEquals($standard, $this->registryService->getStandardVat());
+    }
+
+    public function testGetPluginConfigurations(): void
+    {
+        $configData = ['plugin' => ['config.key' => 'config.value']];
+        $key = md5($this->defaultConfig->getDomain());
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_pluginConfigurations')
+            ->willReturn($configData);
+
+        $this->assertEquals($configData, $this->registryService->getPluginConfigurations());
     }
 }
