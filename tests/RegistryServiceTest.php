@@ -265,6 +265,34 @@ class RegistryServiceTest extends TestCase
 
     public function testMissingPluginConfigurationPermissionsAreLoggedAndAllowTheExportToContinue(): void
     {
+        $webStoreResponseBody = [
+            [
+                'id' => 0,
+                'type' => 'plentymarkets',
+                'storeIdentifier' => 12345,
+                'name' => 'German Test Store',
+                'pluginSetId' => 46,
+                'configuration' => []
+            ]
+        ];
+        $webStoreResponse = new Response(200, [], json_encode($webStoreResponseBody));
+        $categoryResponseBody = json_decode(
+            $this->getMockResponse('CategoryResponse/one.json')->getBody()->__toString(),
+            true
+        );
+        $categoryResponse = new Response(200, [], json_encode($categoryResponseBody));
+        $vatResponse = $this->getMockResponse('VatResponse/one.json');
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/rrp_normal_and_default.json');
+        $attributeResponse = $this->getMockResponse('AttributeResponse/one.json');
+        $manufacturerResponse = $this->getMockResponse('ManufacturerResponse/one.json');
+        $propertyResponse = $this->getMockResponse('PropertyResponse/one.json');
+        $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/one.json');
+        $unitResponse = $this->getMockResponse('UnitResponse/one.json');
+        $propertySelectionResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
+        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
+        $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
+
         $expectedWebStore = new WebStore([
             'id' => 0,
             'type' => 'plentymarkets',
@@ -274,12 +302,26 @@ class RegistryServiceTest extends TestCase
             'configuration' => []
         ]);
 
-        $this->registryMock->method('get')->willReturnOnConsecutiveCalls($expectedWebStore);
-
-        $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
+        $this->registryMock->method('get')->willReturnOnConsecutiveCalls(
+            $expectedWebStore,
+            $expectedWebStore,
+            $expectedWebStore
+        );
 
         $this->clientMock->method('send')->will(
             $this->onConsecutiveCalls(
+                $webStoreResponse,
+                $categoryResponse,
+                $vatResponse,
+                $standardVatResponse,
+                $salesPriceResponse,
+                $attributeResponse,
+                $manufacturerResponse,
+                $propertyResponse,
+                $itemPropertyResponse,
+                $unitResponse,
+                $propertySelectionResponse,
+                $propertyGroupResponse,
                 $pluginSetPluginsResponse,
                 $this->throwException(new \Exception('The REST client does not have access rights for method asdasd')),
             )
@@ -292,13 +334,41 @@ class RegistryServiceTest extends TestCase
 
         $registryKey = md5($this->defaultConfig->getDomain());
 
-        $this->registryMock->expects($this->once())->method('set')->with($registryKey . '_pluginConfigurations', []);
+        $this->registryMock->expects($this->at(20))->method('set')->with($registryKey . '_pluginConfigurations', []);
 
-        $this->registryService->fetchPluginConfigurations();
+        $this->registryService->warmUp();
     }
 
     public function testUnknownPluginConfigurationFetchErrorsAreNotHandled(): void
     {
+        $webStoreResponseBody = [
+            [
+                'id' => 0,
+                'type' => 'plentymarkets',
+                'storeIdentifier' => 12345,
+                'name' => 'German Test Store',
+                'pluginSetId' => 46,
+                'configuration' => []
+            ]
+        ];
+        $webStoreResponse = new Response(200, [], json_encode($webStoreResponseBody));
+        $categoryResponseBody = json_decode(
+            $this->getMockResponse('CategoryResponse/one.json')->getBody()->__toString(),
+            true
+        );
+        $categoryResponse = new Response(200, [], json_encode($categoryResponseBody));
+        $vatResponse = $this->getMockResponse('VatResponse/one.json');
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/rrp_normal_and_default.json');
+        $attributeResponse = $this->getMockResponse('AttributeResponse/one.json');
+        $manufacturerResponse = $this->getMockResponse('ManufacturerResponse/one.json');
+        $propertyResponse = $this->getMockResponse('PropertyResponse/one.json');
+        $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/one.json');
+        $unitResponse = $this->getMockResponse('UnitResponse/one.json');
+        $propertySelectionResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
+        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
+        $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
+
         $expectedWebStore = new WebStore([
             'id' => 0,
             'type' => 'plentymarkets',
@@ -308,14 +378,28 @@ class RegistryServiceTest extends TestCase
             'configuration' => []
         ]);
 
-        $this->registryMock->method('get')->willReturnOnConsecutiveCalls($expectedWebStore);
-
-        $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
+        $this->registryMock->method('get')->willReturnOnConsecutiveCalls(
+            $expectedWebStore,
+            $expectedWebStore,
+            $expectedWebStore
+        );
 
         $exception = new \Exception('Some unknown error message');
 
         $this->clientMock->method('send')->will(
             $this->onConsecutiveCalls(
+                $webStoreResponse,
+                $categoryResponse,
+                $vatResponse,
+                $standardVatResponse,
+                $salesPriceResponse,
+                $attributeResponse,
+                $manufacturerResponse,
+                $propertyResponse,
+                $itemPropertyResponse,
+                $unitResponse,
+                $propertySelectionResponse,
+                $propertyGroupResponse,
                 $pluginSetPluginsResponse,
                 $this->throwException($exception),
             )
@@ -323,7 +407,7 @@ class RegistryServiceTest extends TestCase
 
         $this->expectExceptionObject($exception);
 
-        $this->registryService->fetchPluginConfigurations();
+        $this->registryService->warmUp();
     }
 
     public function testGetWebStoreIsProperlyFetchedFromRegistry(): void

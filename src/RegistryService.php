@@ -228,53 +228,6 @@ class RegistryService
         return $this->get('pluginConfigurations');
     }
 
-    public function fetchPluginConfigurations(): void
-    {
-        $allConfigurations = [];
-
-        $pluginSetId = $this->get('webStore')->getPluginSetId();
-
-        $pluginSetRequest = new PluginFromSetRequest($pluginSetId);
-        $response = $this->client->send($pluginSetRequest);
-
-        $plugins = PluginsFromSetParser::parse($response);
-
-        foreach ($plugins->all() as $plugin) {
-            $pluginConfigurationRequest = new PluginConfigurationRequest($plugin->getId(), $pluginSetId);
-
-            try {
-                $response = $this->client->send($pluginConfigurationRequest);
-            } catch (Exception $e) {
-                if (str_starts_with($e->getMessage(), 'The REST client does not have access rights for method')) {
-                    $this->customerLogger->error(
-                        'Required permissions \'Plugins > Configurations > Show\' have not been granted. ' .
-                        'Product-URLs will be exported in Callisto format!'
-                    );
-
-                    $this->set('pluginConfigurations', $allConfigurations);
-
-                    return;
-                }
-
-                throw $e;
-            }
-
-            $configurations = PluginConfigurationParser::parse($response);
-
-            foreach ($configurations->all() as $configuration) {
-                $value = $configuration->getValue();
-
-                if ($value === null) {
-                    $value = $configuration->getDefault();
-                }
-
-                $allConfigurations[$plugin->getName()][$configuration->getKey()] = $value;
-            }
-        }
-
-        $this->set('pluginConfigurations', $allConfigurations);
-    }
-
     private function fetchWebStores(): void
     {
         $webStoreRequest = new WebStoreRequest();
@@ -449,6 +402,53 @@ class RegistryService
                 $this->set('propertyGroup_' . $propertyGroup->getId(), $propertyGroup);
             }
         }
+    }
+
+    private function fetchPluginConfigurations(): void
+    {
+        $allConfigurations = [];
+
+        $pluginSetId = $this->getWebStore()->getPluginSetId();
+
+        $pluginSetRequest = new PluginFromSetRequest($pluginSetId);
+        $response = $this->client->send($pluginSetRequest);
+
+        $plugins = PluginsFromSetParser::parse($response);
+
+        foreach ($plugins->all() as $plugin) {
+            $pluginConfigurationRequest = new PluginConfigurationRequest($plugin->getId(), $pluginSetId);
+
+            try {
+                $response = $this->client->send($pluginConfigurationRequest);
+            } catch (Exception $e) {
+                if (str_starts_with($e->getMessage(), 'The REST client does not have access rights for method')) {
+                    $this->customerLogger->error(
+                        'Required permissions \'Plugins > Configurations > Show\' have not been granted. ' .
+                        'Product-URLs will be exported in Callisto format!'
+                    );
+
+                    $this->set('pluginConfigurations', $allConfigurations);
+
+                    return;
+                }
+
+                throw $e;
+            }
+
+            $configurations = PluginConfigurationParser::parse($response);
+
+            foreach ($configurations->all() as $configuration) {
+                $value = $configuration->getValue();
+
+                if ($value === null) {
+                    $value = $configuration->getDefault();
+                }
+
+                $allConfigurations[$plugin->getName()][$configuration->getKey()] = $value;
+            }
+        }
+
+        $this->set('pluginConfigurations', $allConfigurations);
     }
 
     private function set(string $key, $data)
