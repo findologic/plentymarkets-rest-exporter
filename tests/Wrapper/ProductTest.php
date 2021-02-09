@@ -185,7 +185,7 @@ class ProductTest extends TestCase
         );
     }
 
-    public function testProductWithAllVariationsMatchingConfigurationAvailabilityAreExportedIfConfiguredToDoSo()
+    public function testProductWithAllVariationsMatchingConfigurationAvailabilityAreExportedIfConfigured()
     {
         $this->exporterMock = $this->getExporter();
 
@@ -278,11 +278,10 @@ class ProductTest extends TestCase
 
         $this->registryServiceMock->expects($this->once())
             ->method('getPluginConfigurations')
+            ->with('Ceres')
             ->willReturn(
                 [
-                    'Ceres' => [
-                        'global.enableOldUrlPattern' => false
-                    ]
+                    'global.enableOldUrlPattern' => false
                 ]
             );
 
@@ -364,13 +363,8 @@ class ProductTest extends TestCase
 
         $this->registryServiceMock->expects($this->once())
             ->method('getPluginConfigurations')
-            ->willReturn(
-                [
-                    'Ceres' => [
-                        'global.enableOldUrlPattern' => false
-                    ]
-                ]
-            );
+            ->with('Ceres')
+            ->willReturn(['global.enableOldUrlPattern' => false]);
 
         $text = new Text([
             'lang' => $expectedLanguagePrefix,
@@ -693,7 +687,7 @@ class ProductTest extends TestCase
         );
     }
 
-    public function testCallistoUrlFormatIsUsedWhenConfiguredToDoSo(): void
+    public function testCallistoUrlFormatIsUsedWhenConfigured(): void
     {
         $expectedUrlPath = 'awesome-url-path/somewhere-in-the-store';
 
@@ -715,13 +709,8 @@ class ProductTest extends TestCase
         $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
         $this->registryServiceMock->expects($this->once())
             ->method('getPluginConfigurations')
-            ->willReturn(
-                [
-                    'Ceres' => [
-                        'global.enableOldUrlPattern' => true
-                    ]
-                ]
-            );
+            ->with('Ceres')
+            ->willReturn(['global.enableOldUrlPattern' => true]);
 
         $text = new Text([
             'lang' => 'de',

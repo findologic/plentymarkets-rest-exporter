@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
-use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
@@ -47,8 +47,6 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\VatConfiguration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use GuzzleHttp\Client as GuzzleClient;
 use Psr\Log\LoggerInterface;
-
-use function PHPUnit\Framework\isNull;
 
 class RegistryService
 {
@@ -223,9 +221,15 @@ class RegistryService
         return $defaultRrpId ? $defaultRrpId->getId() : null;
     }
 
-    public function getPluginConfigurations(): array
+    public function getPluginConfigurations($pluginName = null): array
     {
-        return $this->get('pluginConfigurations');
+        $configs = $this->get('pluginConfigurations');
+
+        if (!$pluginName) {
+            return $configs;
+        }
+
+        return $configs[$pluginName] ?? [];
     }
 
     private function fetchWebStores(): void
@@ -420,19 +424,15 @@ class RegistryService
 
             try {
                 $response = $this->client->send($pluginConfigurationRequest);
-            } catch (Exception $e) {
-                if (str_starts_with($e->getMessage(), 'The REST client does not have access rights for method')) {
-                    $this->customerLogger->error(
-                        'Required permissions \'Plugins > Configurations > Show\' have not been granted. ' .
-                        'Product-URLs will be exported in Callisto format!'
-                    );
+            } catch (PermissionException $e) {
+                $this->customerLogger->error(
+                    'Required permissions \'Plugins > Configurations > Show\' have not been granted. ' .
+                    'Product-URLs will be exported in Callisto format!'
+                );
 
-                    $this->set('pluginConfigurations', $allConfigurations);
+                $this->set('pluginConfigurations', $allConfigurations);
 
-                    return;
-                }
-
-                throw $e;
+                return;
             }
 
             $configurations = PluginConfigurationParser::parse($response);

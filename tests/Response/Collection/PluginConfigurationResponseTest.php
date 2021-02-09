@@ -12,11 +12,7 @@ class PluginConfigurationResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private $response;
-
-    private $pluginConfigurationResponse;
-
-    public function testResponseSearchFunctions(): void
+    public function testMethodsForEntitySearchInResponse(): void
     {
         $response = $this->getMockResponse('PluginConfigurationResponse/findologic.json');
         $pluginConfigurationResponse = PluginConfigurationParser::parse($response);

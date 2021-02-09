@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PluginsFromSetParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PluginFromSetResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Plugin\Container;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Plugin\DataProvider;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Plugin\PluginSetEntry;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
 
@@ -15,8 +17,14 @@ class PluginFromSetResponseTest extends TestCase
 {
     use ResponseHelper;
 
+    /**
+     * @var \GuzzleHttp\Psr7\Response
+     */
     private $response;
 
+    /**
+     * @var PluginFromSetResponse|Response
+     */
     private $pluginResponse;
 
     public function setUp(): void
@@ -25,7 +33,7 @@ class PluginFromSetResponseTest extends TestCase
         $this->pluginResponse = PluginsFromSetParser::parse($this->response);
     }
 
-    public function testResponseSearchFunctions(): void
+    public function testMethodsForEntitySearchInResponse(): void
     {
         $plugin = $this->pluginResponse->first();
         $this->assertEquals(5, $plugin->getId());
@@ -205,9 +213,7 @@ class PluginFromSetResponseTest extends TestCase
                 'de' => 'Das offizielle Findologic plugin für plentymarkets Ceres',
                 'en' => 'The official Findologic plugin for plentymarkets Ceres.',
             ],
-            'categories' => [
-                0 => '4090',
-            ],
+            'categories' => ['4090'],
             'price' => 0,
             'email' => 'plugins@findologic.com',
             'phone' => '+43 662 45 67 08',
@@ -232,9 +238,7 @@ class PluginFromSetResponseTest extends TestCase
             ],
             'notActiveProductiveRequirements' => [
             ],
-            'pluginSetIds' => [
-                0 => '13',
-            ],
+            'pluginSetIds' => ['13'],
             'installed' => true,
             'branch' => null,
             'commit' => null,
@@ -254,43 +258,43 @@ class PluginFromSetResponseTest extends TestCase
                 'updatedAt' => '2021-01-27 11:18:50',
             ],
             'containers' => [
-                0 => [
+                [
                     'key' => 'Findologic::CategoryItem.Promotion',
                     'name' => 'Category item list: Add content to main container',
                     'description' => 'Provides content for promotion banners (search and category pages only)',
                     'multiple' => false,
                 ],
-                1 => [
+                [
                     'key' => 'Findologic::CategoryItem.SmartDidYouMean',
                     'name' => 'Category item list: Add alternative searchwords to the search page title',
                     'description' => 'Adds the Smart Did-You-Mean data right beneath the search page title',
                     'multiple' => false,
-                ],
+                ]
             ],
             'dataProviders' => [
-                0 => [
+                [
                     'key' => 'Findologic\\Containers\\SearchFilterContainer',
                     'name' => 'Filters',
                     'description' => 'Display Findologic filters',
                 ],
-                1 => [
+                [
                     'key' => 'Findologic\\Containers\\SearchBarContainer',
                     'name' => 'Search Bar',
                     'description' => 'Display search bar customized for Findologic',
                 ],
-                2 => [
+                [
                     'key' => 'Findologic\\Containers\\PromotionContainer',
                     'name' => 'Promotion',
                     'description' => 'Display promotion banner',
                 ],
-                3 => [
+                [
                     'key' => 'Findologic\\Containers\\SmartDidYouMeanContainer',
                     'name' => 'Smart Did-You-Mean',
                     'description' => 'Display Smart Did-You-Mean info for the current search',
                 ],
             ],
             'pluginSetEntries' => [
-                0 => [
+                [
                     'id' => 199,
                     'pluginId' => 15,
                     'pluginSetId' => 13,

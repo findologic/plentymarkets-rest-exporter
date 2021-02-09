@@ -39,6 +39,9 @@ class PluginConfigurationResponse extends Response implements CollectionInterfac
         return $this->getFirstEntity($this->configurations);
     }
 
+    /**
+     * @return PluginConfiguration[]
+     */
     public function all(): array
     {
         return $this->getConfigurations();

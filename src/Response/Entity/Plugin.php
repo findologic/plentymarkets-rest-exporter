@@ -226,31 +226,14 @@ class Plugin extends Entity
         $this->installed = $this->getBoolProperty('installed', $data);
         $this->branch = $this->getStringProperty('branch', $data);
         $this->commit = $this->getStringProperty('commit', $data);
-
-        if (!empty($data['containers'])) {
-            foreach ($data['containers'] as $container) {
-                $this->containers[] = new Container($container);
-            }
-        }
-
-        if (!empty($data['dataProviders'])) {
-            foreach ($data['dataProviders'] as $dataProvider) {
-                $this->dataProviders[] = new DataProvider($dataProvider);
-            }
-        }
-
+        $this->containers = $this->getEntities(Container::class, 'containers', $data);
+        $this->dataProviders = $this->getEntities(DataProvider::class, 'dataProviders', $data);
         if (isset($data['updateInformation'])) {
-            $this->updateInformation = new UpdateInformation($data['updateInformation']);
+            $this->updateInformation = $this->getEntity(UpdateInformation::class, $data['updateInformation']);
         }
-
-        if (!empty($data['pluginSetEntries'])) {
-            foreach ($data['pluginSetEntries'] as $pluginSetEntry) {
-                $this->pluginSetEntries[] = new PluginSetEntry($pluginSetEntry);
-            }
-        }
-
+        $this->pluginSetEntries = $this->getEntities(PluginSetEntry::class, 'pluginSetEntries', $data);
         if (isset($data['repository'])) {
-            $this->repository = new Repository($data['repository']);
+            $this->repository = $this->getEntity(Repository::class, $data['repository']);
         }
     }
 
@@ -464,9 +447,6 @@ class Plugin extends Entity
         return $this->dependencies;
     }
 
-    /**
-     * @return array
-     */
     public function getJavaScriptFiles(): array
     {
         return $this->javaScriptFiles;
@@ -549,9 +529,6 @@ class Plugin extends Entity
         return $this->marketplaceName;
     }
 
-    /**
-     * @return array
-     */
     public function getSubscriptionInformation(): array
     {
         return $this->subscriptionInformation;
@@ -567,9 +544,6 @@ class Plugin extends Entity
         return $this->versionProductive;
     }
 
-    /**
-     * @return array
-     */
     public function getMarketplaceVariations(): array
     {
         return $this->marketplaceVariations;
@@ -585,9 +559,6 @@ class Plugin extends Entity
         return $this->isExternalTool;
     }
 
-    /**
-     * @return array
-     */
     public function getDirectDownloadLinks(): array
     {
         return $this->directDownloadLinks;
@@ -598,25 +569,16 @@ class Plugin extends Entity
         return $this->forwardLink;
     }
 
-    /**
-     * @return array
-     */
     public function getNotInstalledRequirements(): array
     {
         return $this->notInstalledRequirements;
     }
 
-    /**
-     * @return array
-     */
     public function getNotActiveStageRequirements(): array
     {
         return $this->notActiveStageRequirements;
     }
 
-    /**
-     * @return array
-     */
     public function getNotActiveProductiveRequirements(): array
     {
         return $this->notActiveProductiveRequirements;

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 
+use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
@@ -308,6 +310,8 @@ class RegistryServiceTest extends TestCase
             $expectedWebStore
         );
 
+        $expectedException = new PermissionException('The REST client does not have access rights for method asdasd');
+
         $this->clientMock->method('send')->will(
             $this->onConsecutiveCalls(
                 $webStoreResponse,
@@ -323,7 +327,7 @@ class RegistryServiceTest extends TestCase
                 $propertySelectionResponse,
                 $propertyGroupResponse,
                 $pluginSetPluginsResponse,
-                $this->throwException(new \Exception('The REST client does not have access rights for method asdasd')),
+                $this->throwException($expectedException),
             )
         );
 
@@ -339,7 +343,7 @@ class RegistryServiceTest extends TestCase
         $this->registryService->warmUp();
     }
 
-    public function testUnknownPluginConfigurationFetchErrorsAreNotHandled(): void
+    public function testExceptionsUnrelatedToPermissionsAreNotHandledWhenFetchingPluginConfigs(): void
     {
         $webStoreResponseBody = [
             [
@@ -384,7 +388,7 @@ class RegistryServiceTest extends TestCase
             $expectedWebStore
         );
 
-        $exception = new \Exception('Some unknown error message');
+        $exception = new Exception('Some unknown error message');
 
         $this->clientMock->method('send')->will(
             $this->onConsecutiveCalls(

@@ -335,13 +335,13 @@ class Product
 
     private function shouldUseCallistoUrl(): bool
     {
-        $configs = $this->registryService->getPluginConfigurations();
+        $config = $this->registryService->getPluginConfigurations('Ceres');
 
-        if (!isset($configs['Ceres']['global.enableOldUrlPattern'])) {
+        if (!isset($config['global.enableOldUrlPattern'])) {
             return true;
         }
 
-        return filter_var($configs['Ceres']['global.enableOldUrlPattern'], FILTER_VALIDATE_BOOLEAN);
+        return filter_var($config['global.enableOldUrlPattern'], FILTER_VALIDATE_BOOLEAN);
     }
 
     /**

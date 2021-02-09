@@ -39,6 +39,9 @@ class PluginFromSetResponse extends Response implements CollectionInterface
         return $this->getFirstEntity($this->plugins);
     }
 
+    /**
+     * @return Plugin[]
+     */
     public function all(): array
     {
         return $this->getPlugins();
