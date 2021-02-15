@@ -1,0 +1,30 @@
+[
+  {
+    "id": 461,
+    "key": "config.config1",
+    "value": null,
+    "plugin_id": 44,
+    "pluginSetEntryId": "197",
+    "updated_at": "2021-02-05 15:40:58",
+    "label": "Config.config1",
+    "type": "inputText",
+    "possibleValues": [],
+    "default": "default value",
+    "tab": null,
+    "scss": false
+  },
+  {
+    "id": 462,
+    "key": "config.config2",
+    "value": "non default value",
+    "plugin_id": 44,
+    "pluginSetEntryId": "197",
+    "updated_at": "2021-02-05 15:40:58",
+    "label": "Config.config2",
+    "type": "inputText",
+    "possibleValues": [],
+    "default": "default value 2",
+    "tab": null,
+    "scss": false
+  }
+]

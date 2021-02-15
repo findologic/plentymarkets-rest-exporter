@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PluginConfigurationParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PluginsFromSetParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
@@ -20,6 +23,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\AttributeRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemPropertyRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ManufacturerRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\PluginConfigurationRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\PluginFromSetRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertyGroupRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertyRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertySelectionRequest;
@@ -89,6 +94,7 @@ class RegistryService
         $this->fetchUnits();
         $this->fetchPropertySelections();
         $this->fetchPropertyGroups();
+        $this->fetchPluginConfigurations();
     }
 
     public function getWebStore(): WebStore
@@ -213,6 +219,17 @@ class RegistryService
         }
 
         return $defaultRrpId ? $defaultRrpId->getId() : null;
+    }
+
+    public function getPluginConfigurations($pluginName = null): array
+    {
+        $configs = $this->get('pluginConfigurations');
+
+        if (!$pluginName) {
+            return $configs;
+        }
+
+        return $configs[$pluginName] ?? [];
     }
 
     private function fetchWebStores(): void
@@ -389,6 +406,49 @@ class RegistryService
                 $this->set('propertyGroup_' . $propertyGroup->getId(), $propertyGroup);
             }
         }
+    }
+
+    private function fetchPluginConfigurations(): void
+    {
+        $allConfigurations = [];
+
+        $pluginSetId = $this->getWebStore()->getPluginSetId();
+
+        $pluginSetRequest = new PluginFromSetRequest($pluginSetId);
+        $response = $this->client->send($pluginSetRequest);
+
+        $plugins = PluginsFromSetParser::parse($response);
+
+        foreach ($plugins->all() as $plugin) {
+            $pluginConfigurationRequest = new PluginConfigurationRequest($plugin->getId(), $pluginSetId);
+
+            try {
+                $response = $this->client->send($pluginConfigurationRequest);
+            } catch (PermissionException $e) {
+                $this->customerLogger->error(
+                    'Required permissions \'Plugins > Configurations > Show\' have not been granted. ' .
+                    'Product-URLs will be exported in Callisto format!'
+                );
+
+                $this->set('pluginConfigurations', $allConfigurations);
+
+                return;
+            }
+
+            $configurations = PluginConfigurationParser::parse($response);
+
+            foreach ($configurations->all() as $configuration) {
+                $value = $configuration->getValue();
+
+                if ($value === null) {
+                    $value = $configuration->getDefault();
+                }
+
+                $allConfigurations[$plugin->getName()][$configuration->getKey()] = $value;
+            }
+        }
+
+        $this->set('pluginConfigurations', $allConfigurations);
     }
 
     private function set(string $key, $data)

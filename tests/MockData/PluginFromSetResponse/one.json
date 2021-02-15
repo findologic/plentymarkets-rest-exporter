@@ -1,0 +1,136 @@
+[
+  {
+    "id": 15,
+    "name": "Findologic",
+    "last_build_production": null,
+    "last_build_stage": null,
+    "created_at": "2019-03-05 11:53:09",
+    "updated_at": "2019-03-05 11:53:09",
+    "position": "2",
+    "activeProductive": true,
+    "activeStage": false,
+    "inStage": false,
+    "inProductive": false,
+    "type": "template",
+    "version": "3.3.0",
+    "description": "The official Findologic plugin for plentymarkets Ceres.",
+    "namespace": "Findologic",
+    "author": "FINDOLOGIC GmbH",
+    "keywords": [],
+    "require": {
+      "Ceres": "~5.0",
+      "IO": "~5.0"
+    },
+    "runOnBuild": [],
+    "checkOnBuild": [],
+    "authorIcon": "",
+    "pluginIcon": "",
+    "isConnectedWithGit": true,
+    "dependencies": {
+      "findologic\/http_request2": "2.3.1"
+    },
+    "javaScriptFiles": [],
+    "containers": [
+      {
+        "key": "Findologic::CategoryItem.Promotion",
+        "name": "Category item list: Add content to main container",
+        "description": "Provides content for promotion banners (search and category pages only)",
+        "multiple": false
+      },
+      {
+        "key": "Findologic::CategoryItem.SmartDidYouMean",
+        "name": "Category item list: Add alternative searchwords to the search page title",
+        "description": "Adds the Smart Did-You-Mean data right beneath the search page title",
+        "multiple": false
+      }
+    ],
+    "dataProviders": [
+      {
+        "key": "Findologic\\Containers\\SearchFilterContainer",
+        "name": "Filters",
+        "description": "Display Findologic filters",
+        "defaultLayoutContainer": "Ceres::Search.Filter"
+      },
+      {
+        "key": "Findologic\\Containers\\SearchBarContainer",
+        "name": "Search Bar",
+        "description": "Display search bar customized for Findologic",
+        "defaultLayoutContainer": "Ceres::Search.SearchBar"
+      },
+      {
+        "key": "Findologic\\Containers\\PromotionContainer",
+        "name": "Promotion",
+        "description": "Display promotion banner",
+        "defaultLayoutContainer": "Findologic::CategoryItem.Promotion"
+      },
+      {
+        "key": "Findologic\\Containers\\SmartDidYouMeanContainer",
+        "name": "Smart Did-You-Mean",
+        "description": "Display Smart Did-You-Mean info for the current search",
+        "defaultLayoutContainer": "Findologic::CategoryItem.SmartDidYouMean"
+      }
+    ],
+    "source": "git",
+    "updateInformation": {
+      "hasUpdate": false,
+      "updateVariationId": null,
+      "updateVersion": null
+    },
+    "isClosedSource": false,
+    "license": "AGPL-3.0",
+    "shortDescription": {
+      "de": "Das offizielle Findologic plugin f\u00fcr plentymarkets Ceres",
+      "en": "The official Findologic plugin for plentymarkets Ceres."
+    },
+    "categories": [
+      "4090"
+    ],
+    "price": 0,
+    "email": "plugins@findologic.com",
+    "phone": "+43 662 45 67 08",
+    "marketplaceName": {
+      "de": "Findologic - Search & Navigation Platform",
+      "en": "Findologic - Search & Navigation Platform"
+    },
+    "subscriptionInformation": [],
+    "versionStage": "",
+    "versionProductive": "",
+    "marketplaceVariations": [],
+    "webhookUrl": "",
+    "isExternalTool": false,
+    "directDownloadLinks": [],
+    "forwardLink": "",
+    "notInstalledRequirements": [],
+    "notActiveStageRequirements": [],
+    "notActiveProductiveRequirements": [],
+    "pluginSetIds": [
+      "13"
+    ],
+    "installed": true,
+    "branch": null,
+    "commit": null,
+    "pluginSetEntries": [
+      {
+        "id": 199,
+        "pluginId": "15",
+        "pluginSetId": "13",
+        "createdAt": "2021-01-27T11:19:15+00:00",
+        "updatedAt": "2021-02-02T14:25:29+00:00",
+        "deleted_at": null,
+        "branchName": "branchname",
+        "position": "2",
+        "commit": "0d5efe17a8e51b2478641631d926d1fffc25a63f"
+      }
+    ],
+    "repository": {
+      "id": 130,
+      "remoteUrl": "https:\/\/github.com\/findologic\/plugin-plentymarkets-ceres-api",
+      "username": "github-user",
+      "branch": "",
+      "webhookToken": "1231321564dfs4g6sd1g",
+      "autoFetch": "0",
+      "createdAt": "2021-01-27 11:18:50",
+      "updatedAt": "2021-01-27 11:18:50"
+    }
+  }
+]

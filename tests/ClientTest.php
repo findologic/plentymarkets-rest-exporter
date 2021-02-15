@@ -11,6 +11,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
@@ -94,7 +95,7 @@ class ClientTest extends TestCase
             'response with status code 403' => [
                 'request' => new CategoryRequest(1234),
                 'response' => new GuzzleResponse(403, [], 'OOF you are not authorized bro...'),
-                'expectedException' => CustomerException::class,
+                'expectedException' => PermissionException::class,
                 'expectedExceptionMessage' => sprintf(
                     'The REST client does not have access rights for method with URI "%s"',
                     $requestUri

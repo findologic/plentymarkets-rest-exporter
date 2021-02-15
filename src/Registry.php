@@ -33,14 +33,14 @@ class Registry
 
     /**
      * @param string $key
-     * @param Entity|Response $response
+     * @param mixed $value
      * @return $this
      */
-    public function set(string $key, $response): self
+    public function set(string $key, $value): self
     {
         /** @var CacheItem $item */
         $item = $this->cache->getItem($key);
-        $item->set(serialize($response));
+        $item->set(serialize($value));
         $this->cache->save($item);
 
         return $this;
@@ -48,7 +48,7 @@ class Registry
 
     /**
      * @param string $key
-     * @return Entity|Response|null
+     * @return mixed
      */
     public function get(string $key)
     {
