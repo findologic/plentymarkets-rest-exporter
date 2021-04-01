@@ -25,7 +25,7 @@ XML this could be multiple files.
 
 ## Requirements
 
-* PHP >= 7.3
+* PHP >= 7.4
 * PHP JSON extension
 * Composer
 
