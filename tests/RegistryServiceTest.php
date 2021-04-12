@@ -336,10 +336,6 @@ class RegistryServiceTest extends TestCase
             'Product-URLs will be exported in Callisto format!'
         );
 
-        $registryKey = md5($this->defaultConfig->getDomain());
-
-        $this->registryMock->expects($this->at(20))->method('set')->with($registryKey . '_pluginConfigurations', []);
-
         $this->registryService->warmUp();
     }
 
@@ -659,11 +655,12 @@ class RegistryServiceTest extends TestCase
     {
         $configData = ['plugin' => ['config.key' => 'config.value']];
         $key = md5($this->defaultConfig->getDomain());
-        $this->registryMock->expects($this->once())
+        $this->registryMock->expects($this->exactly(2))
             ->method('get')
             ->with($key . '_pluginConfigurations')
             ->willReturn($configData);
 
+        $this->assertEquals($configData['plugin'], $this->registryService->getPluginConfigurations('plugin'));
         $this->assertEquals($configData, $this->registryService->getPluginConfigurations());
     }
 }
