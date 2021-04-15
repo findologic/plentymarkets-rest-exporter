@@ -55,6 +55,7 @@ class ConfigTest extends TestCase
         $expectedAvailabilityId = null;
         $expectedPriceId = 1;
         $expectedRrpId = 2;
+        $expectedUnavailableVariations = false;
 
         $customerLoginResponse = [
             '1234' => [
@@ -65,10 +66,14 @@ class ConfigTest extends TestCase
                 'export_username' => $expectedUsername,
                 'export_password' => $expectedPassword,
                 'language' => $expectedLanguage,
-                'multishop_id' => $expectedMultiShopId,
-                'availability_id' => $expectedAvailabilityId,
-                'price_id' => $expectedPriceId,
-                'rrp_id' => $expectedRrpId
+                'plentymarkets' => [
+                    'multishop_id' => $expectedMultiShopId,
+                    'availability_id' => $expectedAvailabilityId,
+                    'price_id' => $expectedPriceId,
+                    'rrp_id' => $expectedRrpId,
+                    'exporter' => 'REST',
+                    'exportUnavailableVariations' => $expectedUnavailableVariations
+                ],
             ]
         ];
 
@@ -81,5 +86,6 @@ class ConfigTest extends TestCase
         $this->assertSame($expectedAvailabilityId, $config->getAvailabilityId());
         $this->assertSame($expectedPriceId, $config->getPriceId());
         $this->assertSame($expectedRrpId, $config->getRrpId());
+        $this->assertSame($expectedUnavailableVariations, $config->isExportUnavailableVariations());
     }
 }

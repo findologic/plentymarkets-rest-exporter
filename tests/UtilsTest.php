@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 
+use Exception;
+use FINDOLOGIC\Export\Helpers\DataHelper;
+use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\DirectoryAware;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Yaml\Yaml;
 
 class UtilsTest extends TestCase
 {
     use ResponseHelper;
+    use DirectoryAware;
 
     private const TEMP_PATH = '/tmp/rest-export';
     private const CONFIG_PATH = self::TEMP_PATH . '/config.yml';
@@ -26,7 +28,7 @@ class UtilsTest extends TestCase
 
     public function setUp(): void
     {
-        mkdir(self::TEMP_PATH, 0777, true);
+        $this->createDirectories([self::TEMP_PATH]);
 
         $this->clientMock = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
@@ -103,18 +105,12 @@ class UtilsTest extends TestCase
 
         return [
             'config has no customerLoginUri set' => [
-                'rawConfig' => $this->getDefaultRawConfig([
-                    'domain' => $expectedDomain,
-                    'customerLoginUri' => null,
-                ]),
+                'customerLoginUri' => null,
                 'shopkey' => self::VALID_SHOPKEY,
                 'expectedDomain' => $expectedDomain,
             ],
             'config has customerLoginUri set, but no shopkey provided' => [
-                'rawConfig' => $this->getDefaultRawConfig([
-                    'domain' => $expectedDomain,
-                    'customerLoginUri' => 'https://customer-login.com',
-                ]),
+                'customerLoginUri' => 'https://customer-login.com',
                 'shopkey' => null,
                 'expectedDomain' => $expectedDomain,
             ],
@@ -125,17 +121,16 @@ class UtilsTest extends TestCase
      * @dataProvider configDoesNotCallCustomerLoginProvider
      */
     public function testCustomerLoginIsNotCalledIfConfigDoesNotAllowIt(
-        array $rawConfig,
+        ?string $customerLoginUrl,
         ?string $shopkey,
         string $expectedDomain
     ): void {
-        file_put_contents(self::CONFIG_PATH, Yaml::dump($rawConfig));
+        $_ENV['CUSTOMER_LOGIN_URL'] = $customerLoginUrl;
 
         $this->clientMock->expects($this->never())->method('get');
 
         $config = Utils::getExportConfiguration(
             $shopkey,
-            self::CONFIG_PATH,
             $this->clientMock
         );
 
@@ -146,10 +141,7 @@ class UtilsTest extends TestCase
     {
         return [
             'config has customerLoginUri and shopkey set' => [
-                'rawConfig' => $this->getDefaultRawConfig([
-                    'domain' => 'https://that-should-not-be-used.com',
-                    'customerLoginUri' => 'https://customer-login.com',
-                ]),
+                'customerLoginUrl' => 'https://customer-login.com',
                 'shopkey' => self::VALID_SHOPKEY,
                 'expectedDomain' => 'blubbergurken.io',
             ],
@@ -159,12 +151,37 @@ class UtilsTest extends TestCase
     /**
      * @dataProvider configCallsCustomerLoginProvider
      */
-    public function testCustomerLoginIsCalledIfConfigDoesAllowIt(
-        array $rawConfig,
+    public function testCustomerLoginIsCalledIfConfigDoesAllowsItAndFailsWhenResponseIsInvalid(
+        ?string $customerLoginUrl,
         ?string $shopkey,
         string $expectedDomain
     ): void {
-        file_put_contents(self::CONFIG_PATH, Yaml::dump($rawConfig));
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Something went wrong while tying to fetch the importer data');
+
+        $_ENV['CUSTOMER_LOGIN_URL'] = $customerLoginUrl;
+
+        $this->clientMock->expects($this->once())
+            ->method('get')
+            ->willReturn($this->getMockResponse('CustomerLoginResponse/invalid_response.json'));
+
+        $config = Utils::getExportConfiguration(
+            $shopkey,
+            $this->clientMock
+        );
+
+        $this->assertSame($expectedDomain, $config->getDomain());
+    }
+
+    /**
+     * @dataProvider configCallsCustomerLoginProvider
+     */
+    public function testCustomerLoginIsCalledIfConfigDoesAllowsIt(
+        ?string $customerLoginUrl,
+        ?string $shopkey,
+        string $expectedDomain
+    ): void {
+        $_ENV['CUSTOMER_LOGIN_URL'] = $customerLoginUrl;
 
         $this->clientMock->expects($this->once())
             ->method('get')
@@ -172,28 +189,53 @@ class UtilsTest extends TestCase
 
         $config = Utils::getExportConfiguration(
             $shopkey,
-            self::CONFIG_PATH,
             $this->clientMock
         );
 
         $this->assertSame($expectedDomain, $config->getDomain());
     }
 
-    private function getDefaultRawConfig(array $overrides = []): array
+    public function isEmptyDataProvider(): array
     {
-        $config = [
-            'username' => 'Findologic',
-            'password' => 'verySecure12',
-            'domain' => 'findologic.plentymarkets-cloud02.com',
-            'multiShopId' => 0,
-            'availabilityId' => null,
-            'priceId' => 1,
-            'rrpId' => 2,
-            'language' => 'DE',
-            'debug' => false,
-            'customerLoginUri' => null,
+        return [
+            'non-empty string is considered not empty' => ['asdf', false],
+            'non-zero number is considered not empty' => [1, false],
+            'true is considered empty' => [true, true],
+            'false is considered empty' => [false, true],
+            'zero is considered empty' => [0, true],
+            'null is considered empty' => [null, true],
+            'null as string is considered empty' => ['null', true],
+            'empty string is considered empty' => ['', true],
+            'all whitespace string is considered empty' => ['       ', true],
+            'string above character limit is considered empty' => [
+                str_repeat('0', DataHelper::ATTRIBUTE_CHARACTER_LIMIT + 1),
+                true
+            ],
+            'string exactly at character is not considered empty' => [
+                str_repeat('0', DataHelper::ATTRIBUTE_CHARACTER_LIMIT),
+                false
+            ]
         ];
+    }
 
-        return array_merge($config, $overrides);
+    /**
+     * @dataProvider isEmptyDataProvider
+     */
+    public function testIsEmpty($value, bool $expected): void
+    {
+        $this->assertSame($expected, Utils::isEmpty($value));
+    }
+
+    public function testEnvBooleanStringsValuesAreCastedIntoBooleanValues(): void
+    {
+        $_ENV['TRUE_VALUE'] = 'true';
+        $_ENV['FALSE_VALUE'] = 'false';
+
+        $this->assertTrue(Utils::env('TRUE_VALUE'));
+        $this->assertFalse(Utils::env('FALSE_VALUE'));
+
+        // Reset test, so nothing is left from this test, when running a new test.
+        unset($_ENV['TRUE_VALUE']);
+        unset($_ENV['FALSE_VALUE']);
     }
 }

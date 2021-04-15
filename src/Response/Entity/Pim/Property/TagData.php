@@ -45,7 +45,7 @@ class TagData extends Entity
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'tagName' => $this->name,
             'color' => $this->color,
             'names' => $this->names,
             'clients' => $this->clients,

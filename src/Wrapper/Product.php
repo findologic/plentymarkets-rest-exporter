@@ -11,6 +11,7 @@ use FINDOLOGIC\Export\Data\Attribute;
 use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Ordernumber;
+use FINDOLOGIC\Export\Data\Property;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
@@ -88,6 +89,9 @@ class Product
         }
 
         $variationCount = $this->processVariations();
+        if ($variationCount === 0 && $this->config->isExportUnavailableVariations()) {
+            $variationCount = $this->processVariations(false);
+        }
         if ($variationCount === 0) {
             $this->reason = 'All assigned variations are not exportable (inactive, no longer available, etc.)';
 
@@ -96,10 +100,18 @@ class Product
 
         $this->setTexts();
 
-        $this->item->addSalesFrequency(0);
         $this->item->addDateAdded(new DateTime($this->productEntity->getCreatedAt()));
         $this->addManufacturer();
         $this->addFreeTextFields();
+
+        $variationIdProperty = new Property('variation_id');
+        $variationIdProperty->addValue((string)$this->productEntity->getMainVariationId());
+        $this->item->addProperty($variationIdProperty);
+
+        $priceId = $this->registryService->getPriceId();
+        $priceIdProperty = new Property('price_id');
+        $priceIdProperty->addValue((string)$priceId);
+        $this->item->addProperty($priceIdProperty);
 
         return $this->item;
     }
@@ -148,15 +160,19 @@ class Product
         }
     }
 
-    protected function processVariations(): int
+    protected function processVariations(bool $checkAvailability = true): int
     {
         $hasImage = false;
         $variationsProcessed = 0;
         $prices = [];
         $insteadPrices = [];
         $ordernumbers = [];
+        $highestPosition = 0;
+        $baseUnit = null;
+        $packageSize = null;
+
         foreach ($this->variationEntities as $variationEntity) {
-            if (!$this->shouldExportVariation($variationEntity)) {
+            if (!$this->shouldExportVariation($variationEntity, $checkAvailability)) {
                 continue;
             }
 
@@ -176,9 +192,19 @@ class Product
                 $this->item->addKeyword($tag);
             }
 
+            if (!$packageSize) {
+                $packageSize = $variation->getPackageSize();
+            }
+
+            if (!$baseUnit) {
+                $baseUnit = $variation->getBaseUnit();
+            }
+
+            $position = $variation->getPosition();
             if ($variation->isMain() || !$this->item->getSort()->getValues()) {
                 $this->item->addSort($variation->getPosition() ?? 0);
             }
+            $highestPosition = $position > $highestPosition ? $position : $highestPosition;
 
             $ordernumbers = array_merge($ordernumbers, $this->getVariationOrdernumbers($variation));
 
@@ -206,15 +232,29 @@ class Product
         }
 
         $ordernumbers = array_unique($ordernumbers);
-
         foreach ($ordernumbers as $ordernumber) {
             $this->addOrdernumber($ordernumber);
+        }
+
+        $salesFrequency = $this->storeConfiguration->getItemSortByMonthlySales() ? $highestPosition : 0;
+        $this->item->addSalesFrequency($salesFrequency);
+
+        if ($baseUnit) {
+            $baseUnitProperty = new Property('base_unit');
+            $baseUnitProperty->addValue((string)$baseUnit);
+            $this->item->addProperty($baseUnitProperty);
+        }
+
+        if ($packageSize) {
+            $packageSizeProperty = new Property('package_size');
+            $packageSizeProperty->addValue((string)$packageSize);
+            $this->item->addProperty($packageSizeProperty);
         }
 
         return $variationsProcessed;
     }
 
-    protected function shouldExportVariation(PimVariation $variation): bool
+    protected function shouldExportVariation(PimVariation $variation, bool $checkAvailability = true): bool
     {
         if (!$variation->getBase()->isActive()) {
             return false;
@@ -230,7 +270,7 @@ class Product
             return false;
         }
 
-        if ($this->config->getAvailabilityId() !== null) {
+        if ($checkAvailability && $this->config->getAvailabilityId() !== null) {
             if ($variation->getBase()->getAvailability() === $this->config->getAvailabilityId()) {
                 return false;
             }
@@ -271,14 +311,37 @@ class Product
 
     private function buildProductUrl(string $urlPath): string
     {
+        if ($this->shouldUseCallistoUrl()) {
+            return sprintf(
+                '%s://%s%s/%s/a-%s',
+                $this->config->getProtocol(),
+                $this->config->getDomain(),
+                $this->getLanguageUrlPrefix(),
+                trim($urlPath, '/'),
+                $this->productEntity->getId()
+            );
+        }
+
         return sprintf(
-            '%s://%s%s/%s/a-%s',
+            '%s://%s%s/%s_%s_%s',
             $this->config->getProtocol(),
             $this->config->getDomain(),
             $this->getLanguageUrlPrefix(),
             trim($urlPath, '/'),
-            $this->productEntity->getId()
+            $this->productEntity->getId(),
+            $this->productEntity->getMainVariationId()
         );
+    }
+
+    private function shouldUseCallistoUrl(): bool
+    {
+        $config = $this->registryService->getPluginConfigurations('Ceres');
+
+        if (!isset($config['global.enableOldUrlPattern'])) {
+            return true;
+        }
+
+        return filter_var($config['global.enableOldUrlPattern'], FILTER_VALIDATE_BOOLEAN);
     }
 
     /**

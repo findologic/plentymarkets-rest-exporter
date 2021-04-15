@@ -1,0 +1,66 @@
+[
+  {
+    "id": 459,
+    "key": "shopkey",
+    "value": "de: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nen: BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "plugin_id": 15,
+    "pluginSetEntryId": "199",
+    "updated_at": "2021-01-27 11:31:46",
+    "label": "Config.shopkeyLabel",
+    "type": "inputTextArea",
+    "possibleValues": [],
+    "default": null,
+    "tab": null,
+    "scss": false
+  },
+  {
+    "id": 460,
+    "key": "nav_enabled",
+    "value": "1",
+    "plugin_id": 15,
+    "pluginSetEntryId": "199",
+    "updated_at": "2021-01-27 11:31:46",
+    "label": "Config.navEnabledLabel",
+    "type": "selectBox",
+    "possibleValues": [],
+    "default": "1",
+    "tab": null,
+    "scss": false
+  },
+  {
+    "id": null,
+    "key": "filters_styling_css_enabled",
+    "value": null,
+    "plugin_id": 15,
+    "label": "Config.filtersStylingCSSEnabledLabel",
+    "type": "selectBox",
+    "possibleValues": [],
+    "default": "1",
+    "tab": null,
+    "scss": false
+  },
+  {
+    "id": null,
+    "key": "load_no_ui_slider_styles_enabled",
+    "value": null,
+    "plugin_id": 15,
+    "label": "Config.loadNoUiSliderStylesEnabledLabel",
+    "type": "selectBox",
+    "possibleValues": [],
+    "default": "1",
+    "tab": null,
+    "scss": false
+  },
+  {
+    "id": null,
+    "key": "filters_per_row",
+    "value": null,
+    "plugin_id": 15,
+    "label": "Config.filtersStylingFilterPerRowLabel",
+    "type": "selectBox",
+    "possibleValues": [],
+    "default": "4",
+    "tab": null,
+    "scss": false
+  }
+]

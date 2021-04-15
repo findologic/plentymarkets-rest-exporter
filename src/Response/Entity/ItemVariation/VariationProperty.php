@@ -167,18 +167,4 @@ class VariationProperty extends Entity
     {
         return $this->property;
     }
-
-    public function getPropertyName(string $lang): ?string
-    {
-        $name = $this->getProperty()->getBackendName();
-
-        $names = $this->getNames();
-        if (!empty($names[strtoupper($lang)])) {
-            // @codeCoverageIgnoreStart
-            $name = $names[strtoupper($lang)];
-            // @codeCoverageIgnoreEnd
-        }
-
-        return $name;
-    }
 }

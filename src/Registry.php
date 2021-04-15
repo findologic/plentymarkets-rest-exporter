@@ -15,7 +15,7 @@ use Symfony\Component\Cache\CacheItem;
  */
 class Registry
 {
-    public const CACHE_DIR = __DIR__ . '/../cache/';
+    public const CACHE_DIR = __DIR__ . '/../var/cache/';
 
     private const CACHE_LIFETIME = 60 * 60 * 24;
 
@@ -24,19 +24,23 @@ class Registry
 
     public function __construct(?AbstractAdapter $cache = null)
     {
-        $this->cache = $cache ?? new FilesystemAdapter('', self::CACHE_LIFETIME, self::CACHE_DIR);
+        $this->cache = $cache ?? new FilesystemAdapter(
+            '',
+            self::CACHE_LIFETIME,
+            Utils::env('CACHE_DIR', self::CACHE_DIR)
+        );
     }
 
     /**
      * @param string $key
-     * @param Entity|Response $response
+     * @param mixed $value
      * @return $this
      */
-    public function set(string $key, $response): self
+    public function set(string $key, $value): self
     {
         /** @var CacheItem $item */
         $item = $this->cache->getItem($key);
-        $item->set(serialize($response));
+        $item->set(serialize($value));
         $this->cache->save($item);
 
         return $this;
@@ -44,7 +48,7 @@ class Registry
 
     /**
      * @param string $key
-     * @return Entity|Response|null
+     * @return mixed
      */
     public function get(string $key)
     {

@@ -4,33 +4,29 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 
+use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
-use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\VatConfiguration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use GuzzleHttp\Psr7\Response;
-use InvalidArgumentException;
 use Log4Php\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -147,7 +143,17 @@ class RegistryServiceTest extends TestCase
         $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
         $expectedGroups = PropertyGroupParser::parse($propertyGroupResponse);
 
-        $this->clientMock->expects($this->exactly(12))
+        $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
+
+        $pluginConfigurationResponse = $this->getMockResponse('PluginConfigurationResponse/sample.json');
+        $expectedPluginConfigurations = [
+            'Findologic' => [
+                'config.config2' => 'non default value',
+                'config.config1' => 'default value'
+            ]
+        ];
+
+        $this->clientMock->expects($this->exactly(14))
             ->method('send')
             ->willReturnOnConsecutiveCalls(
                 $webStoreResponse,
@@ -162,11 +168,13 @@ class RegistryServiceTest extends TestCase
                 $unitResponse,
                 $propertySelectionResponse,
                 $propertyGroupResponse,
+                $pluginSetPluginsResponse,
+                $pluginConfigurationResponse
             );
 
         $registryKey = md5($this->defaultConfig->getDomain());
 
-        $this->registryMock->expects($this->exactly(17))
+        $this->registryMock->expects($this->exactly(18))
             ->method('set')
             ->withConsecutive(
                 [$registryKey . '_allWebStores', $parsedWebStoreResponse],
@@ -196,12 +204,14 @@ class RegistryServiceTest extends TestCase
                 [$registryKey . '_unit_1', $expectedUnits->first()],
                 [$registryKey . '_propertySelections', $expectedPropertySelections],
                 [$registryKey . '_propertyGroup_1', $expectedGroups->first()],
-                [$registryKey . '_categories', $expectedCategories],
+                [$registryKey . '_pluginConfigurations', $expectedPluginConfigurations],
+                [$registryKey . '_categories', $expectedPluginConfigurations],
             );
 
         $this->registryMock->expects($this->any())
             ->method('get')
             ->willReturnOnConsecutiveCalls(
+                $expectedWebStore,
                 $expectedWebStore,
                 $expectedWebStore,
                 new CategoryResponse(1, 1, true, []),
@@ -251,6 +261,151 @@ class RegistryServiceTest extends TestCase
             ->willReturnOnConsecutiveCalls($webStoreResponse);
 
         $this->defaultConfig->setMultiShopId($expectedMultiShopId);
+
+        $this->registryService->warmUp();
+    }
+
+    public function testMissingPluginConfigurationPermissionsAreLoggedAndAllowTheExportToContinue(): void
+    {
+        $webStoreResponseBody = [
+            [
+                'id' => 0,
+                'type' => 'plentymarkets',
+                'storeIdentifier' => 12345,
+                'name' => 'German Test Store',
+                'pluginSetId' => 46,
+                'configuration' => []
+            ]
+        ];
+        $webStoreResponse = new Response(200, [], json_encode($webStoreResponseBody));
+        $categoryResponseBody = json_decode(
+            $this->getMockResponse('CategoryResponse/one.json')->getBody()->__toString(),
+            true
+        );
+        $categoryResponse = new Response(200, [], json_encode($categoryResponseBody));
+        $vatResponse = $this->getMockResponse('VatResponse/one.json');
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/rrp_normal_and_default.json');
+        $attributeResponse = $this->getMockResponse('AttributeResponse/one.json');
+        $manufacturerResponse = $this->getMockResponse('ManufacturerResponse/one.json');
+        $propertyResponse = $this->getMockResponse('PropertyResponse/one.json');
+        $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/one.json');
+        $unitResponse = $this->getMockResponse('UnitResponse/one.json');
+        $propertySelectionResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
+        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
+        $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
+
+        $expectedWebStore = new WebStore([
+            'id' => 0,
+            'type' => 'plentymarkets',
+            'storeIdentifier' => 12345,
+            'name' => 'Test Store',
+            'pluginSetId' => 44,
+            'configuration' => []
+        ]);
+
+        $this->registryMock->method('get')->willReturnOnConsecutiveCalls(
+            $expectedWebStore,
+            $expectedWebStore,
+            $expectedWebStore
+        );
+
+        $expectedException = new PermissionException('The REST client does not have access rights for method asdasd');
+
+        $this->clientMock->method('send')->will(
+            $this->onConsecutiveCalls(
+                $webStoreResponse,
+                $categoryResponse,
+                $vatResponse,
+                $standardVatResponse,
+                $salesPriceResponse,
+                $attributeResponse,
+                $manufacturerResponse,
+                $propertyResponse,
+                $itemPropertyResponse,
+                $unitResponse,
+                $propertySelectionResponse,
+                $propertyGroupResponse,
+                $pluginSetPluginsResponse,
+                $this->throwException($expectedException),
+            )
+        );
+
+        $this->loggerMock->expects($this->once())->method('error')->with(
+            'Required permissions \'Plugins > Configurations > Show\' have not been granted. ' .
+            'Product-URLs will be exported in Callisto format!'
+        );
+
+        $this->registryService->warmUp();
+    }
+
+    public function testExceptionsUnrelatedToPermissionsAreNotHandledWhenFetchingPluginConfigs(): void
+    {
+        $webStoreResponseBody = [
+            [
+                'id' => 0,
+                'type' => 'plentymarkets',
+                'storeIdentifier' => 12345,
+                'name' => 'German Test Store',
+                'pluginSetId' => 46,
+                'configuration' => []
+            ]
+        ];
+        $webStoreResponse = new Response(200, [], json_encode($webStoreResponseBody));
+        $categoryResponseBody = json_decode(
+            $this->getMockResponse('CategoryResponse/one.json')->getBody()->__toString(),
+            true
+        );
+        $categoryResponse = new Response(200, [], json_encode($categoryResponseBody));
+        $vatResponse = $this->getMockResponse('VatResponse/one.json');
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/rrp_normal_and_default.json');
+        $attributeResponse = $this->getMockResponse('AttributeResponse/one.json');
+        $manufacturerResponse = $this->getMockResponse('ManufacturerResponse/one.json');
+        $propertyResponse = $this->getMockResponse('PropertyResponse/one.json');
+        $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/one.json');
+        $unitResponse = $this->getMockResponse('UnitResponse/one.json');
+        $propertySelectionResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
+        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
+        $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
+
+        $expectedWebStore = new WebStore([
+            'id' => 0,
+            'type' => 'plentymarkets',
+            'storeIdentifier' => 12345,
+            'name' => 'Test Store',
+            'pluginSetId' => 44,
+            'configuration' => []
+        ]);
+
+        $this->registryMock->method('get')->willReturnOnConsecutiveCalls(
+            $expectedWebStore,
+            $expectedWebStore,
+            $expectedWebStore
+        );
+
+        $exception = new Exception('Some unknown error message');
+
+        $this->clientMock->method('send')->will(
+            $this->onConsecutiveCalls(
+                $webStoreResponse,
+                $categoryResponse,
+                $vatResponse,
+                $standardVatResponse,
+                $salesPriceResponse,
+                $attributeResponse,
+                $manufacturerResponse,
+                $propertyResponse,
+                $itemPropertyResponse,
+                $unitResponse,
+                $propertySelectionResponse,
+                $propertyGroupResponse,
+                $pluginSetPluginsResponse,
+                $this->throwException($exception),
+            )
+        );
+
+        $this->expectExceptionObject($exception);
 
         $this->registryService->warmUp();
     }
@@ -458,5 +613,54 @@ class RegistryServiceTest extends TestCase
             ->willReturn($expected);
 
         $this->assertEquals($expected->getId(), $this->registryService->getRrpId());
+    }
+
+    public function testGetRrpIdIsFetchedFromConfigIfSet(): void
+    {
+        $rawResponse = $this->getMockResponse('SalesPriceResponse/response.json');
+        $parsed = SalesPriceParser::parse($rawResponse);
+        $default = $parsed->findOne([
+            'type' => 'rrp'
+        ]);
+
+        $expectedRrpId = 69;
+
+        $this->defaultConfig->setRrpId($expectedRrpId);
+
+        $key = md5($this->defaultConfig->getDomain());
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_defaultRrpId')
+            ->willReturn($default);
+
+        $this->assertEquals($expectedRrpId, $this->registryService->getRrpId());
+    }
+
+    public function testGetStandardVat(): void
+    {
+        $rawResponse = $this->getMockResponse('VatResponse/response.json');
+        $parsed = VatParser::parse($rawResponse);
+        $standard = $parsed->first();
+
+        $key = md5($this->defaultConfig->getDomain());
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_standardVat')
+            ->willReturn($standard);
+
+        $this->assertEquals($standard, $this->registryService->getStandardVat());
+    }
+
+    public function testGetPluginConfigurations(): void
+    {
+        $configData = ['plugin' => ['config.key' => 'config.value']];
+        $key = md5($this->defaultConfig->getDomain());
+        $this->registryMock->expects($this->exactly(2))
+            ->method('get')
+            ->with($key . '_pluginConfigurations')
+            ->willReturn($configData);
+
+        $this->assertEquals($configData['plugin'], $this->registryService->getPluginConfigurations('plugin'));
+        $this->assertEquals($configData, $this->registryService->getPluginConfigurations());
     }
 }

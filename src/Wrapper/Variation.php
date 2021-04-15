@@ -14,6 +14,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage\Availability;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Tag;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 
@@ -76,14 +77,17 @@ class Variation
     /** @var Keyword[] */
     protected $tags = [];
 
-    /** @var int|null */
-    protected $salesRank;
-
     /** @var Image */
     protected $image;
 
     /** @var float */
     protected $vatRate;
+
+    /** @var string|null */
+    protected $baseUnit;
+
+    /** @var string|null */
+    protected $packageSize;
 
     public function __construct(
         Config $config,
@@ -111,6 +115,7 @@ class Variation
         $this->processCharacteristics();
         $this->processProperties();
         $this->processVatRate();
+        $this->processUnits();
     }
 
     public function isMain(): bool
@@ -198,14 +203,6 @@ class Variation
         return $this->tags;
     }
 
-    public function getSalesRank(): ?int
-    {
-        // @codeCoverageIgnoreStart
-        // TODO: test when becomes relevant
-        return $this->salesRank;
-        // @codeCoverageIgnoreEnd
-    }
-
     public function getImage(): ?Image
     {
         return $this->image;
@@ -214,6 +211,16 @@ class Variation
     public function getVatRate(): ?float
     {
         return $this->vatRate;
+    }
+
+    public function getBaseUnit(): ?string
+    {
+        return $this->baseUnit;
+    }
+
+    public function getPackageSize(): ?string
+    {
+        return $this->packageSize;
     }
 
     private function processIdentifiers(): void
@@ -275,12 +282,9 @@ class Variation
 
     private function processPrices(): void
     {
-        $priceId = $this->registryService->getPriceId();
         $insteadPriceId = $this->registryService->getRrpId();
 
-        $priceIdProperty = new Property('price_id');
-        $priceIdProperty->addValue((string)$priceId);
-        $this->properties[] = $priceIdProperty;
+        $priceId = $this->registryService->getPriceId();
 
         foreach ($this->variationEntity->getSalesPrices() as $variationSalesPrice) {
             $price = $variationSalesPrice->getPrice();
@@ -335,9 +339,14 @@ class Variation
     private function processTags(): void
     {
         $tags = $this->variationEntity->getTags();
+        $storeId = $this->registryService->getWebStore()->getStoreIdentifier();
 
         $tagIds = [];
         foreach ($tags as $tag) {
+            if (!$this->shouldProcessTag($tag, $storeId)) {
+                continue;
+            }
+
             $tagIds[] = $tag->getId();
 
             $tagName = $tag->getTagData()->getName();
@@ -356,6 +365,21 @@ class Variation
         if ($tagIds) {
             $this->attributes[] = new Attribute('cat_id', $tagIds);
         }
+    }
+
+    private function shouldProcessTag(Tag $tag, int $storeId): bool
+    {
+        if (!$clients = $tag->getTagData()->getClients()) {
+            return false;
+        }
+
+        foreach ($clients as $client) {
+            if ($client->getPlentyId() === $storeId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function processImages(): void
@@ -382,6 +406,23 @@ class Variation
                 $this->vatRate = $vatRate->getVatRate();
 
                 return;
+            }
+        }
+    }
+
+    private function processUnits(): void
+    {
+        if (!$unitData = $this->variationEntity->getUnit()) {
+            return;
+        }
+
+        $this->packageSize = $unitData->getContent();
+
+        if ($unitEntity = $this->registryService->getUnit($unitData->getUnitId())) {
+            foreach ($unitEntity->getNames() as $name) {
+                if (strtolower($name->getLang()) === (strtolower($this->config->getLanguage()))) {
+                    $this->baseUnit = $name->getName();
+                }
             }
         }
     }

@@ -34,9 +34,10 @@ class Attribute extends Entity
     public function getData(): array
     {
         return [
-            'id' => $this->id,
-            'valueSetId' => $this->valueSetId,
+            'attributeId' => $this->id,
+            'attributeValueSetId' => $this->valueSetId,
             'valueId' => $this->valueId,
+            'attributeValue' => $this->value
         ];
     }
 

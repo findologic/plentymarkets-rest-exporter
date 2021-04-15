@@ -45,7 +45,7 @@ class PropertyRelationValue extends Entity
     {
         return [
             'id' => $this->id,
-            'relationId' => $this->relationId,
+            'propertyRelationId' => $this->relationId,
             'value' => $this->value,
             'lang' => $this->lang,
             'description' => $this->description,

@@ -1,0 +1,29 @@
+{
+  "page": 1,
+  "totalsCount": 1,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 1,
+      "position": 0,
+      "unit": null,
+      "propertyGroupId": null,
+      "backendName": "Int characteristic",
+      "valueType": "int",
+      "isSearchable": true,
+      "isOderProperty": false,
+      "isShownOnItemPage": false,
+      "isShownOnItemList": false,
+      "isShownAtCheckout": false,
+      "isShownInPdf": false,
+      "comment": "",
+      "surcharge": 0,
+      "isShownAsAdditionalCosts": false,
+      "updatedAt": "2020-08-28T16:46:21+02:00"
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100
+}

@@ -101,7 +101,9 @@ class ItemVariationRequestTest extends TestCase
         ];
 
         $this->guzzleClientMock->method('send')->willReturn($this->responseMock);
-        $this->guzzleClientMock->expects($this->at(1))->method('send')->with($modifiedRequest, $expectedParams);
+        $this->guzzleClientMock->expects($this->exactly(2))
+            ->method('send')
+            ->withConsecutive([], [$modifiedRequest, $expectedParams]);
         $this->client->send($request);
     }
 }

@@ -77,5 +77,16 @@ class PropertyGroupResponseTest extends TestCase
             Carbon::createFromTimeString($responseData['entries'][0]['updatedAt']),
             $propertyGroup->getUpdatedAt()
         );
+
+        $names = $propertyGroup->getNames();
+
+        $this->assertCount(1, $names);
+        $name = $names[0];
+
+        $this->assertSame('My package', $name->getName());
+        $this->assertSame('en', $name->getLang());
+        $this->assertSame(1, $name->getPropertyGroupId());
+        $this->assertSame('', $name->getDescription());
+        $this->assertEqualsCanonicalizing($responseData['entries'][0]['names'][0], $name->getData());
     }
 }

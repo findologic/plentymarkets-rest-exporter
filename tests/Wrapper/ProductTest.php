@@ -12,19 +12,19 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage\Availability;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Base;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Product;
-use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -32,6 +32,8 @@ class ProductTest extends TestCase
 {
     use ConfigHelper;
     use ResponseHelper;
+
+    private const AVAILABLE_PROPERTIES = ['price_id', 'variation_id', 'base_unit', 'package_size'];
 
     /** @var Exporter|MockObject */
     private $exporterMock;
@@ -163,30 +165,15 @@ class ProductTest extends TestCase
         );
     }
 
-    public function testProductWithVariationsConfigAvailabilityIdIsNotExported(): void
+    public function testProductWithAllVariationsMatchingConfigurationAvailabilityIdAreNotExported()
     {
-        $configAvailabilityId = 7;
-        $this->config->setAvailabilityId($configAvailabilityId);
+        $this->exporterMock = $this->getExporter();
 
-        $variationMock = $this->getMockBuilder(Variation::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->config->setAvailabilityId(5);
 
-        $baseMock = $this->getMockBuilder(Base::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $variationMock->expects($this->exactly(4))->method('getBase')->willReturn($baseMock);
-        $baseMock->expects($this->once())->method('isActive')
-            ->willReturn(true);
-        $baseMock->expects($this->once())->method('getAutomaticListVisibility')
-            ->willReturn(3);
-        $baseMock->expects($this->once())->method('getAvailableUntil')
-            ->willReturn(Carbon::now()->addSeconds(5));
-        $baseMock->expects($this->once())->method('getAvailability')
-            ->willReturn($configAvailabilityId);
-
-        $this->variationEntityMocks[] = $variationMock;
+        $rawVariations = $this->getMockResponse('Pim/Variations/variations_with_5_for_availability_id.json');
+        $variations = PimVariationsParser::parse($rawVariations);
+        $this->variationEntityMocks = $variations->all();
 
         $product = $this->getProduct();
         $item = $product->processProductData();
@@ -198,14 +185,62 @@ class ProductTest extends TestCase
         );
     }
 
+    public function testProductWithAllVariationsMatchingConfigurationAvailabilityAreExportedIfConfigured()
+    {
+        $this->exporterMock = $this->getExporter();
+
+        $this->config->setAvailabilityId(5);
+        $this->config->setExportUnavailableVariations(true);
+
+        $rawVariations = $this->getMockResponse('Pim/Variations/variations_with_5_for_availability_id.json');
+        $variations = PimVariationsParser::parse($rawVariations);
+        $this->variationEntityMocks = $variations->all();
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertNotNull($item);
+        // TODO: check item's orderNumbers directly once order numbers getter is implemented
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+        $this->assertEquals('S-000813-C|modeeeel|1004|106|3213213213213|101|1005|107', $columnValues[1]);
+    }
+
+    public function testMatchingAvailabilityExportSettingDoesNotOverrideOtherVariationExportabilityChecks()
+    {
+        $this->exporterMock = $this->getExporter();
+
+        $this->config->setAvailabilityId(5);
+        $this->config->setExportUnavailableVariations(true);
+
+        $rawVariations = $this->getMockResponse(
+            'Pim/Variations/variations_with_5_for_availability_id_and_mixed_status.json'
+        );
+        $variations = PimVariationsParser::parse($rawVariations);
+        $this->variationEntityMocks = $variations->all();
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertNotNull($item);
+        // TODO: check item's orderNumbers directly once order numbers getter is implemented
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+        $this->assertEquals('101|1005|107', $columnValues[1]);
+    }
+
     public function testProductIsSuccessfullyWrapped(): void
     {
         $expectedName = 'Pretty awesome name!';
         $expectedSummary = 'Easy, transparent, sexy';
         $expectedDescription = 'That is the best item, and I am a bit longer text.';
         $expectedUrlPath = 'awesome-url-path/somewhere-in-the-store';
+        $expectedPriceId = 11;
+        $expectedMainVariationId = 20;
+        $expectedBaseUnit = 'Stück';
+        $expectedPackageSize = '1000';
 
-        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+        $this->exporterMock = $this->getExporter();
 
         $rawVariation = $this->getMockResponse('Pim/Variations/response.json');
         $variations = PimVariationsParser::parse($rawVariation);
@@ -218,6 +253,9 @@ class ProductTest extends TestCase
 
         $rawManufacturers = $this->getMockResponse('ManufacturerResponse/one.json');
         $manufacturers = ManufacturerParser::parse($rawManufacturers);
+
+        $rawUnits = $this->getMockResponse('UnitResponse/one.json');
+        $units = UnitParser::parse($rawUnits);
 
         $this->storeConfigurationMock->expects($this->exactly(2))
             ->method('getDisplayItemName')
@@ -233,6 +271,21 @@ class ProductTest extends TestCase
         $this->registryServiceMock->expects($this->once())
             ->method('getManufacturer')
             ->willReturn($manufacturers->first());
+
+        $this->registryServiceMock->expects($this->once())
+            ->method('getUnit')
+            ->willReturn($units->first());
+
+        $this->registryServiceMock->expects($this->once())
+            ->method('getPluginConfigurations')
+            ->with('Ceres')
+            ->willReturn(
+                [
+                    'global.enableOldUrlPattern' => false
+                ]
+            );
+
+        $this->registryServiceMock->method('getPriceId')->willReturn($expectedPriceId);
 
         $text = new Text([
             'lang' => 'de',
@@ -255,6 +308,9 @@ class ProductTest extends TestCase
             ->method('getManufacturerId')
             ->willReturn(1);
 
+        $this->itemMock->method('getId')->willReturn(10);
+        $this->itemMock->method('getMainVariationId')->willReturn($expectedMainVariationId);
+
         $this->variationEntityMocks[] = $variations->findOne(['id' => 1004]);
 
         $product = $this->getProduct();
@@ -264,9 +320,18 @@ class ProductTest extends TestCase
         $this->assertSame($expectedSummary, $item->getSummary()->getValues()['']);
         $this->assertSame($expectedDescription, $item->getDescription()->getValues()['']);
         $this->assertSame(
-            'https://plenty-testshop.de/' . $expectedUrlPath . '/a-0',
+            'https://plenty-testshop.de/' . $expectedUrlPath . '_10_20',
             $item->getUrl()->getValues()['']
         );
+
+        $line = $item->getCsvFragment(self::AVAILABLE_PROPERTIES);
+        $line = trim($line, "\n");
+        $columnValues = explode("\t", $line);
+        $this->assertSame((string)$expectedPriceId, $columnValues[18]);
+        $this->assertSame((string)$expectedMainVariationId, $columnValues[19]);
+        $this->assertSame($expectedBaseUnit, $columnValues[20]);
+        $this->assertSame($expectedPackageSize, $columnValues[21]);
+
         $this->assertTrue(
             DateTime::createFromFormat(DateTime::ISO8601, $item->getDateAdded()->getValues()['']) !== false
         );
@@ -277,7 +342,7 @@ class ProductTest extends TestCase
         $expectedUrlPath = 'awesome-url-path/somewhere-in-the-store';
         $expectedLanguagePrefix = 'de';
 
-        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+        $this->exporterMock = $this->getExporter();
 
         $rawVariation = $this->getMockResponse('Pim/Variations/response.json');
         $variations = PimVariationsParser::parse($rawVariation);
@@ -295,6 +360,11 @@ class ProductTest extends TestCase
             ->willReturn(['de', 'en']);
 
         $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
+
+        $this->registryServiceMock->expects($this->once())
+            ->method('getPluginConfigurations')
+            ->with('Ceres')
+            ->willReturn(['global.enableOldUrlPattern' => false]);
 
         $text = new Text([
             'lang' => $expectedLanguagePrefix,
@@ -332,14 +402,14 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         $this->assertSame(
-            'https://plenty-testshop.de/' . $expectedLanguagePrefix . '/' . $expectedUrlPath . '/a-0',
+            'https://plenty-testshop.de/' . $expectedLanguagePrefix . '/' . $expectedUrlPath . '_0_0',
             $item->getUrl()->getValues()['']
         );
     }
 
     public function testSortIsSetByTheMainVariation(): void
     {
-        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+        $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_sort_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
@@ -357,7 +427,7 @@ class ProductTest extends TestCase
 
     public function testKeywordsAreSetFromAllVariations(): void
     {
-        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+        $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_tags.json');
         $variations = PimVariationsParser::parse($variationResponse);
@@ -379,6 +449,12 @@ class ProductTest extends TestCase
         $this->itemMock->expects($this->once())
             ->method('getTexts')
             ->willReturn([$text]);
+
+        $webStoreMock = $this->getMockBuilder(WebStore::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $webStoreMock->method('getStoreIdentifier')->willReturn(34185);
+        $this->registryServiceMock->method('getWebStore')->willReturn($webStoreMock);
 
         $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
         $webStores = WebStoreParser::parse($rawWebStores);
@@ -403,7 +479,7 @@ class ProductTest extends TestCase
 
     public function testPriceAndInsteadPriceIsSetByLowestValues(): void
     {
-        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+        $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_lowest_price_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
@@ -424,7 +500,7 @@ class ProductTest extends TestCase
 
     public function testImageOfFirstVariationIsUsed(): void
     {
-        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+        $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_image_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
@@ -441,7 +517,7 @@ class ProductTest extends TestCase
 
     public function testGroupsAreSetFromAllVariations()
     {
-        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+        $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_different_clients.json');
         $variations = PimVariationsParser::parse($variationResponse);
@@ -462,7 +538,7 @@ class ProductTest extends TestCase
 
     public function testOrdernumbersAreSetFromAllVariations()
     {
-        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+        $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_ordernumber_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
@@ -483,7 +559,7 @@ class ProductTest extends TestCase
 
     public function testAttributesAreSetFromAllVariations()
     {
-        $this->exporterMock = Exporter::create(Exporter::TYPE_CSV);
+        $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_attribute_values.json');
         $variations = PimVariationsParser::parse($variationResponse);
@@ -508,6 +584,162 @@ class ProductTest extends TestCase
         $this->assertEquals('Couch+color=purple&Couch+color=valueeeee&Test=2121asdsdf', $columnValues[11]);
     }
 
+    public function testSetsSalesFrequencyAsZeroIfSortBySalesIsNotConfigured()
+    {
+        $this->exporterMock = $this->getExporter();
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_attribute_values.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $this->storeConfigurationMock->expects($this->once())->method('getItemSortByMonthlySales')->willReturn(0);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertEquals(['' => 0], $item->getSalesFrequency()->getValues());
+    }
+
+    public function testSetSalesFrequencyByPositionIfSortBySalesIsConfigured()
+    {
+        $this->exporterMock = $this->getExporter();
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_different_positions.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $this->storeConfigurationMock->expects($this->once())->method('getItemSortByMonthlySales')->willReturn(1);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertEquals(['' => 5], $item->getSalesFrequency()->getValues());
+    }
+
+    /**
+     * For this test the first item in the response is a non-main variation with the higher position
+     * The second variation is main with lower position.
+     * This test makes sure that the highest position is used and not from simply from the last or main variation
+     */
+    public function testUsesHighestPositionForSalesFrequency()
+    {
+        $this->exporterMock = $this->getExporter();
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_different_positions.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = array_slice($variations->all(), 0, 2);
+
+        $this->storeConfigurationMock->expects($this->once())->method('getItemSortByMonthlySales')->willReturn(1);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertEquals(['' => 1], $item->getSalesFrequency()->getValues());
+    }
+
+    public function testCallistoUrlFormatIsUsedWhenCeresConfigCouldNotBeFetched(): void
+    {
+        $expectedUrlPath = 'awesome-url-path/somewhere-in-the-store';
+
+        $this->exporterMock = $this->getExporter();
+
+        $rawVariation = $this->getMockResponse('Pim/Variations/response.json');
+        $variations = PimVariationsParser::parse($rawVariation);
+
+        $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
+        $webStores = WebStoreParser::parse($rawWebStores);
+
+        $this->storeConfigurationMock->expects($this->exactly(2))
+            ->method('getDisplayItemName')
+            ->willReturn(1);
+
+        $this->storeConfigurationMock->expects($this->once())->method('getDefaultLanguage')
+            ->willReturn('de');
+
+        $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
+        $this->registryServiceMock->expects($this->once())->method('getPluginConfigurations')->willReturn([]);
+
+        $text = new Text([
+            'lang' => 'de',
+            'name1' => 'Pretty awesome name!',
+            'name2' => 'wrong',
+            'name3' => 'wrong',
+            'shortDescription' => 'Easy, transparent, sexy',
+            'metaDescription' => 'my father gave me a small loan of a million dollar.',
+            'description' => 'That is the best item, and I am a bit longer text.',
+            'technicalData' => 'Interesting technical information.',
+            'urlPath' => $expectedUrlPath,
+            'keywords' => 'get me out',
+        ]);
+
+        $this->itemMock->expects($this->once())
+            ->method('getTexts')
+            ->willReturn([$text]);
+
+        $this->variationEntityMocks[] = $variations->first();
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertSame(
+            'https://plenty-testshop.de/' . $expectedUrlPath . '/a-0',
+            $item->getUrl()->getValues()['']
+        );
+    }
+
+    public function testCallistoUrlFormatIsUsedWhenConfigured(): void
+    {
+        $expectedUrlPath = 'awesome-url-path/somewhere-in-the-store';
+
+        $this->exporterMock = $this->getExporter();
+
+        $rawVariation = $this->getMockResponse('Pim/Variations/response.json');
+        $variations = PimVariationsParser::parse($rawVariation);
+
+        $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
+        $webStores = WebStoreParser::parse($rawWebStores);
+
+        $this->storeConfigurationMock->expects($this->exactly(2))
+            ->method('getDisplayItemName')
+            ->willReturn(1);
+
+        $this->storeConfigurationMock->expects($this->once())->method('getDefaultLanguage')
+            ->willReturn('de');
+
+        $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
+        $this->registryServiceMock->expects($this->once())
+            ->method('getPluginConfigurations')
+            ->with('Ceres')
+            ->willReturn(['global.enableOldUrlPattern' => true]);
+
+        $text = new Text([
+            'lang' => 'de',
+            'name1' => 'Pretty awesome name!',
+            'name2' => 'wrong',
+            'name3' => 'wrong',
+            'shortDescription' => 'Easy, transparent, sexy',
+            'metaDescription' => 'my father gave me a small loan of a million dollar.',
+            'description' => 'That is the best item, and I am a bit longer text.',
+            'technicalData' => 'Interesting technical information.',
+            'urlPath' => $expectedUrlPath,
+            'keywords' => 'get me out',
+        ]);
+
+        $this->itemMock->expects($this->once())
+            ->method('getTexts')
+            ->willReturn([$text]);
+
+        $this->variationEntityMocks[] = $variations->first();
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertSame(
+            'https://plenty-testshop.de/' . $expectedUrlPath . '/a-0',
+            $item->getUrl()->getValues()['']
+        );
+    }
+
     private function getProduct(): Product
     {
         return new Product(
@@ -518,5 +750,10 @@ class ProductTest extends TestCase
             $this->itemMock,
             $this->variationEntityMocks
         );
+    }
+
+    private function getExporter(): Exporter
+    {
+        return Exporter::create(Exporter::TYPE_CSV, 100, self::AVAILABLE_PROPERTIES);
     }
 }

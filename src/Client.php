@@ -10,6 +10,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Debug\DummyDebugger;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
@@ -125,7 +126,7 @@ class Client
             case 401:
                 throw new AuthorizationException('The REST client is not logged in.');
             case 403:
-                throw new CustomerException(sprintf(
+                throw new PermissionException(sprintf(
                     'The REST client does not have access rights for method with URI "%s"',
                     $request->getUri()->__toString()
                 ));

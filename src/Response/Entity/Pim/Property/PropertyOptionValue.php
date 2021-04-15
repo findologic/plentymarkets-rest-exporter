@@ -12,6 +12,9 @@ class PropertyOptionValue extends Entity
     /** @var int */
     private $id;
 
+    /** @var int|null */
+    private $optionId;
+
     /** @var string */
     private $value;
 
@@ -24,6 +27,7 @@ class PropertyOptionValue extends Entity
     public function __construct(array $data)
     {
         $this->id = $this->getIntProperty('id', $data);
+        $this->optionId = $this->getIntProperty('optionId', $data);
         $this->value = $this->getStringProperty('value', $data);
         $this->createdAt = $this->getDateTimeProperty('createdAt', $data);
         $this->updatedAt = $this->getDateTimeProperty('updatedAt', $data);
@@ -33,6 +37,7 @@ class PropertyOptionValue extends Entity
     {
         return [
             'id' => $this->id,
+            'optionId' => $this->optionId,
             'value' => $this->value,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
@@ -42,6 +47,11 @@ class PropertyOptionValue extends Entity
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function getOptionId(): ?int
+    {
+        return $this->optionId;
     }
 
     public function getValue(): string

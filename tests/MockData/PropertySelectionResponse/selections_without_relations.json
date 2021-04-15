@@ -1,0 +1,51 @@
+{
+  "page": 1,
+  "totalsCount": 3,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 9,
+      "propertyId": 7,
+      "position": 0,
+      "createdAt": "2020-04-07T11:39:05+01:00",
+      "updatedAt": "2020-04-07T11:39:05+01:00",
+      "property": {
+        "id": 7,
+        "cast": "multiSelection",
+        "typeIdentifier": "item",
+        "position": 5,
+        "createdAt": "2020-04-07T10:48:55+01:00",
+        "updatedAt": "2020-04-07T10:48:55+01:00"
+      }
+    },
+    {
+      "id": 8,
+      "propertyId": 7,
+      "position": 0,
+      "createdAt": "2020-04-07T11:38:56+01:00",
+      "updatedAt": "2020-04-07T11:38:56+01:00",
+      "property": {
+        "id": 7,
+        "cast": "multiSelection",
+        "typeIdentifier": "item",
+        "position": 5,
+        "createdAt": "2020-04-07T10:48:55+01:00",
+        "updatedAt": "2020-04-07T10:48:55+01:00"
+      },
+      "relation": {
+        "id": 11,
+        "propertyId": 7,
+        "relationTypeIdentifier": null,
+        "relationTargetId": null,
+        "selectionRelationId": 8,
+        "createdAt": "2020-04-07T11:38:56+01:00",
+        "updatedAt": "2020-04-07T11:38:56+01:00",
+        "relationValues": []
+      }
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100
+}

@@ -27,7 +27,7 @@ class AttributeValueName extends Entity
     public function getData(): array
     {
         return [
-            'id' => $this->id,
+            'valueId' => $this->id,
             'name' => $this->name,
             'lang' => $this->lang,
         ];

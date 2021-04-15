@@ -45,8 +45,8 @@ class Image extends Entity
     /** @var string */
     private $urlPreview;
 
-    /** @var null Unknown data. */
-    private $attributeValueImages = null;
+    /** @var array Unknown data. */
+    private $attributeValueImages = [];
 
     /** @var ImageName[] */
     private $names;
@@ -113,6 +113,8 @@ class Image extends Entity
             'url' => $this->url,
             'fileType' => $this->fileType,
             'urlMiddle' => $this->urlMiddle,
+            'attributeValueImages' => $this->attributeValueImages,
+            'size' => $this->size,
             'hasLinkedVariations' => $this->hasLinkedVariations,
             'urlPreview' => $this->urlPreview,
             'names' => $this->names,
@@ -176,7 +178,7 @@ class Image extends Entity
         return $this->urlMiddle;
     }
 
-    public function isHasLinkedVariations(): bool
+    public function hasLinkedVariations(): bool
     {
         return $this->hasLinkedVariations;
     }
