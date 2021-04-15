@@ -74,7 +74,7 @@ class Config
             'availabilityId' => $plentyConfig['availability_id'],
             'priceId' => $plentyConfig['price_id'],
             'rrpId' => $plentyConfig['rrp_id'],
-            'exportUnavailableVariations' => $plentyConfig['exportUnavailableVariations'],
+            'exportUnavailableVariations' => $plentyConfig['export_unavailable_variants'],
             'debug' => $debug
         ]);
     }

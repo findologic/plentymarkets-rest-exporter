@@ -394,7 +394,7 @@ class RegistryService
                 'propertySelections',
                 new PropertySelectionResponse(1, count($selections), true, $selections)
             );
-        } catch (CustomerException $e) {
+        } catch (PermissionException $e) {
             // Thrown in case the customer has not given Findologic access for this route.
         }
     }
