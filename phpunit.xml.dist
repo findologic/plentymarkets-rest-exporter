@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <phpunit
-        backupGlobals="false"
-        backupStaticAttributes="false"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         colors="true"
-        convertErrorsToExceptions="true"
-        convertNoticesToExceptions="true"
-        convertWarningsToExceptions="true"
-        processIsolation="false"
-        stopOnFailure="false"
         bootstrap="tests/bootstrap.php"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
 >
-    <testsuites>
-        <testsuite name="FINDOLOGIC exporter for exporting product data via the plentymarkets REST API">
-            <directory>./tests</directory>
-        </testsuite>
-    </testsuites>
+  <coverage>
+    <include>
+      <directory>src</directory>
+    </include>
+  </coverage>
 
-    <filter>
-        <whitelist>
-            <directory>src</directory>
-        </whitelist>
-    </filter>
+  <testsuites>
+    <testsuite name="REST exporter Unit-Tests">
+      <directory>./tests</directory>
+    </testsuite>
+  </testsuites>
+
 </phpunit>

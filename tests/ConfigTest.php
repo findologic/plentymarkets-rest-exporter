@@ -72,7 +72,7 @@ class ConfigTest extends TestCase
                     'price_id' => $expectedPriceId,
                     'rrp_id' => $expectedRrpId,
                     'exporter' => 'REST',
-                    'exportUnavailableVariations' => $expectedUnavailableVariations
+                    'export_unavailable_variants' => $expectedUnavailableVariations
                 ],
             ]
         ];

@@ -91,7 +91,7 @@
       "price_id": 1,
       "rrp_id": 2,
       "exporter": "REST",
-      "exportUnavailableVariations": false
+      "export_unavailable_variants": false
     },
     "synonyms": "",
     "bonus": "{}",
