@@ -922,7 +922,10 @@ class Configuration extends Entity
         return $this->itemAvailabilityDisabledList;
     }
 
-    public function getItemMeasureUnit(): ?string
+    /**
+     * @return string|ItemMeasureUnit[]|null
+     */
+    public function getItemMeasureUnit()
     {
         return $this->itemMeasureUnit;
     }

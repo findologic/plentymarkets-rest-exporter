@@ -103,7 +103,7 @@ class Client
             $uri .= sprintf('?%s', $this->getRequestOptions($request, $params)[RequestOptions::QUERY]);
         }
 
-        $this->customerLogger->info(sprintf('Getting data from: %s', $uri));
+        $this->customerLogger->debug(sprintf('Getting data from: %s', $uri));
 
         if ($this->accessToken) {
             $request = $request->withAddedHeader('Authorization', 'Bearer ' . $this->accessToken);
@@ -155,7 +155,7 @@ class Client
 
     private function doLogin(): void
     {
-        $this->customerLogger->info('Trying to log into the Plentymarkets REST API...');
+        $this->customerLogger->debug('Trying to log into the Plentymarkets REST API...');
 
         $request = new GuzzleRequest(
             self::METHOD_POST,

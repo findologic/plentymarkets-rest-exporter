@@ -25,4 +25,14 @@ class ItemMeasureUnit extends Entity
             ]
         ];
     }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getOptions(): ?array
+    {
+        return $this->options;
+    }
 }

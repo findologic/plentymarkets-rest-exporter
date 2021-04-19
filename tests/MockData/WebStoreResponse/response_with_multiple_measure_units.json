@@ -1,0 +1,447 @@
+[
+  {
+    "id": 0,
+    "type": "plentymarkets",
+    "storeIdentifier": 1234,
+    "name": "Standard Shop",
+    "pluginSetId": 7,
+    "configuration": {
+      "name": "Standard Shop",
+      "defaultLanguage": "de",
+      "defaultLayout": "callisto_light_2",
+      "defaultShippingCountryId": 1,
+      "displayPriceColumn": 0,
+      "displayPriceNetto": 0,
+      "doctype": 50,
+      "faviconPath": "",
+      "frontPageContentPageId": 0,
+      "maxLoginAttempts": 10,
+      "error404ContentPageId": 182,
+      "cancellationRightsContentPageId": 184,
+      "helpContentPageId": 0,
+      "itemNotFoundContentPageId": 0,
+      "privacyPolicyContentPageId": 191,
+      "shippingContentPageId": 192,
+      "termsConditionsContentPageId": 185,
+      "socialMedia": 0,
+      "urlFacebook": "https://www.facebook.com/plentyMarkets/",
+      "urlGooglePlus": "",
+      "urlTwitter": "https://twitter.com/plentyMarkets",
+      "displayItemOnly4Customer": 0,
+      "displayItemName": 1,
+      "attributeVariantCheck": 2,
+      "attributeSelectDefaultOption": 0,
+      "urlItemCategory": "",
+      "urlItemContent": "cat0",
+      "urlTitleItemName": "",
+      "urlTitleItemContent": "name",
+      "urlNeedle": "-",
+      "urlFileExtension": "/",
+      "urlLinking": "absolute",
+      "languageList": "de, en",
+      "domain": "http://www.plentymarkets.de",
+      "domainSsl": "https://www.plentymarkets.de",
+      "rootDir": "/var/www5/m23512/24046f5893/",
+      "loginMode": 0,
+      "attributesDropDown": 1,
+      "attributeWithMarkup": 1,
+      "categoryItemCount": 0,
+      "categoryLevelLimit": 3,
+      "currencyConversion": 1,
+      "dontSplitItemBundle": 1,
+      "dhlPackstationValidation": 0,
+      "sessionLifetime": 0,
+      "useCharacterCrossSelling": 0,
+      "useDynamicCrossSelling": 1,
+      "defaultCurrency": "EUR",
+      "languageMode": 2,
+      "itemCategorySorting1": 3,
+      "itemCategorySorting2": 3,
+      "itemSortByMonthlySales": 1,
+      "itemAvailabilityDisabledList": "",
+      "itemMeasureUnit": {
+        "C62": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "KGM": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "GRM": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "MGM": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "LTR": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "DPC": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "OP": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "BL": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "DI": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "BG": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "ST": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "D64": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "PD": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "QR": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "BX": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "CL": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "CH": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "TN": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "CA": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "DZN": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "BJ": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "CS": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "Z3": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "BO": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "OZA": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "JR": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "CG": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "CT": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "KT": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "AA": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "MTR": {
+          "options": {
+            "floatAllowed": 1
+          }
+        },
+        "MLT": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "MMT": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "PR": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "PA": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "PK": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "D97": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "MTK": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "CMK": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "MMK": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "SCM": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "SMM": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "RO": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "SA": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "SET": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "RL": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "EA": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "TU": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "OZ": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "WE": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "CMT": {
+          "options": {
+            "floatAllowed": 0
+          }
+        },
+        "INH": {
+          "options": {
+            "floatAllowed": 0
+          }
+        }
+      },
+      "showBasePriceActive": 1,
+      "jumpPaymentActive": 0,
+      "jumpShippingActive": 0,
+      "showContentTermsFsk": 0,
+      "newsletterRegistrationActive": 0,
+      "minimumOrderValue": 0,
+      "ipAddressSaveInactive": 1,
+      "reuseOrderActive": 1,
+      "editOrderActive": 1,
+      "currencySymbol": 0,
+      "dhlAllowPackstationActive": 1,
+      "dhlLimitOrderAmountForPackstation": "0.00",
+      "watchlistActive": 1,
+      "itemwishlistActive": 1,
+      "couponVisibilityActive": 1,
+      "itemlistPrice": 2,
+      "itemlistWeight": 0,
+      "schedulerActive": 0,
+      "changeEmailActive": 1,
+      "changePasswordActive": 1,
+      "changePasswordSendmail": 1,
+      "logoutHiddenActive": 0,
+      "displayStatusInactive": 0,
+      "displayWeightInactive": 0,
+      "displayInvoiceDownload": 1,
+      "displayShippingDateActive": 1,
+      "quickloginValidDays": 90,
+      "paymentMethodsContentPageId": 0,
+      "contactContentPageId": 0,
+      "legalDisclosureContentPageId": 187,
+      "bankContentPageId": 0,
+      "browserLanguage": {
+        "other": "de",
+        "de": "de",
+        "en": "de",
+        "bg": "",
+        "fr": "",
+        "it": "",
+        "es": "",
+        "tr": "",
+        "nl": "",
+        "pl": "",
+        "pt": "",
+        "nn": "",
+        "ro": "",
+        "da": "",
+        "se": "",
+        "cz": "",
+        "ru": "",
+        "sk": "",
+        "cn": "",
+        "vn": ""
+      },
+      "webstoreId": 0,
+      "itemSearchEngine": "findologic",
+      "itemMaxRatingPoints": 5,
+      "itemCommentsActive": 1,
+      "customerLoginMethod": 0,
+      "documentsActive": 1,
+      "dynamicExportActive": 0,
+      "retoureMethod": -1,
+      "editSchedulerPaymentMethodActive": 0,
+      "showSEPAMandateDownload": 0,
+      "defaultShippingCountryList": {
+        "de": 1
+      },
+      "useDefaultShippingCountryAsShopCountry": 0,
+      "defaultParcelServiceId": 101,
+      "defaultParcelServicePresetId": 6,
+      "defaultMethodOfPaymentId": 6003,
+      "ignoreCouponMinOrderValueActive": 0,
+      "externalVatCheckInactive": 1,
+      "customerRegistrationCheck": 0,
+      "captchaCodeInactive": 1,
+      "oversellingWarning": 1,
+      "itemRatingActive": 1,
+      "itemNewFeedbackVisibility": "active",
+      "itemCustomerNameVisibility": 1,
+      "ebayAccount": "",
+      "defaultCurrencyList": {
+        "de": "EUR",
+        "en": "EUR",
+        "fr": "EUR",
+        "it": "EUR",
+        "es": "EUR",
+        "tr": "EUR",
+        "nl": "EUR",
+        "pl": "EUR",
+        "nn": "EUR",
+        "da": "EUR",
+        "se": "EUR",
+        "cz": "EUR",
+        "ru": "EUR",
+        "sk": "EUR",
+        "cn": "EUR",
+        "vn": "EUR",
+        "pt": "EUR",
+        "bg": "EUR",
+        "ro": "EUR"
+      },
+      "closed": 0,
+      "defaultCustomerClassId": 1,
+      "newsletterDirId": 3,
+      "dhlAllowPostidentActive": 1,
+      "displayMyAccountDeliveryDateInactive": 0,
+      "displayMyAccountPaymentDateInactive": 0,
+      "trustedShopsCertificationDeTrustedShopsId": "X125EADAE935CC4DA810DFC83BF554503",
+      "trustedShopsCertificationDeSealHtml": "<script type=\"text/javascript\">\r\n  (function () { \r\n    var _tsid = 'X125EADAE935CC4DA810DFC83BF554503'; \r\n    _tsConfig = { \r\n      'yOffset': '0', /* offset from page bottom */\r\n      'variant': 'reviews', /* text, default, small, reviews, custom, custom_reviews */\r\n      'customElementId': '', /* required for variants custom and custom_reviews */\r\n      'trustcardDirection': '', /* for custom variants: topRight, topLeft, bottomRight, bottomLeft */\r\n      'customBadgeWidth': '', /* for custom variants: 40 - 90 (in pixels) */\r\n      'customBadgeHeight': '', /* for custom variants: 40 - 90 (in pixels) */\r\n      'disableResponsive': 'false', /* deactivate responsive behaviour */\r\n      'disableTrustbadge': 'false', /* deactivate trustbadge */\r\n      'trustCardTrigger': 'mouseenter' /* set to 'click' if you want the trustcard to be opened on click instead */\r\n    };\r\n    var _ts = document.createElement('script');\r\n    _ts.type = 'text/javascript'; \r\n    _ts.charset = 'utf-8'; \r\n    _ts.async = true; \r\n    _ts.src = '//widgets.trustedshops.com/js/' + _tsid + '.js'; \r\n    var __ts = document.getElementsByTagName('script')[0];\r\n    __ts.parentNode.insertBefore(_ts, __ts);\r\n  })();\r\n</script>",
+      "defaultAccountingLocation": 1,
+      "facebookLoginActive": 0,
+      "orderRowDeliveryDate": [
+        [
+          "isActive"
+        ]
+      ],
+      "googleRecaptchaApiWebsitekey": "6LeSC2sUAAAAANEeLZxSH7g0GALJwlOT4FcV1ZMp",
+      "googleRecaptchaApiSecretkey": "6LeSC2sUAAAAAIAK0X-FZ7F34HCoRL8EisQYHRNx",
+      "googleRecaptchaCustomerRegistration": 0,
+      "sortingForInitialSingleItemValues": 0,
+      "urlTrailingSlash": 0,
+      "storeIdentifier": 24046
+    }
+  }
+]

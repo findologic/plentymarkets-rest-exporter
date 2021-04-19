@@ -6,6 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\ItemMeasureUnit;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
 
@@ -361,5 +362,30 @@ class WebStoreResponseTest extends TestCase
         $this->assertEquals('active', $configuration->getFeedbackNewFeedbackVisibility());
         $this->assertEquals(1, $configuration->getFeedbackCustomerNameVisibility());
         $this->assertEquals(0, $configuration->getUrlTrailingSlash());
+    }
+
+    public function testWebStoreResponseWithMultipleMeasureUnits(): void
+    {
+        $webStoreResponse = WebStoreParser::parse(
+            $this->getMockResponse('WebStoreResponse/response_with_multiple_measure_units.json')
+        );
+
+        $webStore = $webStoreResponse->first();
+        $measureUnits = $webStore->getConfiguration()->getItemMeasureUnit();
+
+        $this->assertCount(52, $measureUnits);
+
+        /** @var ItemMeasureUnit $firstMeasureUnit */
+        $firstMeasureUnit = $measureUnits[0];
+        $this->assertSame('C62', $firstMeasureUnit->getName());
+        $this->assertSame(['floatAllowed' => 0], $firstMeasureUnit->getOptions());
+
+        $this->assertEquals([
+            'C62' => [
+                'options' => [
+                    'floatAllowed' => 0
+                ]
+            ]
+        ], $firstMeasureUnit->getData());
     }
 }

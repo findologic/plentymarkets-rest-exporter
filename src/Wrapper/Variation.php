@@ -14,6 +14,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage\Availability;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Image as PimImage;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Tag;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
@@ -88,6 +89,8 @@ class Variation
 
     /** @var string|null */
     protected $packageSize;
+
+    protected bool $hasCategories = false;
 
     public function __construct(
         Config $config,
@@ -223,6 +226,11 @@ class Variation
         return $this->packageSize;
     }
 
+    public function hasCategories(): bool
+    {
+        return $this->hasCategories;
+    }
+
     private function processIdentifiers(): void
     {
         $this->variationEntity->getBase()->getPosition();
@@ -256,6 +264,7 @@ class Variation
                     'cat_url',
                     [parse_url($categoryDetail->getPreviewUrl(), PHP_URL_PATH)]
                 );
+                $this->hasCategories = true;
             }
         }
     }
@@ -385,6 +394,9 @@ class Variation
     private function processImages(): void
     {
         $images = array_merge($this->variationEntity->getImages(), $this->variationEntity->getBase()->getImages());
+
+        // Sort images by position.
+        usort($images, fn(PimImage $a, PimImage $b) => $a->getPosition() <=> $b->getPosition());
 
         /** @var ItemImage $image */
         foreach ($images as $image) {

@@ -395,7 +395,10 @@ class RegistryService
                 new PropertySelectionResponse(1, count($selections), true, $selections)
             );
         } catch (PermissionException $e) {
-            // Thrown in case the customer has not given Findologic access for this route.
+            $this->customerLogger->warning(
+                'Required permission \'Setup > Property > Selection > Show\' has not been granted. ' .
+                'This causes multiSelect properties to not be exported!'
+            );
         }
     }
 
