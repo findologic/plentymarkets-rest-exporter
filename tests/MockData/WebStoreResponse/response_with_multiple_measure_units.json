@@ -427,8 +427,8 @@
       "dhlAllowPostidentActive": 1,
       "displayMyAccountDeliveryDateInactive": 0,
       "displayMyAccountPaymentDateInactive": 0,
-      "trustedShopsCertificationDeTrustedShopsId": "X125EADAE935CC4DA810DFC83BF554503",
-      "trustedShopsCertificationDeSealHtml": "<script type=\"text/javascript\">\r\n  (function () { \r\n    var _tsid = 'X125EADAE935CC4DA810DFC83BF554503'; \r\n    _tsConfig = { \r\n      'yOffset': '0', /* offset from page bottom */\r\n      'variant': 'reviews', /* text, default, small, reviews, custom, custom_reviews */\r\n      'customElementId': '', /* required for variants custom and custom_reviews */\r\n      'trustcardDirection': '', /* for custom variants: topRight, topLeft, bottomRight, bottomLeft */\r\n      'customBadgeWidth': '', /* for custom variants: 40 - 90 (in pixels) */\r\n      'customBadgeHeight': '', /* for custom variants: 40 - 90 (in pixels) */\r\n      'disableResponsive': 'false', /* deactivate responsive behaviour */\r\n      'disableTrustbadge': 'false', /* deactivate trustbadge */\r\n      'trustCardTrigger': 'mouseenter' /* set to 'click' if you want the trustcard to be opened on click instead */\r\n    };\r\n    var _ts = document.createElement('script');\r\n    _ts.type = 'text/javascript'; \r\n    _ts.charset = 'utf-8'; \r\n    _ts.async = true; \r\n    _ts.src = '//widgets.trustedshops.com/js/' + _tsid + '.js'; \r\n    var __ts = document.getElementsByTagName('script')[0];\r\n    __ts.parentNode.insertBefore(_ts, __ts);\r\n  })();\r\n</script>",
+      "trustedShopsCertificationDeTrustedShopsId": "ABC",
+      "trustedShopsCertificationDeSealHtml": "",
       "defaultAccountingLocation": 1,
       "facebookLoginActive": 0,
       "orderRowDeliveryDate": [
@@ -436,12 +436,12 @@
           "isActive"
         ]
       ],
-      "googleRecaptchaApiWebsitekey": "6LeSC2sUAAAAANEeLZxSH7g0GALJwlOT4FcV1ZMp",
-      "googleRecaptchaApiSecretkey": "6LeSC2sUAAAAAIAK0X-FZ7F34HCoRL8EisQYHRNx",
+      "googleRecaptchaApiWebsitekey": "3713489174bbbaaba-ababababa3434734333343",
+      "googleRecaptchaApiSecretkey": "3713489174bbbaaba-ababababa3434734333343",
       "googleRecaptchaCustomerRegistration": 0,
       "sortingForInitialSingleItemValues": 0,
       "urlTrailingSlash": 0,
-      "storeIdentifier": 24046
+      "storeIdentifier": 1234
     }
   }
 ]

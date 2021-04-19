@@ -126,7 +126,7 @@ class ExportCommandTest extends TestCase
 
     public function testExportStopsOnExceptionAndPrintsExceptionDetails(): void
     {
-        $expectedExceptionMessage = 'Oops, that shouldn\'t have happened.';
+        $expectedExceptionMessage = 'Exception BOOO!!';
 
         $this->setUpCommandMocks();
 
