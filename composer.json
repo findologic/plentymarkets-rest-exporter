@@ -47,7 +47,10 @@
         }
     },
     "scripts": {
-        "lint": "./vendor/bin/phpcs --standard=phpcs.xml .",
+        "lint": [
+            "./vendor/bin/phpcs --standard=phpcs.xml .",
+            "./vendor/bin/phpstan analyse src tests"
+        ],
         "fix": "./vendor/bin/phpcbf --standard=phpcs.xml .",
         "test": "XDEBUG_MODE=coverage phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml"
     },
