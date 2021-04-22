@@ -185,7 +185,7 @@ class RegistryService
         return $unit;
     }
 
-    public function getPropertySelections(): PropertySelectionResponse
+    public function getPropertySelections(): ?PropertySelectionResponse
     {
         /** @var PropertySelectionResponse $propertySelection */
         $propertySelection = $this->get('propertySelections');
@@ -381,18 +381,25 @@ class RegistryService
 
     private function fetchPropertySelections(): void
     {
-        $selectionsRequest = new PropertySelectionRequest();
+        try {
+            $selectionsRequest = new PropertySelectionRequest();
 
-        $selections = [];
-        foreach (Utils::sendIterableRequest($this->client, $selectionsRequest) as $response) {
-            $selectionsResponse = PropertySelectionParser::parse($response);
-            $selections = array_merge($selectionsResponse->all(), $selections);
+            $selections = [];
+            foreach (Utils::sendIterableRequest($this->client, $selectionsRequest) as $response) {
+                $selectionsResponse = PropertySelectionParser::parse($response);
+                $selections = array_merge($selectionsResponse->all(), $selections);
+            }
+
+            $this->set(
+                'propertySelections',
+                new PropertySelectionResponse(1, count($selections), true, $selections)
+            );
+        } catch (PermissionException $e) {
+            $this->customerLogger->warning(
+                'Required permission \'Setup > Property > Selection > Show\' has not been granted. ' .
+                'This causes multiSelect properties to not be exported!'
+            );
         }
-
-        $this->set(
-            'propertySelections',
-            new PropertySelectionResponse(1, count($selections), true, $selections)
-        );
     }
 
     private function fetchPropertyGroups(): void

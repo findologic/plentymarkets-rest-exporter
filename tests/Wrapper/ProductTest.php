@@ -72,6 +72,13 @@ class ProductTest extends TestCase
         $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
         $standardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
         $this->registryServiceMock->expects($this->any())->method('getStandardVat')->willReturn($standardVat);
+
+        $categoryResponse = $this->getMockResponse('CategoryResponse/one.json');
+        $parsedCategoryResponse = CategoryParser::parse($categoryResponse);
+
+        $this->registryServiceMock->expects($this->any())
+            ->method('getCategory')
+            ->willReturn($parsedCategoryResponse->first());
     }
 
     public function testProductWithoutVariationsIsNotExported(): void
@@ -103,7 +110,7 @@ class ProductTest extends TestCase
 
         $this->assertNull($item);
         $this->assertSame(
-            'All assigned variations are not exportable (inactive, no longer available, etc.)',
+            'All assigned variations are not exportable (inactive, no longer available, no categories etc.)',
             $product->getReason()
         );
     }
@@ -130,7 +137,7 @@ class ProductTest extends TestCase
 
         $this->assertNull($item);
         $this->assertSame(
-            'All assigned variations are not exportable (inactive, no longer available, etc.)',
+            'All assigned variations are not exportable (inactive, no longer available, no categories etc.)',
             $product->getReason()
         );
     }
@@ -160,7 +167,7 @@ class ProductTest extends TestCase
 
         $this->assertNull($item);
         $this->assertSame(
-            'All assigned variations are not exportable (inactive, no longer available, etc.)',
+            'All assigned variations are not exportable (inactive, no longer available, no categories etc.)',
             $product->getReason()
         );
     }
@@ -180,7 +187,7 @@ class ProductTest extends TestCase
 
         $this->assertNull($item);
         $this->assertSame(
-            'All assigned variations are not exportable (inactive, no longer available, etc.)',
+            'All assigned variations are not exportable (inactive, no longer available, no categories etc.)',
             $product->getReason()
         );
     }
@@ -581,7 +588,8 @@ class ProductTest extends TestCase
         // TODO: check item's attributes property directly once attributes getter is implemented
         $line = $item->getCsvFragment();
         $columnValues = explode("\t", $line);
-        $this->assertEquals('Couch+color=purple&Couch+color=valueeeee&Test=2121asdsdf', $columnValues[11]);
+        $this->assertEquals('cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&' .
+            'Couch+color=purple&Couch+color=valueeeee&Test=2121asdsdf', $columnValues[11]);
     }
 
     public function testSetsSalesFrequencyAsZeroIfSortBySalesIsNotConfigured()

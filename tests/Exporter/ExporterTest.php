@@ -11,6 +11,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
@@ -69,6 +70,13 @@ class ExporterTest extends TestCase
         $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
         $standardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
         $this->registryServiceMock->expects($this->any())->method('getStandardVat')->willReturn($standardVat);
+
+        $categoryResponse = $this->getMockResponse('CategoryResponse/one.json');
+        $parsedCategoryResponse = CategoryParser::parse($categoryResponse);
+
+        $this->registryServiceMock->expects($this->any())
+            ->method('getCategory')
+            ->willReturn($parsedCategoryResponse->first());
     }
 
     public function exporterTypeProvider(): array

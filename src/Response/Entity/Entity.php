@@ -39,8 +39,24 @@ abstract class Entity
         return isset($data[$key]) ? Carbon::createFromTimeString($data[$key]) : $default;
     }
 
-    protected function getEntity(string $class, array $data): Entity
+    /**
+     * This method should not be used for complex structured data, but rather for simple structures,
+     * such as an array of options with max. 4 options. In any other case a new Entity should be created instead!
+     */
+    protected function getArrayProperty(string $key, array $data, ?array $default = null): ?array
     {
+        return isset($data[$key]) ? (array)$data[$key] : $default;
+    }
+
+    /**
+     * @param int|string|null $key Provide for data where the index is used as entity name.
+     */
+    protected function getEntity(string $class, array $data, $key = null): Entity
+    {
+        if (is_string($key)) {
+            return new $class($key, $data);
+        }
+
         return new $class($data);
     }
 
@@ -54,8 +70,8 @@ abstract class Entity
         }
 
         $entities = [];
-        foreach ($data[$field] as $entityData) {
-            $entities[] = $this->getEntity($entityClass, $entityData);
+        foreach ($data[$field] as $key => $entityData) {
+            $entities[] = $this->getEntity($entityClass, $entityData, $key);
         }
 
         return $entities;

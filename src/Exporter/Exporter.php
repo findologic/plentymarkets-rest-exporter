@@ -83,7 +83,8 @@ abstract class Exporter
         $this->internalLogger = $internalLogger;
         $this->customerLogger = $customerLogger;
         $this->config = $config;
-        $this->client = $client ?? new Client(new GuzzleClient(), $config, $internalLogger, $customerLogger);
+        $this->client = $client ??
+            new Client($this->getDefaultGuzzleClient(), $config, $internalLogger, $customerLogger);
         if (!$registryService) {
             $registryService = new RegistryService(
                 $internalLogger,
@@ -214,6 +215,7 @@ abstract class Exporter
             ->setPage(1)
             ->setParam('itemIds', $itemIds)
             ->setParam('isActive', true)
+            ->setParam('sortBy', 'itemId_asc')
             ->setParam('clientId', $this->registryService->getWebStore()->getStoreIdentifier())
             ->setWith($this->getRequiredVariationValues());
 
@@ -243,5 +245,12 @@ abstract class Exporter
             'tags.tag',
             'unit'
         ];
+    }
+
+    private function getDefaultGuzzleClient(): GuzzleClient
+    {
+        return new GuzzleClient([
+            'verify' => false,
+        ]);
     }
 }

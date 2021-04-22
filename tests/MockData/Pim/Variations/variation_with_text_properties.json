@@ -560,9 +560,9 @@
           "propertyId": 9,
           "values": [
             {
-              "id": null,
-              "lang": "0",
-              "value": "8",
+              "id": 9,
+              "lang": "en",
+              "value": "I am a short text.",
               "description": null
             }
           ],

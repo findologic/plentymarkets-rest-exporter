@@ -167,7 +167,7 @@ class Configuration extends Entity
     /** @var string|null */
     private $itemAvailabilityDisabledList;
 
-    /** @var string|null */
+    /** @var string|ItemMeasureUnit[]|null */
     private $itemMeasureUnit;
 
     /** @var int|null */
@@ -446,7 +446,7 @@ class Configuration extends Entity
         $this->itemCategorySorting2 = $this->getIntProperty('itemCategorySorting2', $data);
         $this->itemSortByMonthlySales = $this->getIntProperty('itemSortByMonthlySales', $data);
         $this->itemAvailabilityDisabledList = $this->getStringProperty('itemAvailabilityDisabledList', $data);
-        $this->itemMeasureUnit = $this->getStringProperty('itemMeasureUnit', $data);
+        $this->itemMeasureUnit = $this->fetchItemMeasureUnit($data);
         $this->showBasePriceActive = $this->getIntProperty('showBasePriceActive', $data);
         $this->jumpPaymentActive = $this->getIntProperty('jumpPaymentActive', $data);
         $this->jumpShippingActive = $this->getIntProperty('jumpShippingActive', $data);
@@ -922,7 +922,10 @@ class Configuration extends Entity
         return $this->itemAvailabilityDisabledList;
     }
 
-    public function getItemMeasureUnit(): ?string
+    /**
+     * @return string|ItemMeasureUnit[]|null
+     */
+    public function getItemMeasureUnit()
     {
         return $this->itemMeasureUnit;
     }
@@ -1280,5 +1283,23 @@ class Configuration extends Entity
     public function getUrlTrailingSlash(): ?int
     {
         return $this->urlTrailingSlash;
+    }
+
+    /**
+     * @return ItemMeasureUnit[]|string|null
+     */
+    protected function fetchItemMeasureUnit(array $data)
+    {
+        $itemMeasureUnitData = $data['itemMeasureUnit'] ?? null;
+
+        $measureUnit = null;
+        if (is_string($itemMeasureUnitData)) {
+            $measureUnit = $this->getStringProperty('itemMeasureUnit', $data);
+        } elseif (is_array($itemMeasureUnitData)) {
+            /** @var ItemMeasureUnit[] $measureUnit */
+            $measureUnit =  $this->getEntities(ItemMeasureUnit::class, 'itemMeasureUnit', $data);
+        }
+
+        return $measureUnit;
     }
 }

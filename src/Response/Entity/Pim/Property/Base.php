@@ -18,7 +18,7 @@ class Base extends Entity
     /** @var int */
     private $itemId;
 
-    /** @var int */
+    /** @var int|null */
     private $position;
 
     /** @var bool */
@@ -388,7 +388,7 @@ class Base extends Entity
         return $this->itemId;
     }
 
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
         return $this->position;
     }

@@ -62,12 +62,12 @@ trait PropertyAware
                 return null;
             case CastType::SHORT_TEXT:
             case CastType::LONG_TEXT:
-                foreach ($property->getPropertyData()->getNames() as $name) {
-                    if (strtoupper($name->getLang()) !== strtoupper($this->config->getLanguage())) {
+                foreach ($property->getValues() as $propertyValue) {
+                    if (strtoupper($propertyValue->getLang()) !== strtoupper($this->config->getLanguage())) {
                         continue;
                     }
 
-                    return $name->getValue();
+                    return $propertyValue->getValue();
                 }
 
                 return null;
@@ -84,6 +84,10 @@ trait PropertyAware
 
                 return null;
             case CastType::MULTI_SELECTION:
+                if (!$this->registryService->getPropertySelections()) {
+                    return null;
+                }
+
                 return $this->registryService->getPropertySelections()->getPropertySelectionValues(
                     $property->getId(),
                     $this->config->getLanguage()

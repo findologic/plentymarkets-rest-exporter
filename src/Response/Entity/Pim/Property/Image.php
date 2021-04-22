@@ -27,8 +27,7 @@ class Image extends Entity
     /** @var int */
     private $height;
 
-    /** @var int */
-    private $position;
+    private ?int $position;
 
     /** @var string */
     private $url;
@@ -158,7 +157,7 @@ class Image extends Entity
         return $this->height;
     }
 
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
         return $this->position;
     }

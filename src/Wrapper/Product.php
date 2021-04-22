@@ -83,7 +83,7 @@ class Product
         $this->item->addPrice(0);
 
         if (count($this->variationEntities) === 0) {
-            $this->reason = sprintf('Product has no variations.');
+            $this->reason = 'Product has no variations.';
 
             return null;
         }
@@ -93,7 +93,8 @@ class Product
             $variationCount = $this->processVariations(false);
         }
         if ($variationCount === 0) {
-            $this->reason = 'All assigned variations are not exportable (inactive, no longer available, etc.)';
+            $this->reason =
+                'All assigned variations are not exportable (inactive, no longer available, no categories etc.)';
 
             return null;
         }
@@ -163,6 +164,7 @@ class Product
     protected function processVariations(bool $checkAvailability = true): int
     {
         $hasImage = false;
+        $hasCategories = false;
         $variationsProcessed = 0;
         $prices = [];
         $insteadPrices = [];
@@ -202,7 +204,10 @@ class Product
 
             $position = $variation->getPosition();
             if ($variation->isMain() || !$this->item->getSort()->getValues()) {
-                $this->item->addSort($variation->getPosition());
+                // Only add sort in case the variation has a position.
+                if ($variation->getPosition()) {
+                    $this->item->addSort($variation->getPosition());
+                }
             }
             $highestPosition = $position > $highestPosition ? $position : $highestPosition;
 
@@ -215,7 +220,16 @@ class Product
             $prices[] = $variation->getPrice();
             $insteadPrices[] = $variation->getInsteadPrice();
 
+            if ($variation->hasCategories()) {
+                $hasCategories = true;
+            }
+
             $variationsProcessed++;
+        }
+
+        // If no children have categories, we're skipping this product.
+        if (!$hasCategories) {
+            return 0;
         }
 
         // VatRate should be set from the last variation, therefore this code outside the foreach loop
