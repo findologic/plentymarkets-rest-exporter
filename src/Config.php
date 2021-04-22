@@ -57,7 +57,7 @@ class Config
         }
     }
 
-    public static function parseByCustomerLoginResponse(array $data, bool $debug = false): self
+    public static function fromArray(array $data, bool $debug = false): self
     {
         $shop = array_values($data)[0] ?? null;
         if (!$shop || !isset($shop['plentymarkets'])) {
@@ -93,17 +93,6 @@ class Config
             'exportUnavailableVariations' => (bool)Utils::env('EXPORT_UNAVAILABLE_VARIATIONS'),
             'debug' => (bool)Utils::env('DEBUG')
         ]);
-    }
-
-    public static function fromArray(array $data): Config
-    {
-        //$data = [['plentymarkets' => $data]];
-        $data['plentymarkets']['exportUnavailableVariations'] = $data['plentymarkets']['export_unavailable_variants'];
-        return self::parseByCustomerLoginResponse([$data]);
-        /*return new Config([
-            'domain' => $data['url'],
-            'username' => $data['']
-        ]);*/
     }
 
     /**

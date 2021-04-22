@@ -114,7 +114,7 @@ class Utils
 
         $rawData = json_decode($response->getBody()->__toString(), true);
 
-        return Config::parseByCustomerLoginResponse($rawData, true);
+        return Config::fromArray($rawData, true);
     }
 
     private static function parseIsLastPage(ResponseInterface $response): bool
