@@ -150,12 +150,12 @@ class ExporterTest extends TestCase
             $this->config,
             $this->logger,
             $this->logger,
+            self::EXPORTER_LOCATION,
             $this->clientMock,
             $this->registryServiceMock,
             $this->itemRequestMock,
             $this->variationRequestMock,
-            $this->fileExporterMock,
-            self::EXPORTER_LOCATION
+            $this->fileExporterMock
         );
     }
 

@@ -95,6 +95,17 @@ class Config
         ]);
     }
 
+    public static function fromArray(array $data): Config
+    {
+        //$data = [['plentymarkets' => $data]];
+        $data['plentymarkets']['exportUnavailableVariations'] = $data['plentymarkets']['export_unavailable_variants'];
+        return self::parseByCustomerLoginResponse([$data]);
+        /*return new Config([
+            'domain' => $data['url'],
+            'username' => $data['']
+        ]);*/
+    }
+
     /**
      * A domain or any URI can be submitted to this method. The configuration may only store the domain name itself.
      *
