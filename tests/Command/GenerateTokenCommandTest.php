@@ -50,7 +50,7 @@ class GenerateTokenCommandTest extends TestCase
 
         $commandTester = new CommandTester($this->command);
         $commandTester->execute([
-            'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD'
+            'shopkey' => 'ABCDABCDABCDABCDABCDAdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddasdfBCDABCDABCD'
         ]);
 
         $this->assertSame(0, $commandTester->getStatusCode());
