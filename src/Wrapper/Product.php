@@ -204,7 +204,10 @@ class Product
 
             $position = $variation->getPosition();
             if ($variation->isMain() || !$this->item->getSort()->getValues()) {
-                $this->item->addSort($variation->getPosition() ?? 0);
+                // Only add sort in case the variation has a position.
+                if ($variation->getPosition()) {
+                    $this->item->addSort($variation->getPosition());
+                }
             }
             $highestPosition = $position > $highestPosition ? $position : $highestPosition;
 
