@@ -32,6 +32,9 @@ class GenerateTokenCommandTest extends TestCase
     /** @var GenerateTokenCommand */
     private $command;
 
+    /** @var Exporter|MockObject */
+    private $exportMock;
+
     protected function setUp(): void
     {
         parent::setUp();

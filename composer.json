@@ -27,7 +27,8 @@
         "symfony/filesystem": "^5.1",
         "symfony/finder": "^5.1",
         "phpunit/phpunit": "^9.5",
-        "symfony/phpunit-bridge": "^5.2"
+        "symfony/phpunit-bridge": "^5.2",
+        "phpstan/phpstan": "^0.12.84"
     },
     "config": {
         "platform": {
@@ -46,7 +47,10 @@
         }
     },
     "scripts": {
-        "lint": "./vendor/bin/phpcs --standard=phpcs.xml .",
+        "lint": [
+            "./vendor/bin/phpcs --standard=phpcs.xml .",
+            "./vendor/bin/phpstan analyse src tests"
+        ],
         "fix": "./vendor/bin/phpcbf --standard=phpcs.xml .",
         "test": "XDEBUG_MODE=coverage phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml"
     },
