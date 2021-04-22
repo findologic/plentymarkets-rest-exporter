@@ -57,7 +57,7 @@ class Config
         }
     }
 
-    public static function parseByCustomerLoginResponse(array $data, bool $debug = false): self
+    public static function fromArray(array $data, bool $debug = false): self
     {
         $shop = array_values($data)[0] ?? null;
         if (!$shop || !isset($shop['plentymarkets'])) {

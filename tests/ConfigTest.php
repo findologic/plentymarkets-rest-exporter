@@ -77,7 +77,7 @@ class ConfigTest extends TestCase
             ]
         ];
 
-        $config = Config::parseByCustomerLoginResponse($customerLoginResponse);
+        $config = Config::fromArray($customerLoginResponse);
 
         $this->assertSame($expectedDomain, $config->getDomain());
         $this->assertSame($expectedUsername, $config->getUsername());

@@ -126,12 +126,12 @@ abstract class Exporter
         Config $config,
         LoggerInterface $internalLogger,
         LoggerInterface $customerLogger,
+        ?string $exportPath = null,
         ?Client $client = null,
         ?RegistryService $registryService = null,
         ?ItemRequest $itemRequest = null,
         ?PimVariationRequest $pimVariationRequest = null,
-        ?LibflexportExporter $fileExporter = null,
-        ?string $exportPath = null
+        ?LibflexportExporter $fileExporter = null
     ): Exporter {
         $usedPath = $exportPath ?? Utils::env('EXPORT_DIR', self::DEFAULT_LOCATION);
 
