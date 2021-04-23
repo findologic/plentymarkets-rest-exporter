@@ -49,7 +49,7 @@
     "scripts": {
         "lint": [
             "./vendor/bin/phpcs --standard=phpcs.xml .",
-            "./vendor/bin/phpstan analyse src tests"
+            "./vendor/bin/phpstan analyse --level 2 src tests"
         ],
         "fix": "./vendor/bin/phpcbf --standard=phpcs.xml .",
         "test": "XDEBUG_MODE=coverage phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml"

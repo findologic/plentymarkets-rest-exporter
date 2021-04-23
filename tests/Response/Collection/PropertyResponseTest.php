@@ -9,6 +9,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Amazon;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group\GroupRelation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group\Name;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Name as PropertyName;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Option;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation;
@@ -148,7 +149,7 @@ class PropertyResponseTest extends TestCase
 
         $names = $property->getNames();
         $this->assertCount(1, $names);
-        /** @var Name $name */
+        /** @var PropertyName $name */
         $name = reset($names);
         $this->assertEquals(1, $name->getId());
         $this->assertEquals(1, $name->getPropertyId());

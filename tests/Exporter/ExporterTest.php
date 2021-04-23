@@ -49,6 +49,9 @@ class ExporterTest extends TestCase
     /** @var LibFlexportExporter|MockObject */
     private $fileExporterMock;
 
+    /** @var null|string */
+    private $fileNamePrefix;
+
     protected function setUp(): void
     {
         $this->config = new Config();
@@ -66,6 +69,7 @@ class ExporterTest extends TestCase
         $this->fileExporterMock = $this->getMockBuilder(LibFlexportExporter::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $this->fileNamePrefix = null;
 
         $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
         $standardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
@@ -116,6 +120,25 @@ class ExporterTest extends TestCase
         $this->assertInstanceOf($expected, $exporter);
     }
 
+    public function testFileNameIsChangedWhenSet(): void
+    {
+        $this->fileNamePrefix = 'findologic.new.funny';
+        $this->fileExporterMock = LibFlexportExporter::create(LibFlexportExporter::TYPE_CSV);
+        $expectedFileLocation = self::EXPORTER_LOCATION . $this->fileNamePrefix . '.csv';
+
+        $this->setUpClientMock();
+        $exporter = $this->getExporter(Exporter::TYPE_CSV);
+        $exporter->export();
+
+        $this->assertStringContainsString(
+            'id	ordernumber	name',
+            file_get_contents($expectedFileLocation)
+        );
+
+        // Remove CSV file after test.
+        unlink($expectedFileLocation);
+    }
+
     public function testExporterThrowsAnExceptionWhenAnUnknownInstanceIsRequested(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -159,6 +182,7 @@ class ExporterTest extends TestCase
             $this->logger,
             $this->logger,
             self::EXPORTER_LOCATION,
+            $this->fileNamePrefix,
             $this->clientMock,
             $this->registryServiceMock,
             $this->itemRequestMock,

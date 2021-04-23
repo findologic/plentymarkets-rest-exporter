@@ -6,10 +6,14 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 
 use Exception;
 use FINDOLOGIC\Export\Helpers\DataHelper;
+use FINDOLOGIC\PlentyMarketsRestExporter\Client as PlentyRestClient;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\PluginConfigurationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\DirectoryAware;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -237,5 +241,21 @@ class UtilsTest extends TestCase
         // Reset test, so nothing is left from this test, when running a new test.
         unset($_ENV['TRUE_VALUE']);
         unset($_ENV['FALSE_VALUE']);
+    }
+
+    public function testSendIterableRequestFailsForNonIterableRequests(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf(
+            'An iterable request must implement the interface "%s"',
+            IterableRequestInterface::class
+        ));
+
+        $request = new PluginConfigurationRequest(1234, 1234);
+        $client = $this->getMockBuilder(PlentyRestClient::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        Utils::sendIterableRequest($client, $request);
     }
 }

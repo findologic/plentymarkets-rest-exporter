@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "findologic/libflexport",
-            "version": "v2.8.0",
+            "version": "v2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/findologic/libflexport.git",
-                "reference": "7669467a15985e84bac001c5f40a47e45f4b3a9b"
+                "reference": "6ba98ae3e89def55b42d27437040b22a4bcfb4f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/findologic/libflexport/zipball/7669467a15985e84bac001c5f40a47e45f4b3a9b",
-                "reference": "7669467a15985e84bac001c5f40a47e45f4b3a9b",
+                "url": "https://api.github.com/repos/findologic/libflexport/zipball/6ba98ae3e89def55b42d27437040b22a4bcfb4f9",
+                "reference": "6ba98ae3e89def55b42d27437040b22a4bcfb4f9",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,11 @@
             ],
             "description": "FINDOLOGIC export toolkit for XML and CSV data export",
             "homepage": "https://github.com/findologic/libflexport",
-            "time": "2020-12-09T15:18:27+00:00"
+            "support": {
+                "issues": "https://github.com/findologic/libflexport/issues",
+                "source": "https://github.com/findologic/libflexport/tree/v2.9.0"
+            },
+            "time": "2021-04-22T14:04:19+00:00"
         },
         {
             "name": "findologic/xml-export-schema",
@@ -4382,5 +4386,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

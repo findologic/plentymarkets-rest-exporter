@@ -8,7 +8,7 @@ class AttributeRequest extends Request implements IterableRequestInterface
 {
     use IterableRequest;
 
-    public function __construct(?string $updatedAt = null)
+    public function __construct()
     {
         parent::__construct(
             'GET',

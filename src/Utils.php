@@ -19,11 +19,18 @@ class Utils
      * Returns an array of all responses.
      *
      * @param Client $client
-     * @param IterableRequestInterface|Request $request
+     * @param Request $request
      * @return ResponseInterface[]
      */
-    public static function sendIterableRequest(Client $client, IterableRequestInterface $request): array
+    public static function sendIterableRequest(Client $client, Request $request): array
     {
+        if (!$request instanceof IterableRequestInterface) {
+            throw new InvalidArgumentException(sprintf(
+                'An iterable request must implement the interface "%s"',
+                IterableRequestInterface::class
+            ));
+        }
+
         $responses = [];
         $lastPage = false;
         while (!$lastPage) {
