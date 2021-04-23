@@ -13,7 +13,6 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\DirectoryAware;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
