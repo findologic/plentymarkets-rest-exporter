@@ -250,11 +250,11 @@ class UtilsTest extends TestCase
             IterableRequestInterface::class
         ));
 
-        $request = new PluginConfigurationRequest(1234, 1234);
+        $nonIterableRequest = new PluginConfigurationRequest(1234, 1234);
         $client = $this->getMockBuilder(PlentyRestClient::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        Utils::sendIterableRequest($client, $request);
+        Utils::sendIterableRequest($client, $nonIterableRequest);
     }
 }
