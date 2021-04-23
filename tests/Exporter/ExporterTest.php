@@ -131,7 +131,7 @@ class ExporterTest extends TestCase
         $exporter->export();
 
         $this->assertStringContainsString(
-            'id	ordernumber	name',
+            "id\tordernumber\tname",
             file_get_contents($expectedFileLocation)
         );
 
