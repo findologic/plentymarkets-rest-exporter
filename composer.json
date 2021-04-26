@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^7.1",
         "vasily-kartashov/log4php": "^4.1",
         "ext-json": "*",
-        "findologic/libflexport": "^2.8",
+        "findologic/libflexport": "^2.9",
         "nesbot/carbon": "^2.38",
         "symfony/cache": "^5.1",
         "guzzlehttp/promises": "^1.4",
@@ -49,7 +49,7 @@
     "scripts": {
         "lint": [
             "./vendor/bin/phpcs --standard=phpcs.xml .",
-            "./vendor/bin/phpstan analyse src tests"
+            "./vendor/bin/phpstan analyse --level 2 src tests"
         ],
         "fix": "./vendor/bin/phpcbf --standard=phpcs.xml .",
         "test": "XDEBUG_MODE=coverage phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml"

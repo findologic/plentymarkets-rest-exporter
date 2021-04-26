@@ -22,6 +22,7 @@ class CsvExporter extends Exporter
         LoggerInterface $customerLogger,
         Config $config,
         string $exportPath,
+        ?string $fileNamePrefix,
         ?Client $client = null,
         ?RegistryService $registryService = null,
         ?ItemRequest $pimRequest = null,
@@ -48,6 +49,7 @@ class CsvExporter extends Exporter
 
         $this->wrapper = new CsvWrapper(
             $exportPath,
+            $fileNamePrefix,
             $this->fileExporter,
             $this->config,
             $this->registryService,

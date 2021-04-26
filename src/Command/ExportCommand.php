@@ -111,6 +111,8 @@ class ExportCommand extends Command
             $this->exporter->export();
         } catch (Throwable $e) {
             $io->error(sprintf('Something went wrong. Message: %s: %s', get_class($e), $e->getMessage()));
+
+            // @phpstan-ignore-next-line Method trace() is always available.
             $this->internalLogger->trace($e->getTraceAsString());
 
             return Command::FAILURE;

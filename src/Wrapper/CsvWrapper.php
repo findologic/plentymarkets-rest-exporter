@@ -18,6 +18,8 @@ class CsvWrapper extends Wrapper
     /** @var string */
     protected $exportPath;
 
+    protected ?string $fileNamePrefix;
+
     /** @var Exporter */
     private $exporter;
 
@@ -35,6 +37,7 @@ class CsvWrapper extends Wrapper
 
     public function __construct(
         string $path,
+        ?string $fileNamePrefix,
         Exporter $exporter,
         Config $config,
         RegistryService $registryService,
@@ -42,6 +45,7 @@ class CsvWrapper extends Wrapper
         ?LoggerInterface $customerLogger
     ) {
         $this->exportPath = $path;
+        $this->fileNamePrefix = $fileNamePrefix;
         $this->exporter = $exporter;
         $this->config = $config;
         $this->registryService = $registryService;
@@ -88,6 +92,10 @@ class CsvWrapper extends Wrapper
             }
 
             $items[] = $item;
+        }
+
+        if ($this->fileNamePrefix) {
+            $this->exporter->setFileNamePrefix($this->fileNamePrefix);
         }
 
         $this->exporter->serializeItemsToFile($this->exportPath, $items, $start, count($items), $total);

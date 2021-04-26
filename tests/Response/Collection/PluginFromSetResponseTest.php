@@ -24,7 +24,7 @@ class PluginFromSetResponseTest extends TestCase
     private $response;
 
     /**
-     * @var PluginFromSetResponse|Response
+     * @var PluginFromSetResponse
      */
     private $pluginResponse;
 
