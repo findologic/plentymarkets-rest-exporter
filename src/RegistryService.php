@@ -349,7 +349,7 @@ class RegistryService
             $propertyResponse = PropertyParser::parse($response);
 
             foreach ($propertyResponse->all() as $property) {
-                $this->set('property_' . $property->getPropertyId(), $property);
+                $this->set('property_' . $property->getId(), $property);
             }
         }
     }
