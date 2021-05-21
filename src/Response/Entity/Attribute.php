@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute\Name;
+
 class Attribute extends Entity
 {
     /** @var int */
@@ -51,6 +53,9 @@ class Attribute extends Entity
     /** @var string */
     private $updatedAt;
 
+    /** @var Name[] */
+    private $names = [];
+
     public function __construct(array $data)
     {
         $this->id = (int)$data['id'];
@@ -68,10 +73,21 @@ class Attribute extends Entity
         $this->laRedouteAttribute = (int)$data['laRedouteAttribute'];
         $this->isGroupable = (bool)$data['isGroupable'];
         $this->updatedAt = (string)$data['updatedAt'];
+
+        if (!empty($data['attributeNames'])) {
+            foreach ($data['attributeNames'] as $name) {
+                $this->names[] = new Name($name);
+            }
+        }
     }
 
     public function getData(): array
     {
+        $names = [];
+        foreach ($this->names as $name) {
+            $names[] = $name->getData();
+        }
+
         return [
             'id' => $this->id,
             'backendName' => $this->backendName,
@@ -87,7 +103,8 @@ class Attribute extends Entity
             'typeOfSelectionInOnlineStore' => $this->typeOfSelectionInOnlineStore,
             'laRedouteAttribute' => $this->laRedouteAttribute,
             'isGroupable' => $this->isGroupable,
-            'updatedAt' => $this->updatedAt
+            'updatedAt' => $this->updatedAt,
+            'attributeNames' => $names
         ];
     }
 
@@ -164,5 +181,14 @@ class Attribute extends Entity
     public function getUpdatedAt(): string
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return Name[]
+     */
+    public function getNames(): array
+    {
+        // Undocumented - the properties may not match the received data exactly
+        return $this->names;
     }
 }

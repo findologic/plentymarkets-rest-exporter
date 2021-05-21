@@ -121,7 +121,8 @@
             "typeOfSelectionInOnlineStore": "dropdown",
             "laRedouteAttribute": 0,
             "isGroupable": false,
-            "updatedAt": "2015-04-30T08:56:34+01:00"
+            "updatedAt": "2015-04-30T08:56:34+01:00",
+            "attributeNames": []
           },
           "attributeValue": {
             "id": 1,
@@ -576,7 +577,8 @@
             "typeOfSelectionInOnlineStore": "dropdown",
             "laRedouteAttribute": 0,
             "isGroupable": false,
-            "updatedAt": "2015-04-30T08:56:34+01:00"
+            "updatedAt": "2015-04-30T08:56:34+01:00",
+            "attributeNames": []
           },
           "attributeValue": {
             "id": 2,
@@ -614,7 +616,8 @@
             "typeOfSelectionInOnlineStore": "dropdown",
             "laRedouteAttribute": 0,
             "isGroupable": false,
-            "updatedAt": "2015-04-30T08:56:34+01:00"
+            "updatedAt": "2015-04-30T08:56:34+01:00",
+            "attributeNames": []
           },
           "attributeValue": {
             "id": 321321,
@@ -1109,7 +1112,8 @@
             "typeOfSelectionInOnlineStore": "dropdown",
             "laRedouteAttribute": 0,
             "isGroupable": false,
-            "updatedAt": "2015-04-30T08:56:34+01:00"
+            "updatedAt": "2015-04-30T08:56:34+01:00",
+            "attributeNames": []
           },
           "attributeValue": {
             "id": 2,

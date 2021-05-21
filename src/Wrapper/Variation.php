@@ -327,9 +327,25 @@ class Variation
                 continue;
             }
 
+            $attributeName = $attribute->getBackendName();
+            foreach ($attribute->getNames() as $attributeTranslation) {
+                if (strtolower($attributeTranslation->getLang()) === strtolower($this->config->getLanguage())) {
+                    $attributeName = $attributeTranslation->getName();
+                    break;
+                }
+            }
+
+            $value = $variationAttributeValue->getValue()->getBackendName();
+            foreach ($variationAttributeValue->getValue()->getNames() as $valueTranslation) {
+                if (strtolower($valueTranslation->getLang()) === strtolower($this->config->getLanguage())) {
+                    $value = $valueTranslation->getName();
+                    break;
+                }
+            }
+
             $this->attributes[] = new Attribute(
-                $attribute->getBackendName(),
-                [$variationAttributeValue->getValue()->getBackendName()]
+                $attributeName,
+                [$value]
             );
         }
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
 
@@ -87,5 +88,13 @@ class AttributeResponseTest extends TestCase
         $this->assertEquals(0, $attribute->getLaRedouteAttribute());
         $this->assertEquals(false, $attribute->isGroupable());
         $this->assertEquals('2015-04-30T08:56:34+01:00', $attribute->getUpdatedAt());
+
+        $names = $attribute->getNames();
+        $this->assertCount(2, $names);
+        /** @var Name $name */
+        $name = reset($names);
+        $this->assertEquals(1, $name->getAttributeId());
+        $this->assertEquals('de', $name->getLang());
+        $this->assertEquals('couch color de', $name->getName());
     }
 }

@@ -109,7 +109,7 @@ class VariationTest extends TestCase
         $this->assertEquals(['Armchairs & Stools'], $attributes[0]->getValues());
         $this->assertEquals('cat_url', $attributes[1]->getKey());
         $this->assertEquals(['/wohnzimmer/sessel-hocker/'], $attributes[1]->getValues());
-        $this->assertEquals('Couch color', $attributes[2]->getKey());
+        $this->assertEquals('couch color en', $attributes[2]->getKey());
         $this->assertEquals(['purple'], $attributes[2]->getValues());
 
         $properties = $wrapper->getProperties();
