@@ -94,7 +94,7 @@ trait PropertyAware
                     $this->config->getLanguage()
                 );
             default:
-                return $property->getPropertyData()->getNames()[0]->getValue() ?? null;
+                return $property->getValues()[0]->getValue();
         }
     }
 }

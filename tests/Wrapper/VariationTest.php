@@ -357,8 +357,8 @@ class VariationTest extends TestCase
     public function testPropertiesAreProperlyExported(): void
     {
         $expectedExportedAttributes = [
-            new Attribute('Color', ['Bereichsslider']),
-            new Attribute('Color', ['Hunde']),
+            new Attribute('Color', ['8']),
+            new Attribute('Color', ['100']),
         ];
 
         $variationEntity = $this->getVariationEntity('Pim/Variations/variation_with_properties.json');
