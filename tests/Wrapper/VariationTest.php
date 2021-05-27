@@ -430,7 +430,7 @@ class VariationTest extends TestCase
     public function testMultiSelectionPropertiesAreProperlyExported(): void
     {
         $expectedExportedAttributes = [
-            new Attribute('Shortie', ['value1', 'value2']),
+            new Attribute('Shortie', ['value1', 'value 654654 en']),
         ];
 
         $variationEntity = $this->getVariationEntity('Pim/Variations/variation_with_multi_selection_properties.json');
@@ -464,9 +464,6 @@ class VariationTest extends TestCase
         $properties = PropertyParser::parse(
             $this->getMockResponse('PropertyResponse/property_type_multi_selection.json')
         );
-        $propertySelections = PropertySelectionParser::parse(
-            $this->getMockResponse('PropertySelectionResponse/selections_without_relations.json')
-        );
         $propertyEntity = $properties->first();
 
         $wrapper = new VariationWrapper(
@@ -476,8 +473,7 @@ class VariationTest extends TestCase
         );
 
         $this->registryServiceMock->expects($this->any())->method('getProperty')->willReturn($propertyEntity);
-        $this->registryServiceMock->expects($this->any())->method('getPropertySelections')
-            ->willReturn($propertySelections);
+        $this->registryServiceMock->expects($this->any())->method('getPropertySelections')->willReturn(null);
 
         $wrapper->processData();
 

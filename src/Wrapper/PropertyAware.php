@@ -90,6 +90,7 @@ trait PropertyAware
 
                 return $this->registryService->getPropertySelections()->getPropertySelectionValues(
                     $property->getId(),
+                    $property->getValues(),
                     $this->config->getLanguage()
                 );
             default:
