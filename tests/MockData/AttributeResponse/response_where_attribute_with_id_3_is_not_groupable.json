@@ -51,7 +51,7 @@
       "neckermannAtEpAttribute": 0,
       "typeOfSelectionInOnlineStore": "dropdown",
       "laRedouteAttribute": 0,
-      "isGroupable": true,
+      "isGroupable": false,
       "updatedAt": "2018-06-19T08:04:07+01:00"
     }
   ],

@@ -1,0 +1,5766 @@
+{
+  "page": 1,
+  "totalsCount": 3,
+  "isLastPage": true,
+  "entries": [
+    {
+      "categories": [
+        {
+          "categoryId": 20,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "barcodes": [
+        {
+          "barcodeId": 1,
+          "code": "3213213213213"
+        }
+      ],
+      "additionalSkus": null,
+      "attributeValues": [
+        {
+          "attributeId": 1,
+          "attributeValueSetId": 1,
+          "valueId": 1,
+          "attributeValue": {
+            "id": 1,
+            "position": 1,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "de",
+                "name": "lila",
+                "valueId": "1"
+              }
+            ],
+            "attributeId": 1,
+            "backendName": "purple",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2014-01-15 00:32:01"
+          }
+        }
+      ],
+      "bundleComponents": null,
+      "clients": [
+        {
+          "plentyId": 1234
+        }
+      ],
+      "defaultCategories": null,
+      "images": [
+        {
+          "availabilities": [
+            {
+              "type": "marketplace",
+              "value": 139,
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 135
+            },
+            {
+              "imageId": 46,
+              "type": "marketplace",
+              "value": 110
+            },
+            {
+              "type": "marketplace",
+              "value": 115,
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "value": 120,
+              "imageId": 46
+            },
+            {
+              "imageId": 46,
+              "type": "marketplace",
+              "value": 133
+            },
+            {
+              "imageId": 46,
+              "value": -1,
+              "type": "listing"
+            },
+            {
+              "imageId": 46,
+              "value": 126,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "value": 124,
+              "imageId": 46
+            },
+            {
+              "imageId": 46,
+              "value": 111,
+              "type": "marketplace"
+            },
+            {
+              "value": 102,
+              "type": "marketplace",
+              "imageId": 46
+            },
+            {
+              "imageId": 46,
+              "value": 6,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 46,
+              "value": 5,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 46,
+              "value": 107,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 46,
+              "type": "marketplace",
+              "value": 121
+            },
+            {
+              "type": "marketplace",
+              "value": 134,
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 103
+            },
+            {
+              "imageId": 46,
+              "value": 119,
+              "type": "marketplace"
+            },
+            {
+              "value": -1,
+              "type": "mandant",
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "value": 108,
+              "imageId": 46
+            },
+            {
+              "value": 127,
+              "imageId": 46,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 117
+            },
+            {
+              "value": 109,
+              "type": "marketplace",
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 106
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 104
+            },
+            {
+              "imageId": 46,
+              "type": "marketplace",
+              "value": 122
+            },
+            {
+              "type": "marketplace",
+              "value": 131,
+              "imageId": 46
+            },
+            {
+              "imageId": 46,
+              "value": 114,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "value": 137,
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 116
+            },
+            {
+              "value": 118,
+              "type": "marketplace",
+              "imageId": 46
+            },
+            {
+              "value": 136,
+              "type": "marketplace",
+              "imageId": 46
+            },
+            {
+              "value": 3,
+              "imageId": 46,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": -1
+            },
+            {
+              "imageId": 46,
+              "type": "marketplace",
+              "value": 130
+            },
+            {
+              "type": "marketplace",
+              "value": 143,
+              "imageId": 46
+            },
+            {
+              "imageId": 46,
+              "type": "marketplace",
+              "value": 105
+            },
+            {
+              "type": "marketplace",
+              "value": 123,
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "value": 138,
+              "imageId": 46
+            },
+            {
+              "imageId": 46,
+              "value": 7,
+              "type": "marketplace"
+            },
+            {
+              "value": 4,
+              "type": "marketplace",
+              "imageId": 46
+            },
+            {
+              "type": "marketplace",
+              "imageId": 46,
+              "value": 132
+            }
+          ],
+          "width": 716,
+          "height": 557,
+          "md5Checksum": "b0f935f9768b95eed376ae53b6e503b7",
+          "position": 0,
+          "url": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/full/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg",
+          "fileType": "jpg",
+          "urlMiddle": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/middle/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg",
+          "hasLinkedVariations": "1",
+          "itemId": 131,
+          "urlPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/preview/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg",
+          "id": 46,
+          "attributeValueImages": [],
+          "names": [
+            {
+              "name": "",
+              "imageId": 46,
+              "lang": "de",
+              "alternate": ""
+            }
+          ],
+          "type": "internal",
+          "createdAt": "2014-01-15T00:00:19+01:00",
+          "storageProviderId": "2",
+          "size": 40783,
+          "updatedAt": "2019-10-09T11:39:54+02:00",
+          "path": "S3:131:131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg",
+          "urlSecondPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/secondPreview/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg",
+          "md5ChecksumOriginal": "b0f935f9768b95eed376ae53b6e503b7"
+        },
+        {
+          "availabilities": [
+            {
+              "value": 111,
+              "imageId": 47,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 47,
+              "type": "mandant",
+              "value": -1
+            },
+            {
+              "imageId": 47,
+              "type": "marketplace",
+              "value": 108
+            },
+            {
+              "type": "marketplace",
+              "value": 110,
+              "imageId": 47
+            },
+            {
+              "type": "marketplace",
+              "value": 133,
+              "imageId": 47
+            },
+            {
+              "type": "listing",
+              "imageId": 47,
+              "value": -1
+            },
+            {
+              "value": 6,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "imageId": 47,
+              "value": 126,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "imageId": 47,
+              "value": 106
+            },
+            {
+              "imageId": 47,
+              "type": "marketplace",
+              "value": 122
+            },
+            {
+              "type": "marketplace",
+              "value": 137,
+              "imageId": 47
+            },
+            {
+              "imageId": 47,
+              "type": "marketplace",
+              "value": 107
+            },
+            {
+              "value": 121,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "imageId": 47,
+              "value": 143,
+              "type": "marketplace"
+            },
+            {
+              "value": 138,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 4,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 5,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "imageId": 47,
+              "value": 139,
+              "type": "marketplace"
+            },
+            {
+              "value": 124,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "type": "marketplace",
+              "imageId": 47,
+              "value": 103
+            },
+            {
+              "type": "marketplace",
+              "value": 123,
+              "imageId": 47
+            },
+            {
+              "value": 120,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 127,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 116,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 109,
+              "imageId": 47,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 47,
+              "value": 7,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 47,
+              "value": 132,
+              "type": "marketplace"
+            },
+            {
+              "value": 130,
+              "imageId": 47,
+              "type": "marketplace"
+            },
+            {
+              "imageId": 47,
+              "type": "marketplace",
+              "value": 105
+            },
+            {
+              "imageId": 47,
+              "type": "marketplace",
+              "value": 135
+            },
+            {
+              "imageId": 47,
+              "type": "marketplace",
+              "value": 102
+            },
+            {
+              "type": "marketplace",
+              "value": 119,
+              "imageId": 47
+            },
+            {
+              "imageId": 47,
+              "value": 104,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "value": 117,
+              "imageId": 47
+            },
+            {
+              "type": "marketplace",
+              "value": 114,
+              "imageId": 47
+            },
+            {
+              "type": "marketplace",
+              "imageId": 47,
+              "value": 115
+            },
+            {
+              "value": -1,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "type": "marketplace",
+              "imageId": 47,
+              "value": 136
+            },
+            {
+              "value": 3,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 118,
+              "type": "marketplace",
+              "imageId": 47
+            },
+            {
+              "value": 131,
+              "imageId": 47,
+              "type": "marketplace"
+            },
+            {
+              "type": "marketplace",
+              "imageId": 47,
+              "value": 134
+            }
+          ],
+          "hasLinkedVariations": "1",
+          "size": 34618,
+          "urlSecondPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/secondPreview/131-Zweisitzer-Amsterdam-at-Dawn-schwarz.jpg",
+          "names": [
+            {
+              "lang": "de",
+              "imageId": 47,
+              "name": "",
+              "alternate": ""
+            }
+          ],
+          "width": 716,
+          "md5ChecksumOriginal": "98d321021284e1254950c520c89149ae",
+          "attributeValueImages": [],
+          "position": 1,
+          "height": 557,
+          "storageProviderId": "2",
+          "urlPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/preview/131-Zweisitzer-Amsterdam-at-Dawn-schwarz.jpg",
+          "id": 47,
+          "url": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/full/131-Zweisitzer-Amsterdam-at-Dawn-schwarz.jpg",
+          "md5Checksum": "98d321021284e1254950c520c89149ae",
+          "fileType": "jpg",
+          "updatedAt": "2019-10-09T11:39:54+02:00",
+          "createdAt": "2014-01-15T00:00:20+01:00",
+          "urlMiddle": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/middle/131-Zweisitzer-Amsterdam-at-Dawn-schwarz.jpg",
+          "path": "S3:131:131-Zweisitzer-Amsterdam-at-Dawn-schwarz.jpg",
+          "itemId": 131,
+          "type": "internal"
+        }
+      ],
+      "marketIdentNumbers": null,
+      "markets": null,
+      "salesPrices": [
+        {
+          "salesPriceId": 0,
+          "price": 279
+        },
+        {
+          "salesPriceId": 1,
+          "price": 320
+        }
+      ],
+      "skus": null,
+      "supplier": null,
+      "warehouses": null,
+      "properties": [
+        {
+          "propertyId": 16,
+          "values": [
+            {
+              "id": null,
+              "lang": "0",
+              "value": "13",
+              "description": null
+            },
+            {
+              "id": null,
+              "lang": "0",
+              "value": "14",
+              "description": null
+            }
+          ],
+          "property": {
+            "options": [
+              {
+                "id": 49,
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 49,
+                    "value": "4.26",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 49
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24",
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 48,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.06",
+                    "optionId": 48
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 48
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 39,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 39,
+                    "value": "104.03"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24",
+                "id": 39,
+                "propertyId": 16
+              },
+              {
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 106,
+                    "optionId": 106,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "142.00",
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 106,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "value": "125.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 95,
+                    "optionId": 95
+                  }
+                ],
+                "id": 95,
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "0.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 104,
+                    "optionId": 104
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "id": 104
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 87,
+                    "value": "155.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 87,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "id": 87,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "104.22",
+                    "optionId": 38,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 38
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 38,
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 85,
+                    "id": 85,
+                    "value": "147.00"
+                  }
+                ],
+                "id": 85,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 28,
+                    "value": "104.24",
+                    "id": 28,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 28,
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "id": 45,
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.25",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 45,
+                    "id": 45
+                  }
+                ],
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.09",
+                    "id": 47,
+                    "optionId": 47
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24",
+                "id": 47,
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 120,
+                    "value": "115.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 120
+                  }
+                ],
+                "id": 120,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "value": "135.00",
+                    "optionId": 111,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 111
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 111,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "2.17",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 72,
+                    "optionId": 72
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 72,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "id": 99,
+                "propertyOptionValues": [
+                  {
+                    "optionId": 99,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "116.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 99
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "optionId": 53,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "127.00",
+                    "id": 53
+                  }
+                ],
+                "id": 53,
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 68,
+                    "value": "2.07",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 68
+                  }
+                ],
+                "propertyId": 16,
+                "id": 68,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "1.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 103,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 103
+                  }
+                ],
+                "id": 103,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.05",
+                    "optionId": 63,
+                    "id": 63,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "id": 63,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.11",
+                    "id": 64,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 64
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "id": 64,
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 83,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "2.01",
+                    "optionId": 83
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 83,
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 54,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 54,
+                    "value": "152.00"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 54,
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 50,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.02",
+                    "id": 50
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "id": 50,
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 34,
+                    "value": "104.09",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 34,
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:24",
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 34,
+                "propertyId": 16
+              },
+              {
+                "id": 59,
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "id": 59,
+                    "value": "139.00",
+                    "optionId": 59,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 93,
+                "propertyOptionValues": [
+                  {
+                    "optionId": 93,
+                    "value": "102.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 93
+                  }
+                ],
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "4.03",
+                    "id": 52,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 52
+                  }
+                ],
+                "id": 52,
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 96,
+                    "value": "121.00",
+                    "id": 96,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 96
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "id": 124,
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "value": "113.00",
+                    "id": 124,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 124
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 118,
+                    "value": "106.02",
+                    "id": 118
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 118,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 29,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 29,
+                    "value": "104.01",
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24",
+                "id": 29,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "4.24",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 41,
+                    "id": 41
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:24",
+                "id": 41
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "3.00",
+                    "id": 84,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 84,
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "id": 84,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 27,
+                    "id": 27,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "104.04",
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "id": 27,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 109,
+                    "id": 109,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "107.00"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 109,
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "id": 78,
+                "propertyOptionValues": [
+                  {
+                    "optionId": 78,
+                    "id": 78,
+                    "value": "2.21",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 130,
+                    "value": "5.00",
+                    "optionId": 130,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 130,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 56,
+                    "value": "143.00",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 56,
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 56
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 89,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "111.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 89
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 89,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 101,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "122.00",
+                    "optionId": 101
+                  }
+                ],
+                "id": 101,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 102,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "123.00",
+                    "optionId": 102
+                  }
+                ],
+                "id": 102,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 86,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "145.00",
+                    "id": 86
+                  }
+                ],
+                "id": 86,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 113,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "108.02",
+                    "optionId": 113
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 113,
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "118.00",
+                    "optionId": 131,
+                    "id": 131,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "id": 131,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "value": "2.18",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 74,
+                    "id": 74,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "id": 74,
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 115,
+                    "value": "136.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 115
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 115,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 79,
+                    "value": "2.22",
+                    "optionId": 79,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 79,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "value": "34185",
+                    "createdAt": "2020-06-29 14:54:34",
+                    "optionId": 20,
+                    "id": 20,
+                    "updatedAt": "2020-06-29 14:54:34"
+                  }
+                ],
+                "typeOptionIdentifier": "clients",
+                "createdAt": "2020-06-29 14:54:34",
+                "updatedAt": "2020-06-29 14:54:34",
+                "id": 20
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 51,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.22",
+                    "optionId": 51,
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 51,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "id": 100,
+                    "value": "6.00",
+                    "optionId": 100,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 100,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "117.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 94,
+                    "optionId": 94
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 94,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "104.08",
+                    "id": 33,
+                    "optionId": 33
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 33,
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 105,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "149.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 105
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 105,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 127,
+                    "value": "130.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 127
+                  }
+                ],
+                "id": 127,
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 43,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.21",
+                    "optionId": 43
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "id": 43,
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 116,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "131.00",
+                    "optionId": 116,
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 116,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyOptionValues": [
+                  {
+                    "value": "152.01",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 55,
+                    "id": 55
+                  }
+                ],
+                "id": 55,
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "124.00",
+                    "id": 126,
+                    "optionId": 126,
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 126
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 107,
+                    "value": "120.00",
+                    "id": 107
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 107,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 121,
+                    "id": 121,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "101.00",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "id": 121,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:24",
+                "id": 37,
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 37,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "104.02",
+                    "optionId": 37
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyId": 16
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "108.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 112,
+                    "optionId": 112
+                  }
+                ],
+                "id": 112
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 30,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "104.21",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "id": 30
+                  }
+                ],
+                "id": 30,
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyId": 16
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyOptionValues": [
+                  {
+                    "id": 31,
+                    "optionId": 31,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "104.05",
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "id": 31,
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 136,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 136,
+                    "value": "displayInOrderProcess"
+                  }
+                ],
+                "typeOptionIdentifier": "display",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 136,
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.20",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 77,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 77
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 77,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "112.00",
+                    "optionId": 123,
+                    "id": 123,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "id": 123,
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 129,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 129,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "148.00"
+                  }
+                ],
+                "id": 129,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 76,
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 76,
+                    "value": "2.12",
+                    "optionId": 76
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 75,
+                    "value": "2.09",
+                    "id": 75,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "id": 75
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 70,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 70,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "2.15"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "id": 70
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 58,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 58,
+                    "value": "150.00"
+                  }
+                ],
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 58
+              },
+              {
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 44,
+                    "value": "4.05",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 44
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "id": 44
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "id": 26,
+                    "optionId": 26,
+                    "value": "104.07",
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 26,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 119,
+                    "optionId": 119,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "106.00",
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "id": 119
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 98,
+                    "id": 98,
+                    "value": "103.00",
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 98,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 132,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "105.00",
+                    "id": 132
+                  }
+                ],
+                "propertyId": 16,
+                "id": 132,
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 114,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "126.00",
+                    "optionId": 114
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "id": 114,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.19",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 67,
+                    "optionId": 67,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 67,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 23,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "4.00",
+                    "id": 23,
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 23
+              },
+              {
+                "id": 133,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 133,
+                    "value": "showOnItemsPage",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 133,
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "typeOptionIdentifier": "display"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "4.07",
+                    "id": 24,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 24,
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 24,
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 25,
+                    "optionId": 25,
+                    "value": "104.00"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "id": 25
+              },
+              {
+                "id": 80,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "value": "2.13",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 80,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 80
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.16",
+                    "optionId": 71,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 71,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 71,
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 40,
+                    "id": 40,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.04"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 40,
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 57,
+                    "id": 57,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "143.02"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 57,
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 92,
+                    "value": "138.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 92,
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "propertyId": 16,
+                "id": 92,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "id": 60,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 60,
+                    "value": "144.00"
+                  }
+                ],
+                "id": 60,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.04",
+                    "optionId": 62,
+                    "id": 62,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "id": 62,
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "id": 61,
+                "propertyOptionValues": [
+                  {
+                    "id": 61,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "2.00",
+                    "optionId": 61,
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16
+              },
+              {
+                "id": 91,
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 91,
+                    "value": "137.00",
+                    "optionId": 91
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 110,
+                    "value": "154.00",
+                    "optionId": 110,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "id": 110,
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 36,
+                    "value": "104.26",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 36
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:24",
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 36,
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyOptionValues": [
+                  {
+                    "id": 42,
+                    "value": "4.01",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 42,
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 42,
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 82,
+                    "value": "2.03",
+                    "id": 82
+                  }
+                ],
+                "id": 82,
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 137,
+                    "optionId": 137,
+                    "value": "C62",
+                    "createdAt": "2020-06-29 15:05:38",
+                    "updatedAt": "2020-06-29 15:05:38"
+                  }
+                ],
+                "propertyId": 16,
+                "id": 137,
+                "typeOptionIdentifier": "units",
+                "createdAt": "2020-06-29 15:05:38",
+                "updatedAt": "2020-06-29 15:05:38"
+              },
+              {
+                "typeOptionIdentifier": "display",
+                "propertyOptionValues": [
+                  {
+                    "value": "showInPDFDocuments",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 135,
+                    "optionId": 135,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "id": 135,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 117,
+                    "value": "114.00",
+                    "id": 117,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "id": 117,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "id": 46,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.08",
+                    "optionId": 46,
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24",
+                "id": 46
+              },
+              {
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 32,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "104.25",
+                    "id": 32,
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 32
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 108,
+                    "value": "119.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 108
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "id": 108,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "optionId": 69,
+                    "id": 69,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "2.08"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 69,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 81,
+                    "value": "2.14",
+                    "optionId": 81,
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 81,
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "showInItemListing",
+                    "id": 134,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 134,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 134,
+                "typeOptionIdentifier": "display"
+              },
+              {
+                "id": 97,
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 97,
+                    "optionId": 97,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "121.02"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.02",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 66,
+                    "optionId": 66
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "id": 66,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 125,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 125,
+                    "value": "134.00"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 125,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 88,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "132.00",
+                    "id": 88
+                  }
+                ],
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 88,
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 73,
+                    "optionId": 73,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "2.10"
+                  }
+                ],
+                "id": 73,
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 128,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 128,
+                    "value": "133.00"
+                  }
+                ],
+                "id": 128,
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 35,
+                    "value": "104.06",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 35,
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "id": 35,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 65,
+                    "value": "2.06",
+                    "optionId": 65
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "id": 65,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "109.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 122,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 122
+                  }
+                ],
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 122,
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "7.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 90,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 90
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "id": 90,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "value": "110.00",
+                    "id": 22,
+                    "optionId": 22,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "id": 22
+              }
+            ],
+            "selections": [
+              {
+                "relation": {
+                  "id": 40,
+                  "relationValues": [
+                    {
+                      "createdAt": "2020-05-07 15:52:05",
+                      "propertyRelationId": 40,
+                      "updatedAt": "2020-05-07 15:52:05",
+                      "value": "Mehrfachauswahl 1",
+                      "id": 31,
+                      "lang": "DE",
+                      "description": null
+                    }
+                  ],
+                  "relationTargetId": null,
+                  "updatedAt": "2020-05-07 15:52:05",
+                  "createdAt": "2020-05-07 15:52:05",
+                  "propertyId": 16,
+                  "relationTypeIdentifier": null,
+                  "selectionRelationId": 13
+                },
+                "position": 0,
+                "id": 13,
+                "createdAt": "2020-05-07 15:52:05",
+                "updatedAt": "2020-05-07 15:52:05",
+                "propertyId": 16
+              },
+              {
+                "relation": {
+                  "relationValues": [
+                    {
+                      "updatedAt": "2020-05-07 15:52:13",
+                      "value": "Mehrfachauswahl 2",
+                      "lang": "DE",
+                      "description": null,
+                      "createdAt": "2020-05-07 15:52:13",
+                      "propertyRelationId": 41,
+                      "id": 32
+                    }
+                  ],
+                  "selectionRelationId": 14,
+                  "createdAt": "2020-05-07 15:52:13",
+                  "relationTargetId": null,
+                  "updatedAt": "2020-05-07 15:52:13",
+                  "relationTypeIdentifier": null,
+                  "propertyId": 16,
+                  "id": 41
+                },
+                "position": 0,
+                "createdAt": "2020-05-07 15:52:13",
+                "updatedAt": "2020-05-07 15:52:13",
+                "id": 14,
+                "propertyId": 16
+              },
+              {
+                "relation": {
+                  "relationValues": [
+                    {
+                      "lang": "DE",
+                      "value": "Mehrfachauswahl 3",
+                      "description": null,
+                      "id": 33,
+                      "createdAt": "2020-05-07 15:52:20",
+                      "propertyRelationId": 42,
+                      "updatedAt": "2020-05-07 15:52:20"
+                    }
+                  ],
+                  "relationTypeIdentifier": null,
+                  "selectionRelationId": 15,
+                  "createdAt": "2020-05-07 15:52:20",
+                  "propertyId": 16,
+                  "relationTargetId": null,
+                  "updatedAt": "2020-05-07 15:52:20",
+                  "id": 42
+                },
+                "updatedAt": "2020-05-07 15:52:20",
+                "createdAt": "2020-05-07 15:52:20",
+                "propertyId": 16,
+                "id": 15,
+                "position": 0
+              },
+              {
+                "relation": {
+                  "relationValues": [
+                    {
+                      "lang": "DE",
+                      "id": 34,
+                      "propertyRelationId": 43,
+                      "updatedAt": "2020-05-07 15:52:28",
+                      "createdAt": "2020-05-07 15:52:28",
+                      "description": null,
+                      "value": "Mehrfachauswahl 4"
+                    }
+                  ],
+                  "selectionRelationId": 16,
+                  "relationTypeIdentifier": null,
+                  "id": 43,
+                  "relationTargetId": null,
+                  "propertyId": 16,
+                  "updatedAt": "2020-05-07 15:52:28",
+                  "createdAt": "2020-05-07 15:52:28"
+                },
+                "createdAt": "2020-05-07 15:52:28",
+                "propertyId": 16,
+                "id": 16,
+                "updatedAt": "2020-05-07 15:52:28",
+                "position": 0
+              }
+            ],
+            "names": [
+              {
+                "lang": "de",
+                "createdAt": "2020-05-07 15:51:50",
+                "updatedAt": "2020-05-07 15:51:50",
+                "description": "",
+                "name": "Mehrfachauswahl",
+                "id": 16,
+                "propertyId": 16
+              }
+            ],
+            "position": 3,
+            "typeIdentifier": "item",
+            "id": 16,
+            "updatedAt": "2020-06-29 15:05:37",
+            "cast": "multiSelection",
+            "createdAt": "2020-05-07 15:51:50"
+          }
+        }
+      ],
+      "tags": [
+        {
+          "tagId": 1,
+          "tag": {
+            "createdAt": "2019-03-19 14:07:52",
+            "updatedAt": "2020-03-03 15:30:19",
+            "names": [
+              {
+                "id": 1,
+                "tagId": "1",
+                "tagLang": "de",
+                "tagName": "i am a tag"
+              },
+              {
+                "id": 2,
+                "tagId": "1",
+                "tagLang": "en",
+                "tagName": "I am a Tag"
+              },
+              {
+                "id": 3,
+                "tagId": "1",
+                "tagLang": "fr",
+                "tagName": "Le france"
+              }
+            ],
+            "clients": [
+              {
+                "id": 1,
+                "tagId": 1,
+                "plentyId": 34185,
+                "createdAt": "2020-08-19 12:48:35",
+                "updatedAt": "2020-08-19 12:48:35"
+              }
+            ],
+            "id": 1,
+            "tagName": "i am a tag",
+            "color": "#ffffff"
+          }
+        }
+      ],
+      "comments": null,
+      "id": 1004,
+      "timestamps": null,
+      "unit": {
+        "unitId": 4,
+        "unitCombinationId": 321123,
+        "content": 1000
+      },
+      "base": {
+        "isMain": true,
+        "mainVariationId": null,
+        "itemId": 106,
+        "position": 0,
+        "isActive": true,
+        "number": "S-000813-C",
+        "model": "modeeeel",
+        "externalId": "",
+        "availability": 1,
+        "estimatedAvailableAt": null,
+        "purchasePrice": 0,
+        "movingAveragePrice": null,
+        "priceCalculationId": null,
+        "picking": null,
+        "stockLimitation": 1,
+        "isVisibleIfNetStockIsPositive": true,
+        "isInvisibleIfNetStockIsNotPositive": true,
+        "isAvailableIfNetStockIsPositive": false,
+        "isUnavailableIfNetStockIsNotPositive": false,
+        "isVisibleInListIfNetStockIsPositive": false,
+        "isInvisibleInListIfNetStockIsNotPositive": false,
+        "mainWarehouseId": 1,
+        "maximumOrderQuantity": 0,
+        "minimumOrderQuantity": null,
+        "intervalOrderQuantity": null,
+        "availableUntil": null,
+        "releasedAt": null,
+        "name": null,
+        "weightG": 0,
+        "weightNetG": 0,
+        "widthMM": 0,
+        "lengthMM": 0,
+        "heightMM": 0,
+        "extraShippingCharge1": 0,
+        "extraShippingCharge2": 0,
+        "unitsContained": 1,
+        "palletTypeId": 24,
+        "packingUnits": 1,
+        "packingUnitTypeId": 0,
+        "transportationCosts": 0,
+        "storageCosts": 0,
+        "customs": 0,
+        "operatingCosts": 0,
+        "vatId": 0,
+        "bundleType": null,
+        "automaticClientVisibility": 0,
+        "automaticListVisibility": 3,
+        "isHiddenInCategoryList": false,
+        "defaultShippingCosts": null,
+        "mayShowUnitPrice": true,
+        "parentVariationId": null,
+        "parentVariationQuantity": null,
+        "singleItemCount": null,
+        "hasCalculatedBundleWeight": null,
+        "hasCalculatedBundleNetWeight": null,
+        "hasCalculatedBundlePurchasePrice": null,
+        "hasCalculatedBundleMovingAveragePrice": null,
+        "customsTariffNumber": null,
+        "categoriesInherited": false,
+        "referrerInherited": false,
+        "clientsInherited": false,
+        "salesPricesInherited": false,
+        "supplierInherited": false,
+        "warehousesInherited": false,
+        "propertiesInherited": false,
+        "tagsInherited": false,
+        "item": {
+          "id": 106,
+          "position": 0,
+          "add_cms_page": "0",
+          "condition": 0,
+          "free1": null,
+          "free2": null,
+          "free3": null,
+          "free4": null,
+          "free5": null,
+          "free6": null,
+          "free7": "0",
+          "free8": "0",
+          "free9": "0",
+          "free10": "0",
+          "free11": "0",
+          "free12": "0",
+          "free13": "0",
+          "free14": "0",
+          "free15": "0",
+          "free16": "0",
+          "free17": "0",
+          "free18": "0",
+          "free19": "0",
+          "free20": "0",
+          "gimahhot": "0",
+          "storeSpecial": 0,
+          "ownerId": null,
+          "manufacturerId": 2,
+          "producingCountryId": 1,
+          "revenueAccount": 0,
+          "couponRestriction": 0,
+          "conditionApi": 0,
+          "createdAt": "2014-12-24T00:00:00+01:00",
+          "updatedAt": "2017-07-05T14:00:51+02:00",
+          "isSubscribable": false,
+          "amazonFbaPlatform": 0,
+          "isShippableByAmazon": false,
+          "amazonProductType": 0,
+          "amazonFedas": "",
+          "ebayPresetId": null,
+          "ebayCategory": null,
+          "ebayCategory2": null,
+          "ebayStoreCategory": null,
+          "ebayStoreCategory2": null,
+          "rakutenCategoryId": 0,
+          "flagOne": 26,
+          "flagTwo": 0,
+          "ageRestriction": 0,
+          "feedback": 0,
+          "itemType": "default",
+          "stockType": 0,
+          "sitemapPublished": "0",
+          "isSerialNumber": false,
+          "isShippingPackage": false,
+          "maximumOrderQuantity": 0,
+          "variationCount": "1",
+          "customsTariffNumber": "",
+          "mainVariationId": 1004,
+          "inactive": true
+        },
+        "characteristics": [],
+        "images": [
+          {
+            "availabilities": [
+              {
+                "type": "listing",
+                "imageId": 12,
+                "value": -1
+              },
+              {
+                "value": -1,
+                "imageId": 12,
+                "type": "mandant"
+              },
+              {
+                "type": "marketplace",
+                "imageId": 12,
+                "value": -1
+              }
+            ],
+            "md5ChecksumOriginal": "784f64ca3a26a1d0ba65594378b69bb9",
+            "updatedAt": "2018-02-26T11:21:35+01:00",
+            "names": [
+              {
+                "alternate": "",
+                "name": "",
+                "imageId": 12,
+                "lang": "de"
+              }
+            ],
+            "hasLinkedVariations": "0",
+            "itemId": 106,
+            "md5Checksum": "784f64ca3a26a1d0ba65594378b69bb9",
+            "position": 0,
+            "type": "internal",
+            "width": 462,
+            "height": 600,
+            "path": "S3:106:106-buerostuhl-gruen.jpg",
+            "createdAt": "2013-12-09T15:32:19+01:00",
+            "fileType": "jpg",
+            "attributeValueImages": [],
+            "urlMiddle": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/106/middle/106-buerostuhl-gruen.jpg",
+            "storageProviderId": "2",
+            "urlSecondPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/106/secondPreview/106-buerostuhl-gruen.jpg",
+            "urlPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/106/preview/106-buerostuhl-gruen.jpg",
+            "id": 12,
+            "size": 27879,
+            "url": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/106/full/106-buerostuhl-gruen.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "categories": [
+        {
+          "categoryId": 17,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "barcodes": [],
+      "additionalSkus": null,
+      "attributeValues": [
+        {
+          "attributeId": 1,
+          "attributeValueSetId": 1,
+          "valueId": 1,
+          "attributeValue": {
+            "id": 1,
+            "position": 1,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "de",
+                "name": "lila",
+                "valueId": "1"
+              }
+            ],
+            "attributeId": 1,
+            "backendName": "black",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2014-01-15 00:32:01"
+          }
+        }
+      ],
+      "bundleComponents": null,
+      "clients": [
+        {
+          "plentyId": 34185
+        }
+      ],
+      "defaultCategories": null,
+      "images": [],
+      "marketIdentNumbers": null,
+      "markets": null,
+      "salesPrices": [
+        {
+          "salesPriceId": 1,
+          "price": 79
+        },
+        {
+          "salesPriceId": 2,
+          "price": 110
+        }
+      ],
+      "skus": null,
+      "supplier": null,
+      "warehouses": null,
+      "properties": [],
+      "tags": [],
+      "comments": null,
+      "id": 1005,
+      "timestamps": null,
+      "unit": null,
+      "base": {
+        "isMain": true,
+        "mainVariationId": null,
+        "itemId": 106,
+        "position": 0,
+        "isActive": true,
+        "number": "101",
+        "model": "",
+        "externalId": "",
+        "availability": 1,
+        "estimatedAvailableAt": null,
+        "purchasePrice": 0,
+        "movingAveragePrice": null,
+        "priceCalculationId": null,
+        "picking": null,
+        "stockLimitation": 1,
+        "isVisibleIfNetStockIsPositive": true,
+        "isInvisibleIfNetStockIsNotPositive": true,
+        "isAvailableIfNetStockIsPositive": false,
+        "isUnavailableIfNetStockIsNotPositive": false,
+        "isVisibleInListIfNetStockIsPositive": false,
+        "isInvisibleInListIfNetStockIsNotPositive": false,
+        "mainWarehouseId": 1,
+        "maximumOrderQuantity": null,
+        "minimumOrderQuantity": null,
+        "intervalOrderQuantity": null,
+        "availableUntil": null,
+        "releasedAt": null,
+        "name": null,
+        "weightG": 0,
+        "weightNetG": 0,
+        "widthMM": 0,
+        "lengthMM": 0,
+        "heightMM": 0,
+        "extraShippingCharge1": 0,
+        "extraShippingCharge2": 0,
+        "unitsContained": 1,
+        "palletTypeId": null,
+        "packingUnits": 0,
+        "packingUnitTypeId": 0,
+        "transportationCosts": 0,
+        "storageCosts": 0,
+        "customs": 0,
+        "operatingCosts": 0,
+        "vatId": 0,
+        "bundleType": null,
+        "automaticClientVisibility": 0,
+        "automaticListVisibility": 3,
+        "isHiddenInCategoryList": false,
+        "defaultShippingCosts": null,
+        "mayShowUnitPrice": true,
+        "parentVariationId": null,
+        "parentVariationQuantity": null,
+        "singleItemCount": null,
+        "hasCalculatedBundleWeight": null,
+        "hasCalculatedBundleNetWeight": null,
+        "hasCalculatedBundlePurchasePrice": null,
+        "hasCalculatedBundleMovingAveragePrice": null,
+        "customsTariffNumber": null,
+        "categoriesInherited": false,
+        "referrerInherited": false,
+        "clientsInherited": false,
+        "salesPricesInherited": false,
+        "supplierInherited": false,
+        "warehousesInherited": false,
+        "propertiesInherited": false,
+        "tagsInherited": false,
+        "item": {
+          "id": 106,
+          "position": 0,
+          "add_cms_page": "0",
+          "condition": 0,
+          "free1": null,
+          "free2": null,
+          "free3": null,
+          "free4": null,
+          "free5": null,
+          "free6": null,
+          "free7": "0",
+          "free8": "0",
+          "free9": "0",
+          "free10": "0",
+          "free11": "0",
+          "free12": "0",
+          "free13": "0",
+          "free14": "0",
+          "free15": "0",
+          "free16": "0",
+          "free17": "0",
+          "free18": "0",
+          "free19": "0",
+          "free20": "0",
+          "gimahhot": "0",
+          "storeSpecial": 0,
+          "ownerId": null,
+          "manufacturerId": 2,
+          "producingCountryId": 1,
+          "revenueAccount": 0,
+          "couponRestriction": 0,
+          "conditionApi": 0,
+          "createdAt": "2014-12-24T00:00:00+01:00",
+          "updatedAt": "2017-07-05T14:00:51+02:00",
+          "isSubscribable": false,
+          "amazonFbaPlatform": 0,
+          "isShippableByAmazon": false,
+          "amazonProductType": 0,
+          "amazonFedas": "",
+          "ebayPresetId": null,
+          "ebayCategory": null,
+          "ebayCategory2": null,
+          "ebayStoreCategory": null,
+          "ebayStoreCategory2": null,
+          "rakutenCategoryId": 0,
+          "flagOne": 26,
+          "flagTwo": 0,
+          "ageRestriction": 0,
+          "feedback": 0,
+          "itemType": "default",
+          "stockType": 0,
+          "sitemapPublished": "0",
+          "isSerialNumber": false,
+          "isShippingPackage": false,
+          "maximumOrderQuantity": 0,
+          "variationCount": "1",
+          "customsTariffNumber": "",
+          "mainVariationId": 1004,
+          "inactive": true
+        },
+        "characteristics": [
+          {
+            "propertySelectionId": 3,
+            "propertySelection": [
+              {
+                "lang": "de",
+                "id": 3,
+                "name": "Diese Farbe existiert nicht",
+                "description": "",
+                "propertyId": 1
+              }
+            ],
+            "itemId": 107,
+            "valueTexts": [],
+            "valueInt": null,
+            "updatedAt": "2020-04-06 10:25:00",
+            "surcharge": 0,
+            "valueFloat": null,
+            "propertyId": 1,
+            "valueFile": null,
+            "id": 6,
+            "createdAt": "2020-04-06 10:20:33",
+            "variationId": 1005
+          },
+          {
+            "updatedAt": "2020-08-13 08:34:27",
+            "propertySelection": [],
+            "valueTexts": [
+              {
+                "value": "10%",
+                "valueId": 10,
+                "lang": "de"
+              }
+            ],
+            "valueFloat": null,
+            "valueInt": null,
+            "valueFile": null,
+            "id": 10,
+            "surcharge": 0,
+            "propertySelectionId": null,
+            "itemId": 107,
+            "propertyId": 5,
+            "variationId": 1005,
+            "createdAt": "2020-08-13 08:34:27"
+          }
+        ],
+        "images": [
+          {
+            "availabilities": [
+              {
+                "type": "marketplace",
+                "value": -1,
+                "imageId": 21
+              },
+              {
+                "imageId": 21,
+                "type": "marketplace",
+                "value": 120
+              },
+              {
+                "type": "marketplace",
+                "imageId": 21,
+                "value": 104
+              },
+              {
+                "value": 107,
+                "imageId": 21,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "imageId": 21,
+                "value": 131
+              },
+              {
+                "imageId": 21,
+                "type": "marketplace",
+                "value": 102
+              },
+              {
+                "imageId": 21,
+                "type": "marketplace",
+                "value": 124
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 21
+              },
+              {
+                "type": "marketplace",
+                "imageId": 21,
+                "value": 110
+              },
+              {
+                "imageId": 21,
+                "value": 116,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 21,
+                "type": "marketplace",
+                "value": 3
+              },
+              {
+                "type": "marketplace",
+                "imageId": 21,
+                "value": 119
+              },
+              {
+                "imageId": 21,
+                "value": 133,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 21,
+                "type": "marketplace",
+                "value": 126
+              },
+              {
+                "imageId": 21,
+                "value": 135,
+                "type": "marketplace"
+              },
+              {
+                "value": 127,
+                "type": "marketplace",
+                "imageId": 21
+              },
+              {
+                "value": 4,
+                "imageId": 21,
+                "type": "marketplace"
+              },
+              {
+                "value": 7,
+                "imageId": 21,
+                "type": "marketplace"
+              },
+              {
+                "value": 105,
+                "type": "marketplace",
+                "imageId": 21
+              },
+              {
+                "value": 139,
+                "imageId": 21,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 21,
+                "value": 111,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 21,
+                "type": "marketplace",
+                "value": 136
+              },
+              {
+                "value": 5,
+                "imageId": 21,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 21,
+                "type": "marketplace",
+                "value": 132
+              },
+              {
+                "type": "marketplace",
+                "imageId": 21,
+                "value": 143
+              },
+              {
+                "value": 138,
+                "imageId": 21,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 21,
+                "value": -1,
+                "type": "mandant"
+              },
+              {
+                "value": 108,
+                "type": "marketplace",
+                "imageId": 21
+              },
+              {
+                "type": "marketplace",
+                "value": 118,
+                "imageId": 21
+              },
+              {
+                "value": -1,
+                "type": "listing",
+                "imageId": 21
+              },
+              {
+                "imageId": 21,
+                "value": 103,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 109,
+                "imageId": 21
+              },
+              {
+                "imageId": 21,
+                "type": "marketplace",
+                "value": 122
+              },
+              {
+                "value": 121,
+                "imageId": 21,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "imageId": 21,
+                "value": 114
+              },
+              {
+                "value": 130,
+                "imageId": 21,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 21,
+                "type": "marketplace",
+                "value": 134
+              },
+              {
+                "value": 115,
+                "imageId": 21,
+                "type": "marketplace"
+              },
+              {
+                "value": 117,
+                "type": "marketplace",
+                "imageId": 21
+              },
+              {
+                "type": "marketplace",
+                "imageId": 21,
+                "value": 137
+              },
+              {
+                "imageId": 21,
+                "type": "marketplace",
+                "value": 6
+              },
+              {
+                "type": "marketplace",
+                "value": 123,
+                "imageId": 21
+              }
+            ],
+            "hasLinkedVariations": "0",
+            "names": [
+              {
+                "lang": "de",
+                "imageId": 21,
+                "name": "",
+                "alternate": ""
+              }
+            ],
+            "md5ChecksumOriginal": "32f1559a7b32dfd948fa11d15e617844",
+            "size": 24092,
+            "position": 1,
+            "id": 21,
+            "url": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/107/full/107-Barhocker-Fury-gepolstert.jpg",
+            "type": "internal",
+            "attributeValueImages": [],
+            "itemId": 107,
+            "path": "S3:107:107-Barhocker-Fury-gepolstert.jpg",
+            "width": 472,
+            "createdAt": "2014-01-13T17:04:20+01:00",
+            "urlSecondPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/107/secondPreview/107-Barhocker-Fury-gepolstert.jpg",
+            "updatedAt": "2019-03-18T08:55:30+01:00",
+            "storageProviderId": "2",
+            "md5Checksum": "163879a54aa7f37899993fdc75e609ca",
+            "fileType": "jpg",
+            "urlMiddle": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/107/middle/107-Barhocker-Fury-gepolstert.jpg",
+            "height": 600,
+            "urlPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/107/preview/107-Barhocker-Fury-gepolstert.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "categories": [
+        {
+          "categoryId": 17,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "barcodes": [],
+      "additionalSkus": null,
+      "attributeValues": [
+        {
+          "attributeId": 3,
+          "attributeValueSetId": 1,
+          "valueId": 1,
+          "attributeValue": {
+            "id": 1,
+            "position": 1,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "de",
+                "name": "lila",
+                "valueId": "1"
+              }
+            ],
+            "attributeId": 1,
+            "backendName": "white",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2014-01-15 00:32:01"
+          }
+        }
+      ],
+      "bundleComponents": null,
+      "clients": [
+        {
+          "plentyId": 34185
+        }
+      ],
+      "defaultCategories": null,
+      "images": [],
+      "marketIdentNumbers": null,
+      "markets": null,
+      "salesPrices": [
+        {
+          "salesPriceId": 1,
+          "price": 99
+        },
+        {
+          "salesPriceId": 2,
+          "price": 120
+        }
+      ],
+      "skus": null,
+      "supplier": null,
+      "warehouses": null,
+      "properties": [
+        {
+          "propertyId": 16,
+          "values": [
+            {
+              "id": null,
+              "lang": "0",
+              "value": "13",
+              "description": null
+            },
+            {
+              "id": null,
+              "lang": "0",
+              "value": "14",
+              "description": null
+            }
+          ],
+          "property": {
+            "options": [
+              {
+                "id": 49,
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 49,
+                    "value": "4.26",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 49
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24",
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 48,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.06",
+                    "optionId": 48
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 48
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 39,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 39,
+                    "value": "104.03"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24",
+                "id": 39,
+                "propertyId": 16
+              },
+              {
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 106,
+                    "optionId": 106,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "142.00",
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 106,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "value": "125.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 95,
+                    "optionId": 95
+                  }
+                ],
+                "id": 95,
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "0.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 104,
+                    "optionId": 104
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "id": 104
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 87,
+                    "value": "155.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 87,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "id": 87,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "104.22",
+                    "optionId": 38,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 38
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 38,
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 85,
+                    "id": 85,
+                    "value": "147.00"
+                  }
+                ],
+                "id": 85,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 28,
+                    "value": "104.24",
+                    "id": 28,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 28,
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "id": 45,
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.25",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 45,
+                    "id": 45
+                  }
+                ],
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.09",
+                    "id": 47,
+                    "optionId": 47
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24",
+                "id": 47,
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 120,
+                    "value": "115.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 120
+                  }
+                ],
+                "id": 120,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "value": "135.00",
+                    "optionId": 111,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 111
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 111,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "2.17",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 72,
+                    "optionId": 72
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 72,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "id": 99,
+                "propertyOptionValues": [
+                  {
+                    "optionId": 99,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "116.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 99
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "optionId": 53,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "127.00",
+                    "id": 53
+                  }
+                ],
+                "id": 53,
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 68,
+                    "value": "2.07",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 68
+                  }
+                ],
+                "propertyId": 16,
+                "id": 68,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "1.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 103,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 103
+                  }
+                ],
+                "id": 103,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.05",
+                    "optionId": 63,
+                    "id": 63,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "id": 63,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.11",
+                    "id": 64,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 64
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "id": 64,
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 83,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "2.01",
+                    "optionId": 83
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 83,
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 54,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 54,
+                    "value": "152.00"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 54,
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 50,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.02",
+                    "id": 50
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "id": 50,
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 34,
+                    "value": "104.09",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 34,
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:24",
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 34,
+                "propertyId": 16
+              },
+              {
+                "id": 59,
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "id": 59,
+                    "value": "139.00",
+                    "optionId": 59,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 93,
+                "propertyOptionValues": [
+                  {
+                    "optionId": 93,
+                    "value": "102.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 93
+                  }
+                ],
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "4.03",
+                    "id": 52,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 52
+                  }
+                ],
+                "id": 52,
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 96,
+                    "value": "121.00",
+                    "id": 96,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 96
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "id": 124,
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "value": "113.00",
+                    "id": 124,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 124
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 118,
+                    "value": "106.02",
+                    "id": 118
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 118,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 29,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 29,
+                    "value": "104.01",
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24",
+                "id": 29,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "4.24",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 41,
+                    "id": 41
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:24",
+                "id": 41
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "3.00",
+                    "id": 84,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 84,
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "id": 84,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 27,
+                    "id": 27,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "104.04",
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "id": 27,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 109,
+                    "id": 109,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "107.00"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 109,
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "id": 78,
+                "propertyOptionValues": [
+                  {
+                    "optionId": 78,
+                    "id": 78,
+                    "value": "2.21",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 130,
+                    "value": "5.00",
+                    "optionId": 130,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 130,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 56,
+                    "value": "143.00",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 56,
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 56
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 89,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "111.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 89
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 89,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 101,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "122.00",
+                    "optionId": 101
+                  }
+                ],
+                "id": 101,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 102,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "123.00",
+                    "optionId": 102
+                  }
+                ],
+                "id": 102,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 86,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "145.00",
+                    "id": 86
+                  }
+                ],
+                "id": 86,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 113,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "108.02",
+                    "optionId": 113
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 113,
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "118.00",
+                    "optionId": 131,
+                    "id": 131,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "id": 131,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "value": "2.18",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 74,
+                    "id": 74,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "id": 74,
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 115,
+                    "value": "136.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 115
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 115,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 79,
+                    "value": "2.22",
+                    "optionId": 79,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 79,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "value": "34185",
+                    "createdAt": "2020-06-29 14:54:34",
+                    "optionId": 20,
+                    "id": 20,
+                    "updatedAt": "2020-06-29 14:54:34"
+                  }
+                ],
+                "typeOptionIdentifier": "clients",
+                "createdAt": "2020-06-29 14:54:34",
+                "updatedAt": "2020-06-29 14:54:34",
+                "id": 20
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 51,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.22",
+                    "optionId": 51,
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 51,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "id": 100,
+                    "value": "6.00",
+                    "optionId": 100,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 100,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "117.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 94,
+                    "optionId": 94
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 94,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "104.08",
+                    "id": 33,
+                    "optionId": 33
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 33,
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 105,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "149.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 105
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 105,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 127,
+                    "value": "130.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 127
+                  }
+                ],
+                "id": 127,
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 43,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.21",
+                    "optionId": 43
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "id": 43,
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 116,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "131.00",
+                    "optionId": 116,
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 116,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyOptionValues": [
+                  {
+                    "value": "152.01",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 55,
+                    "id": 55
+                  }
+                ],
+                "id": 55,
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "124.00",
+                    "id": 126,
+                    "optionId": 126,
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 126
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 107,
+                    "value": "120.00",
+                    "id": 107
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 107,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 121,
+                    "id": 121,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "101.00",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "id": 121,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:24",
+                "id": 37,
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 37,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "104.02",
+                    "optionId": 37
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyId": 16
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "108.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 112,
+                    "optionId": 112
+                  }
+                ],
+                "id": 112
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 30,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "104.21",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "id": 30
+                  }
+                ],
+                "id": 30,
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyId": 16
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyOptionValues": [
+                  {
+                    "id": 31,
+                    "optionId": 31,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "104.05",
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "id": 31,
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 136,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 136,
+                    "value": "displayInOrderProcess"
+                  }
+                ],
+                "typeOptionIdentifier": "display",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 136,
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.20",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 77,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 77
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 77,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "112.00",
+                    "optionId": 123,
+                    "id": 123,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "id": 123,
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 129,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 129,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "148.00"
+                  }
+                ],
+                "id": 129,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 76,
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 76,
+                    "value": "2.12",
+                    "optionId": 76
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 75,
+                    "value": "2.09",
+                    "id": 75,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "id": 75
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 70,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 70,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "2.15"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "id": 70
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 58,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 58,
+                    "value": "150.00"
+                  }
+                ],
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 58
+              },
+              {
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 44,
+                    "value": "4.05",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 44
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "id": 44
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "id": 26,
+                    "optionId": 26,
+                    "value": "104.07",
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 26,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 119,
+                    "optionId": 119,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "106.00",
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "id": 119
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 98,
+                    "id": 98,
+                    "value": "103.00",
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 98,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 132,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "105.00",
+                    "id": 132
+                  }
+                ],
+                "propertyId": 16,
+                "id": 132,
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 114,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "value": "126.00",
+                    "optionId": 114
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "id": 114,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.19",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 67,
+                    "optionId": 67,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "id": 67,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 23,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "4.00",
+                    "id": 23,
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 23
+              },
+              {
+                "id": 133,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 133,
+                    "value": "showOnItemsPage",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 133,
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "typeOptionIdentifier": "display"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "4.07",
+                    "id": 24,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 24,
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 24,
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "id": 25,
+                    "optionId": 25,
+                    "value": "104.00"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "id": 25
+              },
+              {
+                "id": 80,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "value": "2.13",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 80,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 80
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.16",
+                    "optionId": 71,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 71,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 71,
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 40,
+                    "id": 40,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.04"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 40,
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "optionId": 57,
+                    "id": 57,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "143.02"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 57,
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 92,
+                    "value": "138.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 92,
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "propertyId": 16,
+                "id": 92,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:24",
+                    "id": 60,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 60,
+                    "value": "144.00"
+                  }
+                ],
+                "id": 60,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.04",
+                    "optionId": 62,
+                    "id": 62,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "id": 62,
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "id": 61,
+                "propertyOptionValues": [
+                  {
+                    "id": 61,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "2.00",
+                    "optionId": 61,
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16
+              },
+              {
+                "id": 91,
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 91,
+                    "value": "137.00",
+                    "optionId": 91
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 110,
+                    "value": "154.00",
+                    "optionId": 110,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "id": 110,
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 36,
+                    "value": "104.26",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 36
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:24",
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 36,
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyOptionValues": [
+                  {
+                    "id": 42,
+                    "value": "4.01",
+                    "createdAt": "2020-06-29 14:56:24",
+                    "optionId": 42,
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:24",
+                "id": 42,
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16
+              },
+              {
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 82,
+                    "value": "2.03",
+                    "id": 82
+                  }
+                ],
+                "id": 82,
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 137,
+                    "optionId": 137,
+                    "value": "C62",
+                    "createdAt": "2020-06-29 15:05:38",
+                    "updatedAt": "2020-06-29 15:05:38"
+                  }
+                ],
+                "propertyId": 16,
+                "id": 137,
+                "typeOptionIdentifier": "units",
+                "createdAt": "2020-06-29 15:05:38",
+                "updatedAt": "2020-06-29 15:05:38"
+              },
+              {
+                "typeOptionIdentifier": "display",
+                "propertyOptionValues": [
+                  {
+                    "value": "showInPDFDocuments",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 135,
+                    "optionId": 135,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "id": 135,
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 117,
+                    "value": "114.00",
+                    "id": 117,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "id": 117,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "typeOptionIdentifier": "referrers",
+                "propertyOptionValues": [
+                  {
+                    "id": 46,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "value": "4.08",
+                    "optionId": 46,
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "updatedAt": "2020-06-29 14:56:24",
+                "id": 46
+              },
+              {
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:24",
+                "propertyOptionValues": [
+                  {
+                    "optionId": 32,
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "value": "104.25",
+                    "id": 32,
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "id": 32
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 108,
+                    "value": "119.00",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 108
+                  }
+                ],
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "id": 108,
+                "createdAt": "2020-06-29 14:56:25",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "optionId": 69,
+                    "id": 69,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "2.08"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 69,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 81,
+                    "value": "2.14",
+                    "optionId": 81,
+                    "createdAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 81,
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "showInItemListing",
+                    "id": 134,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 134,
+                    "updatedAt": "2020-06-29 14:56:25"
+                  }
+                ],
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 134,
+                "typeOptionIdentifier": "display"
+              },
+              {
+                "id": 97,
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyOptionValues": [
+                  {
+                    "id": 97,
+                    "optionId": 97,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "121.02"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "2.02",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 66,
+                    "optionId": 66
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "id": 66,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 125,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 125,
+                    "value": "134.00"
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 125,
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 88,
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "132.00",
+                    "id": 88
+                  }
+                ],
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25",
+                "id": 88,
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 73,
+                    "optionId": 73,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "value": "2.10"
+                  }
+                ],
+                "id": 73,
+                "createdAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers",
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 128,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 128,
+                    "value": "133.00"
+                  }
+                ],
+                "id": 128,
+                "propertyId": 16,
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:25",
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "id": 35,
+                    "value": "104.06",
+                    "updatedAt": "2020-06-29 14:56:24",
+                    "optionId": 35,
+                    "createdAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "id": 35,
+                "propertyId": 16,
+                "updatedAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:24"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "createdAt": "2020-06-29 14:56:25",
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 65,
+                    "value": "2.06",
+                    "optionId": 65
+                  }
+                ],
+                "updatedAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "id": 65,
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "109.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "optionId": 122,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "id": 122
+                  }
+                ],
+                "propertyId": 16,
+                "createdAt": "2020-06-29 14:56:25",
+                "id": 122,
+                "updatedAt": "2020-06-29 14:56:25",
+                "typeOptionIdentifier": "referrers"
+              },
+              {
+                "propertyOptionValues": [
+                  {
+                    "value": "7.00",
+                    "createdAt": "2020-06-29 14:56:25",
+                    "id": 90,
+                    "updatedAt": "2020-06-29 14:56:25",
+                    "optionId": 90
+                  }
+                ],
+                "typeOptionIdentifier": "referrers",
+                "createdAt": "2020-06-29 14:56:25",
+                "propertyId": 16,
+                "id": 90,
+                "updatedAt": "2020-06-29 14:56:25"
+              },
+              {
+                "createdAt": "2020-06-29 14:56:24",
+                "typeOptionIdentifier": "referrers",
+                "updatedAt": "2020-06-29 14:56:24",
+                "propertyId": 16,
+                "propertyOptionValues": [
+                  {
+                    "value": "110.00",
+                    "id": 22,
+                    "optionId": 22,
+                    "createdAt": "2020-06-29 14:56:24",
+                    "updatedAt": "2020-06-29 14:56:24"
+                  }
+                ],
+                "id": 22
+              }
+            ],
+            "selections": [
+              {
+                "relation": {
+                  "id": 40,
+                  "relationValues": [
+                    {
+                      "createdAt": "2020-05-07 15:52:05",
+                      "propertyRelationId": 40,
+                      "updatedAt": "2020-05-07 15:52:05",
+                      "value": "Mehrfachauswahl 1",
+                      "id": 31,
+                      "lang": "DE",
+                      "description": null
+                    }
+                  ],
+                  "relationTargetId": null,
+                  "updatedAt": "2020-05-07 15:52:05",
+                  "createdAt": "2020-05-07 15:52:05",
+                  "propertyId": 16,
+                  "relationTypeIdentifier": null,
+                  "selectionRelationId": 13
+                },
+                "position": 0,
+                "id": 13,
+                "createdAt": "2020-05-07 15:52:05",
+                "updatedAt": "2020-05-07 15:52:05",
+                "propertyId": 16
+              },
+              {
+                "relation": {
+                  "relationValues": [
+                    {
+                      "updatedAt": "2020-05-07 15:52:13",
+                      "value": "Mehrfachauswahl 2",
+                      "lang": "DE",
+                      "description": null,
+                      "createdAt": "2020-05-07 15:52:13",
+                      "propertyRelationId": 41,
+                      "id": 32
+                    }
+                  ],
+                  "selectionRelationId": 14,
+                  "createdAt": "2020-05-07 15:52:13",
+                  "relationTargetId": null,
+                  "updatedAt": "2020-05-07 15:52:13",
+                  "relationTypeIdentifier": null,
+                  "propertyId": 16,
+                  "id": 41
+                },
+                "position": 0,
+                "createdAt": "2020-05-07 15:52:13",
+                "updatedAt": "2020-05-07 15:52:13",
+                "id": 14,
+                "propertyId": 16
+              },
+              {
+                "relation": {
+                  "relationValues": [
+                    {
+                      "lang": "DE",
+                      "value": "Mehrfachauswahl 3",
+                      "description": null,
+                      "id": 33,
+                      "createdAt": "2020-05-07 15:52:20",
+                      "propertyRelationId": 42,
+                      "updatedAt": "2020-05-07 15:52:20"
+                    }
+                  ],
+                  "relationTypeIdentifier": null,
+                  "selectionRelationId": 15,
+                  "createdAt": "2020-05-07 15:52:20",
+                  "propertyId": 16,
+                  "relationTargetId": null,
+                  "updatedAt": "2020-05-07 15:52:20",
+                  "id": 42
+                },
+                "updatedAt": "2020-05-07 15:52:20",
+                "createdAt": "2020-05-07 15:52:20",
+                "propertyId": 16,
+                "id": 15,
+                "position": 0
+              },
+              {
+                "relation": {
+                  "relationValues": [
+                    {
+                      "lang": "DE",
+                      "id": 34,
+                      "propertyRelationId": 43,
+                      "updatedAt": "2020-05-07 15:52:28",
+                      "createdAt": "2020-05-07 15:52:28",
+                      "description": null,
+                      "value": "Mehrfachauswahl 4"
+                    }
+                  ],
+                  "selectionRelationId": 16,
+                  "relationTypeIdentifier": null,
+                  "id": 43,
+                  "relationTargetId": null,
+                  "propertyId": 16,
+                  "updatedAt": "2020-05-07 15:52:28",
+                  "createdAt": "2020-05-07 15:52:28"
+                },
+                "createdAt": "2020-05-07 15:52:28",
+                "propertyId": 16,
+                "id": 16,
+                "updatedAt": "2020-05-07 15:52:28",
+                "position": 0
+              }
+            ],
+            "names": [
+              {
+                "lang": "de",
+                "createdAt": "2020-05-07 15:51:50",
+                "updatedAt": "2020-05-07 15:51:50",
+                "description": "",
+                "name": "Mehrfachauswahl",
+                "id": 16,
+                "propertyId": 16
+              }
+            ],
+            "position": 3,
+            "typeIdentifier": "item",
+            "id": 16,
+            "updatedAt": "2020-06-29 15:05:37",
+            "cast": "multiSelection",
+            "createdAt": "2020-05-07 15:51:50"
+          }
+        }
+      ],
+      "tags": [],
+      "comments": null,
+      "id": 1006,
+      "timestamps": null,
+      "unit": null,
+      "base": {
+        "isMain": true,
+        "mainVariationId": null,
+        "itemId": 106,
+        "position": 0,
+        "isActive": true,
+        "number": "102",
+        "model": "",
+        "externalId": "",
+        "availability": 1,
+        "estimatedAvailableAt": null,
+        "purchasePrice": 0,
+        "movingAveragePrice": 0,
+        "priceCalculationId": null,
+        "picking": null,
+        "stockLimitation": 1,
+        "isVisibleIfNetStockIsPositive": true,
+        "isInvisibleIfNetStockIsNotPositive": true,
+        "isAvailableIfNetStockIsPositive": false,
+        "isUnavailableIfNetStockIsNotPositive": false,
+        "isVisibleInListIfNetStockIsPositive": false,
+        "isInvisibleInListIfNetStockIsNotPositive": false,
+        "mainWarehouseId": 1,
+        "maximumOrderQuantity": null,
+        "minimumOrderQuantity": null,
+        "intervalOrderQuantity": null,
+        "availableUntil": null,
+        "releasedAt": null,
+        "name": "",
+        "weightG": 0,
+        "weightNetG": 0,
+        "widthMM": 0,
+        "lengthMM": 0,
+        "heightMM": 0,
+        "extraShippingCharge1": 0,
+        "extraShippingCharge2": 0,
+        "unitsContained": 1,
+        "palletTypeId": null,
+        "packingUnits": 0,
+        "packingUnitTypeId": 0,
+        "transportationCosts": 0,
+        "storageCosts": 0,
+        "customs": 0,
+        "operatingCosts": 0,
+        "vatId": 0,
+        "bundleType": null,
+        "automaticClientVisibility": 0,
+        "automaticListVisibility": 3,
+        "isHiddenInCategoryList": false,
+        "defaultShippingCosts": null,
+        "mayShowUnitPrice": true,
+        "parentVariationId": null,
+        "parentVariationQuantity": null,
+        "singleItemCount": null,
+        "hasCalculatedBundleWeight": null,
+        "hasCalculatedBundleNetWeight": null,
+        "hasCalculatedBundlePurchasePrice": null,
+        "hasCalculatedBundleMovingAveragePrice": null,
+        "customsTariffNumber": "",
+        "categoriesInherited": false,
+        "referrerInherited": false,
+        "clientsInherited": false,
+        "salesPricesInherited": false,
+        "supplierInherited": false,
+        "warehousesInherited": false,
+        "propertiesInherited": false,
+        "tagsInherited": false,
+        "item": {
+          "id": 106,
+          "position": 0,
+          "add_cms_page": "0",
+          "condition": 0,
+          "free1": null,
+          "free2": null,
+          "free3": null,
+          "free4": null,
+          "free5": null,
+          "free6": null,
+          "free7": "0",
+          "free8": "0",
+          "free9": "0",
+          "free10": "0",
+          "free11": "0",
+          "free12": "0",
+          "free13": "0",
+          "free14": "0",
+          "free15": "0",
+          "free16": "0",
+          "free17": "0",
+          "free18": "0",
+          "free19": "0",
+          "free20": "0",
+          "gimahhot": "0",
+          "storeSpecial": 0,
+          "ownerId": null,
+          "manufacturerId": 2,
+          "producingCountryId": 1,
+          "revenueAccount": 0,
+          "couponRestriction": 0,
+          "conditionApi": 0,
+          "createdAt": "2014-12-24T00:00:00+01:00",
+          "updatedAt": "2017-07-05T14:00:51+02:00",
+          "isSubscribable": false,
+          "amazonFbaPlatform": 0,
+          "isShippableByAmazon": false,
+          "amazonProductType": 0,
+          "amazonFedas": "",
+          "ebayPresetId": null,
+          "ebayCategory": null,
+          "ebayCategory2": null,
+          "ebayStoreCategory": null,
+          "ebayStoreCategory2": null,
+          "rakutenCategoryId": 0,
+          "flagOne": 26,
+          "flagTwo": 0,
+          "ageRestriction": 0,
+          "feedback": 0,
+          "itemType": "default",
+          "stockType": 0,
+          "sitemapPublished": "0",
+          "isSerialNumber": false,
+          "isShippingPackage": false,
+          "maximumOrderQuantity": 0,
+          "variationCount": "1",
+          "customsTariffNumber": "",
+          "mainVariationId": 1004,
+          "inactive": true
+        },
+        "characteristics": [],
+        "images": [
+          {
+            "availabilities": [
+              {
+                "value": 118,
+                "imageId": 22,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "imageId": 22,
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "imageId": 22,
+                "value": 136
+              },
+              {
+                "value": 120,
+                "imageId": 22,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 22,
+                "value": 139,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 22,
+                "value": 107,
+                "type": "marketplace"
+              },
+              {
+                "value": 108,
+                "type": "marketplace",
+                "imageId": 22
+              },
+              {
+                "imageId": 22,
+                "type": "marketplace",
+                "value": 102
+              },
+              {
+                "type": "marketplace",
+                "value": 111,
+                "imageId": 22
+              },
+              {
+                "value": 115,
+                "type": "marketplace",
+                "imageId": 22
+              },
+              {
+                "type": "marketplace",
+                "value": 122,
+                "imageId": 22
+              },
+              {
+                "type": "listing",
+                "value": -1,
+                "imageId": 22
+              },
+              {
+                "imageId": 22,
+                "type": "marketplace",
+                "value": 7
+              },
+              {
+                "value": 117,
+                "type": "marketplace",
+                "imageId": 22
+              },
+              {
+                "type": "marketplace",
+                "imageId": 22,
+                "value": 135
+              },
+              {
+                "type": "mandant",
+                "imageId": 22,
+                "value": -1
+              },
+              {
+                "value": 6,
+                "type": "marketplace",
+                "imageId": 22
+              },
+              {
+                "value": 105,
+                "imageId": 22,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "imageId": 22,
+                "value": 109
+              },
+              {
+                "value": 123,
+                "imageId": 22,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 22,
+                "type": "marketplace",
+                "value": 4
+              },
+              {
+                "value": 106,
+                "imageId": 22,
+                "type": "marketplace"
+              },
+              {
+                "value": 114,
+                "type": "marketplace",
+                "imageId": 22
+              },
+              {
+                "value": 119,
+                "type": "marketplace",
+                "imageId": 22
+              },
+              {
+                "value": 127,
+                "imageId": 22,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 22,
+                "value": 134,
+                "type": "marketplace"
+              },
+              {
+                "value": 126,
+                "type": "marketplace",
+                "imageId": 22
+              },
+              {
+                "value": 132,
+                "imageId": 22,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 22,
+                "value": 138,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 131,
+                "imageId": 22
+              },
+              {
+                "value": 124,
+                "imageId": 22,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "imageId": 22,
+                "value": 121
+              },
+              {
+                "imageId": 22,
+                "type": "marketplace",
+                "value": -1
+              },
+              {
+                "value": 5,
+                "imageId": 22,
+                "type": "marketplace"
+              },
+              {
+                "value": 104,
+                "type": "marketplace",
+                "imageId": 22
+              },
+              {
+                "type": "marketplace",
+                "value": 143,
+                "imageId": 22
+              },
+              {
+                "imageId": 22,
+                "type": "marketplace",
+                "value": 137
+              },
+              {
+                "imageId": 22,
+                "value": 110,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 22,
+                "value": 3,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 116,
+                "imageId": 22
+              },
+              {
+                "value": 130,
+                "imageId": 22,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 103,
+                "imageId": 22
+              }
+            ],
+            "position": 0,
+            "urlPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/108/preview/108-Barsessel-Black-Mamba.jpg",
+            "names": [
+              {
+                "alternate": "",
+                "imageId": 22,
+                "name": "",
+                "lang": "de"
+              }
+            ],
+            "hasLinkedVariations": "0",
+            "attributeValueImages": [],
+            "itemId": 108,
+            "urlMiddle": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/108/middle/108-Barsessel-Black-Mamba.jpg",
+            "path": "S3:108:108-Barsessel-Black-Mamba.jpg",
+            "id": 22,
+            "md5Checksum": "f03fdd7f83769c1d7cf2f61bf847d72f",
+            "createdAt": "2014-01-13T17:04:49+01:00",
+            "updatedAt": "2018-02-26T11:21:35+01:00",
+            "urlSecondPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/108/secondPreview/108-Barsessel-Black-Mamba.jpg",
+            "md5ChecksumOriginal": "f03fdd7f83769c1d7cf2f61bf847d72f",
+            "fileType": "jpg",
+            "type": "internal",
+            "url": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/108/full/108-Barsessel-Black-Mamba.jpg",
+            "height": 600,
+            "size": 36348,
+            "storageProviderId": "2",
+            "width": 476
+          }
+        ]
+      }
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 34,
+  "itemsPerPage": 100
+}

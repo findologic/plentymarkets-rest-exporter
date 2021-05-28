@@ -11,6 +11,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
 use Psr\Log\LoggerInterface;
 
 class CsvWrapper extends Wrapper
@@ -71,27 +74,19 @@ class CsvWrapper extends Wrapper
                 ]
             ]);
 
-            $productWrapper = new Product(
-                $this->exporter,
-                $this->config,
-                $this->registryService->getWebStore()->getConfiguration(),
-                $this->registryService,
-                $product,
-                $productVariations
-            );
-            $item = $productWrapper->processProductData();
+            list($groupedVariations, $separateVariations) = $this->splitVariationsByGroupability($productVariations);
 
-            if (!$item) {
-                $this->customerLogger->warning(sprintf(
-                    'Product with id %d could not be exported. Reason: %s',
-                    $product->getId(),
-                    $productWrapper->getReason()
-                ));
-
-                continue;
+            if ($groupedVariations) {
+                if ($item = $this->doWrap($product, $groupedVariations)) {
+                    $items[] = $item;
+                }
             }
 
-            $items[] = $item;
+            foreach ($separateVariations as $separateVariation) {
+                if ($item = $this->doWrap($product, [$separateVariation], true)) {
+                    $items[] = $item;
+                }
+            }
         }
 
         if ($this->fileNamePrefix) {
@@ -117,5 +112,79 @@ class CsvWrapper extends Wrapper
     public function getExportPath(): string
     {
         return $this->exportPath;
+    }
+
+    // TODO: come up with a better method name
+    /**
+     * @param PimVariation[] $productVariations
+     */
+    private function doWrap(
+        ProductEntity $product,
+        array $productVariations,
+        bool $separateVariationMode = false
+    ): ?Item {
+        $productWrapper = new Product(
+            $this->exporter,
+            $this->config,
+            $this->registryService->getWebStore()->getConfiguration(),
+            $this->registryService,
+            $product,
+            $productVariations,
+            $separateVariationMode
+        );
+        $item = $productWrapper->processProductData();
+
+        if (!$item) {
+            $this->customerLogger->warning(sprintf(
+                'Product with id %d could not be exported. Reason: %s',
+                $product->getId(),
+                $productWrapper->getReason()
+            ));
+
+            return null;
+        }
+
+        return $item;
+    }
+
+    /**
+     * @param Variation[] $productVariations
+     */
+    private function splitVariationsByGroupability(array $productVariations): array
+    {
+        if (!$this->shouldExportGroupableAttributeVariantsSeparately()) {
+            return [$productVariations, []];
+        }
+
+        $groupedVariations = [];
+        $separateVariations = [];
+
+        foreach ($productVariations as $variation) {
+            $attributeValues = $variation->getAttributeValues();
+
+            foreach ($attributeValues as $attributeValue) {
+                $attribute = $this->registryService->getAttribute($attributeValue->getId());
+
+                if ($attribute && $attribute->isGroupable()) {
+                    $separateVariations[] = $variation;
+                    continue 2;
+                }
+            }
+
+            $groupedVariations[] = $variation;
+        }
+
+        return [$groupedVariations, $separateVariations];
+    }
+
+    private function shouldExportGroupableAttributeVariantsSeparately(): bool
+    {
+        $config = $this->registryService->getPluginConfigurations('Ceres');
+
+        if (!isset($config['item.variation_show_type'])) {
+            return true;
+        }
+
+        return $config['item.variation_show_type'] == 'all';
     }
 }

@@ -47,6 +47,11 @@ class Product
     private $exporter;
 
     /**
+     * @var bool
+     */
+    private $separateMode;
+
+    /**
      * @param PimVariation[] $variationEntities
      */
     public function __construct(
@@ -55,7 +60,8 @@ class Product
         StoreConfiguration $storeConfiguration,
         RegistryService $registryService,
         ProductEntity $productEntity,
-        array $variationEntities
+        array $variationEntities,
+        bool $separateVariationMode
     ) {
         $this->exporter = $exporter;
         $this->item = $exporter->createItem($productEntity->getId());
@@ -64,6 +70,7 @@ class Product
         $this->registryService = $registryService;
         $this->variationEntities = $variationEntities;
         $this->storeConfiguration = $storeConfiguration;
+        $this->separateMode = $separateVariationMode;
     }
 
     /**
@@ -343,7 +350,7 @@ class Product
             $this->getLanguageUrlPrefix(),
             trim($urlPath, '/'),
             $this->productEntity->getId(),
-            $this->productEntity->getMainVariationId()
+            $this->separateMode ? $this->variationEntities[0]->getId() : $this->productEntity->getMainVariationId()
         );
     }
 

@@ -756,7 +756,8 @@ class ProductTest extends TestCase
             $this->storeConfigurationMock,
             $this->registryServiceMock,
             $this->itemMock,
-            $this->variationEntityMocks
+            $this->variationEntityMocks,
+            false
         );
     }
 
