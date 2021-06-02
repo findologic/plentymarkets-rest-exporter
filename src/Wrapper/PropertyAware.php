@@ -102,7 +102,7 @@ trait PropertyAware
                     $this->config->getLanguage()
                 );
             default:
-                return $property->getValues()[0]->getValue();
+                return isset($property->getValues()[0]) ? $property->getValues()[0]->getValue() : null;
         }
     }
 }

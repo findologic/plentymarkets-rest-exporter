@@ -73,12 +73,7 @@ class Attribute extends Entity
         $this->laRedouteAttribute = (int)$data['laRedouteAttribute'];
         $this->isGroupable = (bool)$data['isGroupable'];
         $this->updatedAt = (string)$data['updatedAt'];
-
-        if (!empty($data['attributeNames'])) {
-            foreach ($data['attributeNames'] as $name) {
-                $this->names[] = new Name($name);
-            }
-        }
+        $this->names = $this->getEntities(Name::class, 'attributeNames', $data);
     }
 
     public function getData(): array
