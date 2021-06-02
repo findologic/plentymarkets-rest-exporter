@@ -357,13 +357,19 @@ class VariationTest extends TestCase
     public function testPropertiesAreProperlyExported(): void
     {
         $expectedExportedAttributes = [
-            new Attribute('Color', ['8']),
-            new Attribute('Color', ['100']),
+            new Attribute('Number Property', ['8']),
+            new Attribute('Float Property EN', ['100']),
+            new Attribute('test-multiselect-property', ['value1'])
         ];
 
+        $propertySelections = PropertySelectionParser::parse(
+            $this->getMockResponse('PropertySelectionResponse/response.json')
+        );
+        $this->registryServiceMock->expects($this->any())->method('getPropertySelections')
+            ->willReturn($propertySelections);
+
         $variationEntity = $this->getVariationEntity('Pim/Variations/variation_with_properties.json');
-        $properties = PropertyParser::parse($this->getMockResponse('PropertyResponse/one.json'));
-        $propertyEntity = $properties->first();
+        $properties = PropertyParser::parse($this->getMockResponse('PropertyResponse/response.json'));
 
         $wrapper = new VariationWrapper(
             $this->defaultConfig,
@@ -371,11 +377,19 @@ class VariationTest extends TestCase
             $variationEntity
         );
 
-        $this->registryServiceMock->expects($this->any())->method('getProperty')->willReturn($propertyEntity);
+        $this->registryServiceMock->expects($this->exactly(4))
+            ->method('getProperty')
+            ->withConsecutive([11], [7], [4], [5])
+            ->willReturnOnConsecutiveCalls(
+                $properties->findOne(['id' => 11]),
+                $properties->findOne(['id' => 7]),
+                $properties->findOne(['id' => 4]),
+                $properties->findOne(['id' => 5])
+            );
 
         $wrapper->processData();
 
-        $this->assertCount(2, $wrapper->getAttributes());
+        $this->assertCount(3, $wrapper->getAttributes());
         $this->assertEqualsCanonicalizing($expectedExportedAttributes, $wrapper->getAttributes());
     }
 
