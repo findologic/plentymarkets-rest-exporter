@@ -757,7 +757,7 @@ class ProductTest extends TestCase
             $this->registryServiceMock,
             $this->itemMock,
             $this->variationEntityMocks,
-            false
+            Product::WRAP_MODE_DEFAULT
         );
     }
 

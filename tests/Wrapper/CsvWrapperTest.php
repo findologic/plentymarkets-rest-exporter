@@ -99,7 +99,7 @@ class CsvWrapperTest extends TestCase
         );
     }
 
-    public function testItExportsEachVariationSeparatelyIfConfiguredToDoSoAndIfAllVariationsHaveAGroupableAttribute()
+    public function testExportsEachVariationSeparatelyIfConfiguredAndIfAllVariationsHaveAGroupableAttribute()
     {
         $this->registryServiceMock->method('getPluginConfigurations')
             ->with('Ceres')
@@ -132,7 +132,7 @@ class CsvWrapperTest extends TestCase
             ->method('serializeItemsToFile')
             ->with(
                 self::TEST_EXPORT_PATH,
-                $this->callback(function ($items) {
+                $this->callback(function (array $items) {
                     /** @var CSVItem[] $items */
                     $this->assertCount(3, $items);
 
@@ -178,7 +178,7 @@ class CsvWrapperTest extends TestCase
         $this->csvWrapper->wrap(0, 1, $items, $variations);
     }
 
-    public function testItExportsThreeItemsWhenTwoOutOfThreeVariantsHaveGroupableAttributes()
+    public function testExportsThreeItemsWhenTwoOutOfThreeVariantsHaveGroupableAttributes()
     {
         $this->registryServiceMock->method('getPluginConfigurations')
             ->with('Ceres')
@@ -217,13 +217,13 @@ class CsvWrapperTest extends TestCase
             ->method('serializeItemsToFile')
             ->with(
                 self::TEST_EXPORT_PATH,
-                $this->callback(function ($items) {
+                $this->callback(function (array $items) {
                     $this->assertCount(3, $items);
 
                     $expectedIdentifiers = [
-                        '101|1005|106',
                         'S-000813-C|modeeeel|1004|106|3213213213213',
-                        '102|1006|106'
+                        '102|1006|106',
+                        '101|1005|106'
                     ];
 
                     foreach ($items as $key => $item) {
@@ -239,7 +239,7 @@ class CsvWrapperTest extends TestCase
         $this->csvWrapper->wrap(0, 1, $items, $variations);
     }
 
-    public function testItExportsTwoItemsWhenOnlyOneOutOfThreeVariantsHasGroupableAttributes()
+    public function testExportsTwoItemsWhenOnlyOneOutOfThreeVariantsHasGroupableAttributes()
     {
         $this->registryServiceMock->method('getPluginConfigurations')
             ->with('Ceres')
@@ -277,12 +277,12 @@ class CsvWrapperTest extends TestCase
             ->method('serializeItemsToFile')
             ->with(
                 self::TEST_EXPORT_PATH,
-                $this->callback(function ($items) {
+                $this->callback(function (array $items) {
                     $this->assertCount(2, $items);
 
                     $expectedIdentifiers = [
-                        'S-000813-C|modeeeel|1004|106|3213213213213|101|1005',
-                        '102|1006|106'
+                        '102|1006|106',
+                        'S-000813-C|modeeeel|1004|106|3213213213213|101|1005'
                     ];
 
                     foreach ($items as $key => $item) {
@@ -298,7 +298,7 @@ class CsvWrapperTest extends TestCase
         $this->csvWrapper->wrap(0, 1, $items, $variations);
     }
 
-    public function testItGroupsVariantsWithGroupableAttributesIntoASingleItemIfConfiguredNotToShowSeparately()
+    public function testGroupsVariantsWithGroupableAttributesIntoASingleItemIfConfiguredNotToShowSeparately()
     {
         $this->registryServiceMock->method('getPluginConfigurations')
             ->with('Ceres')
@@ -333,7 +333,7 @@ class CsvWrapperTest extends TestCase
             ->method('serializeItemsToFile')
             ->with(
                 self::TEST_EXPORT_PATH,
-                $this->callback(function ($items) {
+                $this->callback(function (array $items) {
                     $this->assertCount(1, $items);
 
                     $expectedIdentifier = 'S-000813-C|modeeeel|1004|106|3213213213213|101|1005|102|1006';
@@ -349,7 +349,7 @@ class CsvWrapperTest extends TestCase
         $this->csvWrapper->wrap(0, 1, $items, $variations);
     }
 
-    public function testItGroupsVariantsWithoutGroupableAttributesIntoASingleItemDespiteConfigurationToShowSeparately()
+    public function testGroupsVariantsWithoutGroupableAttributesIntoASingleItemDespiteConfigurationToShowSeparately()
     {
         $this->registryServiceMock->method('getPluginConfigurations')
             ->with('Ceres')
@@ -384,7 +384,7 @@ class CsvWrapperTest extends TestCase
             ->method('serializeItemsToFile')
             ->with(
                 self::TEST_EXPORT_PATH,
-                $this->callback(function ($items) {
+                $this->callback(function (array $items) {
                     $this->assertCount(1, $items);
 
                     $expectedIdentifier = 'S-000813-C|modeeeel|1004|106|3213213213213|101|1005|102|1006';
@@ -441,7 +441,7 @@ class CsvWrapperTest extends TestCase
             ->method('serializeItemsToFile')
             ->with(
                 self::TEST_EXPORT_PATH,
-                $this->callback(function ($items) use (&$firstItemData) {
+                $this->callback(function (array $items) use (&$firstItemData) {
                     $this->assertCount(1, $items);
 
                     $firstItemData = $items[0]->getCsvFragment();
@@ -466,7 +466,7 @@ class CsvWrapperTest extends TestCase
             ->method('serializeItemsToFile')
             ->with(
                 self::TEST_EXPORT_PATH,
-                $this->callback(function ($items) use (&$firstItemData) {
+                $this->callback(function (array $items) use (&$firstItemData) {
                     $this->assertCount(1, $items);
 
                     $this->assertEquals($firstItemData, $items[0]->getCsvFragment());
@@ -524,7 +524,7 @@ class CsvWrapperTest extends TestCase
             ->method('serializeItemsToFile')
             ->with(
                 self::TEST_EXPORT_PATH,
-                $this->callback(function ($items) use (&$firstItemData) {
+                $this->callback(function (array $items) use (&$firstItemData) {
                     $this->assertCount(1, $items);
 
                     $firstItemData = $items[0]->getCsvFragment();
@@ -541,7 +541,7 @@ class CsvWrapperTest extends TestCase
             ->method('serializeItemsToFile')
             ->with(
                 self::TEST_EXPORT_PATH,
-                $this->callback(function ($items) use (&$firstItemData) {
+                $this->callback(function (array $items) use (&$firstItemData) {
                     $this->assertCount(1, $items);
 
                     $this->assertEquals($firstItemData, $items[0]->getCsvFragment());

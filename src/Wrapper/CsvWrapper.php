@@ -18,6 +18,8 @@ use Psr\Log\LoggerInterface;
 
 class CsvWrapper extends Wrapper
 {
+    public const SHOW_VARIATIONS_BY_TYPE_MODE_ALL = 'all';
+
     /** @var string */
     protected $exportPath;
 
@@ -76,16 +78,18 @@ class CsvWrapper extends Wrapper
 
             list($groupedVariations, $separateVariations) = $this->splitVariationsByGroupability($productVariations);
 
-            if ($groupedVariations) {
-                if ($item = $this->doWrap($product, $groupedVariations)) {
+            foreach ($separateVariations as $separateVariation) {
+                if ($item = $this->wrapItem($product, [$separateVariation], Product::WRAP_MODE_SEPARATE_VARIATIONS)) {
                     $items[] = $item;
                 }
             }
 
-            foreach ($separateVariations as $separateVariation) {
-                if ($item = $this->doWrap($product, [$separateVariation], true)) {
-                    $items[] = $item;
-                }
+            if (!$groupedVariations) {
+                continue;
+            }
+
+            if ($item = $this->wrapItem($product, $groupedVariations, Product::WRAP_MODE_DEFAULT)) {
+                $items[] = $item;
             }
         }
 
@@ -114,14 +118,13 @@ class CsvWrapper extends Wrapper
         return $this->exportPath;
     }
 
-    // TODO: come up with a better method name
     /**
      * @param PimVariation[] $productVariations
      */
-    private function doWrap(
+    private function wrapItem(
         ProductEntity $product,
         array $productVariations,
-        bool $separateVariationMode = false
+        int $wrapMode
     ): ?Item {
         $productWrapper = new Product(
             $this->exporter,
@@ -130,7 +133,7 @@ class CsvWrapper extends Wrapper
             $this->registryService,
             $product,
             $productVariations,
-            $separateVariationMode
+            $wrapMode
         );
         $item = $productWrapper->processProductData();
 
@@ -148,6 +151,10 @@ class CsvWrapper extends Wrapper
     }
 
     /**
+     * Splits product variations into those that should be grouped into a single item and those that should be
+     * exported as separate items. Product variations that have groupable attributes are exported separately if the
+     * "Item view" > "Show variations by type" Ceres config is set to "All".
+     *
      * @param Variation[] $productVariations
      */
     private function splitVariationsByGroupability(array $productVariations): array
@@ -160,21 +167,30 @@ class CsvWrapper extends Wrapper
         $separateVariations = [];
 
         foreach ($productVariations as $variation) {
-            $attributeValues = $variation->getAttributeValues();
-
-            foreach ($attributeValues as $attributeValue) {
-                $attribute = $this->registryService->getAttribute($attributeValue->getId());
-
-                if ($attribute && $attribute->isGroupable()) {
-                    $separateVariations[] = $variation;
-                    continue 2;
-                }
+            if ($this->hasVariationGroupableAttributes($variation)) {
+                $separateVariations[] = $variation;
+                continue;
             }
 
             $groupedVariations[] = $variation;
         }
 
         return [$groupedVariations, $separateVariations];
+    }
+
+    private function hasVariationGroupableAttributes(Variation $variation): bool
+    {
+        $attributeValues = $variation->getAttributeValues();
+
+        foreach ($attributeValues as $attributeValue) {
+            $attribute = $this->registryService->getAttribute($attributeValue->getId());
+
+            if ($attribute && $attribute->isGroupable()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function shouldExportGroupableAttributeVariantsSeparately(): bool
@@ -185,6 +201,6 @@ class CsvWrapper extends Wrapper
             return true;
         }
 
-        return $config['item.variation_show_type'] == 'all';
+        return $config['item.variation_show_type'] === self::SHOW_VARIATIONS_BY_TYPE_MODE_ALL;
     }
 }
