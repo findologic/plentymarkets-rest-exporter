@@ -1,6 +1,6 @@
 {
   "page": 1,
-  "totalsCount": 3,
+  "totalsCount": 5,
   "isLastPage": true,
   "entries": [
     {
@@ -93,6 +93,94 @@
     },
     {
       "id": 7,
+      "propertyId": 7,
+      "position": 0,
+      "createdAt": "2020-04-07T11:38:56+01:00",
+      "updatedAt": "2020-04-07T11:38:56+01:00",
+      "property": {
+        "id": 7,
+        "cast": "multiSelection",
+        "typeIdentifier": "item",
+        "position": 5,
+        "createdAt": "2020-04-07T10:48:55+01:00",
+        "updatedAt": "2020-04-07T10:48:55+01:00"
+      },
+      "relation": {
+        "id": 11,
+        "propertyId": 7,
+        "relationTypeIdentifier": null,
+        "relationTargetId": null,
+        "selectionRelationId": 10000,
+        "createdAt": "2020-04-07T11:38:56+01:00",
+        "updatedAt": "2020-04-07T11:38:56+01:00",
+        "relationValues": [
+          {
+            "id": 654654,
+            "propertyRelationId": 11,
+            "lang": "EN",
+            "value": "value 654654 en",
+            "description": null,
+            "createdAt": "2020-04-07T11:38:56+01:00",
+            "updatedAt": "2020-04-07T11:38:56+01:00"
+          },
+          {
+            "id": 456456,
+            "propertyRelationId": 11,
+            "lang": "de",
+            "value": "value 456456 de",
+            "description": "",
+            "createdAt": "2020-04-07T11:39:34+01:00",
+            "updatedAt": "2020-04-07T11:39:34+01:00"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "propertyId": 7,
+      "position": 0,
+      "createdAt": "2020-04-07T11:38:56+01:00",
+      "updatedAt": "2020-04-07T11:38:56+01:00",
+      "property": {
+        "id": 7,
+        "cast": "multiSelection",
+        "typeIdentifier": "item",
+        "position": 5,
+        "createdAt": "2020-04-07T10:48:55+01:00",
+        "updatedAt": "2020-04-07T10:48:55+01:00"
+      },
+      "relation": {
+        "id": 11,
+        "propertyId": 7,
+        "relationTypeIdentifier": null,
+        "relationTargetId": null,
+        "selectionRelationId": 10001,
+        "createdAt": "2020-04-07T11:38:56+01:00",
+        "updatedAt": "2020-04-07T11:38:56+01:00",
+        "relationValues": [
+          {
+            "id": 11111,
+            "propertyRelationId": 11,
+            "lang": "EN",
+            "value": "value 11111 en",
+            "description": null,
+            "createdAt": "2020-04-07T11:38:56+01:00",
+            "updatedAt": "2020-04-07T11:38:56+01:00"
+          },
+          {
+            "id": 22222,
+            "propertyRelationId": 11,
+            "lang": "de",
+            "value": "value 22222 de",
+            "description": "",
+            "createdAt": "2020-04-07T11:39:34+01:00",
+            "updatedAt": "2020-04-07T11:39:34+01:00"
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
       "propertyId": 4,
       "position": 0,
       "createdAt": "2019-02-22T10:41:58+00:00",
@@ -115,20 +203,20 @@
         "updatedAt": "2019-02-22T10:41:58+00:00",
         "relationValues": [
           {
-            "id": 11,
+            "id": 100,
             "propertyRelationId": 7,
             "lang": "EN",
-            "value": "Very Large",
-            "description": "Very Large",
+            "value": "Value 100 en",
+            "description": "Description 100 en",
             "createdAt": "2019-02-22T10:41:58+00:00",
             "updatedAt": "2019-02-22T10:41:58+00:00"
           },
           {
-            "id": 12,
+            "id": 101,
             "propertyRelationId": 7,
             "lang": "DE",
-            "value": "Sehr Grob",
-            "description": "Sehr Grob",
+            "value": "Value 101 de",
+            "description": "Description 101 de",
             "createdAt": "2019-02-22T10:41:58+00:00",
             "updatedAt": "2019-02-22T10:41:58+00:00"
           }

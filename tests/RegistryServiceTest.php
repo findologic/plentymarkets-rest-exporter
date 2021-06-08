@@ -128,7 +128,9 @@ class RegistryServiceTest extends TestCase
         $manufacturerResponse = $this->getMockResponse('ManufacturerResponse/one.json');
         $expectedManufacturer = ManufacturerParser::parse($manufacturerResponse);
 
-        $propertyResponse = $this->getMockResponse('PropertyResponse/one.json');
+        $propertyResponse = $this->getMockResponse(
+            'PropertyResponse/two_properties_where_one_has_an_empty_property_id.json'
+        );
         $expectedProperties = PropertyParser::parse($propertyResponse);
 
         $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/one.json');
@@ -174,7 +176,7 @@ class RegistryServiceTest extends TestCase
 
         $registryKey = md5($this->defaultConfig->getDomain());
 
-        $this->registryMock->expects($this->exactly(18))
+        $this->registryMock->expects($this->exactly(19))
             ->method('set')
             ->withConsecutive(
                 [$registryKey . '_allWebStores', $parsedWebStoreResponse],
@@ -200,6 +202,9 @@ class RegistryServiceTest extends TestCase
                 [$registryKey . '_attribute_1', $expectedAttribute->first()],
                 [$registryKey . '_manufacturer_1', $expectedManufacturer->first()],
                 [$registryKey . '_property_1', $expectedProperties->first()],
+                [$registryKey . '_property_4', $expectedProperties->findOne([
+                    'id' => 4
+                ])],
                 [$registryKey . '_itemProperty_1', $expectedItemProperties->first()],
                 [$registryKey . '_unit_1', $expectedUnits->first()],
                 [$registryKey . '_propertySelections', $expectedPropertySelections],

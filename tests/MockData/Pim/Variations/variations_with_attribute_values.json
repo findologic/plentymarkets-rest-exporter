@@ -766,11 +766,6 @@
             "image": "",
             "comment": "",
             "valueNames": [
-              {
-                "lang": "de",
-                "name": "lila",
-                "valueId": "1"
-              }
             ],
             "attributeId": 1,
             "backendName": "valueeeee",
@@ -1260,7 +1255,7 @@
             "valueNames": [
               {
                 "lang": "de",
-                "name": "lila",
+                "name": "some test attribute value in German",
                 "valueId": "1"
               }
             ],

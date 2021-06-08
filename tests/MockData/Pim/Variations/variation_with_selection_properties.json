@@ -562,7 +562,7 @@
             {
               "id": null,
               "lang": "0",
-              "value": "0",
+              "value": "5",
               "description": null
             }
           ],
@@ -662,6 +662,210 @@
                       "description": null,
                       "createdAt": "2019-07-29 11:28:05",
                       "updatedAt": "2019-07-29 11:28:05"
+                    }
+                  ]
+                }
+              }
+            ],
+            "options": [
+              {
+                "id": 11,
+                "propertyId": 10,
+                "typeOptionIdentifier": "clients",
+                "createdAt": "2020-05-06 12:39:26",
+                "updatedAt": "2020-05-06 12:39:26",
+                "propertyOptionValues": [
+                  {
+                    "id": 11,
+                    "optionId": 11,
+                    "value": "34185",
+                    "createdAt": "2020-05-06 12:39:26",
+                    "updatedAt": "2020-05-06 12:39:26"
+                  }
+                ]
+              },
+              {
+                "id": 12,
+                "propertyId": 10,
+                "typeOptionIdentifier": "clients",
+                "createdAt": "2020-05-06 12:39:43",
+                "updatedAt": "2020-05-06 12:39:43",
+                "propertyOptionValues": [
+                  {
+                    "id": 12,
+                    "optionId": 12,
+                    "value": "34185",
+                    "createdAt": "2020-05-06 12:39:43",
+                    "updatedAt": "2020-05-06 12:39:43"
+                  }
+                ]
+              },
+              {
+                "id": 13,
+                "propertyId": 10,
+                "typeOptionIdentifier": "clients",
+                "createdAt": "2020-05-06 12:39:44",
+                "updatedAt": "2020-05-06 12:39:44",
+                "propertyOptionValues": [
+                  {
+                    "id": 13,
+                    "optionId": 13,
+                    "value": "34185",
+                    "createdAt": "2020-05-06 12:39:44",
+                    "updatedAt": "2020-05-06 12:39:44"
+                  }
+                ]
+              },
+              {
+                "id": 14,
+                "propertyId": 10,
+                "typeOptionIdentifier": "clients",
+                "createdAt": "2020-05-06 12:39:45",
+                "updatedAt": "2020-05-06 12:39:45",
+                "propertyOptionValues": [
+                  {
+                    "id": 14,
+                    "optionId": 14,
+                    "value": "34185",
+                    "createdAt": "2020-05-06 12:39:45",
+                    "updatedAt": "2020-05-06 12:39:45"
+                  }
+                ]
+              },
+              {
+                "id": 15,
+                "propertyId": 10,
+                "typeOptionIdentifier": "clients",
+                "createdAt": "2020-05-06 12:42:00",
+                "updatedAt": "2020-05-06 12:42:00",
+                "propertyOptionValues": [
+                  {
+                    "id": 15,
+                    "optionId": 15,
+                    "value": "34185",
+                    "createdAt": "2020-05-06 12:42:00",
+                    "updatedAt": "2020-05-06 12:42:00"
+                  }
+                ]
+              },
+              {
+                "id": 16,
+                "propertyId": 10,
+                "typeOptionIdentifier": "units",
+                "createdAt": "2020-05-06 12:42:04",
+                "updatedAt": "2020-05-06 12:42:04",
+                "propertyOptionValues": [
+                  {
+                    "id": 16,
+                    "optionId": 16,
+                    "value": "C62",
+                    "createdAt": "2020-05-06 12:42:04",
+                    "updatedAt": "2020-05-06 12:42:04"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "propertyId": 1,
+          "values": [],
+          "property": {
+            "id": 1,
+            "cast": "selection",
+            "typeIdentifier": "item",
+            "position": 0,
+            "createdAt": "2019-07-29 11:27:28",
+            "updatedAt": "2019-07-29 11:27:28",
+            "names": [
+              {
+                "id": 10,
+                "propertyId": 1,
+                "lang": "de",
+                "name": "Color DE",
+                "description": "",
+                "createdAt": "2019-07-29 11:27:28",
+                "updatedAt": "2019-07-29 11:27:28"
+              },
+              {
+                "id": 11,
+                "propertyId": 1,
+                "lang": "en",
+                "name": "Color EN",
+                "description": "",
+                "createdAt": "2019-07-29 11:27:28",
+                "updatedAt": "2019-07-29 11:27:28"
+              }
+            ],
+            "selections": [
+              {
+                "id": 1,
+                "propertyId": 1,
+                "position": 0,
+                "createdAt": "2018-04-16T07:05:34+01:00",
+                "updatedAt": "2018-04-16T07:05:34+01:00",
+                "relation": {
+                  "id": 1,
+                  "propertyId": 1,
+                  "relationTypeIdentifier": null,
+                  "relationTargetId": null,
+                  "selectionRelationId": 1,
+                  "createdAt": "2018-04-16T07:05:34+01:00",
+                  "updatedAt": "2018-04-16T07:05:34+01:00",
+                  "relationValues": [
+                    {
+                      "id": 1,
+                      "propertyRelationId": 1,
+                      "lang": "EN",
+                      "value": "Red",
+                      "description": "Red",
+                      "createdAt": "2018-04-16T07:05:34+01:00",
+                      "updatedAt": "2018-04-16T07:05:34+01:00"
+                    },
+                    {
+                      "id": 14,
+                      "propertyRelationId": 1,
+                      "lang": "de",
+                      "value": "Eee",
+                      "description": "Reddd",
+                      "createdAt": "2019-02-22T14:01:42+00:00",
+                      "updatedAt": "2019-02-22T14:01:42+00:00"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": 2,
+                "propertyId": 1,
+                "position": 0,
+                "createdAt": "2018-04-16T07:05:48+01:00",
+                "updatedAt": "2018-04-16T07:05:48+01:00",
+                "relation": {
+                  "id": 2,
+                  "propertyId": 1,
+                  "relationTypeIdentifier": null,
+                  "relationTargetId": null,
+                  "selectionRelationId": 2,
+                  "createdAt": "2018-04-16T07:05:48+01:00",
+                  "updatedAt": "2018-04-16T07:05:48+01:00",
+                  "relationValues": [
+                    {
+                      "id": 2,
+                      "propertyRelationId": 2,
+                      "lang": "EN",
+                      "value": "Blue",
+                      "description": "Blue",
+                      "createdAt": "2018-04-16T07:05:48+01:00",
+                      "updatedAt": "2018-04-16T07:05:48+01:00"
+                    },
+                    {
+                      "id": 13,
+                      "propertyRelationId": 2,
+                      "lang": "de",
+                      "value": "Blue",
+                      "description": "Blue",
+                      "createdAt": "2019-02-22T14:01:33+00:00",
+                      "updatedAt": "2019-02-22T14:01:33+00:00"
                     }
                   ]
                 }
