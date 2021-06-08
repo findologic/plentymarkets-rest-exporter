@@ -110,7 +110,8 @@ class CsvWrapperTest extends TestCase
                 ]
             );
 
-        $this->exporterMock->expects($this->exactly(3))->method('createItem')->willReturnOnConsecutiveCalls(
+        $this->exporterMock->expects($this->exactly(4))->method('createItem')->willReturnOnConsecutiveCalls(
+            new CSVItem(106),
             new CSVItem(106),
             new CSVItem(106),
             new CSVItem(106)
@@ -434,9 +435,12 @@ class CsvWrapperTest extends TestCase
                     'item.variation_show_type' => 'all'
                 ]
             );
-        $this->exporterMock->expects($this->once())
+        $this->exporterMock->expects($this->exactly(2))
             ->method('createItem')
-            ->willReturn(new CSVItem(106));
+            ->willReturnOnConsecutiveCalls(
+                new CSVItem(106),
+                new CSVItem(106)
+            );
         $this->exporterMock->expects($this->once())
             ->method('serializeItemsToFile')
             ->with(
@@ -517,9 +521,12 @@ class CsvWrapperTest extends TestCase
         $registryMockCopy->method('getAttribute')->with(3)->willReturn($modifiedAttributes->findOne(['id' => 3]));
 
         $firstItemData = null;
-        $this->exporterMock->expects($this->once())
+        $this->exporterMock->expects($this->exactly(2))
             ->method('createItem')
-            ->willReturn(new CSVItem(106));
+            ->willReturnOnConsecutiveCalls(
+                new CSVItem(106),
+                new CSVItem(106)
+            );
         $this->exporterMock->expects($this->once())
             ->method('serializeItemsToFile')
             ->with(

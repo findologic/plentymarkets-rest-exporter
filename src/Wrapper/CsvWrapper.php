@@ -84,10 +84,6 @@ class CsvWrapper extends Wrapper
                 }
             }
 
-            if (!$groupedVariations) {
-                continue;
-            }
-
             if ($item = $this->wrapItem($product, $groupedVariations, Product::WRAP_MODE_DEFAULT)) {
                 $items[] = $item;
             }
