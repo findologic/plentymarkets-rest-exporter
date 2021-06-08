@@ -50,7 +50,6 @@ class Product
     /** @var Exporter */
     private $exporter;
 
-    /** @var int */
     private int $wrapMode;
 
     /**

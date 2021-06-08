@@ -18,7 +18,7 @@ use Psr\Log\LoggerInterface;
 
 class CsvWrapper extends Wrapper
 {
-    public const SHOW_VARIATIONS_BY_TYPE_MODE_ALL = 'all';
+    public const VARIANT_MODE_ALL = 'all';
 
     /** @var string */
     protected $exportPath;
@@ -197,6 +197,6 @@ class CsvWrapper extends Wrapper
             return true;
         }
 
-        return $config['item.variation_show_type'] === self::SHOW_VARIATIONS_BY_TYPE_MODE_ALL;
+        return $config['item.variation_show_type'] === self::VARIANT_MODE_ALL;
     }
 }

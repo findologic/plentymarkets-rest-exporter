@@ -150,14 +150,14 @@ class CsvWrapperTest extends TestCase
                     ];
 
                     $expectedAttributes = [
-                        'cat=Armchairs+%26+Stools&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&Groupable+attribute=purple' .
-                        '&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=0' .
+                        'cat=Armchairs+%26+Stools&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&groupable+attribute+en=' .
+                        'purple&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=' .
+                        '0&free17=0&free18=0&free19=0&free20=0',
+                        'cat=Armchairs+%26+Stools&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&groupable+attribute+en=' .
+                        'black&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=0' .
                         '&free17=0&free18=0&free19=0&free20=0',
-                        'cat=Armchairs+%26+Stools&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&Groupable+attribute=black' .
-                        '&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=0' .
-                        '&free17=0&free18=0&free19=0&free20=0',
-                        'cat=Armchairs+%26+Stools&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&Groupable+attribute=white' .
-                        '&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=0' .
+                        'cat=Armchairs+%26+Stools&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&groupable+attribute+en=' .
+                        'white&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=0' .
                         '&free17=0&free18=0&free19=0&free20=0'
                     ];
 
@@ -306,7 +306,7 @@ class CsvWrapperTest extends TestCase
             ->willReturn(
                 [
                     'global.enableOldUrlPattern' => false,
-                    'item.variation_show_type' => 'notAll'
+                    'item.variation_show_type' => 'combined'
                 ]
             );
 
