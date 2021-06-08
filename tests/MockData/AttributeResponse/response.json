@@ -35,7 +35,19 @@
       "typeOfSelectionInOnlineStore": "dropdown",
       "laRedouteAttribute": 0,
       "isGroupable": false,
-      "updatedAt": "2018-06-19T08:04:07+01:00"
+      "updatedAt": "2018-06-19T08:04:07+01:00",
+      "attributeNames": [
+        {
+          "attributeId": 2,
+          "lang": "de",
+          "name": "test de"
+        },
+        {
+          "attributeId": 2,
+          "lang": "en",
+          "name": "test en"
+        }
+      ]
     },
     {
       "id": 3,
@@ -52,7 +64,19 @@
       "typeOfSelectionInOnlineStore": "dropdown",
       "laRedouteAttribute": 0,
       "isGroupable": true,
-      "updatedAt": "2018-06-19T08:04:07+01:00"
+      "updatedAt": "2018-06-19T08:04:07+01:00",
+      "attributeNames": [
+        {
+          "attributeId": 3,
+          "lang": "de",
+          "name": "groupable attribute de"
+        },
+        {
+          "attributeId": 3,
+          "lang": "en",
+          "name": "groupable attribute en"
+        }
+      ]
     }
   ],
   "lastPageNumber": 1,
