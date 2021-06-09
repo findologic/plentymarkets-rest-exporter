@@ -90,7 +90,7 @@ class PropertyResponseTest extends TestCase
 
     public function testGetAllReturnsCorrectNumberOfItems()
     {
-        self::assertCount(5, $this->propertyResponse->all());
+        self::assertCount(6, $this->propertyResponse->all());
     }
 
     public function testFindReturnsCorrectNumberOfItems()

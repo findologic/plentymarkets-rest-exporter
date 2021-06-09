@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\PropertyValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertySelection;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
@@ -74,20 +75,30 @@ class PropertySelectionResponse extends IterableResponse implements CollectionIn
     }
 
     /**
+     * @param PropertyValue[] $selections
      * @return string[]
      */
-    public function getPropertySelectionValues(int $id, string $lang): array
+    public function getPropertySelectionValues(int $propertyId, array $selections, string $lang): array
     {
-        $propertySelections = $this->find(['propertyId' => $id]);
+        $propertySelections = [];
+        foreach ($selections as $selection) {
+            $propertySelections[] = $this->findOne(
+                [
+                    'propertyId' => $propertyId,
+                    'relation' => [
+                        'selectionRelationId' => (int)$selection->getValue()
+                    ]
+                ]
+            );
+        }
+
+        $propertySelections = array_filter($propertySelections);
+
         $values = [];
         foreach ($propertySelections as $propertySelection) {
-            if (!$relation = $propertySelection->getRelation()) {
-                continue;
-            }
-
-            foreach ($relation->getRelationValues() as $relationValue) {
+            foreach ($propertySelection->getRelation()->getRelationValues() as $relationValue) {
                 if (strtoupper($relationValue->getLang()) == strtoupper($lang)) {
-                    $values[] = $relationValue->getValue();
+                    $values[$propertySelection->getId()] = $relationValue->getValue();
                 }
             }
         }

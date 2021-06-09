@@ -18,7 +18,19 @@
       "typeOfSelectionInOnlineStore": "dropdown",
       "laRedouteAttribute": 0,
       "isGroupable": false,
-      "updatedAt": "2015-04-30T08:56:34+01:00"
+      "updatedAt": "2015-04-30T08:56:34+01:00",
+      "attributeNames": [
+        {
+          "attributeId": 1,
+          "lang": "de",
+          "name": "couch color de"
+        },
+        {
+          "attributeId": 1,
+          "lang": "en",
+          "name": "couch color en"
+        }
+      ]
     },
     {
       "id": 2,

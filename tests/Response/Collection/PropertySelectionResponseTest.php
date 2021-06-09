@@ -31,7 +31,7 @@ class PropertySelectionResponseTest extends TestCase
                 'criteria' => [
                     'propertyId' => 4
                 ],
-                'expectedId' => 7
+                'expectedId' => 5
             ],
             'criteria with sub-criteria' => [
                 'criteria' => [
@@ -39,7 +39,7 @@ class PropertySelectionResponseTest extends TestCase
                         'cast' => 'selection'
                     ]
                 ],
-                'expectedId' => 7
+                'expectedId' => 5
             ],
             'criteria with multi-level sub-criteria' => [
                 'criteria' => [
@@ -65,7 +65,7 @@ class PropertySelectionResponseTest extends TestCase
                         ]
                     ]
                 ],
-                'expectedId' => 7
+                'expectedId' => 5
             ]
         ];
     }
@@ -82,7 +82,7 @@ class PropertySelectionResponseTest extends TestCase
 
     public function testGetAllReturnsCorrectNumberOfItems()
     {
-        self::assertCount(3, $this->selectionResponse->all());
+        self::assertCount(5, $this->selectionResponse->all());
     }
 
     public function testFindReturnsCorrectNumberOfItems()
@@ -91,7 +91,7 @@ class PropertySelectionResponseTest extends TestCase
             'propertyId' => 7
         ];
 
-        self::assertCount(2, $this->selectionResponse->find($criteria));
+        self::assertCount(4, $this->selectionResponse->find($criteria));
     }
 
     public function testSelectionsDataCanBeFetched(): void

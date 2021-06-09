@@ -8,14 +8,15 @@ class AttributeRequest extends Request implements IterableRequestInterface
 {
     use IterableRequest;
 
-    public function __construct()
+    public function __construct(?string $with = 'names')
     {
         parent::__construct(
             'GET',
             'items/attributes',
             [
                 'page' => $this->page,
-                'itemsPerPage' => self::$ITEMS_PER_PAGE
+                'itemsPerPage' => self::$ITEMS_PER_PAGE,
+                'with' => $with
             ]
         );
     }

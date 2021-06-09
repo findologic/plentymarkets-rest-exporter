@@ -72,7 +72,15 @@ trait PropertyAware
 
                 return null;
             case CastType::SELECTION:
+                if (!$property->getValues()) {
+                    return null;
+                }
+
                 foreach ($property->getPropertyData()->getSelections() as $selection) {
+                    if ($property->getValues()[0]->getValue() != $selection->getId()) {
+                        continue;
+                    }
+
                     foreach ($selection->getRelation()->getValues() as $relationValue) {
                         if (strtoupper($relationValue->getLang()) !== strtoupper($this->config->getLanguage())) {
                             continue;
@@ -90,10 +98,11 @@ trait PropertyAware
 
                 return $this->registryService->getPropertySelections()->getPropertySelectionValues(
                     $property->getId(),
+                    $property->getValues(),
                     $this->config->getLanguage()
                 );
             default:
-                return $property->getPropertyData()->getNames()[0]->getValue() ?? null;
+                return isset($property->getValues()[0]) ? $property->getValues()[0]->getValue() : null;
         }
     }
 }
