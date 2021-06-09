@@ -11,10 +11,15 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
 use Psr\Log\LoggerInterface;
 
 class CsvWrapper extends Wrapper
 {
+    public const VARIANT_MODE_ALL = 'all';
+
     /** @var string */
     protected $exportPath;
 
@@ -71,27 +76,17 @@ class CsvWrapper extends Wrapper
                 ]
             ]);
 
-            $productWrapper = new Product(
-                $this->exporter,
-                $this->config,
-                $this->registryService->getWebStore()->getConfiguration(),
-                $this->registryService,
-                $product,
-                $productVariations
-            );
-            $item = $productWrapper->processProductData();
+            list($groupedVariations, $separateVariations) = $this->splitVariationsByGroupability($productVariations);
 
-            if (!$item) {
-                $this->customerLogger->warning(sprintf(
-                    'Product with id %d could not be exported. Reason: %s',
-                    $product->getId(),
-                    $productWrapper->getReason()
-                ));
-
-                continue;
+            foreach ($separateVariations as $separateVariation) {
+                if ($item = $this->wrapItem($product, [$separateVariation], Product::WRAP_MODE_SEPARATE_VARIATIONS)) {
+                    $items[] = $item;
+                }
             }
 
-            $items[] = $item;
+            if ($item = $this->wrapItem($product, $groupedVariations, Product::WRAP_MODE_DEFAULT)) {
+                $items[] = $item;
+            }
         }
 
         if ($this->fileNamePrefix) {
@@ -117,5 +112,91 @@ class CsvWrapper extends Wrapper
     public function getExportPath(): string
     {
         return $this->exportPath;
+    }
+
+    /**
+     * @param PimVariation[] $productVariations
+     */
+    private function wrapItem(
+        ProductEntity $product,
+        array $productVariations,
+        int $wrapMode
+    ): ?Item {
+        $productWrapper = new Product(
+            $this->exporter,
+            $this->config,
+            $this->registryService->getWebStore()->getConfiguration(),
+            $this->registryService,
+            $product,
+            $productVariations,
+            $wrapMode
+        );
+        $item = $productWrapper->processProductData();
+
+        if (!$item) {
+            $this->customerLogger->warning(sprintf(
+                'Product with id %d could not be exported. Reason: %s',
+                $product->getId(),
+                $productWrapper->getReason()
+            ));
+
+            return null;
+        }
+
+        return $item;
+    }
+
+    /**
+     * Splits product variations into those that should be grouped into a single item and those that should be
+     * exported as separate items. Product variations that have groupable attributes are exported separately if the
+     * "Item view" > "Show variations by type" Ceres config is set to "All".
+     *
+     * @param Variation[] $productVariations
+     */
+    private function splitVariationsByGroupability(array $productVariations): array
+    {
+        if (!$this->shouldExportGroupableAttributeVariantsSeparately()) {
+            return [$productVariations, []];
+        }
+
+        $groupedVariations = [];
+        $separateVariations = [];
+
+        foreach ($productVariations as $variation) {
+            if ($this->hasVariationGroupableAttributes($variation)) {
+                $separateVariations[] = $variation;
+                continue;
+            }
+
+            $groupedVariations[] = $variation;
+        }
+
+        return [$groupedVariations, $separateVariations];
+    }
+
+    private function hasVariationGroupableAttributes(Variation $variation): bool
+    {
+        $attributeValues = $variation->getAttributeValues();
+
+        foreach ($attributeValues as $attributeValue) {
+            $attribute = $this->registryService->getAttribute($attributeValue->getId());
+
+            if ($attribute && $attribute->isGroupable()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function shouldExportGroupableAttributeVariantsSeparately(): bool
+    {
+        $config = $this->registryService->getPluginConfigurations('Ceres');
+
+        if (!isset($config['item.variation_show_type'])) {
+            return true;
+        }
+
+        return $config['item.variation_show_type'] === self::VARIANT_MODE_ALL;
     }
 }

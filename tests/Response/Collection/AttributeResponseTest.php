@@ -54,7 +54,7 @@ class AttributeResponseTest extends TestCase
 
     public function testGetAllReturnsCorrectNumberOfItems()
     {
-        self::assertCount(2, $this->attributeResponse->all());
+        self::assertCount(3, $this->attributeResponse->all());
     }
 
     public function testFindReturnsCorrectNumberOfItems()

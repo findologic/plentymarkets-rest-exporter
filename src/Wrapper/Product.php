@@ -22,6 +22,10 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 
 class Product
 {
+    public const WRAP_MODE_DEFAULT = 0;
+
+    public const WRAP_MODE_SEPARATE_VARIATIONS = 1;
+
     /** @var Item */
     private $item;
 
@@ -46,6 +50,8 @@ class Product
     /** @var Exporter */
     private $exporter;
 
+    private int $wrapMode;
+
     /**
      * @param PimVariation[] $variationEntities
      */
@@ -55,7 +61,8 @@ class Product
         StoreConfiguration $storeConfiguration,
         RegistryService $registryService,
         ProductEntity $productEntity,
-        array $variationEntities
+        array $variationEntities,
+        int $wrapMode = self::WRAP_MODE_DEFAULT
     ) {
         $this->exporter = $exporter;
         $this->item = $exporter->createItem($productEntity->getId());
@@ -64,6 +71,7 @@ class Product
         $this->registryService = $registryService;
         $this->variationEntities = $variationEntities;
         $this->storeConfiguration = $storeConfiguration;
+        $this->wrapMode = $wrapMode;
     }
 
     /**
@@ -343,7 +351,7 @@ class Product
             $this->getLanguageUrlPrefix(),
             trim($urlPath, '/'),
             $this->productEntity->getId(),
-            $this->productEntity->getMainVariationId()
+            $this->wrapMode ? $this->variationEntities[0]->getId() : $this->productEntity->getMainVariationId()
         );
     }
 
