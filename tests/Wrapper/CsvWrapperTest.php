@@ -558,4 +558,90 @@ class CsvWrapperTest extends TestCase
             );
         $anotherCsvWrapper->wrap(0, 1, $items, $variations);
     }
+
+    public function testProductsWithMainVariationIncludingAnExportExclusionTagAreSkippedAndMessageIsLogged()
+    {
+        $itemResponse = $this->getMockResponse('ItemResponse/one.json');
+        $items = ItemParser::parse($itemResponse);
+
+        $variationResponse = $this->getMockResponse(
+            'Pim/Variations/variations_for_one_item_where_main_has_exclusion_tag.json'
+        );
+        $variations = PimVariationsParser::parse($variationResponse);
+
+        $this->exporterMock->expects($this->never())->method('createItem');
+        $this->loggerMock->expects($this->once())
+            ->method('alert')
+            ->with('Product with id 106 was skipped, as it contains the tag "findologic-exclude"');
+
+        $this->csvWrapper->wrap(0, 1, $items, $variations);
+    }
+
+    public function testNonMainVariationsWithExclusionTagAreSkipped()
+    {
+        $itemResponse = $this->getMockResponse('ItemResponse/one.json');
+        $items = ItemParser::parse($itemResponse);
+
+        $variationResponse = $this->getMockResponse(
+            'Pim/Variations/variations_for_one_item_where_all_non_mains_have_exclusion_tag.json'
+        );
+        $variations = PimVariationsParser::parse($variationResponse);
+
+        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem(106));
+
+        $this->exporterMock->expects($this->once())
+            ->method('serializeItemsToFile')
+            ->with(
+                self::TEST_EXPORT_PATH,
+                $this->callback(function (array $items) {
+                    $this->assertCount(1, $items);
+
+                    // No 1006
+                    $expectedIdentifier = 'S-000813-C|modeeeel|1004|106|3213213213213';
+
+                    $line = $items[0]->getCsvFragment();
+                    $columnValues = explode("\t", $line);
+                    $this->assertEquals($expectedIdentifier, $columnValues[1]);
+
+                    return true;
+                })
+            );
+
+        $this->csvWrapper->wrap(0, 1, $items, $variations);
+    }
+
+    public function testProductsWithExclusionTagsAreExportedIfExlusionTagDoesNotHaveATranslateionInCurrentLanguage()
+    {
+        $itemResponse = $this->getMockResponse('ItemResponse/one.json');
+        $items = ItemParser::parse($itemResponse);
+
+        $this->config->setLanguage('en');
+
+        $variationResponse = $this->getMockResponse(
+            'Pim/Variations/variations_for_one_item_where_main_has_exclusion_tag_only_for_de_lang.json'
+        );
+        $variations = PimVariationsParser::parse($variationResponse);
+
+        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem(106));
+
+        $this->exporterMock->expects($this->once())
+            ->method('serializeItemsToFile')
+            ->with(
+                self::TEST_EXPORT_PATH,
+                $this->callback(function (array $items) {
+                    $this->assertCount(1, $items);
+
+                    // No 1006
+                    $expectedIdentifier = 'S-000813-C|modeeeel|1004|106|3213213213213|101|1005';
+
+                    $line = $items[0]->getCsvFragment();
+                    $columnValues = explode("\t", $line);
+                    $this->assertEquals($expectedIdentifier, $columnValues[1]);
+
+                    return true;
+                })
+            );
+
+        $this->csvWrapper->wrap(0, 1, $items, $variations);
+    }
 }

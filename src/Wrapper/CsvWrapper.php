@@ -12,8 +12,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductResponseItem;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
 use Psr\Log\LoggerInterface;
 
 class CsvWrapper extends Wrapper
@@ -70,6 +70,17 @@ class CsvWrapper extends Wrapper
         /** @var Item[] $items */
         $items = [];
         foreach ($products->all() as $product) {
+            if (!$this->shouldExportProduct($product, $variations)) {
+                $this->customerLogger->alert(
+                    sprintf(
+                        'Product with id %d was skipped, as it contains the tag "findologic-exclude"',
+                        $product->getId()
+                    )
+                );
+
+                return;
+            }
+
             $productVariations = $variations->find([
                 'base' => [
                     'itemId' => $product->getId()
@@ -115,7 +126,7 @@ class CsvWrapper extends Wrapper
     }
 
     /**
-     * @param PimVariation[] $productVariations
+     * @param Variation[] $productVariations
      */
     private function wrapItem(
         ProductEntity $product,
@@ -198,5 +209,21 @@ class CsvWrapper extends Wrapper
         }
 
         return $config['item.variation_show_type'] === self::VARIANT_MODE_ALL;
+    }
+
+    private function shouldExportProduct(ProductResponseItem $product, PimVariationResponse $variations): bool
+    {
+        $mainVariation = $variations->findOne([
+            'base' => [
+                'itemId' => $product->getId(),
+                'isMain' => true
+            ]
+        ]);
+
+        if ($mainVariation && $mainVariation->hasExportExclusionTag($this->config->getLanguage())) {
+            return false;
+        }
+
+        return true;
     }
 }
