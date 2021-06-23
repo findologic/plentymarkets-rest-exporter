@@ -571,7 +571,7 @@ class CsvWrapperTest extends TestCase
 
         $this->exporterMock->expects($this->never())->method('createItem');
         $this->loggerMock->expects($this->once())
-            ->method('alert')
+            ->method('notice')
             ->with('Product with id 106 was skipped, as it contains the tag "findologic-exclude"');
 
         $this->csvWrapper->wrap(0, 1, $items, $variations);

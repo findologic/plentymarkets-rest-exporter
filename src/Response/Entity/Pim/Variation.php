@@ -19,7 +19,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Unit;
 
 class Variation extends Entity
 {
-    public const EXCLUSION_TAG = 'findologic-exclude';
+    public const EXCLUSION_TAG_NAME = 'findologic-exclude';
 
     /** @var int */
     private $id;
@@ -204,7 +204,7 @@ class Variation extends Entity
                     continue;
                 }
 
-                if (strtolower($name->getName()) === self::EXCLUSION_TAG) {
+                if (strtolower($name->getName()) === self::EXCLUSION_TAG_NAME) {
                     return true;
                 }
             }

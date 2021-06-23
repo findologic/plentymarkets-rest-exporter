@@ -71,7 +71,7 @@ class CsvWrapper extends Wrapper
         $items = [];
         foreach ($products->all() as $product) {
             if (!$this->shouldExportProduct($product, $variations)) {
-                $this->customerLogger->alert(
+                $this->customerLogger->notice(
                     sprintf(
                         'Product with id %d was skipped, as it contains the tag "findologic-exclude"',
                         $product->getId()
