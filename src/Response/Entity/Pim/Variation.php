@@ -19,6 +19,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Unit;
 
 class Variation extends Entity
 {
+    public const EXCLUSION_TAG_NAME = 'findologic-exclude';
+
     /** @var int */
     private $id;
 
@@ -192,5 +194,22 @@ class Variation extends Entity
     public function getUnit(): ?Unit
     {
         return $this->unit;
+    }
+
+    public function hasExportExclusionTag(string $lang): bool
+    {
+        foreach ($this->getTags() as $tag) {
+            foreach ($tag->getTagData()->getNames() as $name) {
+                if (strtolower($name->getLang()) !== strtolower($lang)) {
+                    continue;
+                }
+
+                if (strtolower($name->getName()) === self::EXCLUSION_TAG_NAME) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

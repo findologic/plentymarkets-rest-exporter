@@ -298,6 +298,10 @@ class Product
             }
         }
 
+        if ($variation->hasExportExclusionTag($this->config->getLanguage())) {
+            return false;
+        }
+
         return true;
     }
 
