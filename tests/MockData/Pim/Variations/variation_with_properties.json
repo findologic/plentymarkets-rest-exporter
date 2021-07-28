@@ -569,7 +569,7 @@
           "property": {
             "id": 11,
             "cast": "float",
-            "typeIdentifier": "item",
+            "type": "item",
             "position": 7,
             "createdAt": "2019-11-11 12:41:04",
             "updatedAt": "2019-11-11 12:41:04",
@@ -640,7 +640,7 @@
           "property": {
             "id": 7,
             "cast": "multiSelection",
-            "typeIdentifier": "item",
+            "type": "item",
             "position": 3,
             "createdAt": "2020-02-18 15:26:42",
             "updatedAt": "2020-02-18 15:26:42",
@@ -744,7 +744,7 @@
           "property": {
             "id": 4,
             "cast": "selection",
-            "typeIdentifier": "item",
+            "type": "item",
             "position": 0,
             "createdAt": "2019-07-29 11:27:28",
             "updatedAt": "2019-07-29 11:27:28",
@@ -946,7 +946,7 @@
           "property": {
             "id": 5,
             "cast": "int",
-            "typeIdentifier": "item",
+            "type": "item",
             "position": 1,
             "createdAt": "2019-07-16 11:19:41",
             "updatedAt": "2019-07-16 11:19:41",

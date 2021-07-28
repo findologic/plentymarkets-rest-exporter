@@ -575,7 +575,7 @@
           "property": {
             "id": 7,
             "cast": "multiSelection",
-            "typeIdentifier": "item",
+            "type": "item",
             "position": 3,
             "createdAt": "2020-02-18 15:26:42",
             "updatedAt": "2020-02-18 15:26:42",

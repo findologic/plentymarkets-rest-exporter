@@ -324,7 +324,7 @@ class ItemVariationResponseTest extends TestCase
         /** @var SelectionProperty $propertyRelation */
         $propertyRelation = $property->getPropertyRelation();
         $this->assertEquals(6, $propertyRelation->getId());
-        $this->assertEquals('shortText', $propertyRelation->getCast());
+        $this->assertEquals('text', $propertyRelation->getCast());
         $this->assertEquals('item', $propertyRelation->getTypeIdentifier());
         $this->assertEquals(50, $propertyRelation->getPosition());
         $this->assertEquals('2019-02-22T14:54:23+00:00', $propertyRelation->getCreatedAt());

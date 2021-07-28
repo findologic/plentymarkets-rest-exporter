@@ -64,8 +64,8 @@ trait PropertyAware
         switch ($property->getPropertyData()->getCast()) {
             case CastType::EMPTY:
                 return null;
-            case CastType::SHORT_TEXT:
-            case CastType::LONG_TEXT:
+            case CastType::TEXT:
+            case CastType::HTML:
                 /** @var PropertyValue|null $propertyValue */
                 $propertyValue = Translator::translate($property->getValues(), $this->config->getLanguage());
                 if ($propertyValue) {
