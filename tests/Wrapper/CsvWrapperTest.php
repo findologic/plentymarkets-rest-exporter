@@ -561,18 +561,18 @@ class CsvWrapperTest extends TestCase
 
     public function testProductsWithMainVariationIncludingAnExportExclusionTagAreSkippedAndMessageIsLogged()
     {
-        $itemResponse = $this->getMockResponse('ItemResponse/one.json');
+        $itemResponse = $this->getMockResponse('ItemResponse/response_with_two_items_for_exclusion_tag_test.json');
         $items = ItemParser::parse($itemResponse);
 
         $variationResponse = $this->getMockResponse(
-            'Pim/Variations/variations_for_one_item_where_main_has_exclusion_tag.json'
+            'Pim/Variations/variations_for_two_items_where_main_variation_of_one_has_exclusion_tag.json'
         );
         $variations = PimVariationsParser::parse($variationResponse);
 
-        $this->exporterMock->expects($this->never())->method('createItem');
         $this->loggerMock->expects($this->once())
             ->method('notice')
             ->with('Product with id 106 was skipped, as it contains the tag "findologic-exclude"');
+        $this->exporterMock->expects($this->once())->method('createItem');
 
         $this->csvWrapper->wrap(0, 1, $items, $variations);
     }
