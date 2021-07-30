@@ -568,8 +568,8 @@
           ],
           "property": {
             "id": 9,
-            "cast": "shortText",
-            "typeIdentifier": "item",
+            "cast": "text",
+            "type": "item",
             "position": 1,
             "createdAt": "2019-07-16 11:19:41",
             "updatedAt": "2019-07-16 11:19:41",

@@ -63,7 +63,7 @@ class PropertyResponseTest extends TestCase
             ],
             'simple criteria with multiple sub-criteria' => [
                 'criteria' => [
-                    'cast' => 'shortText',
+                    'cast' => 'text',
                     'names' => [
                         'lang' => 'en',
                         'name' => 'Description'

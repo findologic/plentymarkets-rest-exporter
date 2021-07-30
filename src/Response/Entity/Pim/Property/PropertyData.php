@@ -25,7 +25,7 @@ class PropertyData extends Entity
     private $position;
 
     /** @var string */
-    private $typeIdentifier;
+    private $type;
 
     /** @var string */
     private $cast;
@@ -43,7 +43,7 @@ class PropertyData extends Entity
         $this->selections = $this->getEntities(PropertySelection::class, 'selections', $data);
         $this->names = $this->getEntities(PropertyName::class, 'names', $data);
         $this->position = $this->getIntProperty('position', $data);
-        $this->typeIdentifier = $this->getStringProperty('typeIdentifier', $data);
+        $this->type = $this->getStringProperty('type', $data);
         $this->cast = $this->getStringProperty('cast', $data);
         $this->createdAt = $this->getDateTimeProperty('createdAt', $data);
         $this->updatedAt = $this->getDateTimeProperty('updatedAt', $data);
@@ -57,7 +57,7 @@ class PropertyData extends Entity
             'selections' => $this->selections,
             'names' => $this->names,
             'position' => $this->position,
-            'typeIdentifier' => $this->typeIdentifier,
+            'type' => $this->type,
             'cast' => $this->cast,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
@@ -98,9 +98,9 @@ class PropertyData extends Entity
         return $this->position;
     }
 
-    public function getTypeIdentifier(): string
+    public function getType(): string
     {
-        return $this->typeIdentifier;
+        return $this->type;
     }
 
     public function getCast(): string

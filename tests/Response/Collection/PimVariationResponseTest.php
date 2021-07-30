@@ -456,7 +456,7 @@ class PimVariationResponseTest extends TestCase
         $propertyData = $property->getPropertyData();
         $this->assertSame(11, $propertyData->getId());
         $this->assertSame(7, $propertyData->getPosition());
-        $this->assertSame('item', $propertyData->getTypeIdentifier());
+        $this->assertSame('item', $propertyData->getType());
         $this->assertSame('float', $propertyData->getCast());
         $this->assertInstanceOf(DateTimeInterface::class, $propertyData->getUpdatedAt());
         $this->assertInstanceOf(DateTimeInterface::class, $propertyData->getCreatedAt());

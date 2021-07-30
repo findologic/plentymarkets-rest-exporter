@@ -569,7 +569,7 @@
           "property": {
             "id": 11,
             "cast": "empty",
-            "typeIdentifier": "item",
+            "type": "item",
             "position": 7,
             "createdAt": "2019-11-11 12:41:04",
             "updatedAt": "2019-11-11 12:41:04",

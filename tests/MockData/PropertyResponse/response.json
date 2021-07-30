@@ -532,7 +532,7 @@
     },
     {
       "id": 6,
-      "cast": "shortText",
+      "cast": "text",
       "typeIdentifier": "item",
       "position": 50,
       "createdAt": "2019-02-22T14:54:23+00:00",

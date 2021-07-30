@@ -5,7 +5,7 @@
   "entries": [
     {
       "id": 5,
-      "cast": "shortText",
+      "cast": "text",
       "typeIdentifier": "item",
       "position": 50,
       "createdAt": "2019-02-22T14:03:11+00:00",

@@ -2569,7 +2569,7 @@
               }
             ],
             "position": 3,
-            "typeIdentifier": "item",
+            "type": "item",
             "id": 16,
             "updatedAt": "2020-06-29 15:05:37",
             "cast": "multiSelection",
@@ -5342,7 +5342,7 @@
               }
             ],
             "position": 3,
-            "typeIdentifier": "item",
+            "type": "item",
             "id": 16,
             "updatedAt": "2020-06-29 15:05:37",
             "cast": "multiSelection",
@@ -10699,7 +10699,7 @@
               }
             ],
             "position": 3,
-            "typeIdentifier": "item",
+            "type": "item",
             "id": 16,
             "updatedAt": "2020-06-29 15:05:37",
             "cast": "multiSelection",
@@ -14698,7 +14698,7 @@
               }
             ],
             "cast": "multiSelection",
-            "typeIdentifier": "item",
+            "type": "item",
             "position": 1,
             "id": 17,
             "updatedAt": "2020-06-29 15:08:07"
@@ -18038,7 +18038,7 @@
           "property": {
             "id": 11,
             "cast": "float",
-            "typeIdentifier": "item",
+            "type": "item",
             "position": 7,
             "createdAt": "2019-11-11 12:41:04",
             "updatedAt": "2019-11-11 12:41:04",
@@ -23821,7 +23821,7 @@
           "property": {
             "id": 15,
             "cast": "selection",
-            "typeIdentifier": "item",
+            "type": "item",
             "position": 11,
             "createdAt": "2020-04-21 12:41:17",
             "updatedAt": "2020-04-21 12:41:17",
@@ -25930,7 +25930,7 @@
               }
             ],
             "position": 3,
-            "typeIdentifier": "item",
+            "type": "item",
             "id": 16,
             "updatedAt": "2020-06-29 15:05:37",
             "cast": "multiSelection",
@@ -26450,7 +26450,7 @@
           "property": {
             "id": 9,
             "cast": "int",
-            "typeIdentifier": "item",
+            "type": "item",
             "position": 1,
             "createdAt": "2019-07-16 11:19:41",
             "updatedAt": "2019-07-16 11:19:41",

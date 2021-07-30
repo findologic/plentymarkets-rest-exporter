@@ -2569,7 +2569,7 @@
               }
             ],
             "position": 3,
-            "typeIdentifier": "item",
+            "type": "item",
             "id": 16,
             "updatedAt": "2020-06-29 15:05:37",
             "cast": "multiSelection",
@@ -5370,7 +5370,7 @@
               }
             ],
             "position": 3,
-            "typeIdentifier": "item",
+            "type": "item",
             "id": 16,
             "updatedAt": "2020-06-29 15:05:37",
             "cast": "multiSelection",
