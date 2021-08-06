@@ -246,9 +246,9 @@ class Config
         return $this->exportOrdernumberProductId;
     }
 
-    public function setExportOrdernumberProductId(bool $flag): void
+    public function setExportOrdernumberProductId(bool $exportOrdernumberProductId): void
     {
-        $this->exportOrdernumberProductId = $flag;
+        $this->exportOrdernumberProductId = $exportOrdernumberProductId;
     }
 
     public function getExportOrdernumberVariantId(): bool
@@ -256,9 +256,9 @@ class Config
         return $this->exportOrdernumberVariantId;
     }
 
-    public function setExportOrdernumberVariantId(bool $flag): void
+    public function setExportOrdernumberVariantId(bool $exportOrdernumberVariantId): void
     {
-        $this->exportOrdernumberVariantId = $flag;
+        $this->exportOrdernumberVariantId = $exportOrdernumberVariantId;
     }
 
     public function getExportOrdernumberVariantNumber(): bool
@@ -266,9 +266,9 @@ class Config
         return $this->exportOrdernumberVariantNumber;
     }
 
-    public function setExportOrdernumberVariantNumber(bool $flag): void
+    public function setExportOrdernumberVariantNumber(bool $exportOrdernumberVariantNumber): void
     {
-        $this->exportOrdernumberVariantNumber = $flag;
+        $this->exportOrdernumberVariantNumber = $exportOrdernumberVariantNumber;
     }
 
     public function getExportOrdernumberVariantModel(): bool
@@ -276,9 +276,9 @@ class Config
         return $this->exportOrdernumberVariantModel;
     }
 
-    public function setExportOrdernumberVariantModel(bool $flag): void
+    public function setExportOrdernumberVariantModel(bool $exportOrdernumberVariantModel): void
     {
-        $this->exportOrdernumberVariantModel = $flag;
+        $this->exportOrdernumberVariantModel = $exportOrdernumberVariantModel;
     }
 
     public function getExportOrdernumberVariantBarcodes(): bool
@@ -286,8 +286,8 @@ class Config
         return $this->exportOrdernumberVariantBarcodes;
     }
 
-    public function setExportOrdernumberVariantBarcodes(bool $flag): void
+    public function setExportOrdernumberVariantBarcodes(bool $exportOrdernumberVariantBarcodes): void
     {
-        $this->exportOrdernumberVariantBarcodes = $flag;
+        $this->exportOrdernumberVariantBarcodes = $exportOrdernumberVariantBarcodes;
     }
 }
