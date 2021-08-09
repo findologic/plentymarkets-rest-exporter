@@ -406,16 +406,28 @@ class Product
 
     private function getVariationOrdernumbers(Variation $variation): array
     {
-        $ordernumberGetters = ['number', 'model', 'id', 'itemId'];
         $ordernumbers = [];
 
-        foreach ($ordernumberGetters as $field) {
-            $getter = 'get' . ucfirst($field);
-            $ordernumbers[] = (string)$variation->{$getter}();
+        if ($this->config->getExportOrdernumberVariantNumber()) {
+            $ordernumbers[] = (string)$variation->getNumber();
         }
 
-        foreach ($variation->getBarcodes() as $barcode) {
-            $ordernumbers[] = $barcode;
+        if ($this->config->getExportOrdernumberVariantModel()) {
+            $ordernumbers[] = (string)$variation->getModel();
+        }
+
+        if ($this->config->getExportOrdernumberVariantId()) {
+            $ordernumbers[] = (string)$variation->getId();
+        }
+
+        if ($this->config->getExportOrdernumberProductId()) {
+            $ordernumbers[] = (string)$variation->getItemId();
+        }
+
+        if ($this->config->getExportOrdernumberVariantBarcodes()) {
+            foreach ($variation->getBarcodes() as $barcode) {
+                $ordernumbers[] = $barcode;
+            }
         }
 
         return $ordernumbers;

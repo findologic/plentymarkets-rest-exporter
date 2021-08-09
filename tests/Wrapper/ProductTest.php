@@ -564,6 +564,33 @@ class ProductTest extends TestCase
         $this->assertEquals('1|11|1111|111|11111|111111|2|22|2222|222|22222|222222', $columnValues[1]);
     }
 
+    /**
+     * @dataProvider orderNumberExportConfigurationTestProvider
+     */
+    public function testOrderNumbersAreExportedAccordingToConfiguration(
+        array $orderNumbersExportConfig,
+        string $expectedOrderNumbers
+    ): void {
+        $this->config = $this->getDefaultConfig($orderNumbersExportConfig);
+        $this->exporterMock = $this->getExporter();
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_ordernumber_test.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
+        $webStores = WebStoreParser::parse($rawWebStores);
+        $this->registryServiceMock->expects($this->any())->method('getAllWebStores')->willReturn($webStores);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        // TODO: check item's order numbers property directly once order numbers getter is implemented
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+        $this->assertEquals($expectedOrderNumbers, $columnValues[1]);
+    }
+
     public function testAttributesAreSetFromAllVariations()
     {
         $this->exporterMock = $this->getExporter();
@@ -767,5 +794,73 @@ class ProductTest extends TestCase
     private function getExporter(): Exporter
     {
         return Exporter::create(Exporter::TYPE_CSV, 100, self::AVAILABLE_PROPERTIES);
+    }
+
+    public function orderNumberExportConfigurationTestProvider(): array
+    {
+        return [
+            'using default values' => [
+                [],
+                '1|11|1111|111|11111|111111|2|22|2222|222|22222|222222'
+            ],
+            'all fields enabled' => [
+                [
+                    'exportOrdernumberProductId' => true,
+                    'exportOrdernumberVariantId' => true,
+                    'exportOrdernumberVariantNumber' => true,
+                    'exportOrdernumberVariantModel' => true,
+                    'exportOrdernumberVariantBarcodes' => true
+                ],
+                '1|11|1111|111|11111|111111|2|22|2222|222|22222|222222'
+            ],
+            'all fields disabled' => [
+                [
+                    'exportOrdernumberProductId' => false,
+                    'exportOrdernumberVariantId' => false,
+                    'exportOrdernumberVariantNumber' => false,
+                    'exportOrdernumberVariantModel' => false,
+                    'exportOrdernumberVariantBarcodes' => false
+                ],
+                ''
+            ],
+            'product id disabled' => [
+                [
+                    'exportOrdernumberProductId' => false,
+                ],
+                '1|11|1111|11111|111111|2|22|2222|22222|222222'
+            ],
+            'variant id disabled' => [
+                [
+                    'exportOrdernumberVariantId' => false,
+                ],
+                '1|11|111|11111|111111|2|22|222|22222|222222'
+            ],
+            'variant number disabled' => [
+                [
+                    'exportOrdernumberVariantNumber' => false,
+                ],
+                '11|1111|111|11111|111111|22|2222|222|22222|222222'
+            ],
+            'variant model disabled' => [
+                [
+                    'exportOrdernumberVariantModel' => false,
+                ],
+                '1|1111|111|11111|111111|2|2222|222|22222|222222'
+            ],
+            'variant barcodes disabled' => [
+                [
+                    'exportOrdernumberVariantBarcodes' => false,
+                ],
+                '1|11|1111|111|2|22|2222|222'
+            ],
+            'various fields disabled' => [
+                [
+                    'exportOrdernumberProductId' => false,
+                    'exportOrdernumberVariantNumber' => false,
+                    'exportOrdernumberVariantBarcodes' => false
+                ],
+                '11|1111|22|2222'
+            ]
+        ];
     }
 }

@@ -11,38 +11,37 @@ use Exception;
  */
 class Config
 {
-    /** @var string */
-    private $domain;
+    private string $domain;
 
-    /** @var string */
-    private $username;
+    private string $username;
 
-    /** @var string */
-    private $password;
+    private string $password;
 
-    /** @var string */
-    private $language;
+    private string $language;
 
-    /** @var int|null */
-    private $multiShopId;
+    private ?int $multiShopId = null;
 
-    /** @var int|null */
-    private $availabilityId;
+    private ?int $availabilityId = null;
 
-    /** @var int|null */
-    private $priceId;
+    private ?int $priceId = null;
 
-    /** @var int|null */
-    private $rrpId;
+    private ?int $rrpId = null;
 
-    /** @var string  */
-    private $protocol = Client::PROTOCOL_HTTPS;
+    private string $protocol = Client::PROTOCOL_HTTPS;
 
-    /** @var bool */
-    private $debug = false;
+    private bool $debug = false;
 
-    /** @var bool  */
-    private $exportUnavailableVariations = false;
+    private bool $exportUnavailableVariations = false;
+
+    private bool $exportOrdernumberProductId = true;
+
+    private bool $exportOrdernumberVariantId = true;
+
+    private bool $exportOrdernumberVariantNumber = true;
+
+    private bool $exportOrdernumberVariantModel = true;
+
+    private bool $exportOrdernumberVariantBarcodes = true;
 
     public function __construct(array $rawConfig = [])
     {
@@ -74,7 +73,12 @@ class Config
             'availabilityId' => $plentyConfig['availability_id'],
             'priceId' => $plentyConfig['price_id'],
             'rrpId' => $plentyConfig['rrp_id'],
-            'exportUnavailableVariations' => $plentyConfig['export_unavailable_variants'],
+            'exportUnavailableVariations' => $plentyConfig['export_unavailable_variants'] ?? true,
+            'exportOrdernumberProductId' => $plentyConfig['export_ordernumber_product_id'] ?? true,
+            'exportOrdernumberVariantId' => $plentyConfig['export_ordernumber_variant_id'] ?? true,
+            'exportOrdernumberVariantNumber' => $plentyConfig['export_ordernumber_variant_number'] ?? true,
+            'exportOrdernumberVariantModel' => $plentyConfig['export_ordernumber_variant_model'] ?? true,
+            'exportOrdernumberVariantBarcodes' => $plentyConfig['export_ordernumber_variant_barcodes'] ?? true,
             'debug' => $debug
         ]);
     }
@@ -91,6 +95,11 @@ class Config
             'priceId' => (int)Utils::env('EXPORT_PRICE_ID'),
             'rrpId' => (int)Utils::env('EXPORT_RRP_ID'),
             'exportUnavailableVariations' => (bool)Utils::env('EXPORT_UNAVAILABLE_VARIATIONS'),
+            'exportOrdernumberProductId' => (bool)Utils::env('EXPORT_ORDERNUMBER_PRODUCT_ID', true),
+            'exportOrdernumberVariantId' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_ID', true),
+            'exportOrdernumberVariantNumber' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_NUMBER', true),
+            'exportOrdernumberVariantModel' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_MODEL', true),
+            'exportOrdernumberVariantBarcodes' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_BARCODES', true),
             'debug' => (bool)Utils::env('DEBUG')
         ]);
     }
@@ -230,5 +239,55 @@ class Config
     public function setExportUnavailableVariations(bool $exportUnavailableVariations): void
     {
         $this->exportUnavailableVariations = $exportUnavailableVariations;
+    }
+
+    public function getExportOrdernumberProductId(): bool
+    {
+        return $this->exportOrdernumberProductId;
+    }
+
+    public function setExportOrdernumberProductId(bool $exportOrdernumberProductId): void
+    {
+        $this->exportOrdernumberProductId = $exportOrdernumberProductId;
+    }
+
+    public function getExportOrdernumberVariantId(): bool
+    {
+        return $this->exportOrdernumberVariantId;
+    }
+
+    public function setExportOrdernumberVariantId(bool $exportOrdernumberVariantId): void
+    {
+        $this->exportOrdernumberVariantId = $exportOrdernumberVariantId;
+    }
+
+    public function getExportOrdernumberVariantNumber(): bool
+    {
+        return $this->exportOrdernumberVariantNumber;
+    }
+
+    public function setExportOrdernumberVariantNumber(bool $exportOrdernumberVariantNumber): void
+    {
+        $this->exportOrdernumberVariantNumber = $exportOrdernumberVariantNumber;
+    }
+
+    public function getExportOrdernumberVariantModel(): bool
+    {
+        return $this->exportOrdernumberVariantModel;
+    }
+
+    public function setExportOrdernumberVariantModel(bool $exportOrdernumberVariantModel): void
+    {
+        $this->exportOrdernumberVariantModel = $exportOrdernumberVariantModel;
+    }
+
+    public function getExportOrdernumberVariantBarcodes(): bool
+    {
+        return $this->exportOrdernumberVariantBarcodes;
+    }
+
+    public function setExportOrdernumberVariantBarcodes(bool $exportOrdernumberVariantBarcodes): void
+    {
+        $this->exportOrdernumberVariantBarcodes = $exportOrdernumberVariantBarcodes;
     }
 }
