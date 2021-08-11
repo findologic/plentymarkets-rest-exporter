@@ -243,7 +243,7 @@ class ProductTest extends TestCase
         $expectedDescription = 'That is the best item, and I am a bit longer text.';
         $expectedUrlPath = 'awesome-url-path/somewhere-in-the-store';
         $expectedPriceId = 11;
-        $expectedMainVariationId = 20;
+        $expectedMainVariationId = 1004;
         $expectedBaseUnit = 'Stück';
         $expectedPackageSize = '1000';
 
@@ -327,7 +327,7 @@ class ProductTest extends TestCase
         $this->assertSame($expectedSummary, $item->getSummary()->getValues()['']);
         $this->assertSame($expectedDescription, $item->getDescription()->getValues()['']);
         $this->assertSame(
-            'https://plenty-testshop.de/' . $expectedUrlPath . '_10_20',
+            'https://plenty-testshop.de/' . $expectedUrlPath . '_10_1004',
             $item->getUrl()->getValues()['']
         );
 
@@ -520,6 +520,23 @@ class ProductTest extends TestCase
         $line = $item->getCsvFragment();
         $columnValues = explode("\t", $line);
         $this->assertEquals('FirstAvailableImage.jpg', $columnValues[10]);
+    }
+
+    public function testFirstVariationIsUsedWhenNoMainVariationExists()
+    {
+        $this->exporterMock = $this->getExporter();
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_with_no_main_variation.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        // TODO: check item's images property directly once images getter is implemented
+        $line = $item->getCsvFragment(self::AVAILABLE_PROPERTIES);
+        $columnValues = explode("\t", $line);
+        $this->assertEquals(1004, $columnValues[19]);
     }
 
     public function testGroupsAreSetFromAllVariations()
