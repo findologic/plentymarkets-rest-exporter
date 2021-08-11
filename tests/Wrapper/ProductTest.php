@@ -522,6 +522,23 @@ class ProductTest extends TestCase
         $this->assertEquals('FirstAvailableImage.jpg', $columnValues[10]);
     }
 
+    public function testExportMainVariationIdWhenAvailable()
+    {
+        $this->exporterMock = $this->getExporter();
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_variation_id_test.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        // TODO: check item's images property directly once images getter is implemented
+        $line = $item->getCsvFragment(self::AVAILABLE_PROPERTIES);
+        $columnValues = explode("\t", $line);
+        $this->assertEquals(1005, $columnValues[19]);
+    }
+
     public function testFirstVariationIsUsedWhenNoMainVariationExists()
     {
         $this->exporterMock = $this->getExporter();
