@@ -115,10 +115,6 @@ class Product
         $this->addManufacturer();
         $this->addFreeTextFields();
 
-        $variationIdProperty = new Property('variation_id');
-        $variationIdProperty->addValue((string)$this->productEntity->getMainVariationId());
-        $this->item->addProperty($variationIdProperty);
-
         $priceId = $this->registryService->getPriceId();
         $priceIdProperty = new Property('price_id');
         $priceIdProperty->addValue((string)$priceId);
@@ -180,6 +176,7 @@ class Product
         $highestPosition = 0;
         $baseUnit = null;
         $packageSize = null;
+        $variationId = null;
 
         foreach ($this->variationEntities as $variationEntity) {
             if (!$this->shouldExportVariation($variationEntity, $checkAvailability)) {
@@ -208,6 +205,10 @@ class Product
 
             if (!$baseUnit) {
                 $baseUnit = $variation->getBaseUnit();
+            }
+
+            if (!$variationId || $variation->isMain()) {
+                $variationId = $variation->getId();
             }
 
             $position = $variation->getPosition();
@@ -271,6 +272,12 @@ class Product
             $packageSizeProperty = new Property('package_size');
             $packageSizeProperty->addValue((string)$packageSize);
             $this->item->addProperty($packageSizeProperty);
+        }
+
+        if ($variationId) {
+            $variationIdProperty = new Property('variation_id');
+            $variationIdProperty->addValue((string)$variationId);
+            $this->item->addProperty($variationIdProperty);
         }
 
         return $variationsProcessed;
