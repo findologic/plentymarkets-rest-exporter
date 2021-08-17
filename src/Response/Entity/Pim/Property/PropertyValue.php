@@ -15,7 +15,7 @@ class PropertyValue extends Entity implements Translatable
     /** @var string */
     private $lang;
 
-    /** @var string */
+    /** @var string|null */
     private $value;
 
     /** @var string|null */
@@ -49,7 +49,7 @@ class PropertyValue extends Entity implements Translatable
         return $this->lang;
     }
 
-    public function getValue(): string
+    public function getValue(): ?string
     {
         return $this->value;
     }

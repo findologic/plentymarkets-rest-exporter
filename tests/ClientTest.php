@@ -244,16 +244,16 @@ class ClientTest extends TestCase
                 $this->getMockResponse('LoginResponse/response.json'),
                 $this->getMockResponse('WebStoreResponse/response.json')
                     ->withAddedHeader('X-Plenty-Global-Short-Period-Calls-Left', 1)
-                    ->withAddedHeader('X-Plenty-Global-Short-Period-Decay', 5),
+                    ->withAddedHeader('X-Plenty-Global-Short-Period-Decay', 2),
                 $this->getMockResponse('WebStoreResponse/response.json')
             );
 
         $request = new WebStoreRequest();
         $client->send($request);
-        $expectedRateLimitedTime = Carbon::now()->addSeconds(5);
+        $expectedRateLimitedTime = Carbon::now()->addSeconds(2);
         $client->send($request);
 
-        $this->assertEqualsWithDelta($expectedRateLimitedTime->timestamp, Carbon::now()->timestamp, 2);
+        $this->assertEqualsWithDelta($expectedRateLimitedTime->timestamp, Carbon::now()->timestamp, 1);
     }
 
     public function testGetAccessTokenThrowsExceptionInCaseNoAuthenticationHasBeenMadeYet(): void

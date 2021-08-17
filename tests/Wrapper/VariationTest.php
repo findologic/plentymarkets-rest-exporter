@@ -331,6 +331,14 @@ class VariationTest extends TestCase
                     $this->getVariationEntity('Pim/Variations/variation_without_translated_property.json'),
                 'propertyEntity' =>
                     PropertyParser::parse($this->getMockResponse('PropertyResponse/one.json'))->first()
+            ],
+            'property of type selection without relation' => [
+                'variationEntity' =>
+                    $this->getVariationEntity(
+                        'Pim/Variations/variation_with_selection_properties_without_relations.json'
+                    ),
+                'propertyEntity' =>
+                    PropertyParser::parse($this->getMockResponse('PropertyResponse/one.json'))->first()
             ]
         ];
     }

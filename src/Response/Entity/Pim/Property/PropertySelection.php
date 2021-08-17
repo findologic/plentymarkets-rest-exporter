@@ -15,7 +15,7 @@ class PropertySelection extends Entity
     /** @var int */
     private $propertyId;
 
-    /** @var PropertyRelation */
+    /** @var PropertyRelation|null */
     private $relation;
 
     /** @var int */
@@ -62,7 +62,7 @@ class PropertySelection extends Entity
         return $this->propertyId;
     }
 
-    public function getRelation(): PropertyRelation
+    public function getRelation(): ?PropertyRelation
     {
         return $this->relation;
     }

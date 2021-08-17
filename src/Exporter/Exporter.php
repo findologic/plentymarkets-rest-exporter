@@ -22,14 +22,17 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Wrapper;
 use GuzzleHttp\Client as GuzzleClient;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
+use Throwable;
 
 abstract class Exporter
 {
     public const DEFAULT_LOCATION = __DIR__ . '/../../var/export';
 
-    public const
-        TYPE_CSV = 0,
-        TYPE_XML = 1;
+    public const TYPE_CSV = 0;
+    public const TYPE_XML = 1;
+
+    public const SUCCESS = 0;
+    public const FAILURE = 1;
 
     /** @var LoggerInterface */
     protected $internalLogger;
@@ -166,12 +169,36 @@ abstract class Exporter
         }
     }
 
-    public function export(): void
+    /**
+     * @throws Throwable
+     * @return int The exit code. 0 is only returned in case of success. Any other code may indicate a failure.
+     *
+     * @see Exporter::SUCCESS
+     * @see Exporter::FAILURE
+     */
+    public function export(): int
     {
-        $this->exportStartTime = microtime(true);
-        $this->registryService->warmUp();
-        $this->exportProducts();
-        $this->exportEndTime = microtime(true);
+        try {
+            $this->exportStartTime = microtime(true);
+            $this->registryService->warmUp();
+            $this->exportProducts();
+            $this->exportEndTime = microtime(true);
+
+            return self::SUCCESS;
+        } catch (Throwable $e) {
+            // Running the command locally or for tests, it is easier for debugging to simply throw the error.
+            if (Utils::env('APP_ENV') === 'dev' || Utils::env('APP_ENV') === 'test') {
+                throw $e;
+            }
+
+            $this->customerLogger->error('An unexpected error occurred. Export will stop.');
+            $this->internalLogger->error(
+                sprintf('An unexpected error occurred. Export will stop. Error message: %s', $e->getMessage()),
+                ['exception' => $e]
+            );
+
+            return self::FAILURE;
+        }
     }
 
     public function getExportTime(): string

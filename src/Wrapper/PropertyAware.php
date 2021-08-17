@@ -83,9 +83,14 @@ trait PropertyAware
                         continue;
                     }
 
+                    $relation = $selection->getRelation();
+                    if (!$relation) {
+                        continue;
+                    }
+
                     /** @var PropertyRelationValue|null $relationValue */
                     $relationValue = Translator::translate(
-                        $selection->getRelation()->getValues(),
+                        $relation->getValues(),
                         $this->config->getLanguage()
                     );
                     if ($relationValue) {
