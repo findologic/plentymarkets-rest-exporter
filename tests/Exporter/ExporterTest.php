@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Exporter;
 
+use Exception;
 use FINDOLOGIC\Export\Exporter as LibFlexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
@@ -18,6 +19,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PimVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use InvalidArgumentException;
+use Log4Php\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -83,6 +85,13 @@ class ExporterTest extends TestCase
             ->willReturn($parsedCategoryResponse->first());
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $_ENV['APP_ENV'] = 'test';
+    }
+
     public function exporterTypeProvider(): array
     {
         return [
@@ -118,6 +127,73 @@ class ExporterTest extends TestCase
         $exporter->export();
 
         $this->assertInstanceOf($expected, $exporter);
+    }
+
+    /**
+     * @dataProvider exporterTypeProvider
+     */
+    public function testExceptionIsThrownForTestEnvironment(int $type): void
+    {
+        $expectedExceptionMessage = 'Something gone real bad...';
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+
+        $this->clientMock->expects($this->any())
+            ->method('send')
+            ->willThrowException(new Exception($expectedExceptionMessage));
+
+        $exporter = $this->getExporter($type);
+        $exporter->export();
+    }
+
+    /**
+     * @dataProvider exporterTypeProvider
+     */
+    public function testExceptionIsThrownForDevEnvironment(int $type): void
+    {
+        $expectedExceptionMessage = 'Something gone real bad...';
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+
+        $_ENV['APP_ENV'] = 'dev';
+        $this->clientMock->expects($this->any())
+            ->method('send')
+            ->willThrowException(new Exception($expectedExceptionMessage));
+
+        $exporter = $this->getExporter($type);
+        $exporter->export();
+    }
+
+    /**
+     * @dataProvider exporterTypeProvider
+     */
+    public function testExceptionIsCaughtForProdEnvironment(int $type): void
+    {
+        $expectedExceptionMessage = 'Something gone real bad...';
+        $expectedException = new Exception($expectedExceptionMessage);
+
+        $this->logger = $this->getMockBuilder(Logger::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->logger->expects($this->exactly(2))
+            ->method('error')
+            ->withConsecutive(
+                ['An unexpected error occurred. Export will stop.'],
+                [
+                    'An unexpected error occurred. Export will stop. Error message: ' . $expectedExceptionMessage,
+                    ['exception' => $expectedException]
+                ]
+            );
+
+        $_ENV['APP_ENV'] = 'prod';
+        $this->clientMock->expects($this->any())
+            ->method('send')
+            ->willThrowException($expectedException);
+
+        $exporter = $this->getExporter($type);
+        $result = $exporter->export();
+
+        $this->assertSame(Exporter::FAILURE, $result);
     }
 
     public function testFileNameIsChangedWhenSet(): void
