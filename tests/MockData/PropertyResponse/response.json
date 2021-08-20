@@ -6,45 +6,22 @@
     {
       "id": 1,
       "cast": "selection",
-      "typeIdentifier": "item",
+      "type": "item",
       "position": 0,
       "createdAt": "2018-04-16T07:04:49+01:00",
       "updatedAt": "2018-04-16T07:04:49+01:00",
-      "propertyId": "1",
-      "propertyGroupId": "1",
       "groups": [
         {
           "id": 1,
           "position": 0,
           "createdAt": "2018-04-16T07:08:03+01:00",
           "updatedAt": "2018-04-16T07:08:03+01:00",
-          "names": [
-            {
-              "id": 1,
-              "propertyGroupId": 1,
-              "lang": "en",
-              "name": "Attributes",
-              "description": "",
-              "createdAt": "2018-04-16T07:08:03+01:00",
-              "updatedAt": "2019-02-22T14:34:59+00:00"
-            },
-            {
-              "id": 3,
-              "propertyGroupId": 1,
-              "lang": "de",
-              "name": "ATt",
-              "description": "Ta",
-              "createdAt": "2019-02-22T14:01:58+00:00",
-              "updatedAt": "2019-02-22T14:01:58+00:00"
-            }
-          ],
-          "groupRelation": {
+          "pivot": {
             "propertyId": 1,
-            "propertyGroupId": 2
+            "groupId": 1
           }
         }
       ],
-      "availabilities": [],
       "names": [
         {
           "id": 1,
@@ -60,108 +37,37 @@
         {
           "id": 2,
           "propertyId": 1,
-          "typeOptionIdentifier": "display",
+          "type": "display",
+          "value":"some value",
           "createdAt": "2018-04-16T07:05:22+01:00",
           "updatedAt": "2018-04-16T07:05:22+01:00"
         },
         {
           "id": 128,
           "propertyId": 1,
-          "typeOptionIdentifier": "displayOrder",
+          "type": "displayOrder",
+          "value": "some value",
           "createdAt": "2018-06-18T15:32:30+01:00",
           "updatedAt": "2018-06-18T15:32:30+01:00"
         },
         {
           "id": 129,
           "propertyId": 1,
-          "typeOptionIdentifier": "displayOrder",
+          "type": "displayOrder",
+          "value": "some value",
           "createdAt": "2018-06-18T15:32:30+01:00",
           "updatedAt": "2018-06-18T15:32:30+01:00"
         },
         {
           "id": 132,
           "propertyId": 1,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value": "some value",
           "createdAt": "2018-06-18T15:32:42+01:00",
           "updatedAt": "2018-06-18T15:32:42+01:00"
         }
       ],
-      "markets": [],
-      "selections": [
-        {
-          "id": 1,
-          "propertyId": 1,
-          "position": 0,
-          "createdAt": "2018-04-16T07:05:34+01:00",
-          "updatedAt": "2018-04-16T07:05:34+01:00",
-          "relation": {
-            "id": 1,
-            "propertyId": 1,
-            "relationTypeIdentifier": null,
-            "relationTargetId": null,
-            "selectionRelationId": 1,
-            "createdAt": "2018-04-16T07:05:34+01:00",
-            "updatedAt": "2018-04-16T07:05:34+01:00",
-            "relationValues": [
-              {
-                "id": 1,
-                "propertyRelationId": 1,
-                "lang": "EN",
-                "value": "Red",
-                "description": "Red",
-                "createdAt": "2018-04-16T07:05:34+01:00",
-                "updatedAt": "2018-04-16T07:05:34+01:00"
-              },
-              {
-                "id": 14,
-                "propertyRelationId": 1,
-                "lang": "de",
-                "value": "Eee",
-                "description": "Reddd",
-                "createdAt": "2019-02-22T14:01:42+00:00",
-                "updatedAt": "2019-02-22T14:01:42+00:00"
-              }
-            ]
-          }
-        },
-        {
-          "id": 2,
-          "propertyId": 1,
-          "position": 0,
-          "createdAt": "2018-04-16T07:05:48+01:00",
-          "updatedAt": "2018-04-16T07:05:48+01:00",
-          "relation": {
-            "id": 2,
-            "propertyId": 1,
-            "relationTypeIdentifier": null,
-            "relationTargetId": null,
-            "selectionRelationId": 2,
-            "createdAt": "2018-04-16T07:05:48+01:00",
-            "updatedAt": "2018-04-16T07:05:48+01:00",
-            "relationValues": [
-              {
-                "id": 2,
-                "propertyRelationId": 2,
-                "lang": "EN",
-                "value": "Blue",
-                "description": "Blue",
-                "createdAt": "2018-04-16T07:05:48+01:00",
-                "updatedAt": "2018-04-16T07:05:48+01:00"
-              },
-              {
-                "id": 13,
-                "propertyRelationId": 2,
-                "lang": "de",
-                "value": "Blue",
-                "description": "Blue",
-                "createdAt": "2019-02-22T14:01:33+00:00",
-                "updatedAt": "2019-02-22T14:01:33+00:00"
-              }
-            ]
-          }
-        }
-      ],
-      "amazons": [
+      "amazon": [
         {
           "id": 2,
           "propertyId": 1,
@@ -176,45 +82,18 @@
     {
       "id": 4,
       "cast": "selection",
-      "typeIdentifier": "item",
+      "type": "item",
       "position": 50,
       "createdAt": "2019-02-22T10:39:10+00:00",
       "updatedAt": "2019-02-22T10:44:45+00:00",
-      "propertyId": "4",
-      "propertyGroupId": "1",
       "groups": [
         {
           "id": 1,
           "position": 0,
           "createdAt": "2018-04-16T07:08:03+01:00",
-          "updatedAt": "2018-04-16T07:08:03+01:00",
-          "names": [
-            {
-              "id": 1,
-              "propertyGroupId": 1,
-              "lang": "en",
-              "name": "Attributes",
-              "description": "",
-              "createdAt": "2018-04-16T07:08:03+01:00",
-              "updatedAt": "2019-02-22T14:34:59+00:00"
-            },
-            {
-              "id": 3,
-              "propertyGroupId": 1,
-              "lang": "de",
-              "name": "ATt",
-              "description": "Ta",
-              "createdAt": "2019-02-22T14:01:58+00:00",
-              "updatedAt": "2019-02-22T14:01:58+00:00"
-            }
-          ],
-          "groupRelation": {
-            "propertyId": 4,
-            "propertyGroupId": 1
-          }
+          "updatedAt": "2018-04-16T07:08:03+01:00"
         }
       ],
-      "availabilities": [],
       "names": [
         {
           "id": 4,
@@ -239,209 +118,29 @@
         {
           "id": 627,
           "propertyId": 4,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value": "some value",
           "createdAt": "2019-02-22T10:39:41+00:00",
           "updatedAt": "2019-02-22T10:39:41+00:00"
         },
         {
           "id": 628,
           "propertyId": 4,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value": "some value",
           "createdAt": "2019-02-22T10:39:41+00:00",
           "updatedAt": "2019-02-22T10:39:41+00:00"
         },
         {
           "id": 629,
           "propertyId": 4,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value": "some value",
           "createdAt": "2019-02-22T10:39:41+00:00",
           "updatedAt": "2019-02-22T10:39:41+00:00"
         }
       ],
-      "markets": [],
-      "selections": [
-        {
-          "id": 3,
-          "propertyId": 4,
-          "position": 0,
-          "createdAt": "2019-02-22T10:40:29+00:00",
-          "updatedAt": "2019-02-22T10:40:29+00:00",
-          "relation": {
-            "id": 3,
-            "propertyId": 4,
-            "relationTypeIdentifier": null,
-            "relationTargetId": null,
-            "selectionRelationId": 3,
-            "createdAt": "2019-02-22T10:40:29+00:00",
-            "updatedAt": "2019-02-22T10:40:29+00:00",
-            "relationValues": [
-              {
-                "id": 3,
-                "propertyRelationId": 3,
-                "lang": "EN",
-                "value": "Small",
-                "description": "Small",
-                "createdAt": "2019-02-22T10:40:29+00:00",
-                "updatedAt": "2019-02-22T10:40:29+00:00"
-              },
-              {
-                "id": 4,
-                "propertyRelationId": 3,
-                "lang": "DE",
-                "value": "Klein",
-                "description": "Klein",
-                "createdAt": "2019-02-22T10:40:29+00:00",
-                "updatedAt": "2019-02-22T10:40:29+00:00"
-              }
-            ]
-          }
-        },
-        {
-          "id": 4,
-          "propertyId": 4,
-          "position": 0,
-          "createdAt": "2019-02-22T10:40:53+00:00",
-          "updatedAt": "2019-02-22T10:40:53+00:00",
-          "relation": {
-            "id": 4,
-            "propertyId": 4,
-            "relationTypeIdentifier": null,
-            "relationTargetId": null,
-            "selectionRelationId": 4,
-            "createdAt": "2019-02-22T10:40:53+00:00",
-            "updatedAt": "2019-02-22T10:40:53+00:00",
-            "relationValues": [
-              {
-                "id": 5,
-                "propertyRelationId": 4,
-                "lang": "EN",
-                "value": "Very Small",
-                "description": "Very Small",
-                "createdAt": "2019-02-22T10:40:53+00:00",
-                "updatedAt": "2019-02-22T10:40:53+00:00"
-              },
-              {
-                "id": 6,
-                "propertyRelationId": 4,
-                "lang": "DE",
-                "value": "Sehr Klein",
-                "description": "Sehr Klein",
-                "createdAt": "2019-02-22T10:40:53+00:00",
-                "updatedAt": "2019-02-22T10:40:53+00:00"
-              }
-            ]
-          }
-        },
-        {
-          "id": 5,
-          "propertyId": 4,
-          "position": 0,
-          "createdAt": "2019-02-22T10:41:13+00:00",
-          "updatedAt": "2019-02-22T10:41:13+00:00",
-          "relation": {
-            "id": 5,
-            "propertyId": 4,
-            "relationTypeIdentifier": null,
-            "relationTargetId": null,
-            "selectionRelationId": 5,
-            "createdAt": "2019-02-22T10:41:13+00:00",
-            "updatedAt": "2019-02-22T10:41:13+00:00",
-            "relationValues": [
-              {
-                "id": 7,
-                "propertyRelationId": 5,
-                "lang": "EN",
-                "value": "Medium",
-                "description": "Medium",
-                "createdAt": "2019-02-22T10:41:13+00:00",
-                "updatedAt": "2019-02-22T10:41:13+00:00"
-              },
-              {
-                "id": 8,
-                "propertyRelationId": 5,
-                "lang": "DE",
-                "value": "Mittel",
-                "description": "Mittel",
-                "createdAt": "2019-02-22T10:41:13+00:00",
-                "updatedAt": "2019-02-22T10:41:13+00:00"
-              }
-            ]
-          }
-        },
-        {
-          "id": 6,
-          "propertyId": 4,
-          "position": 0,
-          "createdAt": "2019-02-22T10:41:37+00:00",
-          "updatedAt": "2019-02-22T10:41:37+00:00",
-          "relation": {
-            "id": 6,
-            "propertyId": 4,
-            "relationTypeIdentifier": null,
-            "relationTargetId": null,
-            "selectionRelationId": 6,
-            "createdAt": "2019-02-22T10:41:37+00:00",
-            "updatedAt": "2019-02-22T10:41:37+00:00",
-            "relationValues": [
-              {
-                "id": 9,
-                "propertyRelationId": 6,
-                "lang": "EN",
-                "value": "Large",
-                "description": "Large",
-                "createdAt": "2019-02-22T10:41:37+00:00",
-                "updatedAt": "2019-02-22T10:41:37+00:00"
-              },
-              {
-                "id": 10,
-                "propertyRelationId": 6,
-                "lang": "DE",
-                "value": "Grob",
-                "description": "Grob",
-                "createdAt": "2019-02-22T10:41:37+00:00",
-                "updatedAt": "2019-02-22T10:41:37+00:00"
-              }
-            ]
-          }
-        },
-        {
-          "id": 7,
-          "propertyId": 4,
-          "position": 0,
-          "createdAt": "2019-02-22T10:41:58+00:00",
-          "updatedAt": "2019-02-22T10:41:58+00:00",
-          "relation": {
-            "id": 7,
-            "propertyId": 4,
-            "relationTypeIdentifier": null,
-            "relationTargetId": null,
-            "selectionRelationId": 7,
-            "createdAt": "2019-02-22T10:41:58+00:00",
-            "updatedAt": "2019-02-22T10:41:58+00:00",
-            "relationValues": [
-              {
-                "id": 11,
-                "propertyRelationId": 7,
-                "lang": "EN",
-                "value": "Very Large",
-                "description": "Very Large",
-                "createdAt": "2019-02-22T10:41:58+00:00",
-                "updatedAt": "2019-02-22T10:41:58+00:00"
-              },
-              {
-                "id": 12,
-                "propertyRelationId": 7,
-                "lang": "DE",
-                "value": "Sehr Grob",
-                "description": "Sehr Grob",
-                "createdAt": "2019-02-22T10:41:58+00:00",
-                "updatedAt": "2019-02-22T10:41:58+00:00"
-              }
-            ]
-          }
-        }
-      ],
-      "amazons": [
+      "amazon": [
         {
           "id": 1,
           "propertyId": 4,
@@ -456,14 +155,11 @@
     {
       "id": 5,
       "cast": "int",
-      "typeIdentifier": "item",
+      "type": "item",
       "position": 50,
       "createdAt": "2019-02-22T14:03:11+00:00",
       "updatedAt": "2019-02-22T14:03:11+00:00",
-      "propertyId": null,
-      "propertyGroupId": null,
       "groups": [],
-      "availabilities": [],
       "names": [
         {
           "id": 6,
@@ -488,28 +184,29 @@
         {
           "id": 841,
           "propertyId": 5,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value": "some value",
           "createdAt": "2019-02-22T14:03:20+00:00",
           "updatedAt": "2019-02-22T14:03:20+00:00"
         },
         {
           "id": 842,
           "propertyId": 5,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value": "some value",
           "createdAt": "2019-02-22T14:03:20+00:00",
           "updatedAt": "2019-02-22T14:03:20+00:00"
         },
         {
           "id": 843,
           "propertyId": 5,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value": "some value",
           "createdAt": "2019-02-22T14:03:20+00:00",
           "updatedAt": "2019-02-22T14:03:20+00:00"
         }
       ],
-      "markets": [],
-      "selections": [],
-      "amazons": [
+      "amazon": [
         {
           "id": 3,
           "propertyId": 5,
@@ -533,14 +230,11 @@
     {
       "id": 6,
       "cast": "text",
-      "typeIdentifier": "item",
+      "type": "item",
       "position": 50,
       "createdAt": "2019-02-22T14:54:23+00:00",
       "updatedAt": "2019-02-22T14:54:23+00:00",
-      "propertyId": null,
-      "propertyGroupId": null,
       "groups": [],
-      "availabilities": [],
       "names": [
         {
           "id": 8,
@@ -556,21 +250,21 @@
         {
           "id": 950,
           "propertyId": 6,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value": "some value",
           "createdAt": "2019-02-22T14:54:33+00:00",
           "updatedAt": "2019-02-22T14:54:33+00:00"
         },
         {
           "id": 951,
           "propertyId": 6,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value": "some value",
           "createdAt": "2019-02-22T14:54:33+00:00",
           "updatedAt": "2019-02-22T14:54:33+00:00"
         }
       ],
-      "markets": [],
-      "selections": [],
-      "amazons": [
+      "amazon": [
         {
           "id": 5,
           "propertyId": 6,
@@ -594,12 +288,10 @@
     {
       "id": 7,
       "cast": "multiSelection",
-      "typeIdentifier": "item",
+      "type": "item",
       "position": 5,
       "createdAt": "2020-04-07T10:48:55+01:00",
       "updatedAt": "2020-04-07T10:48:55+01:00",
-      "propertyId": "7",
-      "propertyGroupId": "1",
       "groups": [
         {
           "id": 1,
@@ -611,7 +303,7 @@
               "id": 1,
               "propertyGroupId": 1,
               "lang": "en",
-              "name": "Attributes",
+              "name": "Some name in property id 7",
               "description": "",
               "createdAt": "2018-04-16T07:08:03+01:00",
               "updatedAt": "2019-02-22T14:34:59+00:00"
@@ -632,7 +324,6 @@
           }
         }
       ],
-      "availabilities": [],
       "names": [
         {
           "id": 9,
@@ -654,94 +345,16 @@
         }
       ],
       "options": [],
-      "markets": [],
-      "selections": [
-        {
-          "id": 8,
-          "propertyId": 7,
-          "position": 0,
-          "createdAt": "2020-04-07T11:38:56+01:00",
-          "updatedAt": "2020-04-07T11:38:56+01:00",
-          "relation": {
-            "id": 11,
-            "propertyId": 7,
-            "relationTypeIdentifier": null,
-            "relationTargetId": null,
-            "selectionRelationId": 8,
-            "createdAt": "2020-04-07T11:38:56+01:00",
-            "updatedAt": "2020-04-07T11:38:56+01:00",
-            "relationValues": [
-              {
-                "id": 17,
-                "propertyRelationId": 11,
-                "lang": "EN",
-                "value": "value1",
-                "description": null,
-                "createdAt": "2020-04-07T11:38:56+01:00",
-                "updatedAt": "2020-04-07T11:38:56+01:00"
-              },
-              {
-                "id": 20,
-                "propertyRelationId": 11,
-                "lang": "de",
-                "value": "value1",
-                "description": "",
-                "createdAt": "2020-04-07T11:39:34+01:00",
-                "updatedAt": "2020-04-07T11:39:34+01:00"
-              }
-            ]
-          }
-        },
-        {
-          "id": 9,
-          "propertyId": 7,
-          "position": 0,
-          "createdAt": "2020-04-07T11:39:05+01:00",
-          "updatedAt": "2020-04-07T11:39:05+01:00",
-          "relation": {
-            "id": 12,
-            "propertyId": 7,
-            "relationTypeIdentifier": null,
-            "relationTargetId": null,
-            "selectionRelationId": 9,
-            "createdAt": "2020-04-07T11:39:05+01:00",
-            "updatedAt": "2020-04-07T11:39:05+01:00",
-            "relationValues": [
-              {
-                "id": 18,
-                "propertyRelationId": 12,
-                "lang": "EN",
-                "value": "value2",
-                "description": null,
-                "createdAt": "2020-04-07T11:39:05+01:00",
-                "updatedAt": "2020-04-07T11:39:05+01:00"
-              },
-              {
-                "id": 19,
-                "propertyRelationId": 12,
-                "lang": "de",
-                "value": "value2",
-                "description": "",
-                "createdAt": "2020-04-07T11:39:15+01:00",
-                "updatedAt": "2020-04-07T11:39:23+01:00"
-              }
-            ]
-          }
-        }
-      ],
-      "amazons": []
+      "amazon": []
     },
     {
       "id": 11,
       "cast": "float",
-      "typeIdentifier": "item",
+      "type": "item",
       "position": 50,
       "createdAt": "2019-02-22T14:03:11+00:00",
       "updatedAt": "2019-02-22T14:03:11+00:00",
-      "propertyId": null,
-      "propertyGroupId": null,
       "groups": [],
-      "availabilities": [],
       "names": [
         {
           "id": 6,
@@ -766,28 +379,29 @@
         {
           "id": 841,
           "propertyId": 5,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value": "some value",
           "createdAt": "2019-02-22T14:03:20+00:00",
           "updatedAt": "2019-02-22T14:03:20+00:00"
         },
         {
           "id": 842,
           "propertyId": 5,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value": "some value",
           "createdAt": "2019-02-22T14:03:20+00:00",
           "updatedAt": "2019-02-22T14:03:20+00:00"
         },
         {
           "id": 843,
           "propertyId": 5,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value": "some value",
           "createdAt": "2019-02-22T14:03:20+00:00",
           "updatedAt": "2019-02-22T14:03:20+00:00"
         }
       ],
-      "markets": [],
-      "selections": [],
-      "amazons": [
+      "amazon": [
         {
           "id": 3,
           "propertyId": 5,

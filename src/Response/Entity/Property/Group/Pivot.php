@@ -6,36 +6,34 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
-class GroupRelation extends Entity
+class Pivot extends Entity
 {
-    /** @var int */
-    private $propertyId;
+    private ?int $propertyId;
 
-    /** @var int */
-    private $propertyGroupId;
+    private ?int $groupId;
 
     public function __construct(array $data)
     {
         // Undocumented - the properties may not match the received data exactly
-        $this->propertyId = (int)$data['propertyId'];
-        $this->propertyGroupId = (int)$data['propertyGroupId'];
+        $this->propertyId = $this->getIntProperty('propertyId', $data);
+        $this->groupId = $this->getIntProperty('groupId', $data);
     }
 
     public function getData(): array
     {
         return [
             'propertyId' => $this->propertyId,
-            'propertyGroupId' => $this->propertyGroupId
+            'groupId' => $this->groupId
         ];
     }
 
-    public function getPropertyId(): int
+    public function getPropertyId(): ?int
     {
         return $this->propertyId;
     }
 
-    public function getPropertyGroupId(): int
+    public function getGroupId(): ?int
     {
-        return $this->propertyGroupId;
+        return $this->groupId;
     }
 }

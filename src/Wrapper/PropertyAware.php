@@ -33,7 +33,7 @@ trait PropertyAware
                 continue;
             }
 
-            if ($propertyDetails->getTypeIdentifier() !== ItemVariationProperty::PROPERTY_TYPE_ITEM) {
+            if ($propertyDetails->getType() !== ItemVariationProperty::PROPERTY_TYPE_ITEM) {
                 continue;
             }
 

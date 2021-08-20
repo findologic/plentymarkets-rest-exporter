@@ -282,6 +282,8 @@
             "cast": "text",
             "typeIdentifier": "item",
             "position": 50,
+            "propertyId": 9,
+            "propertyGroupId": 1,
             "createdAt": "2019-02-22T14:54:23+00:00",
             "updatedAt": "2019-02-22T14:54:23+00:00"
           }
