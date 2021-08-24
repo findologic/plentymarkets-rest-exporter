@@ -19,8 +19,7 @@ class Group extends Entity
 
     private ?string $updatedAt;
 
-    /** @var Pivot|Entity|null  */
-    private ?Entity $pivot = null;
+    private ?Pivot $pivot = null;
 
     public function __construct(array $data)
     {
@@ -31,7 +30,9 @@ class Group extends Entity
         $this->updatedAt = $this->getStringProperty('updatedAt', $data);
 
         if (!empty($data['pivot'])) {
-            $this->pivot = $this->getEntity(Pivot::class, $data['pivot']);
+            /** @var Pivot $pivot */
+            $pivot = $this->getEntity(Pivot::class, $data['pivot']);
+            $this->pivot = $pivot;
         }
     }
 

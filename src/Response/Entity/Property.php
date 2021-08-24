@@ -11,68 +11,42 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Option;
 
 class Property extends Entity
 {
-    /** @var int  */
-    private $id;
+    private ?int $id;
 
-    /** @var string  */
-    private $cast;
+    private ?string $cast;
 
-    /** @var string  */
-    private $type;
+    private ?string $type;
 
-    /** @var int  */
-    private $position;
+    private ?int $position;
 
-    /** @var string  */
-    private $createdAt;
+    private ?string $createdAt;
 
-    /** @var string  */
-    private $updatedAt;
+    private ?string $updatedAt;
 
     /** @var Group[] */
-    private $groups = [];
+    private array $groups = [];
 
     /** @var Name[] */
-    private $names = [];
+    private array $names = [];
 
     /** @var Option[] */
-    private $options = [];
+    private array $options = [];
 
     /** @var Amazon[] */
-    private $amazon = [];
+    private array $amazon = [];
 
     public function __construct(array $data)
     {
-        $this->id = (int)$data['id'];
-        $this->cast = (string)$data['cast'];
-        $this->type = (string)$data['type'];
-        $this->position = (int)$data['position'];
-        $this->createdAt = (string)$data['createdAt'];
-        $this->updatedAt = (string)$data['updatedAt'];
-
-        if (!empty($data['groups'])) {
-            foreach ($data['groups'] as $group) {
-                $this->groups[] = new Group($group);
-            }
-        }
-
-        if (!empty($data['names'])) {
-            foreach ($data['names'] as $name) {
-                $this->names[] = new Name($name);
-            }
-        }
-
-        if (!empty($data['options'])) {
-            foreach ($data['options'] as $option) {
-                $this->options[] = new Option($option);
-            }
-        }
-
-        if (!empty($data['amazon'])) {
-            foreach ($data['amazon'] as $amazon) {
-                $this->amazon[] = new Amazon($amazon);
-            }
-        }
+        $this->id = $this->getIntProperty('id', $data);
+        $this->cast = $this->getStringProperty('cast', $data);
+        $this->type = $this->getStringProperty('type', $data);
+        $this->position = $this->getIntProperty('position', $data);
+        $this->createdAt = $this->getStringProperty('createdAt', $data);
+        $this->updatedAt = $this->getStringProperty('updatedAt', $data);
+        $this->groups = $this->getEntities(Group::class, 'groups', $data);
+        $this->names = $this->getEntities(Name::class, 'names', $data);
+        $this->options = $this->getEntities(Option::class, 'options', $data);
+        $this->amazon = $this->getEntities(Amazon::class, 'amazon', $data);
     }
 
     public function getData(): array
@@ -111,33 +85,33 @@ class Property extends Entity
         ];
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCast(): string
+    public function getCast(): ?string
     {
         return $this->cast;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         // Undocumented
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): ?string
     {
         // Undocumented
         return $this->updatedAt;

@@ -8,14 +8,11 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Property extends Entity
 {
-    /** @var int */
-    private $id;
+    private ?int $id;
 
-    /** @var PropertyValue[] */
-    private $values;
+    private array $values = [];
 
-    /** @var PropertyData|null */
-    private $propertyData;
+    private ?PropertyData $propertyData;
 
     public function __construct(array $data)
     {
@@ -23,7 +20,9 @@ class Property extends Entity
         $this->values = $this->getEntities(PropertyValue::class, 'values', $data);
 
         if (isset($data['property'])) {
-            $this->propertyData = $this->getEntity(PropertyData::class, $data['property']);
+            /** @var PropertyData $propertyData */
+            $propertyData = $this->getEntity(PropertyData::class, $data['property']);
+            $this->propertyData = $propertyData;
         }
     }
 
@@ -36,7 +35,7 @@ class Property extends Entity
         ];
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

@@ -91,7 +91,11 @@
           "id": 1,
           "position": 0,
           "createdAt": "2018-04-16T07:08:03+01:00",
-          "updatedAt": "2018-04-16T07:08:03+01:00"
+          "updatedAt": "2018-04-16T07:08:03+01:00",
+          "pivot": {
+            "propertyId": 10,
+            "groupId": 20
+          }
         }
       ],
       "names": [
@@ -298,29 +302,9 @@
           "position": 0,
           "createdAt": "2018-04-16T07:08:03+01:00",
           "updatedAt": "2018-04-16T07:08:03+01:00",
-          "names": [
-            {
-              "id": 1,
-              "propertyGroupId": 1,
-              "lang": "en",
-              "name": "Some name in property id 7",
-              "description": "",
-              "createdAt": "2018-04-16T07:08:03+01:00",
-              "updatedAt": "2019-02-22T14:34:59+00:00"
-            },
-            {
-              "id": 3,
-              "propertyGroupId": 1,
-              "lang": "de",
-              "name": "ATt",
-              "description": "Ta",
-              "createdAt": "2019-02-22T14:01:58+00:00",
-              "updatedAt": "2019-02-22T14:01:58+00:00"
-            }
-          ],
-          "groupRelation": {
-            "propertyId": 7,
-            "propertyGroupId": 1
+          "pivot": {
+            "propertyId": 1000,
+            "groupId": 2000
           }
         }
       ],

@@ -48,6 +48,17 @@ class PropertyResponseTest extends TestCase
                 ],
                 'expectedId' => 4
             ],
+            'criteria with multi-level sub-criteria' => [
+                'criteria' => [
+                    'groups' => [
+                        'pivot' => [
+                            'propertyId' => 1000,
+                            'groupId' => 2000
+                        ]
+                    ]
+                ],
+                'expectedId' => 7
+            ],
             'simple criteria with multiple sub-criteria' => [
                 'criteria' => [
                     'cast' => 'text',
