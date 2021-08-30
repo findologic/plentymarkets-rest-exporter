@@ -8,29 +8,27 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Option extends Entity
 {
-    /** @var int */
-    private $id;
+    private ?int $id;
 
-    /** @var int */
-    private $propertyId;
+    private ?int $propertyId;
 
-    /** @var string */
-    private $typeOptionIdentifier;
+    private ?string $type;
 
-    /** @var string */
-    private $createdAt;
+    private ?string $value;
 
-    /** @var string */
-    private $updatedAt;
+    private ?string $createdAt;
+
+    private ?string $updatedAt;
 
     public function __construct(array $data)
     {
         // Undocumented - the properties may not match the received data exactly
-        $this->id = (int)$data['id'];
-        $this->propertyId = (int)$data['propertyId'];
-        $this->typeOptionIdentifier = (string)$data['typeOptionIdentifier'];
-        $this->createdAt = (string)$data['createdAt'];
-        $this->updatedAt = (string)$data['updatedAt'];
+        $this->id = $this->getIntProperty('id', $data);
+        $this->propertyId = $this->getIntProperty('propertyId', $data);
+        $this->type = $this->getStringProperty('type', $data);
+        $this->value = $this->getStringProperty('value', $data);
+        $this->createdAt = $this->getStringProperty('createdAt', $data);
+        $this->updatedAt = $this->getStringProperty('updatedAt', $data);
     }
 
     public function getData(): array
@@ -38,33 +36,39 @@ class Option extends Entity
         return [
             'id' => $this->id,
             'propertyId' => $this->propertyId,
-            'typeOptionIdentifier' => $this->typeOptionIdentifier,
+            'type' => $this->type,
+            'value' => $this->value,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt
         ];
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPropertyId(): int
+    public function getPropertyId(): ?int
     {
         return $this->propertyId;
     }
 
-    public function getTypeOptionIdentifier(): string
+    public function getType(): ?string
     {
-        return $this->typeOptionIdentifier;
+        return $this->type;
     }
 
-    public function getCreatedAt(): string
+    public function getValue(): ?string
+    {
+        return $this->value;
+    }
+
+    public function getCreatedAt(): ?string
     {
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): ?string
     {
         return $this->updatedAt;
     }

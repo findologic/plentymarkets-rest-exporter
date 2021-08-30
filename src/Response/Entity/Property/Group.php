@@ -7,100 +7,69 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group\GroupRelation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group\Name;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group\Pivot;
 
 class Group extends Entity
 {
-    /** @var int */
-    private $id;
+    private ?int $id;
 
-    /** @var int */
-    private $position;
+    private ?int $position;
 
-    /** @var string */
-    private $createdAt;
+    private ?string $createdAt;
 
-    /** @var string */
-    private $updatedAt;
+    private ?string $updatedAt;
 
-    /** @var Name[] */
-    private $names = [];
-
-    /** @var GroupRelation */
-    private $groupRelation;
+    private ?Pivot $pivot = null;
 
     public function __construct(array $data)
     {
         // Undocumented - the properties may not match the received data exactly
-        $this->id = (int)$data['id'];
-        $this->position = (int)$data['position'];
-        $this->createdAt = (string)$data['createdAt'];
-        $this->updatedAt = (string)$data['updatedAt'];
+        $this->id = $this->getIntProperty('id', $data);
+        $this->position = $this->getIntProperty('position', $data);
+        $this->createdAt = $this->getStringProperty('createdAt', $data);
+        $this->updatedAt = $this->getStringProperty('updatedAt', $data);
 
-        if (!empty($data['names'])) {
-            foreach ($data['names'] as $name) {
-                $this->names[] = new Name($name);
-            }
-        }
-
-        if (!empty($data['groupRelation'])) {
-            $this->groupRelation = new GroupRelation($data['groupRelation']);
+        if (!empty($data['pivot'])) {
+            /** @var Pivot $pivot */
+            $pivot = $this->getEntity(Pivot::class, $data['pivot']);
+            $this->pivot = $pivot;
         }
     }
 
     public function getData(): array
     {
-        $names = [];
-        foreach ($this->names as $name) {
-            $names[] = $name->getData();
-        }
-
-        $data =  [
+        return [
             'id' => $this->id,
             'position' => $this->position,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
-            'names' => $names
+            'pivot' => $this->pivot ? $this->pivot->getData() : []
         ];
-
-        if ($this->groupRelation) {
-            $data['groupRelation'] = $this->groupRelation->getData();
-        }
-
-        return $data;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): ?string
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @return Name[]
-     */
-    public function getNames(): array
+    public function getPivot(): ?Pivot
     {
-        // Undocumented - the properties may not match the received data exactly
-        return $this->names;
-    }
-
-    public function getGroupRelation(): ?GroupRelation
-    {
-        // Undocumented - the properties may not match the received data exactly
-        return $this->groupRelation;
+        // Undocumented
+        return $this->pivot;
     }
 }

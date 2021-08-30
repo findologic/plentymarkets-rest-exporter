@@ -8,33 +8,33 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Property extends Entity
 {
-    /** @var int */
-    private $id;
+    private ?int $id;
 
-    /** @var string */
-    private $cast;
+    private ?string $cast;
 
-    /** @var string */
-    private $typeIdentifier;
+    private ?string $typeIdentifier;
 
-    /** @var int */
-    private $position;
+    private ?int $position;
 
-    /** @var string */
-    private $createdAt;
+    private ?int $propertyId;
 
-    /** @var string */
-    private $updatedAt;
+    private ?int $propertyGroupId;
+
+    private ?string $createdAt;
+
+    private ?string $updatedAt;
 
     public function __construct(array $data)
     {
         // Undocumented - the properties may not match the received data exactly
-        $this->id = (int)$data['id'];
-        $this->cast = (string)$data['cast'];
-        $this->typeIdentifier = (string)$data['typeIdentifier'];
-        $this->position = (int)$data['position'];
-        $this->createdAt = (string)$data['createdAt'];
-        $this->updatedAt = (string)$data['updatedAt'];
+        $this->id = $this->getIntProperty('id', $data);
+        $this->cast = $this->getStringProperty('cast', $data);
+        $this->typeIdentifier = $this->getStringProperty('typeIdentifier', $data);
+        $this->position = $this->getIntProperty('position', $data);
+        $this->propertyId = $this->getIntProperty('propertyId', $data);
+        $this->propertyGroupId = $this->getIntProperty('propertyGroupId', $data);
+        $this->createdAt = $this->getStringProperty('createdAt', $data);
+        $this->updatedAt = $this->getStringProperty('updatedAt', $data);
     }
 
     public function getData(): array
@@ -44,37 +44,49 @@ class Property extends Entity
             'cast' => $this->cast,
             'typeIdentifier' => $this->typeIdentifier,
             'position' => $this->position,
+            'propertyId' => $this->propertyId,
+            'propertyGroupId' => $this->propertyGroupId,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
         ];
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCast(): string
+    public function getCast(): ?string
     {
         return $this->cast;
     }
 
-    public function getTypeIdentifier(): string
+    public function getTypeIdentifier(): ?string
     {
         return $this->typeIdentifier;
     }
 
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    public function getCreatedAt(): string
+    public function getPropertyId(): ?int
+    {
+        return $this->propertyId;
+    }
+
+    public function getPropertyGroupId(): ?int
+    {
+        return $this->propertyGroupId;
+    }
+
+    public function getCreatedAt(): ?string
     {
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): ?string
     {
         return $this->updatedAt;
     }

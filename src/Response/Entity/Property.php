@@ -8,104 +8,45 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Amazon;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Option;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection;
 
 class Property extends Entity
 {
-    /** @var int  */
-    private $id;
+    private ?int $id;
 
-    /** @var string  */
-    private $cast;
+    private ?string $cast;
 
-    /** @var string  */
-    private $typeIdentifier;
+    private ?string $type;
 
-    /** @var int  */
-    private $position;
+    private ?int $position;
 
-    /** @var string  */
-    private $createdAt;
+    private ?string $createdAt;
 
-    /** @var string  */
-    private $updatedAt;
-
-    /** @var string  */
-    private $propertyId;
-
-    /** @var string  */
-    private $propertyGroupId;
+    private ?string $updatedAt;
 
     /** @var Group[] */
-    private $groups = [];
-
-    /** @var array */
-    private $availabilities = [];
+    private array $groups = [];
 
     /** @var Name[] */
-    private $names = [];
+    private array $names = [];
 
     /** @var Option[] */
-    private $options = [];
-
-    /** @var array */
-    private $markets = [];
-
-    /** @var Selection[] */
-    private $selections = [];
+    private array $options = [];
 
     /** @var Amazon[] */
-    private $amazons = [];
+    private array $amazon = [];
 
     public function __construct(array $data)
     {
-        // The documentation completely differs from what is actually received
-        $this->id = (int)$data['id'];
-        $this->cast = (string)$data['cast'];
-        $this->typeIdentifier = (string)$data['typeIdentifier'];
-        $this->position = (int)$data['position'];
-        $this->createdAt = (string)$data['createdAt'];
-        $this->updatedAt = (string)$data['updatedAt'];
-        $this->propertyId = (string)$data['propertyId'];
-        $this->propertyGroupId = (string)$data['propertyGroupId'];
-
-        if (isset($data['availabilities'])) {
-            $this->availabilities = $data['availabilities']; // Unknown structure - undocumented, got only empty arrays.
-        }
-
-        if (isset($data['markets'])) {
-            $this->markets = $data['markets']; // Unknown structure - undocumented, got only empty arrays.
-        }
-
-        if (!empty($data['groups'])) {
-            foreach ($data['groups'] as $group) {
-                $this->groups[] = new Group($group);
-            }
-        }
-
-        if (!empty($data['names'])) {
-            foreach ($data['names'] as $name) {
-                $this->names[] = new Name($name);
-            }
-        }
-
-        if (!empty($data['options'])) {
-            foreach ($data['options'] as $option) {
-                $this->options[] = new Option($option);
-            }
-        }
-
-        if (!empty($data['selections'])) {
-            foreach ($data['selections'] as $selection) {
-                $this->selections[] = new Selection($selection);
-            }
-        }
-
-        if (!empty($data['amazons'])) {
-            foreach ($data['amazons'] as $amazon) {
-                $this->amazons[] = new Amazon($amazon);
-            }
-        }
+        $this->id = $this->getIntProperty('id', $data);
+        $this->cast = $this->getStringProperty('cast', $data);
+        $this->type = $this->getStringProperty('type', $data);
+        $this->position = $this->getIntProperty('position', $data);
+        $this->createdAt = $this->getStringProperty('createdAt', $data);
+        $this->updatedAt = $this->getStringProperty('updatedAt', $data);
+        $this->groups = $this->getEntities(Group::class, 'groups', $data);
+        $this->names = $this->getEntities(Name::class, 'names', $data);
+        $this->options = $this->getEntities(Option::class, 'options', $data);
+        $this->amazon = $this->getEntities(Amazon::class, 'amazon', $data);
     }
 
     public function getData(): array
@@ -125,81 +66,55 @@ class Property extends Entity
             $options[] = $option->getData();
         }
 
-        $selections = [];
-        foreach ($this->selections as $selection) {
-            $selections[] = $selection->getData();
-        }
-
         $amazons = [];
-        foreach ($this->amazons as $amazon) {
+        foreach ($this->amazon as $amazon) {
             $amazons[] = $amazon->getData();
         }
 
         return [
             'id' => $this->id,
             'cast' => $this->cast,
-            'typeIdentifier' => $this->typeIdentifier,
+            'type' => $this->type,
             'position' => $this->position,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
-            'propertyId' => $this->propertyId,
-            'propertyGroupId' => $this->propertyGroupId,
-            'availabilities' => $this->availabilities,
-            'markets' => $this->markets,
             'groups' => $groups,
             'names' => $names,
             'options' => $options,
-            'selections' => $selections,
-            'amazons' => $amazons
+            'amazon' => $amazons
         ];
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
-        // Undocumented
         return $this->id;
     }
 
-    public function getCast(): string
+    public function getCast(): ?string
     {
-        // Undocumented
         return $this->cast;
     }
 
-    public function getTypeIdentifier(): string
+    public function getType(): ?string
     {
-        // Undocumented
-        return $this->typeIdentifier;
+        return $this->type;
     }
 
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
-        // Undocumented
         return $this->position;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         // Undocumented
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): ?string
     {
         // Undocumented
         return $this->updatedAt;
-    }
-
-    public function getPropertyId(): string
-    {
-        // Undocumented
-        return $this->propertyId;
-    }
-
-    public function getPropertyGroupId(): string
-    {
-        // Undocumented
-        return $this->propertyGroupId;
     }
 
     /**
@@ -209,12 +124,6 @@ class Property extends Entity
     {
         // Undocumented - the properties may not match the received data exactly
         return $this->groups;
-    }
-
-    public function getAvailabilities(): array
-    {
-        // Undocumented
-        return $this->availabilities;
     }
 
     /**
@@ -235,27 +144,12 @@ class Property extends Entity
         return $this->options;
     }
 
-    public function getMarkets(): array
-    {
-        // Undocumented
-        return $this->markets;
-    }
-
-    /**
-     * @return Selection[]
-     */
-    public function getSelections(): array
-    {
-        // Undocumented - the properties may not match the received data exactly
-        return $this->selections;
-    }
-
     /**
      * @return Amazon[]
      */
-    public function getAmazons(): array
+    public function getAmazon(): array
     {
         // Undocumented - the properties may not match the received data exactly
-        return $this->amazons;
+        return $this->amazon;
     }
 }

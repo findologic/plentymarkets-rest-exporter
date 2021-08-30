@@ -6,14 +6,11 @@
     {
       "id": 7,
       "cast": "multiSelection",
-      "typeIdentifier": "item",
+      "type": "item",
       "position": 50,
       "createdAt": "2019-02-22T14:03:11+00:00",
       "updatedAt": "2019-02-22T14:03:11+00:00",
-      "propertyId": null,
-      "propertyGroupId": null,
       "groups": [],
-      "availabilities": [],
       "names": [
         {
           "id": 6,
@@ -38,28 +35,29 @@
         {
           "id": 841,
           "propertyId": 5,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value": "some value",
           "createdAt": "2019-02-22T14:03:20+00:00",
           "updatedAt": "2019-02-22T14:03:20+00:00"
         },
         {
           "id": 842,
           "propertyId": 5,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value":  "some value",
           "createdAt": "2019-02-22T14:03:20+00:00",
           "updatedAt": "2019-02-22T14:03:20+00:00"
         },
         {
           "id": 843,
           "propertyId": 5,
-          "typeOptionIdentifier": "referrers",
+          "type": "referrers",
+          "value":  "some value",
           "createdAt": "2019-02-22T14:03:20+00:00",
           "updatedAt": "2019-02-22T14:03:20+00:00"
         }
       ],
-      "markets": [],
-      "selections": [],
-      "amazons": [
+      "amazon": [
         {
           "id": 3,
           "propertyId": 5,

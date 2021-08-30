@@ -14,6 +14,8 @@
         "cast": "multiSelection",
         "typeIdentifier": "item",
         "position": 5,
+        "propertyId": 7,
+        "propertyGroupId": 1,
         "createdAt": "2020-04-07T10:48:55+01:00",
         "updatedAt": "2020-04-07T10:48:55+01:00"
       },
@@ -58,6 +60,8 @@
         "cast": "multiSelection",
         "typeIdentifier": "item",
         "position": 5,
+        "propertyId": 7,
+        "propertyGroupId": 1,
         "createdAt": "2020-04-07T10:48:55+01:00",
         "updatedAt": "2020-04-07T10:48:55+01:00"
       },
@@ -102,6 +106,8 @@
         "cast": "multiSelection",
         "typeIdentifier": "item",
         "position": 5,
+        "propertyId": 7,
+        "propertyGroupId": 1,
         "createdAt": "2020-04-07T10:48:55+01:00",
         "updatedAt": "2020-04-07T10:48:55+01:00"
       },
@@ -146,6 +152,8 @@
         "cast": "multiSelection",
         "typeIdentifier": "item",
         "position": 5,
+        "propertyId": 7,
+        "propertyGroupId": 1,
         "createdAt": "2020-04-07T10:48:55+01:00",
         "updatedAt": "2020-04-07T10:48:55+01:00"
       },
@@ -190,6 +198,8 @@
         "cast": "selection",
         "typeIdentifier": "item",
         "position": 50,
+        "propertyId": 4,
+        "propertyGroupId": 1,
         "createdAt": "2019-02-22T10:39:10+00:00",
         "updatedAt": "2019-02-22T10:44:45+00:00"
       },

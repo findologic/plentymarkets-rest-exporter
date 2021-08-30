@@ -12,10 +12,11 @@ class PropertyRequest extends Request implements IterableRequestInterface
     {
         parent::__construct(
             'GET',
-            'properties',
+            'v2/properties',
             [
                 'page' => $this->page,
-                'itemsPerPage' => self::$ITEMS_PER_PAGE
+                'itemsPerPage' => self::$ITEMS_PER_PAGE,
+                'with' => 'names,amazon,options,groups'
             ]
         );
     }

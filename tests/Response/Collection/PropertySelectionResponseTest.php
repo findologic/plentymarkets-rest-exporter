@@ -134,6 +134,8 @@ class PropertySelectionResponseTest extends TestCase
         $this->assertEquals('multiSelection', $property->getCast());
         $this->assertEquals('item', $property->getTypeIdentifier());
         $this->assertEquals(5, $property->getPosition());
+        $this->assertEquals(7, $property->getPropertyId());
+        $this->assertEquals(1, $property->getPropertyGroupId());
         $this->assertEquals('2020-04-07T10:48:55+01:00', $property->getCreatedAt());
         $this->assertEquals('2020-04-07T10:48:55+01:00', $property->getUpdatedAt());
     }
