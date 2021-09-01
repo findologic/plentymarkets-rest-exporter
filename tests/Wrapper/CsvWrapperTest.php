@@ -577,6 +577,21 @@ class CsvWrapperTest extends TestCase
         $this->csvWrapper->wrap(0, 1, $items, $variations);
     }
 
+    public function testFailureLogGroupingByReason()
+    {
+        $itemResponse = $this->getMockResponse('ItemResponse/response.json');
+        $items = ItemParser::parse($itemResponse);
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/empty_response.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+
+        $this->loggerMock->expects($this->once())
+            ->method('warning')
+            ->with('Products with id 102, 103, 104, 105 could not be exported. Reason: Product has no variations.');
+
+        $this->csvWrapper->wrap(0, 1, $items, $variations);
+    }
+
     public function testNonMainVariationsWithExclusionTagAreSkipped()
     {
         $itemResponse = $this->getMockResponse('ItemResponse/one.json');

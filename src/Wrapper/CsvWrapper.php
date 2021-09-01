@@ -20,25 +20,21 @@ class CsvWrapper extends Wrapper
 {
     public const VARIANT_MODE_ALL = 'all';
 
-    /** @var string */
-    protected $exportPath;
+    protected string $exportPath;
 
     protected ?string $fileNamePrefix;
 
-    /** @var Exporter */
-    private $exporter;
+    private Exporter $exporter;
 
-    /** @var Config */
-    private $config;
+    private Config $config;
 
-    /** @var RegistryService */
-    private $registryService;
+    private RegistryService $registryService;
 
-    /** @var LoggerInterface */
-    private $internalLogger;
+    private LoggerInterface $internalLogger;
 
-    /** @var LoggerInterface */
-    private $customerLogger;
+    private LoggerInterface $customerLogger;
+
+    private array $wrapFailures = [];
 
     public function __construct(
         string $path,
@@ -105,6 +101,8 @@ class CsvWrapper extends Wrapper
         }
 
         $this->exporter->serializeItemsToFile($this->exportPath, $items, $start, count($items), $total);
+
+        $this->logFailures();
     }
 
     /**
@@ -145,11 +143,7 @@ class CsvWrapper extends Wrapper
         $item = $productWrapper->processProductData();
 
         if (!$item) {
-            $this->customerLogger->warning(sprintf(
-                'Product with id %d could not be exported. Reason: %s',
-                $product->getId(),
-                $productWrapper->getReason()
-            ));
+            $this->registerFailure($productWrapper->getReason(), $product->getId());
 
             return null;
         }
@@ -225,5 +219,25 @@ class CsvWrapper extends Wrapper
         }
 
         return true;
+    }
+
+    private function registerFailure(string $reason, int $itemId): void
+    {
+        if (!isset($this->wrapFailures[$reason])) {
+            $this->wrapFailures[$reason] = [];
+        }
+
+        $this->wrapFailures[$reason][] = $itemId;
+    }
+
+    private function logFailures(): void
+    {
+        foreach ($this->wrapFailures as $reason => $itemIds) {
+            $this->customerLogger->warning(sprintf(
+                'Products with id %s could not be exported. Reason: %s',
+                implode(', ', $itemIds),
+                $reason
+            ));
+        }
     }
 }
