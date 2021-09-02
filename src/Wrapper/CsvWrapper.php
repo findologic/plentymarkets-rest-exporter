@@ -34,7 +34,11 @@ class CsvWrapper extends Wrapper
 
     private LoggerInterface $customerLogger;
 
+    /** @var array<string, int> $wrapFailures */
     private array $wrapFailures = [];
+
+    /** @var int[] */
+    private array $skippedProducts = [];
 
     public function __construct(
         string $path,
@@ -67,12 +71,7 @@ class CsvWrapper extends Wrapper
         $items = [];
         foreach ($products->all() as $product) {
             if (!$this->shouldExportProduct($product, $variations)) {
-                $this->customerLogger->notice(
-                    sprintf(
-                        'Product with id %d was skipped, as it contains the tag "findologic-exclude"',
-                        $product->getId()
-                    )
-                );
+                $this->skippedProducts[] = $product->getId();
 
                 continue;
             }
@@ -102,6 +101,7 @@ class CsvWrapper extends Wrapper
 
         $this->exporter->serializeItemsToFile($this->exportPath, $items, $start, count($items), $total);
 
+        $this->logSkippedProducts();
         $this->logFailures();
     }
 
@@ -228,6 +228,16 @@ class CsvWrapper extends Wrapper
         }
 
         $this->wrapFailures[$reason][] = $itemId;
+    }
+
+    private function logSkippedProducts(): void
+    {
+        $this->customerLogger->notice(
+            sprintf(
+                'Products with id %s were skipped, as they contain the tag "findologic-exclude"',
+                implode(', ', $this->skippedProducts)
+            )
+        );
     }
 
     private function logFailures(): void
