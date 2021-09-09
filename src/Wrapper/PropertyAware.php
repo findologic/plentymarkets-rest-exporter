@@ -13,6 +13,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Property a
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\PropertyRelationValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\PropertyValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as VariationEntity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
@@ -67,35 +68,28 @@ trait PropertyAware
             case CastType::TEXT:
             case CastType::HTML:
                 /** @var PropertyValue|null $propertyValue */
-                $propertyValue = Translator::translate($property->getValues(), $this->config->getLanguage());
+                $propertyValue = Translator::translate(
+                    $property->getValues(),
+                    $this->config->getLanguage()
+                );
                 if ($propertyValue) {
                     return $propertyValue->getValue();
                 }
 
                 return null;
             case CastType::SELECTION:
-                if (!$property->getValues()) {
+                if (!$property->getValues() || !$this->registryService->getPropertySelections()) {
                     return null;
                 }
 
-                foreach ($property->getPropertyData()->getSelections() as $selection) {
-                    if ($property->getValues()[0]->getValue() != $selection->getId()) {
-                        continue;
-                    }
+                $value = $this->registryService->getPropertySelections()->getPropertySelectionValues(
+                    $property->getId(),
+                    [$property->getValues()[0]],
+                    $this->config->getLanguage()
+                );
 
-                    $relation = $selection->getRelation();
-                    if (!$relation) {
-                        continue;
-                    }
-
-                    /** @var PropertyRelationValue|null $relationValue */
-                    $relationValue = Translator::translate(
-                        $relation->getValues(),
-                        $this->config->getLanguage()
-                    );
-                    if ($relationValue) {
-                        return $relationValue->getValue();
-                    }
+                if ($value) {
+                    return reset($value);
                 }
 
                 return null;

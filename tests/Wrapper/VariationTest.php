@@ -433,6 +433,9 @@ class VariationTest extends TestCase
 
         $variationEntity = $this->getVariationEntity('Pim/Variations/variation_with_selection_properties.json');
         $properties = PropertyParser::parse($this->getMockResponse('PropertyResponse/one.json'));
+        $propertySelections = PropertySelectionParser::parse(
+            $this->getMockResponse('PropertySelectionResponse/response.json')
+        );
         $propertyEntity = $properties->first();
 
         $wrapper = new VariationWrapper(
@@ -442,6 +445,8 @@ class VariationTest extends TestCase
         );
 
         $this->registryServiceMock->expects($this->any())->method('getProperty')->willReturn($propertyEntity);
+        $this->registryServiceMock->expects($this->any())->method('getPropertySelections')
+            ->willReturn($propertySelections);
 
         $wrapper->processData();
 
