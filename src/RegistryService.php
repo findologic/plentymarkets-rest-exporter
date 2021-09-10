@@ -12,6 +12,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PluginConfigurationParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PluginsFromSetParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
@@ -25,6 +26,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemPropertyRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ManufacturerRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PluginConfigurationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PluginFromSetRequest;
+use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemPropertyGroupRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertyGroupRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertyRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PropertySelectionRequest;
@@ -40,6 +42,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Manufacturer;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemPropertyGroup;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertyGroup;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Unit;
@@ -90,10 +93,11 @@ class RegistryService
         $this->fetchAttributes();
         $this->fetchManufacturers();
         $this->fetchProperties();
+        $this->fetchPropertyGroups();
         $this->fetchItemProperties();
         $this->fetchUnits();
         $this->fetchPropertySelections();
-        $this->fetchPropertyGroups();
+        $this->fetchItemPropertyGroups();
         $this->fetchPluginConfigurations();
     }
 
@@ -169,6 +173,14 @@ class RegistryService
         return $property;
     }
 
+    public function getPropertyGroup(int $id): ?PropertyGroup
+    {
+        /** @var PropertyGroup $property */
+        $propertyGroup = $this->get(sprintf('propertyGroup_%d', $id));
+
+        return $propertyGroup;
+    }
+
     public function getItemProperty(int $id): ?ItemProperty
     {
         /** @var ItemProperty $itemProperty */
@@ -193,10 +205,10 @@ class RegistryService
         return $propertySelection;
     }
 
-    public function getPropertyGroup(int $id): ?PropertyGroup
+    public function getItemPropertyGroup(int $id): ?ItemPropertyGroup
     {
-        /** @var PropertyGroup $propertyGroup */
-        $propertyGroup = $this->get(sprintf('propertyGroup_%d', $id));
+        /** @var ItemPropertyGroup $propertyGroup */
+        $propertyGroup = $this->get(sprintf('itemPropertyGroup_%d', $id));
 
         return $propertyGroup;
     }
@@ -354,6 +366,26 @@ class RegistryService
         }
     }
 
+    private function fetchPropertyGroups(): void
+    {
+        try {
+            $propertyGroupRequest = new PropertyGroupRequest();
+
+            foreach (Utils::sendIterableRequest($this->client, $propertyGroupRequest) as $response) {
+                $propertyGroupResponse = PropertyGroupParser::parse($response);
+
+                foreach ($propertyGroupResponse->all() as $propertyGroup) {
+                    $this->set('propertyGroup_' . $propertyGroup->getId(), $propertyGroup);
+                }
+            }
+        } catch (PermissionException $e) {
+            $this->customerLogger->warning(
+                'Required permission \'Setup > Property > Group > Show\' has not been granted. ' .
+                'This may cause some properties not to be exported!'
+            );
+        }
+    }
+
     private function fetchItemProperties(): void
     {
         $propertyRequest = new ItemPropertyRequest();
@@ -397,20 +429,20 @@ class RegistryService
         } catch (PermissionException $e) {
             $this->customerLogger->warning(
                 'Required permission \'Setup > Property > Selection > Show\' has not been granted. ' .
-                'This causes multiSelect properties to not be exported!'
+                'This causes selection and multiSelect properties not to be exported!'
             );
         }
     }
 
-    private function fetchPropertyGroups(): void
+    private function fetchItemPropertyGroups(): void
     {
-        $propertyGroupRequest = new PropertyGroupRequest('names');
+        $propertyGroupRequest = new ItemPropertyGroupRequest('names');
 
         foreach (Utils::sendIterableRequest($this->client, $propertyGroupRequest) as $response) {
-            $propertyGroupResponse = PropertyGroupParser::parse($response);
+            $propertyGroupResponse = ItemPropertyGroupParser::parse($response);
 
             foreach ($propertyGroupResponse->all() as $propertyGroup) {
-                $this->set('propertyGroup_' . $propertyGroup->getId(), $propertyGroup);
+                $this->set('itemPropertyGroup_' . $propertyGroup->getId(), $propertyGroup);
             }
         }
     }

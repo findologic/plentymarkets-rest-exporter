@@ -15,6 +15,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\PropertyVa
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as VariationEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Name;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertyGroup\Name as PropertyGroupName;
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 
@@ -46,6 +47,20 @@ trait PropertyAware
             }
 
             $value = $this->getPropertyValue($property);
+            if (!$value && $property->getPropertyData()->getCast() == CastType::EMPTY) {
+                $value = $propertyName;
+
+                foreach ($propertyDetails->getGroups() as $group) {
+                    if (!$propertyGroup = $this->registryService->getPropertyGroup($group->getId())) {
+                        continue;
+                    }
+
+                    /** @var PropertyGroupName|null $name */
+                    if ($name = Translator::translate($propertyGroup->getNames(), $this->config->getLanguage())) {
+                        $propertyName = $name->getName();
+                    }
+                }
+            }
 
             if (Utils::isEmpty($property) || Utils::isEmpty($value)) {
                 continue;

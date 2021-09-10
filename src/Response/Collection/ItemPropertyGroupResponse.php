@@ -5,28 +5,28 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertyGroup;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemPropertyGroup;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
 
-class PropertyGroupResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
+class ItemPropertyGroupResponse extends IterableResponse implements CollectionInterface, IterableResponseInterface
 {
     use EntityCollection;
 
-    /** @var PropertyGroup[] */
+    /** @var ItemPropertyGroup[] */
     private $propertyGroups;
 
     /**
-     * @param PropertyGroup[] $propertyGroups
+     * @param ItemPropertyGroup[] $propertyGroups
      */
     public function __construct(
-        int   $page,
-        int   $totalsCount,
-        bool  $isLastPage,
+        int $page,
+        int $totalsCount,
+        bool $isLastPage,
         array $propertyGroups,
-        int   $lastPageNumber = 1,
-        int   $firstOnPage = 1,
-        int   $lastOnPage = 1,
-        int   $itemsPerPage = 100
+        int $lastPageNumber = 1,
+        int $firstOnPage = 1,
+        int $lastOnPage = 1,
+        int $itemsPerPage = 100
     ) {
         $this->page = $page;
         $this->totalsCount = $totalsCount;
@@ -39,7 +39,7 @@ class PropertyGroupResponse extends IterableResponse implements CollectionInterf
     }
 
     /**
-     * @return PropertyGroup|null
+     * @return ItemPropertyGroup|null
      */
     public function first(): ?Entity
     {
@@ -47,7 +47,7 @@ class PropertyGroupResponse extends IterableResponse implements CollectionInterf
     }
 
     /**
-     * @return PropertyGroup[]
+     * @return ItemPropertyGroup[]
      */
     public function all(): array
     {
@@ -56,7 +56,7 @@ class PropertyGroupResponse extends IterableResponse implements CollectionInterf
 
     /**
      * @param array $criteria
-     * @return PropertyGroup|null
+     * @return ItemPropertyGroup|null
      */
     public function findOne(array $criteria): ?Entity
     {
@@ -65,7 +65,7 @@ class PropertyGroupResponse extends IterableResponse implements CollectionInterf
 
     /**
      * @param array $criteria
-     * @return PropertyGroup[]
+     * @return ItemPropertyGroup[]
      */
     public function find(array $criteria): array
     {

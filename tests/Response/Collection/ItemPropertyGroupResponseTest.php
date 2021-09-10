@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use Carbon\Carbon;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;
 
-class PropertyGroupResponseTest extends TestCase
+class ItemPropertyGroupResponseTest extends TestCase
 {
     use ResponseHelper;
 
@@ -19,8 +19,10 @@ class PropertyGroupResponseTest extends TestCase
 
     public function setUp(): void
     {
-        $this->response = $this->getMockResponse('PropertyGroupResponse/response.json');
-        $this->propertyGroupResponse = PropertyGroupParser::parse($this->response);
+        // Set timezone for proper comparison of timestaps in the export.
+        date_default_timezone_set('Europe/Vienna');
+        $this->response = $this->getMockResponse('ItemPropertyGroupResponse/response.json');
+        $this->propertyGroupResponse = ItemPropertyGroupParser::parse($this->response);
     }
 
     public function criteriaProvider(): array
@@ -28,18 +30,10 @@ class PropertyGroupResponseTest extends TestCase
         return [
             'simple criteria' => [
                 'criteria' => [
-                    'id' => 2
-                ],
-                'expectedId' => 2
-            ],
-            'sub-criteria' => [
-                'criteria' => [
-                    'names' => [
-                        'name' => 'Attributes'
-                    ]
+                    'id' => 1
                 ],
                 'expectedId' => 1
-            ]
+            ],
         ];
     }
 
@@ -55,18 +49,16 @@ class PropertyGroupResponseTest extends TestCase
 
     public function testGetAllReturnsCorrectNumberOfItems()
     {
-        self::assertCount(2, $this->propertyGroupResponse->all());
+        self::assertCount(11, $this->propertyGroupResponse->all());
     }
 
     public function testFindReturnsCorrectNumberOfItems()
     {
         $criteria = [
-            'names' => [
-                'lang' => 'de'
-            ]
+            'isSurchargePercental' => false
         ];
 
-        self::assertCount(2, $this->propertyGroupResponse->find($criteria));
+        self::assertCount(10, $this->propertyGroupResponse->find($criteria));
     }
 
     public function testPropertyGroupDataCanBeFetched(): void
@@ -77,21 +69,24 @@ class PropertyGroupResponseTest extends TestCase
         $this->assertEqualsCanonicalizing($responseData['entries'][0], $propertyGroup->getData());
 
         $this->assertEquals(1, $propertyGroup->getId());
-        $this->assertEquals(0, $propertyGroup->getPosition());
-        $this->assertEquals('2021-07-15T11:35:07+01:00', $propertyGroup->getCreatedAt());
-        $this->assertEquals('2021-07-15T11:35:07+01:00', $propertyGroup->getUpdatedAt());
+        $this->assertEquals('Mein Paket', $propertyGroup->getBackendName());
+        $this->assertEquals('none', $propertyGroup->getOrderPropertyGroupingType());
+        $this->assertEquals(false, $propertyGroup->isSurchargePercental());
+        $this->assertEquals(0, $propertyGroup->getOttoComponent());
+        $this->assertEquals(
+            Carbon::createFromTimeString($responseData['entries'][0]['updatedAt']),
+            $propertyGroup->getUpdatedAt()
+        );
 
         $names = $propertyGroup->getNames();
 
-        $this->assertCount(2, $names);
+        $this->assertCount(1, $names);
         $name = $names[0];
 
-        $this->assertSame(1, $name->getId());
-        $this->assertSame(1, $name->getGroupId());
-        $this->assertSame('Attributes', $name->getName());
+        $this->assertSame('My package', $name->getName());
         $this->assertSame('en', $name->getLang());
+        $this->assertSame(1, $name->getPropertyGroupId());
         $this->assertSame('', $name->getDescription());
-        $this->assertSame('2021-07-15T11:35:07+01:00', $name->getCreatedAt());
-        $this->assertSame('2021-07-15T11:35:07+01:00', $name->getUpdatedAt());
+        $this->assertEqualsCanonicalizing($responseData['entries'][0]['names'][0], $name->getData());
     }
 }
