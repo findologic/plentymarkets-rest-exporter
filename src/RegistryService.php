@@ -175,7 +175,7 @@ class RegistryService
 
     public function getPropertyGroup(int $id): ?PropertyGroup
     {
-        /** @var PropertyGroup $property */
+        /** @var PropertyGroup $propertyGroup */
         $propertyGroup = $this->get(sprintf('propertyGroup_%d', $id));
 
         return $propertyGroup;

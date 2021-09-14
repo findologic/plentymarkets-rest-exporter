@@ -10,10 +10,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Definition\CastType;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\Property as ItemVariationProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Property as PimProperty;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\PropertyRelationValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\PropertyValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as VariationEntity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertyGroup\Name as PropertyGroupName;
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
@@ -56,7 +54,8 @@ trait PropertyAware
                     }
 
                     /** @var PropertyGroupName|null $name */
-                    if ($name = Translator::translate($propertyGroup->getNames(), $this->config->getLanguage())) {
+                    $name = Translator::translate($propertyGroup->getNames(), $this->config->getLanguage());
+                    if ($name) {
                         $propertyName = $name->getName();
                     }
                 }
