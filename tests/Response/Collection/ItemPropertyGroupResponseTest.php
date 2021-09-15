@@ -19,8 +19,6 @@ class ItemPropertyGroupResponseTest extends TestCase
 
     public function setUp(): void
     {
-        // Set timezone for proper comparison of timestaps in the export.
-        date_default_timezone_set('Europe/Vienna');
         $this->response = $this->getMockResponse('ItemPropertyGroupResponse/response.json');
         $this->propertyGroupResponse = ItemPropertyGroupParser::parse($this->response);
     }

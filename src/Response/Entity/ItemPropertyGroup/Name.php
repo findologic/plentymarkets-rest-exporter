@@ -9,21 +9,17 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Translatable;
 
 class Name extends Entity implements Translatable
 {
-    /** @var int */
-    private $propertyGroupId;
+    private ?int $propertyGroupId;
 
-    /** @var string|null */
-    private $lang;
+    private ?string $lang;
 
-    /** @var string|null */
-    private $name;
+    private ?string $name;
 
-    /** @var string|null */
-    private $description;
+    private ?string $description;
 
     public function __construct(array $data)
     {
-        $this->propertyGroupId = (int)$data['propertyGroupId'];
+        $this->propertyGroupId = $this->getIntProperty('propertyGroupId', $data);
         $this->lang = $this->getStringProperty('lang', $data);
         $this->name = $this->getStringProperty('name', $data);
         $this->description = $this->getStringProperty('description', $data);
@@ -39,14 +35,14 @@ class Name extends Entity implements Translatable
         ];
     }
 
-    public function getPropertyGroupId(): int
+    public function getPropertyGroupId(): ?int
     {
         return $this->propertyGroupId;
     }
 
     public function getLang(): string
     {
-        return (string)$this->lang;
+        return $this->lang ?? '';
     }
 
     public function getName(): ?string

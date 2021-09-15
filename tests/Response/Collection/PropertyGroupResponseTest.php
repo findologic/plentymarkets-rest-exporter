@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
-use Carbon\Carbon;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use PHPUnit\Framework\TestCase;

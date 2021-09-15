@@ -45,7 +45,7 @@ trait PropertyAware
             }
 
             $value = $this->getPropertyValue($property);
-            if (!$value && $property->getPropertyData()->getCast() == CastType::EMPTY) {
+            if (!$value && $property->getPropertyData()->getCast() === CastType::EMPTY) {
                 $value = $propertyName;
 
                 foreach ($propertyDetails->getGroups() as $group) {
@@ -96,14 +96,14 @@ trait PropertyAware
                     return null;
                 }
 
-                $value = $this->registryService->getPropertySelections()->getPropertySelectionValues(
+                $propertySelectionValues = $this->registryService->getPropertySelections()->getPropertySelectionValues(
                     $property->getId(),
                     [$property->getValues()[0]],
                     $this->config->getLanguage()
                 );
 
-                if ($value) {
-                    return reset($value);
+                if ($propertySelectionValues) {
+                    return reset($propertySelectionValues);
                 }
 
                 return null;

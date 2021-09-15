@@ -19,14 +19,14 @@ class PropertyGroupResponse extends IterableResponse implements CollectionInterf
      * @param PropertyGroup[] $propertyGroups
      */
     public function __construct(
-        int   $page,
-        int   $totalsCount,
-        bool  $isLastPage,
+        int $page,
+        int $totalsCount,
+        bool $isLastPage,
         array $propertyGroups,
-        int   $lastPageNumber = 1,
-        int   $firstOnPage = 1,
-        int   $lastOnPage = 1,
-        int   $itemsPerPage = 100
+        int $lastPageNumber = 1,
+        int $firstOnPage = 1,
+        int $lastOnPage = 1,
+        int $itemsPerPage = 100
     ) {
         $this->page = $page;
         $this->totalsCount = $totalsCount;
