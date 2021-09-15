@@ -964,6 +964,47 @@
             "selections": [],
             "options": []
           }
+        },
+        {
+          "propertyId": 123,
+          "values": [
+            {
+              "id": null,
+              "lang": "0",
+              "value": "some value",
+              "description": null
+            }
+          ],
+          "property": {
+            "id": 123,
+            "cast": "empty",
+            "type": "item",
+            "position": 1,
+            "createdAt": "2019-07-16 11:19:41",
+            "updatedAt": "2019-07-16 11:19:41",
+            "names": [
+              {
+                "id": 5,
+                "propertyId": 123,
+                "lang": "de",
+                "name": "empty cast property name-de",
+                "description": "",
+                "createdAt": "2019-07-16 11:19:41",
+                "updatedAt": "2019-07-16 11:19:41"
+              },
+              {
+                "id": 6,
+                "propertyId": 123,
+                "lang": "en",
+                "name": "empty cast property name-en",
+                "description": "",
+                "createdAt": "2019-07-16 11:19:41",
+                "updatedAt": "2019-07-16 11:19:41"
+              }
+            ],
+            "selections": [],
+            "options": []
+          }
         }
       ],
       "tags": [],

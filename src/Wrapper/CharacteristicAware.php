@@ -14,7 +14,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Characteri
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\CharacteristicSelection;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\CharacteristicText;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as VariationEntity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertyGroup\Name;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemPropertyGroup\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 
@@ -146,7 +146,7 @@ trait CharacteristicAware
 
     protected function getTranslatedPropertyGroupName(?int $propertyGroupId): ?string
     {
-        if (!$propertyGroupId || !$propertyGroup = $this->registryService->getPropertyGroup($propertyGroupId)) {
+        if (!$propertyGroupId || !$propertyGroup = $this->registryService->getItemPropertyGroup($propertyGroupId)) {
             return null;
         }
 

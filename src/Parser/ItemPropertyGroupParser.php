@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertyGroupResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertyGroup;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyGroupResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemPropertyGroup;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class PropertyGroupParser extends Parser
+class ItemPropertyGroupParser extends Parser
 {
     /**
-     * @return PropertyGroupResponse
+     * @return ItemPropertyGroupResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
         $response = self::unserializeJsonResponse($rawResponse);
 
         $propertyGroups = [];
-        foreach ($response['entries'] as $property) {
-            $propertyGroups[] = new PropertyGroup($property);
+        foreach ($response['entries'] as $propertyGroup) {
+            $propertyGroups[] = new ItemPropertyGroup($propertyGroup);
         }
 
-        return new PropertyGroupResponse(
+        return new ItemPropertyGroupResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],

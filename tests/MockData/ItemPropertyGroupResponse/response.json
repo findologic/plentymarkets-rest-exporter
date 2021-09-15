@@ -1,0 +1,107 @@
+{
+  "page": 1,
+  "totalsCount": 11,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 1,
+      "backendName": "Mein Paket",
+      "orderPropertyGroupingType": "none",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2015-02-12T10:47:49+01:00",
+      "names": [
+        {
+          "propertyGroupId": 1,
+          "lang": "en",
+          "name": "My package",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "backendName": "eBay",
+      "orderPropertyGroupingType": "none",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2016-02-02T00:50:59+01:00"
+    },
+    {
+      "id": 3,
+      "backendName": "Amazon Sale ",
+      "orderPropertyGroupingType": "none",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2017-05-20T17:08:36+02:00"
+    },
+    {
+      "id": 4,
+      "backendName": "Ebay Keywords ",
+      "orderPropertyGroupingType": "none",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2017-05-20T17:09:04+02:00"
+    },
+    {
+      "id": 5,
+      "backendName": "Amazon HomeImprovement",
+      "orderPropertyGroupingType": "none",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2017-05-20T21:24:10+02:00"
+    },
+    {
+      "id": 6,
+      "backendName": "Amazon AutoAccessory",
+      "orderPropertyGroupingType": "none",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2017-06-06T15:34:28+02:00"
+    },
+    {
+      "id": 7,
+      "backendName": "Amazon EAN / ASIN",
+      "orderPropertyGroupingType": "none",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2018-03-15T15:20:55+01:00"
+    },
+    {
+      "id": 8,
+      "backendName": "real.de",
+      "orderPropertyGroupingType": "none",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2018-08-10T12:10:31+02:00"
+    },
+    {
+      "id": 9,
+      "backendName": "Amazon",
+      "orderPropertyGroupingType": "none",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2018-10-24T09:25:41+02:00"
+    },
+    {
+      "id": 10,
+      "backendName": "BMEcat Merkmale",
+      "orderPropertyGroupingType": "none",
+      "isSurchargePercental": false,
+      "ottoComponent": 0,
+      "updatedAt": "2019-11-26T12:21:02+01:00"
+    },
+    {
+      "id": 11,
+      "backendName": "stationär Maschinen",
+      "orderPropertyGroupingType": "none",
+      "isSurchargePercental": true,
+      "ottoComponent": 0,
+      "updatedAt": "2019-12-04T11:03:38+01:00"
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 11,
+  "itemsPerPage": 50
+}

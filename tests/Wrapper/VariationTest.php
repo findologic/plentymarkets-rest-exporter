@@ -10,6 +10,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
@@ -21,7 +22,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute as AttributeE
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty as CharacteristicEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property as PropertyEntity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertyGroup;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemPropertyGroup;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
@@ -320,12 +321,6 @@ class VariationTest extends TestCase
                     'PropertyResponse/property_with_unknown_type.json'
                 ))->first()
             ],
-            'property with cast empty' => [
-                'variationEntity' =>
-                    $this->getVariationEntity('Pim/Variations/variation_with_property_of_empty_cast_type.json'),
-                'propertyEntity' =>
-                    PropertyParser::parse($this->getMockResponse('PropertyResponse/one.json'))->first()
-            ],
             'property without translations for current language' => [
                 'variationEntity' =>
                     $this->getVariationEntity('Pim/Variations/variation_without_translated_property.json'),
@@ -367,7 +362,8 @@ class VariationTest extends TestCase
         $expectedExportedAttributes = [
             new Attribute('Number Property', ['8']),
             new Attribute('Float Property EN', ['100']),
-            new Attribute('test-multiselect-property', ['value1'])
+            new Attribute('test-multiselect-property', ['value1']),
+            new Attribute('no group (automatically generated)', ['Empty-cast Property EN'])
         ];
 
         $propertySelections = PropertySelectionParser::parse(
@@ -378,6 +374,7 @@ class VariationTest extends TestCase
 
         $variationEntity = $this->getVariationEntity('Pim/Variations/variation_with_properties.json');
         $properties = PropertyParser::parse($this->getMockResponse('PropertyResponse/response.json'));
+        $propertyGroups = PropertyGroupParser::parse($this->getMockResponse('PropertyGroupResponse/response.json'));
 
         $wrapper = new VariationWrapper(
             $this->defaultConfig,
@@ -385,19 +382,28 @@ class VariationTest extends TestCase
             $variationEntity
         );
 
-        $this->registryServiceMock->expects($this->exactly(4))
+        $this->registryServiceMock->expects($this->exactly(5))
             ->method('getProperty')
-            ->withConsecutive([11], [7], [4], [5])
+            ->withConsecutive([11], [7], [4], [5], [123])
             ->willReturnOnConsecutiveCalls(
                 $properties->findOne(['id' => 11]),
                 $properties->findOne(['id' => 7]),
                 $properties->findOne(['id' => 4]),
-                $properties->findOne(['id' => 5])
+                $properties->findOne(['id' => 5]),
+                $properties->findOne(['id' => 123]),
+            );
+
+        $this->registryServiceMock->expects($this->exactly(2))
+            ->method('getPropertyGroup')
+            ->withConsecutive([555555], [2])
+            ->willReturnOnConsecutiveCalls(
+                null,
+                $propertyGroups->findOne(['id' => 2])
             );
 
         $wrapper->processData();
 
-        $this->assertCount(3, $wrapper->getAttributes());
+        $this->assertCount(4, $wrapper->getAttributes());
         $this->assertEqualsCanonicalizing($expectedExportedAttributes, $wrapper->getAttributes());
     }
 
@@ -433,6 +439,9 @@ class VariationTest extends TestCase
 
         $variationEntity = $this->getVariationEntity('Pim/Variations/variation_with_selection_properties.json');
         $properties = PropertyParser::parse($this->getMockResponse('PropertyResponse/one.json'));
+        $propertySelections = PropertySelectionParser::parse(
+            $this->getMockResponse('PropertySelectionResponse/response.json')
+        );
         $propertyEntity = $properties->first();
 
         $wrapper = new VariationWrapper(
@@ -442,6 +451,8 @@ class VariationTest extends TestCase
         );
 
         $this->registryServiceMock->expects($this->any())->method('getProperty')->willReturn($propertyEntity);
+        $this->registryServiceMock->expects($this->any())->method('getPropertySelections')
+            ->willReturn($propertySelections);
 
         $wrapper->processData();
 
@@ -533,8 +544,8 @@ class VariationTest extends TestCase
                         $this->getMockResponse('ItemPropertyResponse/is_empty_with_group.json')
                     )->first(),
                 'propertyGroupEntity' =>
-                    PropertyGroupParser::parse(
-                        $this->getMockResponse('PropertyGroupResponse/empty_name.json')
+                    ItemPropertyGroupParser::parse(
+                        $this->getMockResponse('ItemPropertyGroupResponse/empty_name.json')
                     )->first(),
             ],
             'characteristic cast type is empty and property group is not available in registry' => [
@@ -599,7 +610,7 @@ class VariationTest extends TestCase
     public function testNonExportableCharacteristicsAreSkipped(
         Variation $variationEntity,
         ?CharacteristicEntity $characteristicEntity,
-        ?PropertyGroup $propertyGroupEntity
+        ?ItemPropertyGroup $propertyGroupEntity
     ): void {
         $wrapper = new VariationWrapper(
             $this->defaultConfig,
@@ -609,7 +620,7 @@ class VariationTest extends TestCase
 
         $this->registryServiceMock->expects($this->any())->method('getItemProperty')
             ->willReturn($characteristicEntity);
-        $this->registryServiceMock->expects($this->any())->method('getPropertyGroup')
+        $this->registryServiceMock->expects($this->any())->method('getItemPropertyGroup')
             ->willReturn($propertyGroupEntity);
 
         $wrapper->processData();
@@ -633,13 +644,13 @@ class VariationTest extends TestCase
         $characteristicEntity = ItemPropertyParser::parse(
             $this->getMockResponse('ItemPropertyResponse/with_group.json')
         )->first();
-        $propertyGroupEntity = PropertyGroupParser::parse(
-            $this->getMockResponse('PropertyGroupResponse/one.json')
+        $propertyGroupEntity = ItemPropertyGroupParser::parse(
+            $this->getMockResponse('ItemPropertyGroupResponse/one.json')
         )->first();
 
         $this->registryServiceMock->expects($this->any())->method('getItemProperty')
             ->willReturn($characteristicEntity);
-        $this->registryServiceMock->expects($this->any())->method('getPropertyGroup')
+        $this->registryServiceMock->expects($this->any())->method('getItemPropertyGroup')
             ->willReturn($propertyGroupEntity);
 
         $wrapper->processData();
@@ -765,13 +776,13 @@ class VariationTest extends TestCase
         $characteristicEntity = ItemPropertyParser::parse(
             $this->getMockResponse('ItemPropertyResponse/text_with_group.json')
         )->first();
-        $propertyGroupEntity = PropertyGroupParser::parse(
-            $this->getMockResponse('PropertyGroupResponse/one.json')
+        $propertyGroupEntity = ItemPropertyGroupParser::parse(
+            $this->getMockResponse('ItemPropertyGroupResponse/one.json')
         )->first();
 
         $this->registryServiceMock->expects($this->any())->method('getItemProperty')
             ->willReturn($characteristicEntity);
-        $this->registryServiceMock->expects($this->any())->method('getPropertyGroup')
+        $this->registryServiceMock->expects($this->any())->method('getItemPropertyGroup')
             ->willReturn($propertyGroupEntity);
 
         $wrapper->processData();

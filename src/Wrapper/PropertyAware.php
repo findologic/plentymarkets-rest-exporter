@@ -10,10 +10,10 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Definition\CastType;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\Property as ItemVariationProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Property as PimProperty;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\PropertyRelationValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\PropertyValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as VariationEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Name;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertyGroup\Name as PropertyGroupName;
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 
@@ -45,6 +45,21 @@ trait PropertyAware
             }
 
             $value = $this->getPropertyValue($property);
+            if (!$value && $property->getPropertyData()->getCast() === CastType::EMPTY) {
+                $value = $propertyName;
+
+                foreach ($propertyDetails->getGroups() as $group) {
+                    if (!$propertyGroup = $this->registryService->getPropertyGroup($group->getId())) {
+                        continue;
+                    }
+
+                    /** @var PropertyGroupName|null $name */
+                    $name = Translator::translate($propertyGroup->getNames(), $this->config->getLanguage());
+                    if ($name) {
+                        $propertyName = $name->getName();
+                    }
+                }
+            }
 
             if (Utils::isEmpty($property) || Utils::isEmpty($value)) {
                 continue;
@@ -67,35 +82,28 @@ trait PropertyAware
             case CastType::TEXT:
             case CastType::HTML:
                 /** @var PropertyValue|null $propertyValue */
-                $propertyValue = Translator::translate($property->getValues(), $this->config->getLanguage());
+                $propertyValue = Translator::translate(
+                    $property->getValues(),
+                    $this->config->getLanguage()
+                );
                 if ($propertyValue) {
                     return $propertyValue->getValue();
                 }
 
                 return null;
             case CastType::SELECTION:
-                if (!$property->getValues()) {
+                if (!$property->getValues() || !$this->registryService->getPropertySelections()) {
                     return null;
                 }
 
-                foreach ($property->getPropertyData()->getSelections() as $selection) {
-                    if ($property->getValues()[0]->getValue() != $selection->getId()) {
-                        continue;
-                    }
+                $propertySelectionValues = $this->registryService->getPropertySelections()->getPropertySelectionValues(
+                    $property->getId(),
+                    [$property->getValues()[0]],
+                    $this->config->getLanguage()
+                );
 
-                    $relation = $selection->getRelation();
-                    if (!$relation) {
-                        continue;
-                    }
-
-                    /** @var PropertyRelationValue|null $relationValue */
-                    $relationValue = Translator::translate(
-                        $relation->getValues(),
-                        $this->config->getLanguage()
-                    );
-                    if ($relationValue) {
-                        return $relationValue->getValue();
-                    }
+                if ($propertySelectionValues) {
+                    return reset($propertySelectionValues);
                 }
 
                 return null;

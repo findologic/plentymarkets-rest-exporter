@@ -405,6 +405,73 @@
           "updatedAt": "2019-02-22T14:32:53+00:00"
         }
       ]
+    },
+    {
+      "id": 123,
+      "cast": "empty",
+      "type": "item",
+      "position": 10001,
+      "createdAt": "2019-02-22T14:03:11+00:00",
+      "updatedAt": "2019-02-22T14:03:11+00:00",
+      "groups": [
+        {
+          "id": 555555,
+          "createdAt": "2019-02-22T14:03:11+00:00",
+          "updatedAt": "2019-02-22T14:03:11+00:00",
+          "pivot": {
+            "propertyId": 123,
+            "groupId": 555555
+          }
+        },
+        {
+          "id": 2,
+          "createdAt": "2019-02-22T14:03:11+00:00",
+          "updatedAt": "2019-02-22T14:03:11+00:00",
+          "pivot": {
+            "propertyId": 123,
+            "groupId": 2
+          }
+        }
+      ],
+      "names": [
+        {
+          "id": 6,
+          "propertyId": 123,
+          "lang": "en",
+          "name": "Empty-cast Property EN",
+          "description": "Float Property EN",
+          "createdAt": "2019-02-22T14:03:12+00:00",
+          "updatedAt": "2019-02-22T14:03:12+00:00"
+        },
+        {
+          "id": 7,
+          "propertyId": 123,
+          "lang": "de",
+          "name": "Empty-cast Property DE",
+          "description": "Float Property DE",
+          "createdAt": "2019-02-22T14:33:12+00:00",
+          "updatedAt": "2019-02-22T14:33:12+00:00"
+        }
+      ],
+      "options": [
+        {
+          "id": 841,
+          "propertyId": 123,
+          "type": "display",
+          "value": "showOnItemsPage",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        },
+        {
+          "id": 842,
+          "propertyId": 123,
+          "type": "clients",
+          "value": "4024",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        }
+      ],
+      "amazon": []
     }
   ],
   "lastPageNumber": 1,

@@ -13,6 +13,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
@@ -133,6 +134,9 @@ class RegistryServiceTest extends TestCase
         );
         $expectedProperties = PropertyParser::parse($propertyResponse);
 
+        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/response.json');
+        $expectedPropertyGroups = PropertyGroupParser::parse($propertyGroupResponse);
+
         $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/one.json');
         $expectedItemProperties = ItemPropertyParser::parse($itemPropertyResponse);
 
@@ -142,8 +146,8 @@ class RegistryServiceTest extends TestCase
         $propertySelectionResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
         $expectedPropertySelections = PropertySelectionParser::parse($propertySelectionResponse);
 
-        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
-        $expectedGroups = PropertyGroupParser::parse($propertyGroupResponse);
+        $itemPropertyGroupResponse = $this->getMockResponse('ItemPropertyGroupResponse/one.json');
+        $expectedItemPropertyGroups = ItemPropertyGroupParser::parse($itemPropertyGroupResponse);
 
         $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
 
@@ -155,7 +159,7 @@ class RegistryServiceTest extends TestCase
             ]
         ];
 
-        $this->clientMock->expects($this->exactly(14))
+        $this->clientMock->expects($this->exactly(15))
             ->method('send')
             ->willReturnOnConsecutiveCalls(
                 $webStoreResponse,
@@ -166,17 +170,18 @@ class RegistryServiceTest extends TestCase
                 $attributeResponse,
                 $manufacturerResponse,
                 $propertyResponse,
+                $propertyGroupResponse,
                 $itemPropertyResponse,
                 $unitResponse,
                 $propertySelectionResponse,
-                $propertyGroupResponse,
+                $itemPropertyGroupResponse,
                 $pluginSetPluginsResponse,
                 $pluginConfigurationResponse
             );
 
         $registryKey = md5($this->defaultConfig->getDomain());
 
-        $this->registryMock->expects($this->exactly(19))
+        $this->registryMock->expects($this->exactly(21))
             ->method('set')
             ->withConsecutive(
                 [$registryKey . '_allWebStores', $parsedWebStoreResponse],
@@ -205,10 +210,14 @@ class RegistryServiceTest extends TestCase
                 [$registryKey . '_property_4', $expectedProperties->findOne([
                     'id' => 4
                 ])],
+                [$registryKey . '_propertyGroup_1', $expectedPropertyGroups->first()],
+                [$registryKey . '_propertyGroup_2', $expectedPropertyGroups->findOne([
+                    'id' => 2
+                ])],
                 [$registryKey . '_itemProperty_1', $expectedItemProperties->first()],
                 [$registryKey . '_unit_1', $expectedUnits->first()],
                 [$registryKey . '_propertySelections', $expectedPropertySelections],
-                [$registryKey . '_propertyGroup_1', $expectedGroups->first()],
+                [$registryKey . '_itemPropertyGroup_1', $expectedItemPropertyGroups->first()],
                 [$registryKey . '_pluginConfigurations', $expectedPluginConfigurations],
                 [$registryKey . '_categories', $expectedPluginConfigurations],
             );
@@ -294,10 +303,11 @@ class RegistryServiceTest extends TestCase
         $attributeResponse = $this->getMockResponse('AttributeResponse/one.json');
         $manufacturerResponse = $this->getMockResponse('ManufacturerResponse/one.json');
         $propertyResponse = $this->getMockResponse('PropertyResponse/one.json');
+        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/response.json');
         $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/one.json');
         $unitResponse = $this->getMockResponse('UnitResponse/one.json');
         $propertySelectionResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
-        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
+        $itemPropertyGroupResponse = $this->getMockResponse('ItemPropertyGroupResponse/one.json');
         $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
 
         $expectedWebStore = new WebStore([
@@ -327,10 +337,11 @@ class RegistryServiceTest extends TestCase
                 $attributeResponse,
                 $manufacturerResponse,
                 $propertyResponse,
+                $propertyGroupResponse,
                 $itemPropertyResponse,
                 $unitResponse,
                 $propertySelectionResponse,
-                $propertyGroupResponse,
+                $itemPropertyGroupResponse,
                 $pluginSetPluginsResponse,
                 $this->throwException($expectedException),
             )
@@ -368,9 +379,10 @@ class RegistryServiceTest extends TestCase
         $attributeResponse = $this->getMockResponse('AttributeResponse/one.json');
         $manufacturerResponse = $this->getMockResponse('ManufacturerResponse/one.json');
         $propertyResponse = $this->getMockResponse('PropertyResponse/one.json');
+        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/response.json');
         $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/one.json');
         $unitResponse = $this->getMockResponse('UnitResponse/one.json');
-        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
+        $ItemPropertyGroupResponse = $this->getMockResponse('ItemPropertyGroupResponse/one.json');
         $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
 
         $expectedWebStore = new WebStore([
@@ -400,10 +412,11 @@ class RegistryServiceTest extends TestCase
                 $attributeResponse,
                 $manufacturerResponse,
                 $propertyResponse,
+                $propertyGroupResponse,
                 $itemPropertyResponse,
                 $unitResponse,
                 $this->throwException($expectedException),
-                $propertyGroupResponse,
+                $ItemPropertyGroupResponse,
                 $pluginSetPluginsResponse,
                 $pluginSetPluginsResponse
             )
@@ -411,7 +424,82 @@ class RegistryServiceTest extends TestCase
 
         $this->loggerMock->expects($this->once())->method('warning')->with(
             'Required permission \'Setup > Property > Selection > Show\' has not been granted. ' .
-            'This causes multiSelect properties to not be exported!'
+            'This causes selection and multiSelect properties not to be exported!'
+        );
+
+        $this->registryService->warmUp();
+    }
+
+    public function testMissingPropertyGroupPermissionIsLoggedAndExportContinues(): void
+    {
+        $webStoreResponseBody = [
+            [
+                'id' => 0,
+                'type' => 'plentymarkets',
+                'storeIdentifier' => 12345,
+                'name' => 'German Test Store',
+                'pluginSetId' => 46,
+                'configuration' => []
+            ]
+        ];
+        $webStoreResponse = new Response(200, [], json_encode($webStoreResponseBody));
+        $categoryResponseBody = json_decode(
+            $this->getMockResponse('CategoryResponse/one.json')->getBody()->__toString(),
+            true
+        );
+        $categoryResponse = new Response(200, [], json_encode($categoryResponseBody));
+        $vatResponse = $this->getMockResponse('VatResponse/one.json');
+        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
+        $salesPriceResponse = $this->getMockResponse('SalesPriceResponse/rrp_normal_and_default.json');
+        $attributeResponse = $this->getMockResponse('AttributeResponse/one.json');
+        $manufacturerResponse = $this->getMockResponse('ManufacturerResponse/one.json');
+        $propertyResponse = $this->getMockResponse('PropertyResponse/one.json');
+        $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/one.json');
+        $unitResponse = $this->getMockResponse('UnitResponse/one.json');
+        $propertySelectionResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
+        $ItemPropertyGroupResponse = $this->getMockResponse('ItemPropertyGroupResponse/one.json');
+        $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
+
+        $expectedWebStore = new WebStore([
+            'id' => 0,
+            'type' => 'plentymarkets',
+            'storeIdentifier' => 12345,
+            'name' => 'Test Store',
+            'pluginSetId' => 44,
+            'configuration' => []
+        ]);
+
+        $this->registryMock->method('get')->willReturnOnConsecutiveCalls(
+            $expectedWebStore,
+            $expectedWebStore,
+            $expectedWebStore
+        );
+
+        $expectedException = new PermissionException('The REST client does not have access rights for method');
+
+        $this->clientMock->method('send')->will(
+            $this->onConsecutiveCalls(
+                $webStoreResponse,
+                $categoryResponse,
+                $vatResponse,
+                $standardVatResponse,
+                $salesPriceResponse,
+                $attributeResponse,
+                $manufacturerResponse,
+                $propertyResponse,
+                $this->throwException($expectedException),
+                $itemPropertyResponse,
+                $unitResponse,
+                $propertySelectionResponse,
+                $ItemPropertyGroupResponse,
+                $pluginSetPluginsResponse,
+                $pluginSetPluginsResponse
+            )
+        );
+
+        $this->loggerMock->expects($this->once())->method('warning')->with(
+            'Required permission \'Setup > Property > Group > Show\' has not been granted. ' .
+            'This may cause some properties not to be exported!'
         );
 
         $this->registryService->warmUp();
@@ -441,10 +529,11 @@ class RegistryServiceTest extends TestCase
         $attributeResponse = $this->getMockResponse('AttributeResponse/one.json');
         $manufacturerResponse = $this->getMockResponse('ManufacturerResponse/one.json');
         $propertyResponse = $this->getMockResponse('PropertyResponse/one.json');
+        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/response.json');
         $itemPropertyResponse = $this->getMockResponse('ItemPropertyResponse/one.json');
         $unitResponse = $this->getMockResponse('UnitResponse/one.json');
         $propertySelectionResponse = $this->getMockResponse('PropertySelectionResponse/response.json');
-        $propertyGroupResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
+        $ItemPropertyGroupResponse = $this->getMockResponse('ItemPropertyGroupResponse/one.json');
         $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
 
         $expectedWebStore = new WebStore([
@@ -474,10 +563,11 @@ class RegistryServiceTest extends TestCase
                 $attributeResponse,
                 $manufacturerResponse,
                 $propertyResponse,
+                $propertyGroupResponse,
                 $itemPropertyResponse,
                 $unitResponse,
                 $propertySelectionResponse,
-                $propertyGroupResponse,
+                $ItemPropertyGroupResponse,
                 $pluginSetPluginsResponse,
                 $this->throwException($exception),
             )
@@ -600,6 +690,21 @@ class RegistryServiceTest extends TestCase
         $this->assertEquals($parsed->first(), $this->registryService->getProperty(1));
     }
 
+    public function testPropertyGroupIsProperlyFetchedFromRegistry(): void
+    {
+        $rawResponse = $this->getMockResponse('PropertyGroupResponse/response.json');
+        $parsed = PropertyGroupParser::parse($rawResponse);
+
+        $key = md5($this->defaultConfig->getDomain());
+
+        $this->registryMock->expects($this->once())
+            ->method('get')
+            ->with($key . '_propertyGroup_1')
+            ->willReturn($parsed->first());
+
+        $this->assertEquals($parsed->first(), $this->registryService->getPropertyGroup(1));
+    }
+
     public function testGetItemPropertyIsProperlyFetchedFromRegistry(): void
     {
         $rawResponse = $this->getMockResponse('ItemPropertyResponse/one.json');
@@ -645,19 +750,19 @@ class RegistryServiceTest extends TestCase
         $this->assertEquals($parsed, $this->registryService->getPropertySelections());
     }
 
-    public function testGetPropertyGroupIsProperlyFetchedFromRegistry(): void
+    public function testItemPropertyGroupIsProperlyFetchedFromRegistry(): void
     {
-        $rawResponse = $this->getMockResponse('PropertyGroupResponse/one.json');
-        $parsed = PropertyGroupParser::parse($rawResponse);
+        $rawResponse = $this->getMockResponse('ItemPropertyGroupResponse/one.json');
+        $parsed = ItemPropertyGroupParser::parse($rawResponse);
 
         $key = md5($this->defaultConfig->getDomain());
 
         $this->registryMock->expects($this->once())
             ->method('get')
-            ->with($key . '_propertyGroup_1')
+            ->with($key . '_itemPropertyGroup_1')
             ->willReturn($parsed->first());
 
-        $this->assertEquals($parsed->first(), $this->registryService->getPropertyGroup(1));
+        $this->assertEquals($parsed->first(), $this->registryService->getItemPropertyGroup(1));
     }
 
     public function testGetPriceIdIsProperlyFetchedFromRegistry(): void
