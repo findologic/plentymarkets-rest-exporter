@@ -260,25 +260,24 @@ class Variation
                 continue;
             }
 
-            /** @var CategoryDetails[] $categoryDetails */
-            $categoryDetails = Translator::translateMultiple($category->getDetails(), $this->config->getLanguage());
-            foreach ($categoryDetails as $categoryDetail) {
-                $this->attributes[] = new Attribute('cat', [$this->buildCategoryPath($category)]);
-                $this->attributes[] = new Attribute(
-                    'cat_url',
-                    [parse_url($categoryDetail->getPreviewUrl(), PHP_URL_PATH)]
-                );
-                $this->hasCategories = true;
+            if (!$categoryDetail = $this->getCategoryDetailForCurrentPlentyIdAndLanguage($category)) {
+                continue;
             }
+
+            $this->attributes[] = new Attribute('cat', [$this->buildCategoryPath($category)]);
+            $this->attributes[] = new Attribute(
+                'cat_url',
+                [parse_url($categoryDetail->getPreviewUrl(), PHP_URL_PATH)]
+            );
+            $this->hasCategories = true;
         }
     }
 
     private function buildCategoryPath(Category $category): string
     {
         $path = [];
-        /** @var CategoryDetails[] $categoryDetails */
-        $categoryDetails = Translator::translateMultiple($category->getDetails(), $this->config->getLanguage());
-        foreach ($categoryDetails as $categoryDetail) {
+
+        if ($categoryDetail = $this->getCategoryDetailForCurrentPlentyIdAndLanguage($category)) {
             if ($category->getParentCategoryId() !== null) {
                 $path[] = $this->buildCategoryPath(
                     $this->registryService->getCategory($category->getParentCategoryId())
@@ -454,5 +453,22 @@ class Variation
                 $this->baseUnit = $name->getName();
             }
         }
+    }
+
+    private function getCategoryDetailForCurrentPlentyIdAndLanguage(Category $category): ?CategoryDetails
+    {
+        /** @var CategoryDetails[] $translatedCategoryDetails */
+        $translatedCategoryDetails = Translator::translateMultiple(
+            $category->getDetails(),
+            $this->config->getLanguage()
+        );
+
+        foreach ($translatedCategoryDetails as $categoryDetail) {
+            if ($categoryDetail->getPlentyId() === $this->registryService->getWebStore()->getStoreIdentifier()) {
+                return $categoryDetail;
+            }
+        }
+
+        return null;
     }
 }

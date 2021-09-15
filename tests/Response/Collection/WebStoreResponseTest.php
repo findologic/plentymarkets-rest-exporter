@@ -173,7 +173,7 @@ class WebStoreResponseTest extends TestCase
     {
         $expectedId = 0;
         $expectedType = 'plentymarkets';
-        $expectedStoreIdentifier = 1234;
+        $expectedStoreIdentifier = 12345;
         $expectedName = 'Standard Shop';
         $expectedPluginSetId = 7;
         $expectedConfiguration = $this->getDefaultWebStoreConfiguration();
@@ -194,7 +194,7 @@ class WebStoreResponseTest extends TestCase
         $this->assertCount(2, $webStoreResponse->all());
         $this->assertSame($webStoreResponse->getWebStores(), $webStoreResponse->all());
         $this->assertEquals($expectedWebStore, $webStore);
-        $this->assertEquals($expectedWebStore, $webStoreResponse->getWebStoreByStoreIdentifier(1234));
+        $this->assertEquals($expectedWebStore, $webStoreResponse->getWebStoreByStoreIdentifier(12345));
         $this->assertEquals($expectedWebStore, $webStoreResponse->find([])[0]);
         $this->assertEquals($expectedWebStore, $webStoreResponse->findOne([]));
 

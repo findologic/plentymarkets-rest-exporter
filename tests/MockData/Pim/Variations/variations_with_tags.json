@@ -580,7 +580,7 @@
               {
                 "id": 1,
                 "tagId": 1,
-                "plentyId": 34185,
+                "plentyId": 12345,
                 "createdAt": "2020-08-19 12:48:35",
                 "updatedAt": "2020-08-19 12:48:35"
               }
@@ -607,7 +607,7 @@
               {
                 "id": 1,
                 "tagId": 1,
-                "plentyId": 34185,
+                "plentyId": 12345,
                 "createdAt": "2020-08-19 12:48:35",
                 "updatedAt": "2020-08-19 12:48:35"
               }
@@ -859,7 +859,7 @@
               {
                 "id": 1,
                 "tagId": 1,
-                "plentyId": 34185,
+                "plentyId": 12345,
                 "createdAt": "2020-08-19 12:48:35",
                 "updatedAt": "2020-08-19 12:48:35"
               }

@@ -85,6 +85,7 @@ class CsvWrapperTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $webstoreMock->method('getConfiguration')->willReturn($webstoreConfigMock);
+        $webstoreMock->method('getStoreIdentifier')->willReturn(12345);
 
         $this->registryServiceMock->method('getWebStore')->willReturn($webstoreMock);
 

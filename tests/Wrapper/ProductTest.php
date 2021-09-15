@@ -79,6 +79,13 @@ class ProductTest extends TestCase
         $this->registryServiceMock->expects($this->any())
             ->method('getCategory')
             ->willReturn($parsedCategoryResponse->first());
+
+        $webstoreResponse = $this->getMockResponse('WebStoreResponse/response.json');
+        $parsedWebstoreResponse = WebStoreParser::parse($webstoreResponse);
+
+        $this->registryServiceMock->expects($this->any())
+            ->method('getWebstore')
+            ->willReturn($parsedWebstoreResponse->first());
     }
 
     public function testProductWithoutVariationsIsNotExported(): void
@@ -460,7 +467,7 @@ class ProductTest extends TestCase
         $webStoreMock = $this->getMockBuilder(WebStore::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $webStoreMock->method('getStoreIdentifier')->willReturn(34185);
+        $webStoreMock->method('getStoreIdentifier')->willReturn(12345);
         $this->registryServiceMock->method('getWebStore')->willReturn($webStoreMock);
 
         $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
