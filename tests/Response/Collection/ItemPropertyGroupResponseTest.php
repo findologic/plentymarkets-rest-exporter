@@ -45,12 +45,12 @@ class ItemPropertyGroupResponseTest extends TestCase
         $this->assertEquals($expectedId, $propertyGroup->getId());
     }
 
-    public function testGetAllReturnsCorrectNumberOfItems()
+    public function testGetAllReturnsCorrectNumberOfItems(): void
     {
         self::assertCount(11, $this->propertyGroupResponse->all());
     }
 
-    public function testFindReturnsCorrectNumberOfItems()
+    public function testFindReturnsCorrectNumberOfItems(): void
     {
         $criteria = [
             'isSurchargePercental' => false
