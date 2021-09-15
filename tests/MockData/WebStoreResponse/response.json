@@ -2,7 +2,7 @@
   {
     "id": 0,
     "type": "plentymarkets",
-    "storeIdentifier": 1234,
+    "storeIdentifier": 12345,
     "name": "Standard Shop",
     "pluginSetId": 7,
     "configuration": {

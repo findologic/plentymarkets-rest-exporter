@@ -14,6 +14,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PimVariationRequest;
@@ -83,6 +84,13 @@ class ExporterTest extends TestCase
         $this->registryServiceMock->expects($this->any())
             ->method('getCategory')
             ->willReturn($parsedCategoryResponse->first());
+
+        $webstoreResponse = $this->getMockResponse('WebStoreResponse/response.json');
+        $parsedWebstoreResponse = WebStoreParser::parse($webstoreResponse);
+
+        $this->registryServiceMock->expects($this->any())
+            ->method('getWebstore')
+            ->willReturn($parsedWebstoreResponse->first());
     }
 
     protected function tearDown(): void

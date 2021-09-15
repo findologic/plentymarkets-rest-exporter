@@ -16,6 +16,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute as AttributeEntity;
@@ -53,6 +54,13 @@ class VariationTest extends TestCase
         $this->registryServiceMock = $this->getMockBuilder(RegistryService::class)
             ->disableOriginalConstructor()
             ->getMock();
+
+        $webstoreResponse = $this->getMockResponse('WebStoreResponse/response.json');
+        $parsedWebstoreResponse = WebStoreParser::parse($webstoreResponse);
+
+        $this->registryServiceMock->expects($this->any())
+            ->method('getWebstore')
+            ->willReturn($parsedWebstoreResponse->first());
 
         $this->defaultConfig = $this->getDefaultConfig();
         $this->defaultConfig->setLanguage('en');
@@ -150,13 +158,15 @@ class VariationTest extends TestCase
         $categoryResponse = $this->getMockResponse('CategoryResponse/category_with_parent.json');
         $categories = CategoryParser::parse($categoryResponse);
 
-        $this->registryServiceMock->expects($this->exactly(2))->method('getCategory')
+        $this->registryServiceMock->expects($this->exactly(3))->method('getCategory')
+            ->withConsecutive([17], [16], [18])
             ->willReturnOnConsecutiveCalls(
-                $categories->findOne(['hasChildren' => false]),
-                $categories->findOne(['hasChildren' => true]),
+                $categories->findOne(['id' => 17]),
+                $categories->findOne(['id' => 16]),
+                $categories->findOne(['id' => 18])
             );
 
-        $variationEntity = $this->getVariationEntity('Pim/Variations/response.json');
+        $variationEntity = $this->getVariationEntity('Pim/Variations/response_for_category_tree_test.json');
 
         $wrapper = new VariationWrapper(
             $this->defaultConfig,
@@ -175,12 +185,6 @@ class VariationTest extends TestCase
 
     public function testTagsAreProperlyProcessed(): void
     {
-        $webStoreMock = $this->getMockBuilder(WebStore::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $webStoreMock->method('getStoreIdentifier')->willReturn(34185);
-        $this->registryServiceMock->method('getWebStore')->willReturn($webStoreMock);
-
         $itemVariationResponse = $this->getMockResponse('Pim/Variations/variation_with_different_tag_clients.json');
         $variationEntities = PimVariationsParser::parse($itemVariationResponse);
         $variationEntity = $variationEntities->first();
