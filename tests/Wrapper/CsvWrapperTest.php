@@ -562,20 +562,31 @@ class CsvWrapperTest extends TestCase
 
     public function testProductsWithMainVariationIncludingAnExportExclusionTagAreSkippedAndMessageIsLogged()
     {
-        $itemResponse = $this->getMockResponse('ItemResponse/response_with_three_items_for_exclusion_tag_test.json');
-        $items = ItemParser::parse($itemResponse);
+        $itemFirstPageResponse = $this->getMockResponse(
+            'ItemResponse/response_with_three_items_for_exclusion_tag_test_page1.json'
+        );
+        $items1 = ItemParser::parse($itemFirstPageResponse);
+
+        $itemSecondPageResponse = $this->getMockResponse(
+            'ItemResponse/response_with_three_items_for_exclusion_tag_test_page2.json'
+        );
+        $items2 = ItemParser::parse($itemSecondPageResponse);
 
         $variationResponse = $this->getMockResponse(
-            'Pim/Variations/variations_for_three_items_where_main_variation_of_two_has_exclusion_tag.json'
+            'Pim/Variations/variations_for_six_items_where_main_variation_of_four_has_exclusion_tag.json'
         );
         $variations = PimVariationsParser::parse($variationResponse);
 
-        $this->loggerMock->expects($this->once())
+        $this->loggerMock->expects($this->exactly(2))
             ->method('notice')
-            ->with('Products with id 106, 108 were skipped, as they contain the tag "findologic-exclude"');
-        $this->exporterMock->expects($this->once())->method('createItem');
+            ->withConsecutive(
+                ['Products with id 106, 108 were skipped, as they contain the tag "findologic-exclude"'],
+                ['Products with id 109, 111 were skipped, as they contain the tag "findologic-exclude"']
+            );
+        $this->exporterMock->expects($this->exactly(2))->method('createItem');
 
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->csvWrapper->wrap(0, 1, $items1, $variations);
+        $this->csvWrapper->wrap(0, 2, $items2, $variations);
     }
 
     public function testFailureLogGroupingByReason()
@@ -583,14 +594,27 @@ class CsvWrapperTest extends TestCase
         $itemResponse = $this->getMockResponse('ItemResponse/response.json');
         $items = ItemParser::parse($itemResponse);
 
+        $differentItemResponse = $this->getMockResponse('ItemResponse/response_with_different_ids.json');
+        $differentItems = ItemParser::parse($differentItemResponse);
+
         $variationResponse = $this->getMockResponse('Pim/Variations/empty_response.json');
         $variations = PimVariationsParser::parse($variationResponse);
 
-        $this->loggerMock->expects($this->once())
+        $this->loggerMock->expects($this->exactly(2))
             ->method('warning')
-            ->with('Products with id 102, 103, 104, 105 could not be exported. Reason: Product has no variations.');
+            ->withConsecutive(
+                [
+                    'Products with id 102, 103, 104, 105, 106, 107 could not be exported. ' .
+                    'Reason: Product has no variations.'
+                ],
+                [
+                    'Products with id 108, 109, 110, 111, 112, 113 could not be exported. ' .
+                    'Reason: Product has no variations.'
+                ]
+            );
 
         $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->csvWrapper->wrap(0, 1, $differentItems, $variations);
     }
 
     public function testNonMainVariationsWithExclusionTagAreSkipped()

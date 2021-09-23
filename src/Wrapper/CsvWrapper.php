@@ -238,6 +238,8 @@ class CsvWrapper extends Wrapper
                 implode(', ', $this->skippedProducts)
             )
         );
+
+        $this->skippedProducts = [];
     }
 
     private function logFailures(): void
@@ -249,5 +251,7 @@ class CsvWrapper extends Wrapper
                 $reason
             ));
         }
+
+        $this->wrapFailures = [];
     }
 }
