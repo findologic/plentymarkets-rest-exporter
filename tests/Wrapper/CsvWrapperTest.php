@@ -17,7 +17,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration 
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\CsvWrapper;
-use Log4Php\Logger;
+use Monolog\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

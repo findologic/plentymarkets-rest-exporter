@@ -8,8 +8,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client;
-use Log4Php\Configurators\LoggerConfigurationAdapterXML;
-use Log4Php\Logger;
+use Monolog\Handler\PHPConsoleHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -25,8 +26,6 @@ class ExportCommand extends Command
 {
     private const IMPORT_LOG_PATH = __DIR__ . '/../../var/log';
     private const IMPORT_LOG_FILE_NAME = 'import.log';
-
-    private const LOGGER_CONFIG = __DIR__ . '/../../config/logger.xml';
 
     protected static $defaultName = 'export:start';
 
@@ -53,9 +52,8 @@ class ExportCommand extends Command
         $this->exporter = $exporter;
         $this->client = $client;
 
-        $this->configureLoggers();
-        $this->internalLogger = $internalLogger ?? Logger::getLogger('import.php');
-        $this->customerLogger = $customerLogger ?? Logger::getLogger('import.php');
+        $this->internalLogger = $internalLogger ?? $this->configureLoggers(new Logger('import.php'));
+        $this->customerLogger = $customerLogger ?? $this->configureLoggers(new Logger('import.php'));
     }
 
     protected function configure()
@@ -125,7 +123,7 @@ class ExportCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function configureLoggers(): void
+    private function configureLoggers(Logger $logger): Logger
     {
         $logPath = Utils::env('LOG_DIR', self::IMPORT_LOG_PATH);
         $logFile = sprintf('%s/%s', $logPath, self::IMPORT_LOG_FILE_NAME);
@@ -134,11 +132,10 @@ class ExportCommand extends Command
             file_put_contents($logFile, '');
         }
 
-        $configurationAdapter = new LoggerConfigurationAdapterXML();
-        $configuration = $configurationAdapter->convert(self::LOGGER_CONFIG);
-        $configuration['appenders']['default']['params']['file'] = $logFile;
+        $logger->pushHandler(new StreamHandler($logFile));
+        $logger->pushHandler(new StreamHandler('php://stdout'));
 
-        Logger::configure($configuration);
+        return $logger;
     }
 
     private function shouldStartExportIfFileAlreadyExists(
