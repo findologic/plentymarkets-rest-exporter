@@ -43,6 +43,8 @@ class Config
 
     private bool $exportOrdernumberVariantBarcodes = true;
 
+    private ?string $exportReferrerId = null;
+
     public function __construct(array $rawConfig = [])
     {
         foreach ($rawConfig as $configKey => $configValue) {
@@ -79,6 +81,7 @@ class Config
             'exportOrdernumberVariantNumber' => $plentyConfig['export_ordernumber_variant_number'] ?? true,
             'exportOrdernumberVariantModel' => $plentyConfig['export_ordernumber_variant_model'] ?? true,
             'exportOrdernumberVariantBarcodes' => $plentyConfig['export_ordernumber_variant_barcodes'] ?? true,
+            'exportReferrerId' => $plentyConfig['export_referrer_id'] ?? null,
             'debug' => $debug
         ]);
     }
@@ -100,6 +103,7 @@ class Config
             'exportOrdernumberVariantNumber' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_NUMBER', true),
             'exportOrdernumberVariantModel' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_MODEL', true),
             'exportOrdernumberVariantBarcodes' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_BARCODES', true),
+            'exportReferrerId' => Utils::env('EXPORT_REFERRER_ID'),
             'debug' => (bool)Utils::env('DEBUG')
         ]);
     }
@@ -289,5 +293,15 @@ class Config
     public function setExportOrdernumberVariantBarcodes(bool $exportOrdernumberVariantBarcodes): void
     {
         $this->exportOrdernumberVariantBarcodes = $exportOrdernumberVariantBarcodes;
+    }
+
+    public function setExportReferrerId(?string $id): void
+    {
+        $this->exportReferrerId = $id;
+    }
+
+    public function getExportReferrerId(): ?string
+    {
+        return $this->exportReferrerId !== null ? (string)$this->exportReferrerId: null;
     }
 }

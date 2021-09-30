@@ -323,13 +323,15 @@ class VariationTest extends TestCase
                     $this->getVariationEntity('Pim/Variations/variation_with_unknown_property_types.json'),
                 'propertyEntity' => PropertyParser::parse($this->getMockResponse(
                     'PropertyResponse/property_with_unknown_type.json'
-                ))->first()
+                ))->first(),
+                false
             ],
             'property without translations for current language' => [
                 'variationEntity' =>
                     $this->getVariationEntity('Pim/Variations/variation_without_translated_property.json'),
                 'propertyEntity' =>
-                    PropertyParser::parse($this->getMockResponse('PropertyResponse/one.json'))->first()
+                    PropertyParser::parse($this->getMockResponse('PropertyResponse/one.json'))->first(),
+                false
             ],
             'property of type selection without relation' => [
                 'variationEntity' =>
@@ -337,7 +339,15 @@ class VariationTest extends TestCase
                         'Pim/Variations/variation_with_selection_properties_without_relations.json'
                     ),
                 'propertyEntity' =>
-                    PropertyParser::parse($this->getMockResponse('PropertyResponse/one.json'))->first()
+                    PropertyParser::parse($this->getMockResponse('PropertyResponse/one.json'))->first(),
+                false
+            ],
+            'forced-skipped property' => [
+                'variationEntity' =>
+                    $this->getVariationEntity('Pim/Variations/variation_with_properties.json'),
+                'propertyEntity' =>
+                    PropertyParser::parse($this->getMockResponse('PropertyResponse/one.json'))->first(),
+                true
             ]
         ];
     }
@@ -347,7 +357,8 @@ class VariationTest extends TestCase
      */
     public function testNonExportablePropertiesAreSkipped(
         Variation $variationEntity,
-        PropertyEntity $propertyEntity
+        PropertyEntity $propertyEntity,
+        bool $forceSkip
     ): void {
         $wrapper = new VariationWrapper(
             $this->defaultConfig,
@@ -355,6 +366,9 @@ class VariationTest extends TestCase
             $variationEntity
         );
 
+        if ($forceSkip) {
+            $propertyEntity->setSkipExport(true);
+        }
         $this->registryServiceMock->expects($this->any())->method('getProperty')->willReturn($propertyEntity);
 
         $wrapper->processData();

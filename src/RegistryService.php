@@ -244,7 +244,7 @@ class RegistryService
         return $configs[$pluginName] ?? [];
     }
 
-    private function fetchWebStores(): void
+    protected function fetchWebStores(): void
     {
         $webStoreRequest = new WebStoreRequest();
         $response = $this->client->send($webStoreRequest);
@@ -266,7 +266,7 @@ class RegistryService
         $this->set('webStore', $webStore);
     }
 
-    private function fetchCategories(): void
+    protected function fetchCategories(): void
     {
         /** @var WebStore $webStore */
         $webStore = $this->get('webStore');
@@ -288,7 +288,7 @@ class RegistryService
         }
     }
 
-    private function fetchVat(): void
+    protected function fetchVat(): void
     {
         $vatRequest = new VatRequest();
         foreach (Utils::sendIterableRequest($this->client, $vatRequest) as $response) {
@@ -306,7 +306,7 @@ class RegistryService
         $this->set('standardVat', $standardVat);
     }
 
-    private function fetchSalesPrices(): void
+    protected function fetchSalesPrices(): void
     {
         $salesPriceRequest = new SalesPriceRequest();
         foreach (Utils::sendIterableRequest($this->client, $salesPriceRequest) as $response) {
@@ -329,7 +329,7 @@ class RegistryService
         }
     }
 
-    private function fetchAttributes(): void
+    protected function fetchAttributes(): void
     {
         $attributeRequest = new AttributeRequest();
         foreach (Utils::sendIterableRequest($this->client, $attributeRequest) as $response) {
@@ -341,7 +341,7 @@ class RegistryService
         }
     }
 
-    private function fetchManufacturers(): void
+    protected function fetchManufacturers(): void
     {
         $manufacturerRequest = new ManufacturerRequest();
         foreach (Utils::sendIterableRequest($this->client, $manufacturerRequest) as $response) {
@@ -353,7 +353,7 @@ class RegistryService
         }
     }
 
-    private function fetchProperties(): void
+    protected function fetchProperties(): void
     {
         $propertyRequest = new PropertyRequest();
 
@@ -361,12 +361,15 @@ class RegistryService
             $propertyResponse = PropertyParser::parse($response);
 
             foreach ($propertyResponse->all() as $property) {
+                if (!$this->isPropertyExportable($property)) {
+                    $property->setSkipExport(true);
+                }
                 $this->set('property_' . $property->getId(), $property);
             }
         }
     }
 
-    private function fetchPropertyGroups(): void
+    protected function fetchPropertyGroups(): void
     {
         try {
             $propertyGroupRequest = new PropertyGroupRequest();
@@ -386,7 +389,7 @@ class RegistryService
         }
     }
 
-    private function fetchItemProperties(): void
+    protected function fetchItemProperties(): void
     {
         $propertyRequest = new ItemPropertyRequest();
 
@@ -399,7 +402,7 @@ class RegistryService
         }
     }
 
-    private function fetchUnits(): void
+    protected function fetchUnits(): void
     {
         $unitRequest = new UnitRequest();
         foreach (Utils::sendIterableRequest($this->client, $unitRequest) as $response) {
@@ -411,7 +414,7 @@ class RegistryService
         }
     }
 
-    private function fetchPropertySelections(): void
+    protected function fetchPropertySelections(): void
     {
         try {
             $selectionsRequest = new PropertySelectionRequest();
@@ -434,7 +437,7 @@ class RegistryService
         }
     }
 
-    private function fetchItemPropertyGroups(): void
+    protected function fetchItemPropertyGroups(): void
     {
         $propertyGroupRequest = new ItemPropertyGroupRequest('names');
 
@@ -447,7 +450,7 @@ class RegistryService
         }
     }
 
-    private function fetchPluginConfigurations(): void
+    protected function fetchPluginConfigurations(): void
     {
         $allConfigurations = [];
 
@@ -488,6 +491,27 @@ class RegistryService
         }
 
         $this->set('pluginConfigurations', $allConfigurations);
+    }
+
+    private function isPropertyExportable(Property $property): bool
+    {
+        $referrerId = $this->config->getExportReferrerId();
+
+        if ($referrerId === null) {
+            return true;
+        }
+
+        foreach ($property->getOptions() as $option) {
+            if ($option->getType() !== 'referrers') {
+                continue;
+            }
+
+            if ($option->getValue() === $referrerId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function set(string $key, $data)

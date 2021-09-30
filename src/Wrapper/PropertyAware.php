@@ -33,6 +33,10 @@ trait PropertyAware
                 continue;
             }
 
+            if ($propertyDetails->getSkipExport()) {
+                continue;
+            }
+
             if ($propertyDetails->getType() !== ItemVariationProperty::PROPERTY_TYPE_ITEM) {
                 continue;
             }
