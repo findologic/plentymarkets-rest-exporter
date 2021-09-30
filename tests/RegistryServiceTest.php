@@ -699,7 +699,7 @@ class RegistryServiceTest extends TestCase
     }
 
     /**
-     * @return RegistryService|MockObject
+     * @return RegistryService&MockObject
      */
     private function getRegistryServiceMockForSpecificFetchMethods(
         array $methodsToTest = [],

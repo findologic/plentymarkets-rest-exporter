@@ -302,6 +302,6 @@ class Config
 
     public function getExportReferrerId(): ?string
     {
-        return $this->exportReferrerId !== null ? (string)$this->exportReferrerId: null;
+        return $this->exportReferrerId !== null ? (string)$this->exportReferrerId : null;
     }
 }
