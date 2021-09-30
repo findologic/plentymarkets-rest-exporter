@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Definition\PropertyOptionType;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
@@ -502,7 +503,7 @@ class RegistryService
         }
 
         foreach ($property->getOptions() as $option) {
-            if ($option->getType() !== 'referrers') {
+            if ($option->getType() !== PropertyOptionType::REFERRERS) {
                 continue;
             }
 

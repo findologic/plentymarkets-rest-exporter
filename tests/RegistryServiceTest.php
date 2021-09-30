@@ -702,7 +702,7 @@ class RegistryServiceTest extends TestCase
      * @return RegistryService&MockObject
      */
     private function getRegistryServiceMockForSpecificFetchMethods(
-        array $methodsToTest = [],
+        array  $excludedMethods = [],
         Config $config = null
     ): MockObject {
         $allMethods = [
@@ -721,9 +721,9 @@ class RegistryServiceTest extends TestCase
             'fetchPluginConfigurations'
         ];
 
-        $methodsToMock = array_diff($allMethods, $methodsToTest);
+        $methodsToMock = array_diff($allMethods, $excludedMethods);
 
-        $config = $config ?: $this->defaultConfig;
+        $config = $config ?? $this->defaultConfig;
 
         return $this->getMockBuilder(RegistryService::class)
             ->onlyMethods($methodsToMock)
