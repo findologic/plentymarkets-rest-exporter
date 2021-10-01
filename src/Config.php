@@ -43,7 +43,7 @@ class Config
 
     private bool $exportOrdernumberVariantBarcodes = true;
 
-    private ?string $exportReferrerId = null;
+    private ?float $exportReferrerId = null;
 
     public function __construct(array $rawConfig = [])
     {
@@ -81,7 +81,7 @@ class Config
             'exportOrdernumberVariantNumber' => $plentyConfig['export_ordernumber_variant_number'] ?? true,
             'exportOrdernumberVariantModel' => $plentyConfig['export_ordernumber_variant_model'] ?? true,
             'exportOrdernumberVariantBarcodes' => $plentyConfig['export_ordernumber_variant_barcodes'] ?? true,
-            'exportReferrerId' => $plentyConfig['export_referrer_id'] ?? null,
+            'exportReferrerId' => self::getFloatCastExportReferrerId($plentyConfig['export_referrer_id'] ?? null),
             'debug' => $debug
         ]);
     }
@@ -103,7 +103,7 @@ class Config
             'exportOrdernumberVariantNumber' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_NUMBER', true),
             'exportOrdernumberVariantModel' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_MODEL', true),
             'exportOrdernumberVariantBarcodes' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_BARCODES', true),
-            'exportReferrerId' => Utils::env('EXPORT_REFERRER_ID'),
+            'exportReferrerId' => self::getFloatCastExportReferrerId(Utils::env('EXPORT_REFERRER_ID')),
             'debug' => (bool)Utils::env('DEBUG')
         ]);
     }
@@ -295,13 +295,22 @@ class Config
         $this->exportOrdernumberVariantBarcodes = $exportOrdernumberVariantBarcodes;
     }
 
-    public function setExportReferrerId(?string $id): void
+    public function setExportReferrerId($id): void
     {
-        $this->exportReferrerId = $id;
+        $this->exportReferrerId = self::getFloatCastExportReferrerId($id);
     }
 
-    public function getExportReferrerId(): ?string
+    public function getExportReferrerId(): ?float
     {
         return $this->exportReferrerId;
+    }
+
+    private static function getFloatCastExportReferrerId($exportReferrerId): ?float
+    {
+        if (is_numeric($exportReferrerId)) {
+            return (float)$exportReferrerId;
+        }
+
+        return null;
     }
 }

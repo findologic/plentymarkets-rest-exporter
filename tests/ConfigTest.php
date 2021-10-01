@@ -88,4 +88,40 @@ class ConfigTest extends TestCase
         $this->assertSame($expectedRrpId, $config->getRrpId());
         $this->assertSame($expectedUnavailableVariations, $config->isExportUnavailableVariations());
     }
+
+    /**
+     * @dataProvider exportReferrerIdProvider
+     */
+    public function testExportReferrerIdConfigIsCastedCorrectly($rawConfigValue, $expectedCastConfigValue): void
+    {
+        $config = new Config(['exportReferrerId' => $rawConfigValue]);
+
+        $this->assertSame($expectedCastConfigValue, $config->getExportReferrerId());
+    }
+
+    public function exportReferrerIdProvider(): array
+    {
+        return [
+            'casts int to float' => [
+                'rawConfigValue' => 10,
+                'expectedCastConfigValue' => 10.0
+            ],
+            'casts int string to float' => [
+                'rawConfigValue' => '10',
+                'expectedCastConfigValue' => 10.0
+            ],
+            'casts float string to float' => [
+                'rawConfigValue' => '10.00',
+                'expectedCastConfigValue' => 10.0
+            ],
+            'casts non-numeric string to null' => [
+                'rawConfigValue' => '10.0a',
+                'expectedCastConfigValue' => null
+            ],
+            'leaves null as null' => [
+                'rawConfigValue' => null,
+                'expectedCastConfigValue' => null
+            ]
+        ];
+    }
 }

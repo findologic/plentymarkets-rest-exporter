@@ -123,7 +123,7 @@
           "id": 627,
           "propertyId": 4,
           "type": "referrers",
-          "value": "10.00",
+          "value": "10",
           "createdAt": "2019-02-22T10:39:41+00:00",
           "updatedAt": "2019-02-22T10:39:41+00:00"
         },
@@ -205,7 +205,7 @@
           "id": 843,
           "propertyId": 5,
           "type": "referrers",
-          "value": "10",
+          "value": "sooooome value",
           "createdAt": "2019-02-22T14:03:20+00:00",
           "updatedAt": "2019-02-22T14:03:20+00:00"
         }

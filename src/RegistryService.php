@@ -507,7 +507,7 @@ class RegistryService
                 continue;
             }
 
-            if ($option->getValue() === $referrerId) {
+            if (is_numeric($option->getValue()) && ((float)$option->getValue() === $referrerId)) {
                 return true;
             }
         }
