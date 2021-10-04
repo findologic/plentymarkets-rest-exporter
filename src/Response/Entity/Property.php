@@ -35,6 +35,8 @@ class Property extends Entity
     /** @var Amazon[] */
     private array $amazon = [];
 
+    private bool $skipExport = false;
+
     public function __construct(array $data)
     {
         $this->id = $this->getIntProperty('id', $data);
@@ -151,5 +153,15 @@ class Property extends Entity
     {
         // Undocumented - the properties may not match the received data exactly
         return $this->amazon;
+    }
+
+    public function setSkipExport(bool $skipFlag): void
+    {
+        $this->skipExport = $skipFlag;
+    }
+
+    public function getSkipExport(): bool
+    {
+        return $this->skipExport;
     }
 }

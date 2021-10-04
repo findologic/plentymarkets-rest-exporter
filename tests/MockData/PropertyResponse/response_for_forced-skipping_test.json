@@ -1,0 +1,506 @@
+{
+  "page": 1,
+  "totalsCount": 7,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 1,
+      "cast": "selection",
+      "type": "item",
+      "position": 0,
+      "createdAt": "2018-04-16T07:04:49+01:00",
+      "updatedAt": "2018-04-16T07:04:49+01:00",
+      "groups": [
+        {
+          "id": 1,
+          "position": 0,
+          "createdAt": "2018-04-16T07:08:03+01:00",
+          "updatedAt": "2018-04-16T07:08:03+01:00",
+          "pivot": {
+            "propertyId": 1,
+            "groupId": 1
+          }
+        }
+      ],
+      "names": [
+        {
+          "id": 1,
+          "propertyId": 1,
+          "lang": "en",
+          "name": "Color",
+          "description": "Color",
+          "createdAt": "2018-04-16T07:04:49+01:00",
+          "updatedAt": "2018-04-16T07:04:49+01:00"
+        }
+      ],
+      "options": [
+        {
+          "id": 2,
+          "propertyId": 1,
+          "type": "display",
+          "value":"some value",
+          "createdAt": "2018-04-16T07:05:22+01:00",
+          "updatedAt": "2018-04-16T07:05:22+01:00"
+        },
+        {
+          "id": 128,
+          "propertyId": 1,
+          "type": "displayOrder",
+          "value": "some value",
+          "createdAt": "2018-06-18T15:32:30+01:00",
+          "updatedAt": "2018-06-18T15:32:30+01:00"
+        },
+        {
+          "id": 129,
+          "propertyId": 1,
+          "type": "displayOrder",
+          "value": "some value",
+          "createdAt": "2018-06-18T15:32:30+01:00",
+          "updatedAt": "2018-06-18T15:32:30+01:00"
+        },
+        {
+          "id": 132,
+          "propertyId": 1,
+          "type": "referrers",
+          "value": "10.00",
+          "createdAt": "2018-06-18T15:32:42+01:00",
+          "updatedAt": "2018-06-18T15:32:42+01:00"
+        }
+      ],
+      "amazon": [
+        {
+          "id": 2,
+          "propertyId": 1,
+          "platform": "de",
+          "category": "AutoAccessory",
+          "field": "item_name",
+          "createdAt": "2019-02-22T14:01:21+00:00",
+          "updatedAt": "2019-02-22T14:01:21+00:00"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "cast": "selection",
+      "type": "item",
+      "position": 50,
+      "createdAt": "2019-02-22T10:39:10+00:00",
+      "updatedAt": "2019-02-22T10:44:45+00:00",
+      "groups": [
+        {
+          "id": 1,
+          "position": 0,
+          "createdAt": "2018-04-16T07:08:03+01:00",
+          "updatedAt": "2018-04-16T07:08:03+01:00",
+          "pivot": {
+            "propertyId": 10,
+            "groupId": 20
+          }
+        }
+      ],
+      "names": [
+        {
+          "id": 4,
+          "propertyId": 4,
+          "lang": "en",
+          "name": "Size",
+          "description": "Size",
+          "createdAt": "2019-02-22T10:39:10+00:00",
+          "updatedAt": "2019-02-22T10:39:10+00:00"
+        },
+        {
+          "id": 5,
+          "propertyId": 4,
+          "lang": "de",
+          "name": "Size",
+          "description": "Size",
+          "createdAt": "2019-02-22T13:54:00+00:00",
+          "updatedAt": "2019-02-22T13:54:00+00:00"
+        }
+      ],
+      "options": [
+        {
+          "id": 627,
+          "propertyId": 4,
+          "type": "referrers",
+          "value": "10",
+          "createdAt": "2019-02-22T10:39:41+00:00",
+          "updatedAt": "2019-02-22T10:39:41+00:00"
+        },
+        {
+          "id": 628,
+          "propertyId": 4,
+          "type": "referrers",
+          "value": "some value",
+          "createdAt": "2019-02-22T10:39:41+00:00",
+          "updatedAt": "2019-02-22T10:39:41+00:00"
+        },
+        {
+          "id": 629,
+          "propertyId": 4,
+          "type": "referrers",
+          "value": "some value",
+          "createdAt": "2019-02-22T10:39:41+00:00",
+          "updatedAt": "2019-02-22T10:39:41+00:00"
+        }
+      ],
+      "amazon": [
+        {
+          "id": 1,
+          "propertyId": 4,
+          "platform": "de",
+          "category": "AutoAccessory",
+          "field": "feed_product_type",
+          "createdAt": "2019-02-22T14:01:05+00:00",
+          "updatedAt": "2019-02-22T14:01:05+00:00"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "cast": "int",
+      "type": "item",
+      "position": 50,
+      "createdAt": "2019-02-22T14:03:11+00:00",
+      "updatedAt": "2019-02-22T14:03:11+00:00",
+      "groups": [],
+      "names": [
+        {
+          "id": 6,
+          "propertyId": 5,
+          "lang": "en",
+          "name": "Number Property",
+          "description": "Number Property",
+          "createdAt": "2019-02-22T14:03:12+00:00",
+          "updatedAt": "2019-02-22T14:03:12+00:00"
+        },
+        {
+          "id": 7,
+          "propertyId": 5,
+          "lang": "de",
+          "name": "Num",
+          "description": "Numbe",
+          "createdAt": "2019-02-22T14:33:12+00:00",
+          "updatedAt": "2019-02-22T14:33:12+00:00"
+        }
+      ],
+      "options": [
+        {
+          "id": 841,
+          "propertyId": 5,
+          "type": "referrers",
+          "value": "some value",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        },
+        {
+          "id": 842,
+          "propertyId": 5,
+          "type": "referrers",
+          "value": "some value",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        },
+        {
+          "id": 843,
+          "propertyId": 5,
+          "type": "referrers",
+          "value": "sooooome value",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        }
+      ],
+      "amazon": [
+        {
+          "id": 3,
+          "propertyId": 5,
+          "platform": "de",
+          "category": "AutoAccessory",
+          "field": "quantity",
+          "createdAt": "2019-02-22T14:03:30+00:00",
+          "updatedAt": "2019-02-22T14:03:30+00:00"
+        },
+        {
+          "id": 4,
+          "propertyId": 5,
+          "platform": "de",
+          "category": "FoodAndBeverages",
+          "field": "item_name",
+          "createdAt": "2019-02-22T14:32:53+00:00",
+          "updatedAt": "2019-02-22T14:32:53+00:00"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "cast": "text",
+      "type": "item",
+      "position": 50,
+      "createdAt": "2019-02-22T14:54:23+00:00",
+      "updatedAt": "2019-02-22T14:54:23+00:00",
+      "groups": [],
+      "names": [
+        {
+          "id": 8,
+          "propertyId": 6,
+          "lang": "en",
+          "name": "Description",
+          "description": "Description",
+          "createdAt": "2019-02-22T14:54:23+00:00",
+          "updatedAt": "2019-02-22T14:54:23+00:00"
+        }
+      ],
+      "options": [
+        {
+          "id": 950,
+          "propertyId": 6,
+          "type": "referrers",
+          "value": "10",
+          "createdAt": "2019-02-22T14:54:33+00:00",
+          "updatedAt": "2019-02-22T14:54:33+00:00"
+        },
+        {
+          "id": 951,
+          "propertyId": 6,
+          "type": "referrers",
+          "value": "10.00",
+          "createdAt": "2019-02-22T14:54:33+00:00",
+          "updatedAt": "2019-02-22T14:54:33+00:00"
+        }
+      ],
+      "amazon": [
+        {
+          "id": 5,
+          "propertyId": 6,
+          "platform": "de",
+          "category": "ConsumerElectronics",
+          "field": "feed_product_type",
+          "createdAt": "2019-02-22T14:55:44+00:00",
+          "updatedAt": "2019-02-22T14:55:44+00:00"
+        },
+        {
+          "id": 6,
+          "propertyId": 6,
+          "platform": "de",
+          "category": "AutoAccessory",
+          "field": "feed_product_type",
+          "createdAt": "2019-02-22T14:55:44+00:00",
+          "updatedAt": "2019-02-22T14:55:44+00:00"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "cast": "multiSelection",
+      "type": "item",
+      "position": 5,
+      "createdAt": "2020-04-07T10:48:55+01:00",
+      "updatedAt": "2020-04-07T10:48:55+01:00",
+      "groups": [
+        {
+          "id": 1,
+          "position": 0,
+          "createdAt": "2018-04-16T07:08:03+01:00",
+          "updatedAt": "2018-04-16T07:08:03+01:00",
+          "pivot": {
+            "propertyId": 1000,
+            "groupId": 2000
+          }
+        }
+      ],
+      "names": [
+        {
+          "id": 9,
+          "propertyId": 7,
+          "lang": "en",
+          "name": "test-multiselect-property",
+          "description": "For PLENTY-198",
+          "createdAt": "2020-04-07T10:48:55+01:00",
+          "updatedAt": "2020-04-07T10:48:55+01:00"
+        },
+        {
+          "id": 10,
+          "propertyId": 7,
+          "lang": "de",
+          "name": "test-multiselect-property",
+          "description": "",
+          "createdAt": "2020-04-08T07:40:22+01:00",
+          "updatedAt": "2020-04-08T07:40:22+01:00"
+        }
+      ],
+      "options": [
+        {
+          "id": 843,
+          "propertyId": 7,
+          "type": "referrers",
+          "value": "9.00",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        },
+        {
+          "id": 843,
+          "propertyId": 7,
+          "type": "referrers",
+          "value": "10.00",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        },
+        {
+          "id": 843,
+          "propertyId": 7,
+          "type": "referrers",
+          "value": "10.01",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        }
+      ],
+      "amazon": []
+    },
+    {
+      "id": 11,
+      "cast": "float",
+      "type": "item",
+      "position": 50,
+      "createdAt": "2019-02-22T14:03:11+00:00",
+      "updatedAt": "2019-02-22T14:03:11+00:00",
+      "groups": [],
+      "names": [
+        {
+          "id": 6,
+          "propertyId": 5,
+          "lang": "en",
+          "name": "Float Property EN",
+          "description": "Float Property EN",
+          "createdAt": "2019-02-22T14:03:12+00:00",
+          "updatedAt": "2019-02-22T14:03:12+00:00"
+        },
+        {
+          "id": 7,
+          "propertyId": 5,
+          "lang": "de",
+          "name": "Float Property DE",
+          "description": "Float Property DE",
+          "createdAt": "2019-02-22T14:33:12+00:00",
+          "updatedAt": "2019-02-22T14:33:12+00:00"
+        }
+      ],
+      "options": [
+        {
+          "id": 841,
+          "propertyId": 5,
+          "type": "referrers",
+          "value": "some value",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        },
+        {
+          "id": 842,
+          "propertyId": 5,
+          "type": "referrers",
+          "value": "some value",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        },
+        {
+          "id": 843,
+          "propertyId": 5,
+          "type": "referrers",
+          "value": "10.00",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        }
+      ],
+      "amazon": [
+        {
+          "id": 3,
+          "propertyId": 5,
+          "platform": "de",
+          "category": "AutoAccessory",
+          "field": "quantity",
+          "createdAt": "2019-02-22T14:03:30+00:00",
+          "updatedAt": "2019-02-22T14:03:30+00:00"
+        },
+        {
+          "id": 4,
+          "propertyId": 5,
+          "platform": "de",
+          "category": "FoodAndBeverages",
+          "field": "item_name",
+          "createdAt": "2019-02-22T14:32:53+00:00",
+          "updatedAt": "2019-02-22T14:32:53+00:00"
+        }
+      ]
+    },
+    {
+      "id": 123,
+      "cast": "empty",
+      "type": "item",
+      "position": 10001,
+      "createdAt": "2019-02-22T14:03:11+00:00",
+      "updatedAt": "2019-02-22T14:03:11+00:00",
+      "groups": [
+        {
+          "id": 555555,
+          "createdAt": "2019-02-22T14:03:11+00:00",
+          "updatedAt": "2019-02-22T14:03:11+00:00",
+          "pivot": {
+            "propertyId": 123,
+            "groupId": 555555
+          }
+        },
+        {
+          "id": 2,
+          "createdAt": "2019-02-22T14:03:11+00:00",
+          "updatedAt": "2019-02-22T14:03:11+00:00",
+          "pivot": {
+            "propertyId": 123,
+            "groupId": 2
+          }
+        }
+      ],
+      "names": [
+        {
+          "id": 6,
+          "propertyId": 123,
+          "lang": "en",
+          "name": "Empty-cast Property EN",
+          "description": "Float Property EN",
+          "createdAt": "2019-02-22T14:03:12+00:00",
+          "updatedAt": "2019-02-22T14:03:12+00:00"
+        },
+        {
+          "id": 7,
+          "propertyId": 123,
+          "lang": "de",
+          "name": "Empty-cast Property DE",
+          "description": "Float Property DE",
+          "createdAt": "2019-02-22T14:33:12+00:00",
+          "updatedAt": "2019-02-22T14:33:12+00:00"
+        }
+      ],
+      "options": [
+        {
+          "id": 841,
+          "propertyId": 123,
+          "type": "display",
+          "value": "showOnItemsPage",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        },
+        {
+          "id": 842,
+          "propertyId": 123,
+          "type": "clients",
+          "value": "4024",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        }
+      ],
+      "amazon": []
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100
+}
