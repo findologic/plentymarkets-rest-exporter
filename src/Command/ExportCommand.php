@@ -51,8 +51,8 @@ class ExportCommand extends Command
         $this->exporter = $exporter;
         $this->client = $client;
 
-        $this->internalLogger = $internalLogger ?? $this->configureLoggers(new Logger('import.php'));
-        $this->customerLogger = $customerLogger ?? $this->configureLoggers(new Logger('import.php'));
+        $this->internalLogger = $internalLogger ?? $this->configureLogger(new Logger('import.php'));
+        $this->customerLogger = $customerLogger ?? $this->configureLogger(new Logger('import.php'));
     }
 
     protected function configure()
@@ -122,7 +122,7 @@ class ExportCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function configureLoggers(Logger $logger): Logger
+    private function configureLogger(Logger $logger): LoggerInterface
     {
         $logPath = Utils::env('LOG_DIR', self::IMPORT_LOG_PATH);
         $logFile = sprintf('%s/%s', $logPath, self::IMPORT_LOG_FILE_NAME);
