@@ -295,6 +295,9 @@ class Config
         $this->exportOrdernumberVariantBarcodes = $exportOrdernumberVariantBarcodes;
     }
 
+    /**
+     * @var string|int|float $id
+     */
     public function setExportReferrerId($id): void
     {
         $this->exportReferrerId = self::getFloatCastExportReferrerId($id);
