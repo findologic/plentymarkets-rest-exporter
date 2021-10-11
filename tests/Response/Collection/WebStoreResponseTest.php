@@ -50,8 +50,8 @@ class WebStoreResponseTest extends TestCase
             'urlFileExtension' => '/',
             'urlLinking' => 'absolute',
             'languageList' => ['de', 'en'],
-            'domain' => 'http://plenty-test.com',
-            'domainSsl' => 'https://plenty-test.com',
+            'domain' => 'http://plenty-testshop.de',
+            'domainSsl' => 'https://plenty-testshop.de',
             'rootDir' => '/var/www7/m6742/1234d095/',
             'loginMode' => 0,
             'attributesDropDown' => 1,
@@ -240,8 +240,8 @@ class WebStoreResponseTest extends TestCase
         $this->assertEquals('/', $configuration->getUrlFileExtension());
         $this->assertEquals('absolute', $configuration->getUrlLinking());
         $this->assertEquals(['de', 'en'], $configuration->getLanguageList());
-        $this->assertEquals('http://plenty-test.com', $configuration->getDomain());
-        $this->assertEquals('https://plenty-test.com', $configuration->getDomainSsl());
+        $this->assertEquals('http://plenty-testshop.de', $configuration->getDomain());
+        $this->assertEquals('https://plenty-testshop.de', $configuration->getDomainSsl());
         $this->assertEquals('/var/www7/m6742/1234d095/', $configuration->getRootDir());
         $this->assertEquals(0, $configuration->getLoginMode());
         $this->assertEquals(1, $configuration->getAttributesDropDown());

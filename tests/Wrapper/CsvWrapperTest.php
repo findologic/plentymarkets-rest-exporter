@@ -80,6 +80,7 @@ class CsvWrapperTest extends TestCase
             ->getMock();
         $webstoreConfigMock->method('getDisplayItemName')->willReturn(1);
         $webstoreConfigMock->method('getDefaultLanguage')->willReturn('en');
+        $webstoreConfigMock->method('getDomainSsl')->willReturn('https://plenty-testshop.de');
 
         $webstoreMock = $this->getMockBuilder(WebStore::class)
             ->disableOriginalConstructor()
