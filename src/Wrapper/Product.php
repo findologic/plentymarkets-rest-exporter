@@ -380,7 +380,7 @@ class Product
 
     private function getWebStoreHost(): string
     {
-        $rawUri = $this->registryService->getWebStore()->getConfiguration()->getDomainSsl();
+        $rawUri = $this->registryService->getWebStore()->getConfiguration()->getDomainSsl() ?? '';
         $uri = new Uri($rawUri);
 
         return $uri->getHost();
