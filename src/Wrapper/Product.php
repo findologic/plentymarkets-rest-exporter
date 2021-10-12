@@ -21,6 +21,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVar
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration as StoreConfiguration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
+use GuzzleHttp\Psr7\Uri;
 
 class Product
 {
@@ -348,7 +349,7 @@ class Product
             return sprintf(
                 '%s://%s%s/%s/a-%s',
                 $this->config->getProtocol(),
-                $this->config->getDomain(),
+                $this->getWebStoreHost(),
                 $this->getLanguageUrlPrefix(),
                 trim($urlPath, '/'),
                 $this->productEntity->getId()
@@ -358,7 +359,7 @@ class Product
         return sprintf(
             '%s://%s%s/%s_%s_%s',
             $this->config->getProtocol(),
-            $this->config->getDomain(),
+            $this->getWebStoreHost(),
             $this->getLanguageUrlPrefix(),
             trim($urlPath, '/'),
             $this->productEntity->getId(),
@@ -375,6 +376,14 @@ class Product
         }
 
         return filter_var($config['global.enableOldUrlPattern'], FILTER_VALIDATE_BOOLEAN);
+    }
+
+    private function getWebStoreHost(): string
+    {
+        $rawUri = $this->registryService->getWebStore()->getConfiguration()->getDomainSsl() ?? '';
+        $uri = new Uri($rawUri);
+
+        return $uri->getHost();
     }
 
     /**
