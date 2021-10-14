@@ -139,7 +139,13 @@ class CsvWrapperTest extends TestCase
                     /** @var CSVItem[] $items */
                     $this->assertCount(3, $items);
 
-                    $expectedIdentifiers = [
+                    $expectedIds = [
+                        '106_1004',
+                        '106_1005',
+                        '106_1006'
+                    ];
+
+                    $expectedOrderNumbers = [
                         'S-000813-C|modeeeel|1004|106|3213213213213',
                         '101|1005|106',
                         '102|1006|106'
@@ -166,7 +172,8 @@ class CsvWrapperTest extends TestCase
                     foreach ($items as $key => $item) {
                         $line = $item->getCsvFragment();
                         $columnValues = explode("\t", $line);
-                        $this->assertEquals($expectedIdentifiers[$key], $columnValues[1]);
+                        $this->assertEquals($expectedIds[$key], $columnValues[0]);
+                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[1]);
 
                         $url = $item->getUrl()->getValues();
                         $this->assertEquals($expectedUrls[$key], reset($url));
@@ -223,7 +230,13 @@ class CsvWrapperTest extends TestCase
                 $this->callback(function (array $items) {
                     $this->assertCount(3, $items);
 
-                    $expectedIdentifiers = [
+                    $expectedIds = [
+                        '106_1004',
+                        '106_1006',
+                        '106'
+                    ];
+
+                    $expectedOrderNumbers = [
                         'S-000813-C|modeeeel|1004|106|3213213213213',
                         '102|1006|106',
                         '101|1005|106'
@@ -232,7 +245,8 @@ class CsvWrapperTest extends TestCase
                     foreach ($items as $key => $item) {
                         $line = $item->getCsvFragment();
                         $columnValues = explode("\t", $line);
-                        $this->assertEquals($expectedIdentifiers[$key], $columnValues[1]);
+                        $this->assertEquals($expectedIds[$key], $columnValues[0]);
+                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[1]);
                     }
 
                     return true;
@@ -283,7 +297,12 @@ class CsvWrapperTest extends TestCase
                 $this->callback(function (array $items) {
                     $this->assertCount(2, $items);
 
-                    $expectedIdentifiers = [
+                    $expectedIds = [
+                       '106_1006',
+                       '106'
+                    ];
+
+                    $expectedOrderNumbers = [
                         '102|1006|106',
                         'S-000813-C|modeeeel|1004|106|3213213213213|101|1005'
                     ];
@@ -291,7 +310,8 @@ class CsvWrapperTest extends TestCase
                     foreach ($items as $key => $item) {
                         $line = $item->getCsvFragment();
                         $columnValues = explode("\t", $line);
-                        $this->assertEquals($expectedIdentifiers[$key], $columnValues[1]);
+                        $this->assertEquals($expectedIds[$key], $columnValues[0]);
+                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[1]);
                     }
 
                     return true;
@@ -339,11 +359,13 @@ class CsvWrapperTest extends TestCase
                 $this->callback(function (array $items) {
                     $this->assertCount(1, $items);
 
-                    $expectedIdentifier = 'S-000813-C|modeeeel|1004|106|3213213213213|101|1005|102|1006';
+                    $expectedId = '106';
+                    $expectedOrderNumber = 'S-000813-C|modeeeel|1004|106|3213213213213|101|1005|102|1006';
 
                     $line = $items[0]->getCsvFragment();
                     $columnValues = explode("\t", $line);
-                    $this->assertEquals($expectedIdentifier, $columnValues[1]);
+                    $this->assertEquals($expectedId, $columnValues[0]);
+                    $this->assertEquals($expectedOrderNumber, $columnValues[1]);
 
                     return true;
                 })
@@ -390,11 +412,13 @@ class CsvWrapperTest extends TestCase
                 $this->callback(function (array $items) {
                     $this->assertCount(1, $items);
 
-                    $expectedIdentifier = 'S-000813-C|modeeeel|1004|106|3213213213213|101|1005|102|1006';
+                    $expectedId = '106';
+                    $expectedOrderNumber = 'S-000813-C|modeeeel|1004|106|3213213213213|101|1005|102|1006';
 
                     $line = $items[0]->getCsvFragment();
                     $columnValues = explode("\t", $line);
-                    $this->assertEquals($expectedIdentifier, $columnValues[1]);
+                    $this->assertEquals($expectedId, $columnValues[0]);
+                    $this->assertEquals($expectedOrderNumber, $columnValues[1]);
 
                     return true;
                 })
@@ -473,9 +497,20 @@ class CsvWrapperTest extends TestCase
             ->with(
                 self::TEST_EXPORT_PATH,
                 $this->callback(function (array $items) use (&$firstItemData) {
+                    $expectedSeparatedProductId = "106_1004";
+                    $expectedGroupedProductId = "106";
+
                     $this->assertCount(1, $items);
 
-                    $this->assertEquals($firstItemData, $items[0]->getCsvFragment());
+                    $separatedProductColumns = explode("\t", $firstItemData);
+                    $groupedProductColumns = explode("\t", $items[0]->getCsvFragment());
+
+                    $this->assertEquals($expectedSeparatedProductId, $separatedProductColumns[0]);
+                    $this->assertEquals($expectedGroupedProductId, $groupedProductColumns[0]);
+                    $this->assertEquals(
+                        array_slice($separatedProductColumns, 1),
+                        array_slice($groupedProductColumns, 1)
+                    );
 
                     return true;
                 })
@@ -551,9 +586,20 @@ class CsvWrapperTest extends TestCase
             ->with(
                 self::TEST_EXPORT_PATH,
                 $this->callback(function (array $items) use (&$firstItemData) {
+                    $expectedSeparatedProductId = "106_1004";
+                    $expectedGroupedProductId = "106";
+
                     $this->assertCount(1, $items);
 
-                    $this->assertEquals($firstItemData, $items[0]->getCsvFragment());
+                    $separatedProductColumns = explode("\t", $firstItemData);
+                    $groupedProductColumns = explode("\t", $items[0]->getCsvFragment());
+
+                    $this->assertEquals($expectedSeparatedProductId, $separatedProductColumns[0]);
+                    $this->assertEquals($expectedGroupedProductId, $groupedProductColumns[0]);
+                    $this->assertEquals(
+                        array_slice($separatedProductColumns, 1),
+                        array_slice($groupedProductColumns, 1)
+                    );
 
                     return true;
                 })
