@@ -632,6 +632,31 @@ class ProductTest extends TestCase
         $this->assertEquals($expectedOrderNumbers, $columnValues[1]);
     }
 
+    /**
+     * @dataProvider exportFreeFieldsConfigurationTestProvider
+     */
+    public function testFreeTextFieldsAreNotExportedAccordingToConfiguration(
+        array $exportFreeFieldsConfig,
+        string $expectedValue
+    ): void {
+        $this->config = $this->getDefaultConfig($exportFreeFieldsConfig);
+        $this->exporterMock = $this->getExporter();
+
+        $variationResponse = $this->getMockResponse("Pim/Variations/response_for_free_fields_exporting_test.json");
+        $variations = PimVariationsParser::parse($variationResponse);
+
+        $this->itemMock = $this->getItem($variations->first()->getBase()->getItem()->getData());
+
+        $this->variationEntityMocks[] = $variations->first();
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+
+        $this->assertEquals($expectedValue, $columnValues[11]);
+    }
+
     public function testAttributesAreSetFromAllVariations()
     {
         $this->exporterMock = $this->getExporter();
@@ -832,9 +857,36 @@ class ProductTest extends TestCase
         );
     }
 
+    private function getItem(array $data): Item
+    {
+        return new Item($data);
+    }
+
     private function getExporter(): Exporter
     {
         return Exporter::create(Exporter::TYPE_CSV, 100, self::AVAILABLE_PROPERTIES);
+    }
+
+    public function exportFreeFieldsConfigurationTestProvider(): array
+    {
+        return [
+            'using default values' => [
+                [],
+                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&free1=0'
+            ],
+            'free fields enabled' => [
+                [
+                    'exportFreeTextFields' => true,
+                ],
+                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&free1=0'
+            ],
+            'free fields disabled' => [
+                [
+                    'exportFreeTextFields' => false,
+                ],
+                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F'
+            ]
+        ];
     }
 
     public function orderNumberExportConfigurationTestProvider(): array

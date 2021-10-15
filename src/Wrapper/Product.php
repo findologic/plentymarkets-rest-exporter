@@ -114,7 +114,10 @@ class Product
 
         $this->item->addDateAdded(new DateTime($this->productEntity->getCreatedAt()));
         $this->addManufacturer();
-        $this->addFreeTextFields();
+
+        if ($this->config->getExportFreeTextFields()) {
+            $this->addFreeTextFields();
+        }
 
         $priceId = $this->registryService->getPriceId();
         $priceIdProperty = new Property('price_id');

@@ -43,6 +43,8 @@ class Config
 
     private bool $exportOrdernumberVariantBarcodes = true;
 
+    private bool $exportFreeTextFields = true;
+
     private ?float $exportReferrerId = null;
 
     public function __construct(array $rawConfig = [])
@@ -81,6 +83,7 @@ class Config
             'exportOrdernumberVariantNumber' => $plentyConfig['export_ordernumber_variant_number'] ?? true,
             'exportOrdernumberVariantModel' => $plentyConfig['export_ordernumber_variant_model'] ?? true,
             'exportOrdernumberVariantBarcodes' => $plentyConfig['export_ordernumber_variant_barcodes'] ?? true,
+            'exportFreeTextFields' => $plentyConfig['export_free_text_fields'] ?? true,
             'exportReferrerId' => self::getFloatCastExportReferrerId($plentyConfig['export_referrer_id'] ?? null),
             'debug' => $debug
         ]);
@@ -103,6 +106,7 @@ class Config
             'exportOrdernumberVariantNumber' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_NUMBER', true),
             'exportOrdernumberVariantModel' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_MODEL', true),
             'exportOrdernumberVariantBarcodes' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_BARCODES', true),
+            'exportFreeTextFields' => (bool)Utils::env('EXPORT_FREE_TEXT_FIELDS', true),
             'exportReferrerId' => self::getFloatCastExportReferrerId(Utils::env('EXPORT_REFERRER_ID')),
             'debug' => (bool)Utils::env('DEBUG')
         ]);
@@ -306,6 +310,16 @@ class Config
     public function getExportReferrerId(): ?float
     {
         return $this->exportReferrerId;
+    }
+
+    public function getExportFreeTextFields(): bool
+    {
+        return $this->exportFreeTextFields;
+    }
+
+    public function setExportFreeTextFields(bool $exportFreeTextFields): void
+    {
+        $this->exportFreeTextFields = $exportFreeTextFields;
     }
 
     private static function getFloatCastExportReferrerId($exportReferrerId): ?float
