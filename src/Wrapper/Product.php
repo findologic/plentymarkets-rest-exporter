@@ -111,7 +111,7 @@ class Product
         }
 
         if ($this->wrapMode === self::WRAP_MODE_SEPARATE_VARIATIONS) {
-            $itemId = $this->item->getId() . "_" . $this->variationEntities[0]->getId();
+            $itemId = $this->item->getId() . '_' . $this->variationEntities[0]->getId();
             $this->item->setId($itemId);
         }
 
