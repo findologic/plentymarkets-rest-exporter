@@ -642,7 +642,7 @@ class ProductTest extends TestCase
         $this->config = $this->getDefaultConfig($exportFreeFieldsConfig);
         $this->exporterMock = $this->getExporter();
 
-        $variationResponse = $this->getMockResponse("Pim/Variations/response_for_free_fields_exporting_test.json");
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_free_fields_exporting_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
 
         $this->itemMock = $this->getItem($variations->first()->getBase()->getItem()->getData());
