@@ -99,6 +99,14 @@ class ConfigTest extends TestCase
         $this->assertSame($expectedCastConfigValue, $config->getExportReferrerId());
     }
 
+    public function testExportFreeTextFieldsConfigDefaultValueIsSetCorrectly(): void
+    {
+        $config = new Config();
+        $expectedResult = true;
+
+        $this->assertSame($expectedResult, $config->getExportFreeTextFields());
+    }
+
     public function exportReferrerIdProvider(): array
     {
         return [
