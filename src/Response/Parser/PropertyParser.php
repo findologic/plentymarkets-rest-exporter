@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
+namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertyResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class ItemPropertyParser extends Parser
+class PropertyParser extends Parser
 {
     /**
-     * @return ItemPropertyResponse
+     * @return PropertyResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
@@ -20,10 +20,10 @@ class ItemPropertyParser extends Parser
 
         $properties = [];
         foreach ($response['entries'] as $property) {
-            $properties[] = new ItemProperty($property);
+            $properties[] = new Property($property);
         }
 
-        return new ItemPropertyResponse(
+        return new PropertyResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
 use FINDOLOGIC\Export\Helpers\DataHelper;
+use FINDOLOGIC\Export\Helpers\Serializable;
+use FINDOLOGIC\Export\Helpers\UsergroupAwareSimpleValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
 use GuzzleHttp\Client as GuzzleClient;
@@ -108,6 +110,35 @@ class Utils
         }
 
         return $_ENV[$key];
+    }
+
+    /**
+     * @param UsergroupAwareSimpleValue[] $usergroupAwareSimpleValues
+     */
+    public static function getLowestValue(
+        array $usergroupAwareSimpleValues,
+        string $usergroup = ''
+    ): float {
+        $lowest = 0.0;
+        foreach ($usergroupAwareSimpleValues as $simpleValue) {
+            $value = $simpleValue->getValues()[$usergroup];
+            $lowest = Utils::getLowestFloatValue($lowest, (float)$value);
+        }
+
+        return $lowest;
+    }
+
+    /**
+     * Gets the lowest float value. In case the current float value has no value set yet, the new float will be
+     * returned instead.
+     */
+    public static function getLowestFloatValue(?float $currentFloat, float $newFloat): float
+    {
+        if ($currentFloat === null || $currentFloat === 0.0) {
+            return $newFloat;
+        }
+
+        return min($currentFloat, $newFloat);
     }
 
     private static function getCustomerLoginConfiguration(

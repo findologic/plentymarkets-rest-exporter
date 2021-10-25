@@ -2,32 +2,32 @@
 
 declare(strict_types=1);
 
-namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
+namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertyGroupResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertyGroup;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class CategoryParser extends Parser
+class PropertyGroupParser extends Parser
 {
     /**
-     * @return CategoryResponse
+     * @return PropertyGroupResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
         $response = self::unserializeJsonResponse($rawResponse);
 
-        $categories = [];
-        foreach ($response['entries'] as $category) {
-            $categories[] = new Category($category);
+        $propertyGroups = [];
+        foreach ($response['entries'] as $property) {
+            $propertyGroups[] = new PropertyGroup($property);
         }
 
-        return new CategoryResponse(
+        return new PropertyGroupResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],
-            $categories,
+            $propertyGroups,
             $response['lastPageNumber'],
             $response['firstOnPage'],
             $response['lastOnPage'],

@@ -2,30 +2,28 @@
 
 declare(strict_types=1);
 
-namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
+namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemVariationResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class PimVariationsParser extends Parser
+class ItemVariationParser extends Parser
 {
     /**
-     * @param ResponseInterface $rawResponse
-     * @return PimVariationResponse
+     * @return ItemVariationResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
         $response = self::unserializeJsonResponse($rawResponse);
 
-
         $itemVariations = [];
         foreach ($response['entries'] as $itemVariation) {
-            $itemVariations[] = new Variation($itemVariation);
+            $itemVariations[] = new ItemVariation($itemVariation);
         }
 
-        return new PimVariationResponse(
+        return new ItemVariationResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],

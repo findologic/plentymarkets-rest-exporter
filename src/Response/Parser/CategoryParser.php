@@ -2,32 +2,32 @@
 
 declare(strict_types=1);
 
-namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
+namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPriceResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class SalesPriceParser extends Parser
+class CategoryParser extends Parser
 {
     /**
-     * @return SalesPriceResponse
+     * @return CategoryResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
         $response = self::unserializeJsonResponse($rawResponse);
 
-        $salesPrices = [];
-        foreach ($response['entries'] as $salesPrice) {
-            $salesPrices[] = new SalesPrice($salesPrice);
+        $categories = [];
+        foreach ($response['entries'] as $category) {
+            $categories[] = new Category($category);
         }
 
-        return new SalesPriceResponse(
+        return new CategoryResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],
-            $salesPrices,
+            $categories,
             $response['lastPageNumber'],
             $response['firstOnPage'],
             $response['lastOnPage'],

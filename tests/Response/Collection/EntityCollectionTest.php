@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\WebStoreResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;

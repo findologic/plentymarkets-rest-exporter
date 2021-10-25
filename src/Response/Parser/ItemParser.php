@@ -2,32 +2,32 @@
 
 declare(strict_types=1);
 
-namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
+namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturerResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Manufacturer;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class ManufacturerParser extends Parser
+class ItemParser extends Parser
 {
     /**
-     * @return ManufacturerResponse
+     * @return ItemResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
         $response = self::unserializeJsonResponse($rawResponse);
 
-        $manufacturers = [];
-        foreach ($response['entries'] as $manufacturer) {
-            $manufacturers[] = new Manufacturer($manufacturer);
+        $items = [];
+        foreach ($response['entries'] as $item) {
+            $items[] = new Item($item);
         }
 
-        return new ManufacturerResponse(
+        return new ItemResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],
-            $manufacturers,
+            $items,
             $response['lastPageNumber'],
             $response['firstOnPage'],
             $response['lastOnPage'],

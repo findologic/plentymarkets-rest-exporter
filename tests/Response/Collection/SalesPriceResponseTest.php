@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Parser\SalesPriceParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\Country;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\Currency;

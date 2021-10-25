@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PluginsFromSetParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Parser\PluginsFromSetParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PluginFromSetResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Plugin\Container;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Plugin\DataProvider;

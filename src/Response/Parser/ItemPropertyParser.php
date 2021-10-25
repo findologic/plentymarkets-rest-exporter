@@ -2,32 +2,32 @@
 
 declare(strict_types=1);
 
-namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
+namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemVariationResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class ItemVariationParser extends Parser
+class ItemPropertyParser extends Parser
 {
     /**
-     * @return ItemVariationResponse
+     * @return ItemPropertyResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
         $response = self::unserializeJsonResponse($rawResponse);
 
-        $itemVariations = [];
-        foreach ($response['entries'] as $itemVariation) {
-            $itemVariations[] = new ItemVariation($itemVariation);
+        $properties = [];
+        foreach ($response['entries'] as $property) {
+            $properties[] = new ItemProperty($property);
         }
 
-        return new ItemVariationResponse(
+        return new ItemPropertyResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],
-            $itemVariations,
+            $properties,
             $response['lastPageNumber'],
             $response['firstOnPage'],
             $response['lastOnPage'],

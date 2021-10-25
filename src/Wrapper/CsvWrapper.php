@@ -26,10 +26,6 @@ class CsvWrapper extends Wrapper
 
     private Exporter $exporter;
 
-    private Config $config;
-
-    private RegistryService $registryService;
-
     private LoggerInterface $internalLogger;
 
     private LoggerInterface $customerLogger;
@@ -52,10 +48,10 @@ class CsvWrapper extends Wrapper
         $this->exportPath = $path;
         $this->fileNamePrefix = $fileNamePrefix;
         $this->exporter = $exporter;
-        $this->config = $config;
-        $this->registryService = $registryService;
         $this->internalLogger = $internalLogger ?? new DummyLogger();
         $this->customerLogger = $customerLogger ?? new DummyLogger();
+
+        parent::__construct($config, $registryService);
     }
 
     /**
@@ -133,9 +129,9 @@ class CsvWrapper extends Wrapper
     ): ?Item {
         $productWrapper = new Product(
             $this->exporter,
-            $this->config,
-            $this->registryService->getWebStore()->getConfiguration(),
-            $this->registryService,
+            $this->getConfig(),
+            $this->getRegistryService()->getWebStore()->getConfiguration(),
+            $this->getRegistryService(),
             $product,
             $productVariations,
             $wrapMode
@@ -184,7 +180,7 @@ class CsvWrapper extends Wrapper
         $attributeValues = $variation->getAttributeValues();
 
         foreach ($attributeValues as $attributeValue) {
-            $attribute = $this->registryService->getAttribute($attributeValue->getId());
+            $attribute = $this->getRegistryService()->getAttribute($attributeValue->getId());
 
             if ($attribute && $attribute->isGroupable()) {
                 return true;
@@ -196,7 +192,7 @@ class CsvWrapper extends Wrapper
 
     private function shouldExportGroupableAttributeVariantsSeparately(): bool
     {
-        $config = $this->registryService->getPluginConfigurations('Ceres');
+        $config = $this->getRegistryService()->getPluginConfigurations('Ceres');
 
         if (!isset($config['item.variation_show_type'])) {
             return true;
@@ -214,7 +210,7 @@ class CsvWrapper extends Wrapper
             ]
         ]);
 
-        if ($mainVariation && $mainVariation->hasExportExclusionTag($this->config->getLanguage())) {
+        if ($mainVariation && $mainVariation->hasExportExclusionTag($this->getConfig()->getLanguage())) {
             return false;
         }
 

@@ -2,32 +2,32 @@
 
 declare(strict_types=1);
 
-namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
+namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Parser;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyGroupResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemPropertyGroup;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturerResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Manufacturer;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class ItemPropertyGroupParser extends Parser
+class ManufacturerParser extends Parser
 {
     /**
-     * @return ItemPropertyGroupResponse
+     * @return ManufacturerResponse
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {
         $response = self::unserializeJsonResponse($rawResponse);
 
-        $propertyGroups = [];
-        foreach ($response['entries'] as $propertyGroup) {
-            $propertyGroups[] = new ItemPropertyGroup($propertyGroup);
+        $manufacturers = [];
+        foreach ($response['entries'] as $manufacturer) {
+            $manufacturers[] = new Manufacturer($manufacturer);
         }
 
-        return new ItemPropertyGroupResponse(
+        return new ManufacturerResponse(
             $response['page'],
             $response['totalsCount'],
             $response['isLastPage'],
-            $propertyGroups,
+            $manufacturers,
             $response['lastPageNumber'],
             $response['firstOnPage'],
             $response['lastOnPage'],
