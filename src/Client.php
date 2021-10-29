@@ -245,10 +245,12 @@ class Client
 
     private function buildRequestUri(string $endpoint): Uri
     {
+        $domain = explode('/', $this->config->getDomain(), 2)[0];
+
         return new Uri(sprintf(
             '%s://%s/%s/%s',
             $this->config->getProtocol(),
-            $this->config->getDomain(),
+            $domain,
             self::REST_PATH,
             $endpoint
         ));

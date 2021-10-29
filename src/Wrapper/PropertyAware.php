@@ -41,13 +41,14 @@ trait PropertyAware
                 continue;
             }
 
-            $propertyName = null;
             /** @var Name|null $name */
             $name = Translator::translate($propertyDetails->getNames(), $this->config->getLanguage());
-            if ($name) {
-                $propertyName = $name->getName();
+
+            if (!$name || empty($name->getName())) {
+                continue;
             }
 
+            $propertyName = $name->getName();
             $value = $this->getPropertyValue($property);
             if (!$value && $property->getPropertyData()->getCast() === CastType::EMPTY) {
                 $value = $propertyName;
