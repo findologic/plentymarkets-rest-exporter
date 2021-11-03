@@ -153,7 +153,7 @@ class VariationTest extends TestCase
         $this->assertCount(1, $attributes);
     }
 
-    public function testIfVariationHaveNotTranslatedPropertyItsSkipped(): void
+    public function testVariationWithoutTranslatedPropertyIsSkipped(): void
     {
         $variationEntity = $this->getVariationEntity(
             'Pim/Variations/variation_with_not_translated_property_response.json'

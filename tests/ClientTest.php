@@ -294,12 +294,12 @@ class ClientTest extends TestCase
         array $configs,
         string $expectedResult,
         string $expectedPath
-    ) {
-        $explodedDomain = $this->explodeDomain();
+    ): void {
+        $domain = $this->getDomain();
         $this->config = $this->getDefaultConfig($configs);
         $client = $this->getDefaultClient();
-        $expectedLoginRequest = new GuzzleRequest('POST', sprintf('https://%s/rest/login', $explodedDomain));
-        $expectedWebStoreRequest = $this->getDefaultWebStoreRequest($explodedDomain);
+        $expectedLoginRequest = new GuzzleRequest('POST', sprintf('https://%s/rest/login', $domain));
+        $expectedWebStoreRequest = $this->getDefaultWebStoreRequest($domain);
 
         $this->guzzleClientMock->expects($this->exactly(2))
             ->method('send')
@@ -346,14 +346,14 @@ class ClientTest extends TestCase
 
     private function getWebShopRequest(): Request
     {
-        $uri = sprintf('https://%s/rest/webstores', $this->explodeDomain());
+        $uri = sprintf('https://%s/rest/webstores', $this->getDomain());
 
         return (new WebStoreRequest())->withUri(new Uri($uri));
     }
 
-    private function explodeDomain(): string
+    private function getDomain(): string
     {
-        return explode("/", $this->config->getDomain())[0];
+        return explode('/', $this->config->getDomain())[0];
     }
 
     public function pathIsRemovedFromUriTestProvider(): array

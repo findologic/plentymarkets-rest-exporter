@@ -101,7 +101,7 @@ class CsvWrapper extends Wrapper
 
         $this->exporter->serializeItemsToFile($this->exportPath, $items, $start, count($items), $total);
 
-        if (!empty($this->skippedProducts)) {
+        if ($this->skippedProducts !== []) {
             $this->logSkippedProducts();
         }
 

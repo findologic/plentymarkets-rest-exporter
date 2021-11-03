@@ -636,7 +636,7 @@ class CsvWrapperTest extends TestCase
         $this->csvWrapper->wrap(0, 2, $items2, $variations);
     }
 
-    public function testIfLoggingIsSkippedIfSkipableItemsDoesNotExist()
+    public function testLoggingIsSkippedIfSkipableItemsDoNotExist(): void
     {
         $itemFirstPageResponse = $this->getMockResponse(
             'ItemResponse/response_with_three_items_for_exclusion_tag_test_page1.json'
@@ -649,7 +649,7 @@ class CsvWrapperTest extends TestCase
         );
         $variations = PimVariationsParser::parse($variationResponse);
 
-        $this->loggerMock->expects($this->exactly(0))->method('notice');
+        $this->loggerMock->expects($this->never())->method('notice');
 
         $this->csvWrapper->wrap(0, 1, $items, $variations);
     }

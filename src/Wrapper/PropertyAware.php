@@ -44,7 +44,7 @@ trait PropertyAware
             /** @var Name|null $name */
             $name = Translator::translate($propertyDetails->getNames(), $this->config->getLanguage());
 
-            if (!$name || empty($name->getName())) {
+            if (!$name || Utils::isEmpty($name->getName())) {
                 continue;
             }
 
