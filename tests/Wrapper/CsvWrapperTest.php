@@ -497,8 +497,8 @@ class CsvWrapperTest extends TestCase
             ->with(
                 self::TEST_EXPORT_PATH,
                 $this->callback(function (array $items) use (&$firstItemData) {
-                    $expectedSeparatedProductId = "106_1004";
-                    $expectedGroupedProductId = "106";
+                    $expectedSeparatedProductId = '106_1004';
+                    $expectedGroupedProductId = '106';
 
                     $this->assertCount(1, $items);
 
@@ -586,8 +586,8 @@ class CsvWrapperTest extends TestCase
             ->with(
                 self::TEST_EXPORT_PATH,
                 $this->callback(function (array $items) use (&$firstItemData) {
-                    $expectedSeparatedProductId = "106_1004";
-                    $expectedGroupedProductId = "106";
+                    $expectedSeparatedProductId = '106_1004';
+                    $expectedGroupedProductId = '106';
 
                     $this->assertCount(1, $items);
 
