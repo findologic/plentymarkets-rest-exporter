@@ -153,6 +153,28 @@ class VariationTest extends TestCase
         $this->assertCount(1, $attributes);
     }
 
+    public function testVariationWithoutTranslatedPropertyIsSkipped(): void
+    {
+        $variationEntity = $this->getVariationEntity(
+            'Pim/Variations/variation_with_not_translated_property_response.json'
+        );
+
+        $propertyEntity = PropertyParser::parse($this->getMockResponse(
+            'PropertyResponse/property_without_translated_name.json'
+        ))->first();
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryServiceMock,
+            $variationEntity
+        );
+
+        $this->registryServiceMock->expects($this->any())->method('getProperty')->willReturn($propertyEntity);
+
+        $wrapper->processData();
+        $this->assertEmpty($wrapper->getAttributes());
+    }
+
     public function testChildCategoriesAreProperlyBuilt(): void
     {
         $categoryResponse = $this->getMockResponse('CategoryResponse/category_with_parent.json');

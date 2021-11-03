@@ -497,8 +497,8 @@ class CsvWrapperTest extends TestCase
             ->with(
                 self::TEST_EXPORT_PATH,
                 $this->callback(function (array $items) use (&$firstItemData) {
-                    $expectedSeparatedProductId = "106_1004";
-                    $expectedGroupedProductId = "106";
+                    $expectedSeparatedProductId = '106_1004';
+                    $expectedGroupedProductId = '106';
 
                     $this->assertCount(1, $items);
 
@@ -586,8 +586,8 @@ class CsvWrapperTest extends TestCase
             ->with(
                 self::TEST_EXPORT_PATH,
                 $this->callback(function (array $items) use (&$firstItemData) {
-                    $expectedSeparatedProductId = "106_1004";
-                    $expectedGroupedProductId = "106";
+                    $expectedSeparatedProductId = '106_1004';
+                    $expectedGroupedProductId = '106';
 
                     $this->assertCount(1, $items);
 
@@ -634,6 +634,24 @@ class CsvWrapperTest extends TestCase
 
         $this->csvWrapper->wrap(0, 1, $items1, $variations);
         $this->csvWrapper->wrap(0, 2, $items2, $variations);
+    }
+
+    public function testLoggingIsSkippedIfSkipableItemsDoNotExist(): void
+    {
+        $itemFirstPageResponse = $this->getMockResponse(
+            'ItemResponse/response_with_three_items_for_exclusion_tag_test_page1.json'
+        );
+
+        $items = ItemParser::parse($itemFirstPageResponse);
+
+        $variationResponse = $this->getMockResponse(
+            'Pim/Variations/response_for_six_items_where_main_variation_have_no_exclusion_tag.json'
+        );
+        $variations = PimVariationsParser::parse($variationResponse);
+
+        $this->loggerMock->expects($this->never())->method('notice');
+
+        $this->csvWrapper->wrap(0, 1, $items, $variations);
     }
 
     public function testFailureLogGroupingByReason()

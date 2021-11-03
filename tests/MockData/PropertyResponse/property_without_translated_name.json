@@ -1,0 +1,86 @@
+{
+  "page": 1,
+  "totalsCount": 1,
+  "isLastPage": true,
+  "entries": [
+    {
+      "id": 5,
+      "cast": "text",
+      "type": "item",
+      "position": 50,
+      "createdAt": "2019-02-22T14:03:11+00:00",
+      "updatedAt": "2019-02-22T14:03:11+00:00",
+      "groups": [],
+      "names": [
+        {
+          "id": 6,
+          "propertyId": 5,
+          "lang": "en",
+          "name": "",
+          "description": "",
+          "createdAt": "2019-02-22T14:03:12+00:00",
+          "updatedAt": "2019-02-22T14:03:12+00:00"
+        },
+        {
+          "id": 7,
+          "propertyId": 5,
+          "lang": "de",
+          "name": "Shortie (DE)",
+          "description": "",
+          "createdAt": "2019-02-22T14:33:12+00:00",
+          "updatedAt": "2019-02-22T14:33:12+00:00"
+        }
+      ],
+      "options": [
+        {
+          "id": 841,
+          "propertyId": 5,
+          "type": "referrers",
+          "value": "some value",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        },
+        {
+          "id": 842,
+          "propertyId": 5,
+          "type": "referrers",
+          "value": "some value",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        },
+        {
+          "id": 843,
+          "propertyId": 5,
+          "type": "referrers",
+          "value": "some value",
+          "createdAt": "2019-02-22T14:03:20+00:00",
+          "updatedAt": "2019-02-22T14:03:20+00:00"
+        }
+      ],
+      "amazon": [
+        {
+          "id": 3,
+          "propertyId": 5,
+          "platform": "de",
+          "category": "AutoAccessory",
+          "field": "quantity",
+          "createdAt": "2019-02-22T14:03:30+00:00",
+          "updatedAt": "2019-02-22T14:03:30+00:00"
+        },
+        {
+          "id": 4,
+          "propertyId": 5,
+          "platform": "de",
+          "category": "FoodAndBeverages",
+          "field": "item_name",
+          "createdAt": "2019-02-22T14:32:53+00:00",
+          "updatedAt": "2019-02-22T14:32:53+00:00"
+        }
+      ]
+    }
+  ],
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100
+}

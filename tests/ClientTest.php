@@ -286,4 +286,100 @@ class ClientTest extends TestCase
 
         $this->assertSame('access token', $client->getAccessToken());
     }
+
+    /**
+     * @dataProvider pathIsRemovedFromUriTestProvider
+     */
+    public function testIfPathIsRemovedFromUri(
+        array $configs,
+        string $expectedResult,
+        string $expectedPath
+    ): void {
+        $domain = $this->getDomain();
+        $this->config = $this->getDefaultConfig($configs);
+        $client = $this->getDefaultClient();
+        $expectedLoginRequest = new GuzzleRequest('POST', sprintf('https://%s/rest/login', $domain));
+        $expectedWebStoreRequest = $this->getDefaultWebStoreRequest($domain);
+
+        $this->guzzleClientMock->expects($this->exactly(2))
+            ->method('send')
+            ->withConsecutive([$expectedLoginRequest], [$expectedWebStoreRequest])
+            ->willReturnOnConsecutiveCalls(
+                $this->getMockResponse('LoginResponse/response.json'),
+                $this->getMockResponse('WebStoreResponse/response.json')
+            );
+
+        $requestMock = $this->getMockBuilder(WebStoreRequest::class)
+            ->onlyMethods(['getParams', 'withUri', 'getUri'])
+            ->getMock();
+
+        $requestMock->expects($this->any())->method('getUri')
+            ->willReturnOnConsecutiveCalls(new Uri('login'), new Uri('webstores'));
+
+        $requestMock->expects($this->any())
+            ->method('getParams')->willReturn([]);
+
+        $requestMock->expects($this->any())
+            ->method('withUri')
+            ->with(
+                $this->callback(function (Uri $uri) use ($expectedResult, $expectedPath) {
+                    $this->assertSame($expectedResult, $uri->getHost());
+                    $this->assertSame($expectedPath, $uri->getPath());
+
+                    return true;
+                })
+            )->willReturn($this->getWebShopRequest(), $expectedLoginRequest);
+
+        $client->send($requestMock);
+    }
+
+    private function getDefaultWebStoreRequest(string $domain): Request
+    {
+        $uri = $overrideUri ?? sprintf('https://%s/rest/webstores', $domain);
+
+        /** @var Request $request */
+        $request = (new WebStoreRequest())->withUri(new Uri($uri))
+            ->withAddedHeader('Authorization', 'Bearer access token');
+
+        return $request;
+    }
+
+    private function getWebShopRequest(): Request
+    {
+        $uri = sprintf('https://%s/rest/webstores', $this->getDomain());
+
+        return (new WebStoreRequest())->withUri(new Uri($uri));
+    }
+
+    private function getDomain(): string
+    {
+        return explode('/', $this->config->getDomain())[0];
+    }
+
+    public function pathIsRemovedFromUriTestProvider(): array
+    {
+        return [
+            'domain with path' => [
+                [
+                    'domain' => 'plenty-testshop.de/'
+                ],
+                'plenty-testshop.de',
+                '/rest/login'
+            ],
+            'domain without path' => [
+                [
+                    'domain' => 'plenty-testshop.de'
+                ],
+                'plenty-testshop.de',
+                '/rest/login'
+            ],
+            'domain with double path' => [
+                [
+                    'domain' => 'plenty-testshop.de/en/test'
+                ],
+                'plenty-testshop.de',
+                '/rest/login'
+            ],
+        ];
+    }
 }

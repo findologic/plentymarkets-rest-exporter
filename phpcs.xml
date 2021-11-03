@@ -32,4 +32,5 @@
 
     <rule ref="Generic.PHP.RequireStrictTypes" />
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
 </ruleset>
