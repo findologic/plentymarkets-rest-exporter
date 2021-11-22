@@ -264,7 +264,13 @@ class Variation
                 continue;
             }
 
-            $this->attributes[] = new Attribute('cat', [$this->buildCategoryPath($category)]);
+            $categoryPath = $this->buildCategoryPath($category);
+
+            if (Utils::isEmpty($categoryPath)) {
+                continue;
+            }
+
+            $this->attributes[] = new Attribute('cat', [$categoryPath]);
             $this->attributes[] = new Attribute(
                 'cat_url',
                 [parse_url($categoryDetail->getPreviewUrl(), PHP_URL_PATH)]
@@ -279,9 +285,13 @@ class Variation
 
         if ($categoryDetail = $this->getCategoryDetailForCurrentPlentyIdAndLanguage($category)) {
             if ($category->getParentCategoryId() !== null) {
-                $path[] = $this->buildCategoryPath(
-                    $this->registryService->getCategory($category->getParentCategoryId())
-                );
+                $parentCategory = $this->registryService->getCategory($category->getParentCategoryId());
+
+                if (Utils::isEmpty($parentCategory)) {
+                    return '';
+                }
+
+                $path[] = $this->buildCategoryPath($parentCategory);
             }
 
             $path[] = $categoryDetail->getName();
