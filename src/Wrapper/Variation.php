@@ -266,7 +266,7 @@ class Variation
 
             $categoryPath = $this->buildCategoryPath($category);
 
-            if (Utils::isEmpty($categoryPath)) {
+            if ($categoryPath === null) {
                 continue;
             }
 
@@ -279,7 +279,7 @@ class Variation
         }
     }
 
-    private function buildCategoryPath(Category $category): string
+    private function buildCategoryPath(Category $category): ?string
     {
         $path = [];
 
@@ -288,7 +288,7 @@ class Variation
                 $parentCategory = $this->registryService->getCategory($category->getParentCategoryId());
 
                 if (Utils::isEmpty($parentCategory)) {
-                    return '';
+                    return null;
                 }
 
                 $path[] = $this->buildCategoryPath($parentCategory);
