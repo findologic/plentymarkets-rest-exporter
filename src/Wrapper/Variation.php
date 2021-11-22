@@ -287,7 +287,7 @@ class Variation
             if ($category->getParentCategoryId() !== null) {
                 $parentCategory = $this->registryService->getCategory($category->getParentCategoryId());
 
-                if (Utils::isEmpty($parentCategory)) {
+                if ($parentCategory === null) {
                     return null;
                 }
 
