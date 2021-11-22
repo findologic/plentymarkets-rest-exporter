@@ -205,7 +205,7 @@ class VariationTest extends TestCase
         $this->assertSame('/living-room/armchairs-stools/', $wrapper->getAttributes()[1]->getValues()[0]);
     }
 
-    public function testCategoryIsSkippedIfParentCategoryIsNotVisible(): void
+    public function testCategoryIsSkippedIfParentCategoryIsNotVisibleForExportingClient(): void
     {
         $categoryResponse = $this->getMockResponse('CategoryResponse/category_with_parent.json');
         $categories = CategoryParser::parse($categoryResponse);
