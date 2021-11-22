@@ -264,7 +264,13 @@ class Variation
                 continue;
             }
 
-            $this->attributes[] = new Attribute('cat', [$this->buildCategoryPath($category)]);
+            $categoryPath = $this->buildCategoryPath($category);
+
+            if ($categoryPath === null) {
+                continue;
+            }
+
+            $this->attributes[] = new Attribute('cat', [$categoryPath]);
             $this->attributes[] = new Attribute(
                 'cat_url',
                 [parse_url($categoryDetail->getPreviewUrl(), PHP_URL_PATH)]
@@ -273,15 +279,19 @@ class Variation
         }
     }
 
-    private function buildCategoryPath(Category $category): string
+    private function buildCategoryPath(Category $category): ?string
     {
         $path = [];
 
         if ($categoryDetail = $this->getCategoryDetailForCurrentPlentyIdAndLanguage($category)) {
             if ($category->getParentCategoryId() !== null) {
-                $path[] = $this->buildCategoryPath(
-                    $this->registryService->getCategory($category->getParentCategoryId())
-                );
+                $parentCategory = $this->registryService->getCategory($category->getParentCategoryId());
+
+                if ($parentCategory === null) {
+                    return null;
+                }
+
+                $path[] = $this->buildCategoryPath($parentCategory);
             }
 
             $path[] = $categoryDetail->getName();

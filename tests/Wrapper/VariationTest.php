@@ -205,6 +205,32 @@ class VariationTest extends TestCase
         $this->assertSame('/living-room/armchairs-stools/', $wrapper->getAttributes()[1]->getValues()[0]);
     }
 
+    public function testCategoryIsSkippedIfParentCategoryIsNotVisibleForExportingClient(): void
+    {
+        $categoryResponse = $this->getMockResponse('CategoryResponse/category_with_parent.json');
+        $categories = CategoryParser::parse($categoryResponse);
+
+        $this->registryServiceMock->expects($this->exactly(3))->method('getCategory')
+            ->withConsecutive([17], [16], [18])
+            ->willReturnOnConsecutiveCalls(
+                $categories->findOne(['id' => 17]),
+                null,
+                $categories->findOne(['id' => 18]),
+            );
+
+        $variationEntity = $this->getVariationEntity('Pim/Variations/response_for_category_tree_test.json');
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryServiceMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+
+        $this->assertCount(0, $wrapper->getAttributes());
+    }
+
     public function testTagsAreProperlyProcessed(): void
     {
         $itemVariationResponse = $this->getMockResponse('Pim/Variations/variation_with_different_tag_clients.json');
