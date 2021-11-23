@@ -175,7 +175,7 @@ class ItemVariation extends Entity
     /** @var float */
     private $operatingCosts;
 
-    /** @var int */
+    /** @var int|null */
     private $vatId;
 
     /** @var string|null */
@@ -314,7 +314,7 @@ class ItemVariation extends Entity
         $this->storageCosts = (float)$data['storageCosts'];
         $this->customs = (float)$data['customs'];
         $this->operatingCosts = (float)$data['operatingCosts'];
-        $this->vatId = (int)$data['vatId'];
+        $this->vatId = $data['vatId'];
         $this->bundleType = $this->getStringProperty('bundleType', $data);
         $this->automaticClientVisibility = (int)$data['automaticClientVisibility'];
         $this->isHiddenInCategoryList = (bool)$data['isHiddenInCategoryList'];
@@ -790,7 +790,7 @@ class ItemVariation extends Entity
         return $this->operatingCosts;
     }
 
-    public function getVatId(): int
+    public function getVatId(): ?int
     {
         return $this->vatId;
     }

@@ -45,7 +45,7 @@ class Variation
     /** @var int|null */
     protected $position;
 
-    /** @var int */
+    /** @var int|null */
     protected $vatId;
 
     /** @var string */
@@ -137,7 +137,7 @@ class Variation
         return $this->position;
     }
 
-    public function getVatId(): int
+    public function getVatId(): ?int
     {
         return $this->vatId;
     }

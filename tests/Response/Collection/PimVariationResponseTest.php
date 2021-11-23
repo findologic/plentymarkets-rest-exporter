@@ -557,4 +557,22 @@ class PimVariationResponseTest extends TestCase
         $expectedRelationValue = $rawProperty['property']['selections'][0]['relation']['relationValues'][0];
         $this->assertEquals($expectedRelationValue, $relationValue->getData());
     }
+
+    public function testPimVariationCanBeFetchedWithoutVatId(): void
+    {
+        $response = $this->getMockResponse('Pim/Variations/response_without_vat_id.json');
+        $variation = PimVariationsParser::parse($response)->first();
+        $vatId = $variation->getBase()->getVatId();
+        $data = $variation->getData();
+
+        $this->assertNull($vatId);
+        $this->assertContainsOnlyInstancesOf(Category::class, $data['categories']);
+        $this->assertContainsOnlyInstancesOf(Barcode::class, $data['barcodes']);
+        $this->assertContainsOnlyInstancesOf(Attribute::class, $data['attributeValues']);
+        $this->assertContainsOnlyInstancesOf(Client::class, $data['clients']);
+        $this->assertContainsOnlyInstancesOf(SalesPrice::class, $data['salesPrices']);
+        $this->assertContainsOnlyInstancesOf(Property::class, $data['properties']);
+        $this->assertContainsOnlyInstancesOf(Tag::class, $data['tags']);
+        $this->assertContainsOnlyInstancesOf(Image::class, $data['images']);
+    }
 }

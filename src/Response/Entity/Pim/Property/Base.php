@@ -138,7 +138,7 @@ class Base extends Entity
     /** @var int */
     private $operatingCosts;
 
-    /** @var int */
+    /** @var int|null */
     private $vatId;
 
     /** @var string|null */
@@ -588,7 +588,7 @@ class Base extends Entity
         return $this->operatingCosts;
     }
 
-    public function getVatId(): int
+    public function getVatId(): ?int
     {
         return $this->vatId;
     }
