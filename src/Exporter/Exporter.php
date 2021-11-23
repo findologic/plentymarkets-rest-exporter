@@ -193,7 +193,12 @@ abstract class Exporter
 
             $this->customerLogger->error('An unexpected error occurred. Export will stop.');
             $this->internalLogger->error(
-                sprintf('An unexpected error occurred. Export will stop. Error message: %s', $e->getMessage()),
+                sprintf(
+                    'An unexpected error occurred. Export will stop. %s: %s. Stack trace: %s',
+                    get_class($e),
+                    $e->getMessage(),
+                    $e->getTraceAsString()
+                ),
                 ['exception' => $e]
             );
 

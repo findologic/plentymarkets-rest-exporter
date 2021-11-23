@@ -179,6 +179,12 @@ class ExporterTest extends TestCase
     {
         $expectedExceptionMessage = 'Something gone real bad...';
         $expectedException = new Exception($expectedExceptionMessage);
+        $expectedExceptionContent = sprintf(
+            'An unexpected error occurred. Export will stop. %s: %s. Stack trace: %s',
+            get_class($expectedException),
+            $expectedException->getMessage(),
+            $expectedException->getTraceAsString()
+        );
 
         $this->logger = $this->getMockBuilder(Logger::class)
             ->disableOriginalConstructor()
@@ -188,7 +194,7 @@ class ExporterTest extends TestCase
             ->withConsecutive(
                 ['An unexpected error occurred. Export will stop.'],
                 [
-                    'An unexpected error occurred. Export will stop. Error message: ' . $expectedExceptionMessage,
+                    $expectedExceptionContent,
                     ['exception' => $expectedException]
                 ]
             );
