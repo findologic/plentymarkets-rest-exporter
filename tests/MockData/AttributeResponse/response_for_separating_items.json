@@ -1,0 +1,107 @@
+{
+  "page": 1,
+  "totalsCount": 4,
+  "isLastPage": true,
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 4,
+  "itemsPerPage": 100,
+  "entries": [
+    {
+      "id": 1,
+      "backendName": "Couch color",
+      "position": 1,
+      "isSurchargePercental": false,
+      "isLinkableToImage": true,
+      "amazonAttribute": "",
+      "fruugoAttribute": "color",
+      "pixmaniaAttribute": 0,
+      "ottoAttribute": "",
+      "googleShoppingAttribute": "",
+      "neckermannAtEpAttribute": 0,
+      "typeOfSelectionInOnlineStore": "dropdown",
+      "laRedouteAttribute": 0,
+      "isGroupable": true,
+      "updatedAt": "2021-11-24T13:40:11+00:00",
+      "attributeNames": [
+        {
+          "attributeId": "1",
+          "lang": "en",
+          "name": "Color"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "backendName": "Some test attribute",
+      "position": 0,
+      "isSurchargePercental": false,
+      "isLinkableToImage": true,
+      "amazonAttribute": "",
+      "fruugoAttribute": "",
+      "pixmaniaAttribute": 0,
+      "ottoAttribute": "",
+      "googleShoppingAttribute": "",
+      "neckermannAtEpAttribute": 0,
+      "typeOfSelectionInOnlineStore": "dropdown",
+      "laRedouteAttribute": 0,
+      "isGroupable": true,
+      "updatedAt": "2021-06-03T13:42:45+01:00",
+      "attributeNames": [
+        {
+          "attributeId": "2",
+          "lang": "en",
+          "name": "Test"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "backendName": "Size",
+      "position": 0,
+      "isSurchargePercental": false,
+      "isLinkableToImage": false,
+      "amazonAttribute": "",
+      "fruugoAttribute": "",
+      "pixmaniaAttribute": 0,
+      "ottoAttribute": "",
+      "googleShoppingAttribute": "",
+      "neckermannAtEpAttribute": 0,
+      "typeOfSelectionInOnlineStore": "dropdown",
+      "laRedouteAttribute": 0,
+      "isGroupable": false,
+      "updatedAt": "2021-11-24T13:40:27+00:00",
+      "attributeNames": [
+        {
+          "attributeId": "3",
+          "lang": "en",
+          "name": "Size"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "backendName": "Unisex",
+      "position": 0,
+      "isSurchargePercental": false,
+      "isLinkableToImage": false,
+      "amazonAttribute": "",
+      "fruugoAttribute": "",
+      "pixmaniaAttribute": 0,
+      "ottoAttribute": "",
+      "googleShoppingAttribute": "",
+      "neckermannAtEpAttribute": 0,
+      "typeOfSelectionInOnlineStore": "dropdown",
+      "laRedouteAttribute": 0,
+      "isGroupable": true,
+      "updatedAt": "2021-11-24T13:39:26+00:00",
+      "attributeNames": [
+        {
+          "attributeId": "4",
+          "lang": "en",
+          "name": "Unisex"
+        }
+      ]
+    }
+  ]
+}
