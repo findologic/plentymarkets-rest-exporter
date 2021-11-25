@@ -836,7 +836,7 @@ class CsvWrapperTest extends TestCase
         $this->csvWrapper->wrap(0, 1, $items, $variations);
     }
 
-    public function testSeparatedVariationsIsGroupedBasedOnOneGroupableAttribute()
+    public function testSeparatedVariationsIsGroupedBasedOnOneGroupableAttribute(): void
     {
         $this->registryServiceMock->method('getPluginConfigurations')
             ->with('Ceres')
