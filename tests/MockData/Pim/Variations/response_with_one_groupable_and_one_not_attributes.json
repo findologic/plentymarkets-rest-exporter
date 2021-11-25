@@ -1,0 +1,4613 @@
+{
+  "page": 1,
+  "totalsCount": 6,
+  "isLastPage": true,
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 6,
+  "itemsPerPage": 100,
+  "entries": [
+    {
+      "categories": [
+        {
+          "categoryId": 18,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "barcodes": [],
+      "additionalSkus": null,
+      "attributeValues": [
+        {
+          "attributeId": 3,
+          "attributeValueSetId": 12,
+          "valueId": 7,
+          "attributeValue": {
+            "id": 7,
+            "position": 0,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "en",
+                "name": "XL",
+                "valueId": "7"
+              }
+            ],
+            "attributeId": 3,
+            "backendName": "XL",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2021-11-23 14:19:49"
+          }
+        },
+        {
+          "attributeId": 1,
+          "attributeValueSetId": 12,
+          "valueId": 11,
+          "attributeValue": {
+            "id": 11,
+            "position": 0,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "en",
+                "name": "green",
+                "valueId": "11"
+              }
+            ],
+            "attributeId": 1,
+            "backendName": "green",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2021-11-23 14:21:41"
+          }
+        }
+      ],
+      "bundleComponents": null,
+      "clients": [
+        {
+          "plentyId": 37811
+        }
+      ],
+      "defaultCategories": null,
+      "images": [],
+      "marketIdentNumbers": null,
+      "markets": null,
+      "salesPrices": [
+        {
+          "salesPriceId": 1,
+          "price": 2300,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        },
+        {
+          "salesPriceId": 2,
+          "price": 0,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        }
+      ],
+      "skus": null,
+      "supplier": null,
+      "warehouses": null,
+      "properties": [],
+      "tags": [],
+      "comments": null,
+      "id": 1118,
+      "timestamps": null,
+      "unit": {
+        "unitId": 1,
+        "unitCombinationId": 1,
+        "content": 1
+      },
+      "base": {
+        "isMain": false,
+        "mainVariationId": 1031,
+        "itemId": 133,
+        "position": 0,
+        "isActive": true,
+        "number": "133-green-xl",
+        "model": "",
+        "externalId": "",
+        "availability": 1,
+        "estimatedAvailableAt": null,
+        "purchasePrice": 0,
+        "movingAveragePrice": 0,
+        "priceCalculationId": null,
+        "priceCalculationUUID": null,
+        "picking": null,
+        "stockLimitation": 1,
+        "isVisibleIfNetStockIsPositive": true,
+        "isInvisibleIfNetStockIsNotPositive": true,
+        "isAvailableIfNetStockIsPositive": false,
+        "isUnavailableIfNetStockIsNotPositive": false,
+        "isVisibleInListIfNetStockIsPositive": false,
+        "isInvisibleInListIfNetStockIsNotPositive": false,
+        "mainWarehouseId": 1,
+        "maximumOrderQuantity": 0,
+        "minimumOrderQuantity": 0,
+        "intervalOrderQuantity": 0,
+        "availableUntil": null,
+        "releasedAt": null,
+        "name": "",
+        "weightG": 0,
+        "weightNetG": 0,
+        "widthMM": 0,
+        "lengthMM": 0,
+        "heightMM": 0,
+        "extraShippingCharge1": 0,
+        "extraShippingCharge2": 0,
+        "unitsContained": 1,
+        "palletTypeId": null,
+        "packingUnits": 0,
+        "packingUnitTypeId": 0,
+        "transportationCosts": 0,
+        "storageCosts": 0,
+        "customs": 0,
+        "operatingCosts": 0,
+        "vatId": 0,
+        "bundleType": null,
+        "automaticClientVisibility": 1,
+        "automaticListVisibility": 3,
+        "isHiddenInCategoryList": false,
+        "defaultShippingCosts": null,
+        "mayShowUnitPrice": true,
+        "parentVariationId": null,
+        "parentVariationQuantity": null,
+        "singleItemCount": null,
+        "hasCalculatedBundleWeight": null,
+        "hasCalculatedBundleNetWeight": null,
+        "hasCalculatedBundlePurchasePrice": null,
+        "hasCalculatedBundleMovingAveragePrice": null,
+        "customsTariffNumber": "",
+        "categoriesInherited": true,
+        "referrerInherited": true,
+        "clientsInherited": true,
+        "salesPricesInherited": true,
+        "supplierInherited": true,
+        "warehousesInherited": true,
+        "propertiesInherited": true,
+        "tagsInherited": true,
+        "characteristics": [
+          {
+            "valueTexts": [],
+            "propertySelectionId": null,
+            "valueFile": null,
+            "surcharge": 0,
+            "valueFloat": null,
+            "id": 17,
+            "updatedAt": "2019-07-11 09:00:19",
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 3,
+            "valueInt": null,
+            "propertySelection": [],
+            "variationId": 1031,
+            "itemId": 133
+          },
+          {
+            "valueTexts": [],
+            "surcharge": 0,
+            "valueFile": null,
+            "valueFloat": null,
+            "propertySelection": [],
+            "updatedAt": "2019-07-11 09:00:26",
+            "propertySelectionId": null,
+            "valueInt": 158,
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 2,
+            "variationId": 1031,
+            "itemId": 133,
+            "id": 18
+          },
+          {
+            "valueTexts": [],
+            "propertySelectionId": null,
+            "valueFile": null,
+            "surcharge": 0,
+            "valueFloat": null,
+            "id": 19,
+            "updatedAt": "2019-07-11 09:00:26",
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 1,
+            "valueInt": 22220,
+            "propertySelection": [],
+            "variationId": 1031,
+            "itemId": 133
+          }
+        ],
+        "images": [
+          {
+            "availabilities": [
+              {
+                "value": 135,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "value": 4,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 132,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 123,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 105
+              },
+              {
+                "type": "marketplace",
+                "value": 102,
+                "imageId": 51
+              },
+              {
+                "value": 110,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "value": 139,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 104
+              },
+              {
+                "type": "marketplace",
+                "value": 5,
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": -1,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 121,
+                "imageId": 51
+              },
+              {
+                "value": 138,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 7,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 115,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "value": 108,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 124,
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": 3,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 103
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 134
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 126
+              },
+              {
+                "imageId": 51,
+                "value": 114,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 120
+              },
+              {
+                "type": "listing",
+                "imageId": 51,
+                "value": -1
+              },
+              {
+                "value": 136,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 116
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 137
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 107
+              },
+              {
+                "type": "marketplace",
+                "value": 130,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 122,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 51
+              },
+              {
+                "value": 111,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": 131,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 143
+              },
+              {
+                "value": 118,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "type": "mandant",
+                "value": -1,
+                "imageId": 51
+              },
+              {
+                "value": 127,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 6
+              },
+              {
+                "value": 109,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "value": 117,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 119,
+                "type": "marketplace",
+                "imageId": 51
+              }
+            ],
+            "names": [
+              {
+                "imageId": 51,
+                "lang": "de",
+                "name": "",
+                "alternate": ""
+              }
+            ],
+            "itemId": 133,
+            "attributeValueImages": [],
+            "type": "internal",
+            "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/preview\/133-Zweisitzer-White-Russian-1.jpg",
+            "hasLinkedVariations": "0",
+            "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/full\/133-Zweisitzer-White-Russian-1.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/middle\/133-Zweisitzer-White-Russian-1.jpg",
+            "fileType": "jpg",
+            "height": 0,
+            "storageProviderId": "2",
+            "id": 51,
+            "path": "S3:133:133-Zweisitzer-White-Russian-1.jpg",
+            "md5Checksum": "",
+            "createdAt": "2014-01-15T00:08:15+01:00",
+            "md5ChecksumOriginal": "",
+            "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/secondPreview\/133-Zweisitzer-White-Russian-1.jpg",
+            "updatedAt": "2018-03-08T10:43:15+01:00",
+            "position": 0,
+            "size": 0,
+            "width": 0
+          },
+          {
+            "availabilities": [
+              {
+                "imageId": 52,
+                "value": 116,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 117,
+                "imageId": 52
+              },
+              {
+                "value": 124,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "value": 120,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 110,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "type": "listing",
+                "value": -1,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "value": 107,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "value": 132,
+                "imageId": 52
+              },
+              {
+                "value": 131,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 126,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 139
+              },
+              {
+                "value": 138,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 135
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 4
+              },
+              {
+                "value": 5,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 130,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "type": "marketplace",
+                "value": 104,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 114
+              },
+              {
+                "type": "marketplace",
+                "value": 6,
+                "imageId": 52
+              },
+              {
+                "value": 111,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "value": -1,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 102
+              },
+              {
+                "imageId": 52,
+                "value": 3,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 119
+              },
+              {
+                "value": 143,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "value": 118,
+                "type": "marketplace"
+              },
+              {
+                "value": 105,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": -1,
+                "imageId": 52,
+                "type": "mandant"
+              },
+              {
+                "imageId": 52,
+                "value": 136,
+                "type": "marketplace"
+              },
+              {
+                "value": 7,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 127
+              },
+              {
+                "value": 122,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 103,
+                "imageId": 52
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 121
+              },
+              {
+                "value": 137,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 115
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 134
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 123
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 108
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 109
+              }
+            ],
+            "width": 0,
+            "names": [
+              {
+                "lang": "de",
+                "imageId": 52,
+                "name": "",
+                "alternate": ""
+              }
+            ],
+            "hasLinkedVariations": "0",
+            "md5Checksum": "",
+            "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/preview\/133-Zweisitzer-White-Russian-2.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/middle\/133-Zweisitzer-White-Russian-2.jpg",
+            "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/full\/133-Zweisitzer-White-Russian-2.jpg",
+            "itemId": 133,
+            "attributeValueImages": [],
+            "height": 0,
+            "md5ChecksumOriginal": "",
+            "createdAt": "2014-01-15T00:08:17+01:00",
+            "id": 52,
+            "size": 0,
+            "type": "internal",
+            "position": 1,
+            "fileType": "jpg",
+            "storageProviderId": "2",
+            "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/secondPreview\/133-Zweisitzer-White-Russian-2.jpg",
+            "path": "S3:133:133-Zweisitzer-White-Russian-2.jpg",
+            "updatedAt": "2018-03-08T10:43:15+01:00"
+          }
+        ],
+        "item": {
+          "id": 133,
+          "position": 0,
+          "add_cms_page": "0",
+          "condition": 0,
+          "free1": null,
+          "free2": null,
+          "free3": null,
+          "free4": null,
+          "free5": null,
+          "free6": null,
+          "free7": "0",
+          "free8": "0",
+          "free9": "0",
+          "free10": "0",
+          "free11": "0",
+          "free12": "0",
+          "free13": "0",
+          "free14": "0",
+          "free15": "0",
+          "free16": "0",
+          "free17": "0",
+          "free18": "0",
+          "free19": "0",
+          "free20": "0",
+          "gimahhot": "0",
+          "storeSpecial": 2,
+          "ownerId": null,
+          "manufacturerId": 1,
+          "producingCountryId": 1,
+          "revenueAccount": 0,
+          "couponRestriction": 0,
+          "conditionApi": 0,
+          "createdAt": "2014-01-15T00:00:00+01:00",
+          "updatedAt": "2021-11-24T14:10:59+01:00",
+          "isSubscribable": false,
+          "amazonFbaPlatform": 0,
+          "isShippableByAmazon": false,
+          "amazonProductType": 0,
+          "amazonFedas": "",
+          "ebayPresetId": null,
+          "ebayCategory": null,
+          "ebayCategory2": null,
+          "ebayStoreCategory": null,
+          "ebayStoreCategory2": null,
+          "rakutenCategoryId": 0,
+          "flagOne": 7,
+          "flagTwo": 7,
+          "ageRestriction": 0,
+          "feedback": 0,
+          "itemType": "default",
+          "stockType": 0,
+          "sitemapPublished": "0",
+          "isSerialNumber": false,
+          "isShippingPackage": false,
+          "maximumOrderQuantity": 0,
+          "variationCount": "7",
+          "customsTariffNumber": "",
+          "mainVariationId": 1031,
+          "inactive": true
+        }
+      }
+    },
+    {
+      "categories": [
+        {
+          "categoryId": 18,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "barcodes": [],
+      "additionalSkus": null,
+      "attributeValues": [
+        {
+          "attributeId": 3,
+          "attributeValueSetId": 13,
+          "valueId": 7,
+          "attributeValue": {
+            "id": 7,
+            "position": 0,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "en",
+                "name": "XL",
+                "valueId": "7"
+              }
+            ],
+            "attributeId": 3,
+            "backendName": "XL",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2021-11-23 14:19:49"
+          }
+        },
+        {
+          "attributeId": 1,
+          "attributeValueSetId": 13,
+          "valueId": 12,
+          "attributeValue": {
+            "id": 12,
+            "position": 0,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "en",
+                "name": "blue",
+                "valueId": "12"
+              }
+            ],
+            "attributeId": 1,
+            "backendName": "blue",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2021-11-23 14:22:18"
+          }
+        }
+      ],
+      "bundleComponents": null,
+      "clients": [
+        {
+          "plentyId": 37811
+        }
+      ],
+      "defaultCategories": null,
+      "images": [],
+      "marketIdentNumbers": null,
+      "markets": null,
+      "salesPrices": [
+        {
+          "salesPriceId": 1,
+          "price": 2300,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        },
+        {
+          "salesPriceId": 2,
+          "price": 0,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        }
+      ],
+      "skus": null,
+      "supplier": null,
+      "warehouses": null,
+      "properties": [],
+      "tags": [],
+      "comments": null,
+      "id": 1119,
+      "timestamps": null,
+      "unit": {
+        "unitId": 1,
+        "unitCombinationId": 1,
+        "content": 1
+      },
+      "base": {
+        "isMain": false,
+        "mainVariationId": 1031,
+        "itemId": 133,
+        "position": 0,
+        "isActive": true,
+        "number": "133-blue-xl",
+        "model": "",
+        "externalId": "",
+        "availability": 1,
+        "estimatedAvailableAt": null,
+        "purchasePrice": 0,
+        "movingAveragePrice": 0,
+        "priceCalculationId": null,
+        "priceCalculationUUID": null,
+        "picking": null,
+        "stockLimitation": 1,
+        "isVisibleIfNetStockIsPositive": true,
+        "isInvisibleIfNetStockIsNotPositive": true,
+        "isAvailableIfNetStockIsPositive": false,
+        "isUnavailableIfNetStockIsNotPositive": false,
+        "isVisibleInListIfNetStockIsPositive": false,
+        "isInvisibleInListIfNetStockIsNotPositive": false,
+        "mainWarehouseId": 1,
+        "maximumOrderQuantity": 0,
+        "minimumOrderQuantity": 0,
+        "intervalOrderQuantity": 0,
+        "availableUntil": null,
+        "releasedAt": null,
+        "name": "",
+        "weightG": 0,
+        "weightNetG": 0,
+        "widthMM": 0,
+        "lengthMM": 0,
+        "heightMM": 0,
+        "extraShippingCharge1": 0,
+        "extraShippingCharge2": 0,
+        "unitsContained": 1,
+        "palletTypeId": null,
+        "packingUnits": 0,
+        "packingUnitTypeId": 0,
+        "transportationCosts": 0,
+        "storageCosts": 0,
+        "customs": 0,
+        "operatingCosts": 0,
+        "vatId": 0,
+        "bundleType": null,
+        "automaticClientVisibility": 1,
+        "automaticListVisibility": 3,
+        "isHiddenInCategoryList": false,
+        "defaultShippingCosts": null,
+        "mayShowUnitPrice": true,
+        "parentVariationId": null,
+        "parentVariationQuantity": null,
+        "singleItemCount": null,
+        "hasCalculatedBundleWeight": null,
+        "hasCalculatedBundleNetWeight": null,
+        "hasCalculatedBundlePurchasePrice": null,
+        "hasCalculatedBundleMovingAveragePrice": null,
+        "customsTariffNumber": "",
+        "categoriesInherited": true,
+        "referrerInherited": true,
+        "clientsInherited": true,
+        "salesPricesInherited": true,
+        "supplierInherited": true,
+        "warehousesInherited": true,
+        "propertiesInherited": true,
+        "tagsInherited": true,
+        "characteristics": [
+          {
+            "valueTexts": [],
+            "propertySelectionId": null,
+            "valueFile": null,
+            "surcharge": 0,
+            "valueFloat": null,
+            "id": 17,
+            "updatedAt": "2019-07-11 09:00:19",
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 3,
+            "valueInt": null,
+            "propertySelection": [],
+            "variationId": 1031,
+            "itemId": 133
+          },
+          {
+            "valueTexts": [],
+            "surcharge": 0,
+            "valueFile": null,
+            "valueFloat": null,
+            "propertySelection": [],
+            "updatedAt": "2019-07-11 09:00:26",
+            "propertySelectionId": null,
+            "valueInt": 158,
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 2,
+            "variationId": 1031,
+            "itemId": 133,
+            "id": 18
+          },
+          {
+            "valueTexts": [],
+            "propertySelectionId": null,
+            "valueFile": null,
+            "surcharge": 0,
+            "valueFloat": null,
+            "id": 19,
+            "updatedAt": "2019-07-11 09:00:26",
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 1,
+            "valueInt": 22220,
+            "propertySelection": [],
+            "variationId": 1031,
+            "itemId": 133
+          }
+        ],
+        "images": [
+          {
+            "availabilities": [
+              {
+                "value": 135,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "value": 4,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 132,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 123,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 105
+              },
+              {
+                "type": "marketplace",
+                "value": 102,
+                "imageId": 51
+              },
+              {
+                "value": 110,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "value": 139,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 104
+              },
+              {
+                "type": "marketplace",
+                "value": 5,
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": -1,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 121,
+                "imageId": 51
+              },
+              {
+                "value": 138,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 7,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 115,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "value": 108,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 124,
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": 3,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 103
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 134
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 126
+              },
+              {
+                "imageId": 51,
+                "value": 114,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 120
+              },
+              {
+                "type": "listing",
+                "imageId": 51,
+                "value": -1
+              },
+              {
+                "value": 136,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 116
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 137
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 107
+              },
+              {
+                "type": "marketplace",
+                "value": 130,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 122,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 51
+              },
+              {
+                "value": 111,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": 131,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 143
+              },
+              {
+                "value": 118,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "type": "mandant",
+                "value": -1,
+                "imageId": 51
+              },
+              {
+                "value": 127,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 6
+              },
+              {
+                "value": 109,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "value": 117,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 119,
+                "type": "marketplace",
+                "imageId": 51
+              }
+            ],
+            "names": [
+              {
+                "imageId": 51,
+                "lang": "de",
+                "name": "",
+                "alternate": ""
+              }
+            ],
+            "itemId": 133,
+            "attributeValueImages": [],
+            "type": "internal",
+            "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/preview\/133-Zweisitzer-White-Russian-1.jpg",
+            "hasLinkedVariations": "0",
+            "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/full\/133-Zweisitzer-White-Russian-1.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/middle\/133-Zweisitzer-White-Russian-1.jpg",
+            "fileType": "jpg",
+            "height": 0,
+            "storageProviderId": "2",
+            "id": 51,
+            "path": "S3:133:133-Zweisitzer-White-Russian-1.jpg",
+            "md5Checksum": "",
+            "createdAt": "2014-01-15T00:08:15+01:00",
+            "md5ChecksumOriginal": "",
+            "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/secondPreview\/133-Zweisitzer-White-Russian-1.jpg",
+            "updatedAt": "2018-03-08T10:43:15+01:00",
+            "position": 0,
+            "size": 0,
+            "width": 0
+          },
+          {
+            "availabilities": [
+              {
+                "imageId": 52,
+                "value": 116,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 117,
+                "imageId": 52
+              },
+              {
+                "value": 124,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "value": 120,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 110,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "type": "listing",
+                "value": -1,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "value": 107,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "value": 132,
+                "imageId": 52
+              },
+              {
+                "value": 131,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 126,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 139
+              },
+              {
+                "value": 138,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 135
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 4
+              },
+              {
+                "value": 5,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 130,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "type": "marketplace",
+                "value": 104,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 114
+              },
+              {
+                "type": "marketplace",
+                "value": 6,
+                "imageId": 52
+              },
+              {
+                "value": 111,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "value": -1,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 102
+              },
+              {
+                "imageId": 52,
+                "value": 3,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 119
+              },
+              {
+                "value": 143,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "value": 118,
+                "type": "marketplace"
+              },
+              {
+                "value": 105,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": -1,
+                "imageId": 52,
+                "type": "mandant"
+              },
+              {
+                "imageId": 52,
+                "value": 136,
+                "type": "marketplace"
+              },
+              {
+                "value": 7,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 127
+              },
+              {
+                "value": 122,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 103,
+                "imageId": 52
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 121
+              },
+              {
+                "value": 137,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 115
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 134
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 123
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 108
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 109
+              }
+            ],
+            "width": 0,
+            "names": [
+              {
+                "lang": "de",
+                "imageId": 52,
+                "name": "",
+                "alternate": ""
+              }
+            ],
+            "hasLinkedVariations": "0",
+            "md5Checksum": "",
+            "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/preview\/133-Zweisitzer-White-Russian-2.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/middle\/133-Zweisitzer-White-Russian-2.jpg",
+            "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/full\/133-Zweisitzer-White-Russian-2.jpg",
+            "itemId": 133,
+            "attributeValueImages": [],
+            "height": 0,
+            "md5ChecksumOriginal": "",
+            "createdAt": "2014-01-15T00:08:17+01:00",
+            "id": 52,
+            "size": 0,
+            "type": "internal",
+            "position": 1,
+            "fileType": "jpg",
+            "storageProviderId": "2",
+            "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/secondPreview\/133-Zweisitzer-White-Russian-2.jpg",
+            "path": "S3:133:133-Zweisitzer-White-Russian-2.jpg",
+            "updatedAt": "2018-03-08T10:43:15+01:00"
+          }
+        ],
+        "item": {
+          "id": 133,
+          "position": 0,
+          "add_cms_page": "0",
+          "condition": 0,
+          "free1": null,
+          "free2": null,
+          "free3": null,
+          "free4": null,
+          "free5": null,
+          "free6": null,
+          "free7": "0",
+          "free8": "0",
+          "free9": "0",
+          "free10": "0",
+          "free11": "0",
+          "free12": "0",
+          "free13": "0",
+          "free14": "0",
+          "free15": "0",
+          "free16": "0",
+          "free17": "0",
+          "free18": "0",
+          "free19": "0",
+          "free20": "0",
+          "gimahhot": "0",
+          "storeSpecial": 2,
+          "ownerId": null,
+          "manufacturerId": 1,
+          "producingCountryId": 1,
+          "revenueAccount": 0,
+          "couponRestriction": 0,
+          "conditionApi": 0,
+          "createdAt": "2014-01-15T00:00:00+01:00",
+          "updatedAt": "2021-11-24T14:10:59+01:00",
+          "isSubscribable": false,
+          "amazonFbaPlatform": 0,
+          "isShippableByAmazon": false,
+          "amazonProductType": 0,
+          "amazonFedas": "",
+          "ebayPresetId": null,
+          "ebayCategory": null,
+          "ebayCategory2": null,
+          "ebayStoreCategory": null,
+          "ebayStoreCategory2": null,
+          "rakutenCategoryId": 0,
+          "flagOne": 7,
+          "flagTwo": 7,
+          "ageRestriction": 0,
+          "feedback": 0,
+          "itemType": "default",
+          "stockType": 0,
+          "sitemapPublished": "0",
+          "isSerialNumber": false,
+          "isShippingPackage": false,
+          "maximumOrderQuantity": 0,
+          "variationCount": "7",
+          "customsTariffNumber": "",
+          "mainVariationId": 1031,
+          "inactive": true
+        }
+      }
+    },
+    {
+      "categories": [
+        {
+          "categoryId": 18,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "barcodes": [],
+      "additionalSkus": null,
+      "attributeValues": [
+        {
+          "attributeId": 3,
+          "attributeValueSetId": 15,
+          "valueId": 8,
+          "attributeValue": {
+            "id": 8,
+            "position": 0,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "en",
+                "name": "L",
+                "valueId": "8"
+              }
+            ],
+            "attributeId": 3,
+            "backendName": "L",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2021-11-23 14:19:57"
+          }
+        },
+        {
+          "attributeId": 1,
+          "attributeValueSetId": 15,
+          "valueId": 11,
+          "attributeValue": {
+            "id": 11,
+            "position": 0,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "en",
+                "name": "green",
+                "valueId": "11"
+              }
+            ],
+            "attributeId": 1,
+            "backendName": "green",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2021-11-23 14:21:41"
+          }
+        }
+      ],
+      "bundleComponents": null,
+      "clients": [
+        {
+          "plentyId": 37811
+        }
+      ],
+      "defaultCategories": null,
+      "images": [],
+      "marketIdentNumbers": null,
+      "markets": null,
+      "salesPrices": [
+        {
+          "salesPriceId": 1,
+          "price": 2300,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        },
+        {
+          "salesPriceId": 2,
+          "price": 0,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        }
+      ],
+      "skus": null,
+      "supplier": null,
+      "warehouses": null,
+      "properties": [],
+      "tags": [],
+      "comments": null,
+      "id": 1121,
+      "timestamps": null,
+      "unit": {
+        "unitId": 1,
+        "unitCombinationId": 1,
+        "content": 1
+      },
+      "base": {
+        "isMain": false,
+        "mainVariationId": 1031,
+        "itemId": 133,
+        "position": 0,
+        "isActive": true,
+        "number": "133-green-l",
+        "model": "",
+        "externalId": "",
+        "availability": 1,
+        "estimatedAvailableAt": null,
+        "purchasePrice": 0,
+        "movingAveragePrice": 0,
+        "priceCalculationId": null,
+        "priceCalculationUUID": null,
+        "picking": null,
+        "stockLimitation": 1,
+        "isVisibleIfNetStockIsPositive": true,
+        "isInvisibleIfNetStockIsNotPositive": true,
+        "isAvailableIfNetStockIsPositive": false,
+        "isUnavailableIfNetStockIsNotPositive": false,
+        "isVisibleInListIfNetStockIsPositive": false,
+        "isInvisibleInListIfNetStockIsNotPositive": false,
+        "mainWarehouseId": 1,
+        "maximumOrderQuantity": 0,
+        "minimumOrderQuantity": 0,
+        "intervalOrderQuantity": 0,
+        "availableUntil": null,
+        "releasedAt": null,
+        "name": "",
+        "weightG": 0,
+        "weightNetG": 0,
+        "widthMM": 0,
+        "lengthMM": 0,
+        "heightMM": 0,
+        "extraShippingCharge1": 0,
+        "extraShippingCharge2": 0,
+        "unitsContained": 1,
+        "palletTypeId": null,
+        "packingUnits": 0,
+        "packingUnitTypeId": 0,
+        "transportationCosts": 0,
+        "storageCosts": 0,
+        "customs": 0,
+        "operatingCosts": 0,
+        "vatId": 0,
+        "bundleType": null,
+        "automaticClientVisibility": 1,
+        "automaticListVisibility": 3,
+        "isHiddenInCategoryList": false,
+        "defaultShippingCosts": null,
+        "mayShowUnitPrice": true,
+        "parentVariationId": null,
+        "parentVariationQuantity": null,
+        "singleItemCount": null,
+        "hasCalculatedBundleWeight": null,
+        "hasCalculatedBundleNetWeight": null,
+        "hasCalculatedBundlePurchasePrice": null,
+        "hasCalculatedBundleMovingAveragePrice": null,
+        "customsTariffNumber": "",
+        "categoriesInherited": true,
+        "referrerInherited": true,
+        "clientsInherited": true,
+        "salesPricesInherited": true,
+        "supplierInherited": true,
+        "warehousesInherited": true,
+        "propertiesInherited": true,
+        "tagsInherited": true,
+        "characteristics": [
+          {
+            "valueTexts": [],
+            "propertySelectionId": null,
+            "valueFile": null,
+            "surcharge": 0,
+            "valueFloat": null,
+            "id": 17,
+            "updatedAt": "2019-07-11 09:00:19",
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 3,
+            "valueInt": null,
+            "propertySelection": [],
+            "variationId": 1031,
+            "itemId": 133
+          },
+          {
+            "valueTexts": [],
+            "surcharge": 0,
+            "valueFile": null,
+            "valueFloat": null,
+            "propertySelection": [],
+            "updatedAt": "2019-07-11 09:00:26",
+            "propertySelectionId": null,
+            "valueInt": 158,
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 2,
+            "variationId": 1031,
+            "itemId": 133,
+            "id": 18
+          },
+          {
+            "valueTexts": [],
+            "propertySelectionId": null,
+            "valueFile": null,
+            "surcharge": 0,
+            "valueFloat": null,
+            "id": 19,
+            "updatedAt": "2019-07-11 09:00:26",
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 1,
+            "valueInt": 22220,
+            "propertySelection": [],
+            "variationId": 1031,
+            "itemId": 133
+          }
+        ],
+        "images": [
+          {
+            "availabilities": [
+              {
+                "value": 135,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "value": 4,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 132,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 123,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 105
+              },
+              {
+                "type": "marketplace",
+                "value": 102,
+                "imageId": 51
+              },
+              {
+                "value": 110,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "value": 139,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 104
+              },
+              {
+                "type": "marketplace",
+                "value": 5,
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": -1,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 121,
+                "imageId": 51
+              },
+              {
+                "value": 138,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 7,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 115,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "value": 108,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 124,
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": 3,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 103
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 134
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 126
+              },
+              {
+                "imageId": 51,
+                "value": 114,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 120
+              },
+              {
+                "type": "listing",
+                "imageId": 51,
+                "value": -1
+              },
+              {
+                "value": 136,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 116
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 137
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 107
+              },
+              {
+                "type": "marketplace",
+                "value": 130,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 122,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 51
+              },
+              {
+                "value": 111,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": 131,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 143
+              },
+              {
+                "value": 118,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "type": "mandant",
+                "value": -1,
+                "imageId": 51
+              },
+              {
+                "value": 127,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 6
+              },
+              {
+                "value": 109,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "value": 117,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 119,
+                "type": "marketplace",
+                "imageId": 51
+              }
+            ],
+            "names": [
+              {
+                "imageId": 51,
+                "lang": "de",
+                "name": "",
+                "alternate": ""
+              }
+            ],
+            "itemId": 133,
+            "attributeValueImages": [],
+            "type": "internal",
+            "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/preview\/133-Zweisitzer-White-Russian-1.jpg",
+            "hasLinkedVariations": "0",
+            "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/full\/133-Zweisitzer-White-Russian-1.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/middle\/133-Zweisitzer-White-Russian-1.jpg",
+            "fileType": "jpg",
+            "height": 0,
+            "storageProviderId": "2",
+            "id": 51,
+            "path": "S3:133:133-Zweisitzer-White-Russian-1.jpg",
+            "md5Checksum": "",
+            "createdAt": "2014-01-15T00:08:15+01:00",
+            "md5ChecksumOriginal": "",
+            "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/secondPreview\/133-Zweisitzer-White-Russian-1.jpg",
+            "updatedAt": "2018-03-08T10:43:15+01:00",
+            "position": 0,
+            "size": 0,
+            "width": 0
+          },
+          {
+            "availabilities": [
+              {
+                "imageId": 52,
+                "value": 116,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 117,
+                "imageId": 52
+              },
+              {
+                "value": 124,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "value": 120,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 110,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "type": "listing",
+                "value": -1,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "value": 107,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "value": 132,
+                "imageId": 52
+              },
+              {
+                "value": 131,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 126,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 139
+              },
+              {
+                "value": 138,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 135
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 4
+              },
+              {
+                "value": 5,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 130,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "type": "marketplace",
+                "value": 104,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 114
+              },
+              {
+                "type": "marketplace",
+                "value": 6,
+                "imageId": 52
+              },
+              {
+                "value": 111,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "value": -1,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 102
+              },
+              {
+                "imageId": 52,
+                "value": 3,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 119
+              },
+              {
+                "value": 143,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "value": 118,
+                "type": "marketplace"
+              },
+              {
+                "value": 105,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": -1,
+                "imageId": 52,
+                "type": "mandant"
+              },
+              {
+                "imageId": 52,
+                "value": 136,
+                "type": "marketplace"
+              },
+              {
+                "value": 7,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 127
+              },
+              {
+                "value": 122,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 103,
+                "imageId": 52
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 121
+              },
+              {
+                "value": 137,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 115
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 134
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 123
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 108
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 109
+              }
+            ],
+            "width": 0,
+            "names": [
+              {
+                "lang": "de",
+                "imageId": 52,
+                "name": "",
+                "alternate": ""
+              }
+            ],
+            "hasLinkedVariations": "0",
+            "md5Checksum": "",
+            "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/preview\/133-Zweisitzer-White-Russian-2.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/middle\/133-Zweisitzer-White-Russian-2.jpg",
+            "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/full\/133-Zweisitzer-White-Russian-2.jpg",
+            "itemId": 133,
+            "attributeValueImages": [],
+            "height": 0,
+            "md5ChecksumOriginal": "",
+            "createdAt": "2014-01-15T00:08:17+01:00",
+            "id": 52,
+            "size": 0,
+            "type": "internal",
+            "position": 1,
+            "fileType": "jpg",
+            "storageProviderId": "2",
+            "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/secondPreview\/133-Zweisitzer-White-Russian-2.jpg",
+            "path": "S3:133:133-Zweisitzer-White-Russian-2.jpg",
+            "updatedAt": "2018-03-08T10:43:15+01:00"
+          }
+        ],
+        "item": {
+          "id": 133,
+          "position": 0,
+          "add_cms_page": "0",
+          "condition": 0,
+          "free1": null,
+          "free2": null,
+          "free3": null,
+          "free4": null,
+          "free5": null,
+          "free6": null,
+          "free7": "0",
+          "free8": "0",
+          "free9": "0",
+          "free10": "0",
+          "free11": "0",
+          "free12": "0",
+          "free13": "0",
+          "free14": "0",
+          "free15": "0",
+          "free16": "0",
+          "free17": "0",
+          "free18": "0",
+          "free19": "0",
+          "free20": "0",
+          "gimahhot": "0",
+          "storeSpecial": 2,
+          "ownerId": null,
+          "manufacturerId": 1,
+          "producingCountryId": 1,
+          "revenueAccount": 0,
+          "couponRestriction": 0,
+          "conditionApi": 0,
+          "createdAt": "2014-01-15T00:00:00+01:00",
+          "updatedAt": "2021-11-24T14:10:59+01:00",
+          "isSubscribable": false,
+          "amazonFbaPlatform": 0,
+          "isShippableByAmazon": false,
+          "amazonProductType": 0,
+          "amazonFedas": "",
+          "ebayPresetId": null,
+          "ebayCategory": null,
+          "ebayCategory2": null,
+          "ebayStoreCategory": null,
+          "ebayStoreCategory2": null,
+          "rakutenCategoryId": 0,
+          "flagOne": 7,
+          "flagTwo": 7,
+          "ageRestriction": 0,
+          "feedback": 0,
+          "itemType": "default",
+          "stockType": 0,
+          "sitemapPublished": "0",
+          "isSerialNumber": false,
+          "isShippingPackage": false,
+          "maximumOrderQuantity": 0,
+          "variationCount": "7",
+          "customsTariffNumber": "",
+          "mainVariationId": 1031,
+          "inactive": true
+        }
+      }
+    },
+    {
+      "categories": [
+        {
+          "categoryId": 18,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "barcodes": [],
+      "additionalSkus": null,
+      "attributeValues": [
+        {
+          "attributeId": 3,
+          "attributeValueSetId": 16,
+          "valueId": 8,
+          "attributeValue": {
+            "id": 8,
+            "position": 0,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "en",
+                "name": "L",
+                "valueId": "8"
+              }
+            ],
+            "attributeId": 3,
+            "backendName": "L",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2021-11-23 14:19:57"
+          }
+        },
+        {
+          "attributeId": 1,
+          "attributeValueSetId": 16,
+          "valueId": 12,
+          "attributeValue": {
+            "id": 12,
+            "position": 0,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "en",
+                "name": "blue",
+                "valueId": "12"
+              }
+            ],
+            "attributeId": 1,
+            "backendName": "blue",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2021-11-23 14:22:18"
+          }
+        }
+      ],
+      "bundleComponents": null,
+      "clients": [
+        {
+          "plentyId": 37811
+        }
+      ],
+      "defaultCategories": null,
+      "images": [],
+      "marketIdentNumbers": null,
+      "markets": null,
+      "salesPrices": [
+        {
+          "salesPriceId": 1,
+          "price": 2300,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        },
+        {
+          "salesPriceId": 2,
+          "price": 0,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        }
+      ],
+      "skus": null,
+      "supplier": null,
+      "warehouses": null,
+      "properties": [],
+      "tags": [],
+      "comments": null,
+      "id": 1122,
+      "timestamps": null,
+      "unit": {
+        "unitId": 1,
+        "unitCombinationId": 1,
+        "content": 1
+      },
+      "base": {
+        "isMain": false,
+        "mainVariationId": 1031,
+        "itemId": 133,
+        "position": 0,
+        "isActive": true,
+        "number": "133-blue-l",
+        "model": "",
+        "externalId": "",
+        "availability": 1,
+        "estimatedAvailableAt": null,
+        "purchasePrice": 0,
+        "movingAveragePrice": 0,
+        "priceCalculationId": null,
+        "priceCalculationUUID": null,
+        "picking": null,
+        "stockLimitation": 1,
+        "isVisibleIfNetStockIsPositive": true,
+        "isInvisibleIfNetStockIsNotPositive": true,
+        "isAvailableIfNetStockIsPositive": false,
+        "isUnavailableIfNetStockIsNotPositive": false,
+        "isVisibleInListIfNetStockIsPositive": false,
+        "isInvisibleInListIfNetStockIsNotPositive": false,
+        "mainWarehouseId": 1,
+        "maximumOrderQuantity": 0,
+        "minimumOrderQuantity": 0,
+        "intervalOrderQuantity": 0,
+        "availableUntil": null,
+        "releasedAt": null,
+        "name": "",
+        "weightG": 0,
+        "weightNetG": 0,
+        "widthMM": 0,
+        "lengthMM": 0,
+        "heightMM": 0,
+        "extraShippingCharge1": 0,
+        "extraShippingCharge2": 0,
+        "unitsContained": 1,
+        "palletTypeId": null,
+        "packingUnits": 0,
+        "packingUnitTypeId": 0,
+        "transportationCosts": 0,
+        "storageCosts": 0,
+        "customs": 0,
+        "operatingCosts": 0,
+        "vatId": 0,
+        "bundleType": null,
+        "automaticClientVisibility": 1,
+        "automaticListVisibility": 3,
+        "isHiddenInCategoryList": false,
+        "defaultShippingCosts": null,
+        "mayShowUnitPrice": true,
+        "parentVariationId": null,
+        "parentVariationQuantity": null,
+        "singleItemCount": null,
+        "hasCalculatedBundleWeight": null,
+        "hasCalculatedBundleNetWeight": null,
+        "hasCalculatedBundlePurchasePrice": null,
+        "hasCalculatedBundleMovingAveragePrice": null,
+        "customsTariffNumber": "",
+        "categoriesInherited": true,
+        "referrerInherited": true,
+        "clientsInherited": true,
+        "salesPricesInherited": true,
+        "supplierInherited": true,
+        "warehousesInherited": true,
+        "propertiesInherited": true,
+        "tagsInherited": true,
+        "characteristics": [
+          {
+            "valueTexts": [],
+            "propertySelectionId": null,
+            "valueFile": null,
+            "surcharge": 0,
+            "valueFloat": null,
+            "id": 17,
+            "updatedAt": "2019-07-11 09:00:19",
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 3,
+            "valueInt": null,
+            "propertySelection": [],
+            "variationId": 1031,
+            "itemId": 133
+          },
+          {
+            "valueTexts": [],
+            "surcharge": 0,
+            "valueFile": null,
+            "valueFloat": null,
+            "propertySelection": [],
+            "updatedAt": "2019-07-11 09:00:26",
+            "propertySelectionId": null,
+            "valueInt": 158,
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 2,
+            "variationId": 1031,
+            "itemId": 133,
+            "id": 18
+          },
+          {
+            "valueTexts": [],
+            "propertySelectionId": null,
+            "valueFile": null,
+            "surcharge": 0,
+            "valueFloat": null,
+            "id": 19,
+            "updatedAt": "2019-07-11 09:00:26",
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 1,
+            "valueInt": 22220,
+            "propertySelection": [],
+            "variationId": 1031,
+            "itemId": 133
+          }
+        ],
+        "images": [
+          {
+            "availabilities": [
+              {
+                "value": 135,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "value": 4,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 132,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 123,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 105
+              },
+              {
+                "type": "marketplace",
+                "value": 102,
+                "imageId": 51
+              },
+              {
+                "value": 110,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "value": 139,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 104
+              },
+              {
+                "type": "marketplace",
+                "value": 5,
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": -1,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 121,
+                "imageId": 51
+              },
+              {
+                "value": 138,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 7,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 115,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "value": 108,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 124,
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": 3,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 103
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 134
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 126
+              },
+              {
+                "imageId": 51,
+                "value": 114,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 120
+              },
+              {
+                "type": "listing",
+                "imageId": 51,
+                "value": -1
+              },
+              {
+                "value": 136,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 116
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 137
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 107
+              },
+              {
+                "type": "marketplace",
+                "value": 130,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 122,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 51
+              },
+              {
+                "value": 111,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": 131,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 143
+              },
+              {
+                "value": 118,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "type": "mandant",
+                "value": -1,
+                "imageId": 51
+              },
+              {
+                "value": 127,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 6
+              },
+              {
+                "value": 109,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "value": 117,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 119,
+                "type": "marketplace",
+                "imageId": 51
+              }
+            ],
+            "names": [
+              {
+                "imageId": 51,
+                "lang": "de",
+                "name": "",
+                "alternate": ""
+              }
+            ],
+            "itemId": 133,
+            "attributeValueImages": [],
+            "type": "internal",
+            "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/preview\/133-Zweisitzer-White-Russian-1.jpg",
+            "hasLinkedVariations": "0",
+            "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/full\/133-Zweisitzer-White-Russian-1.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/middle\/133-Zweisitzer-White-Russian-1.jpg",
+            "fileType": "jpg",
+            "height": 0,
+            "storageProviderId": "2",
+            "id": 51,
+            "path": "S3:133:133-Zweisitzer-White-Russian-1.jpg",
+            "md5Checksum": "",
+            "createdAt": "2014-01-15T00:08:15+01:00",
+            "md5ChecksumOriginal": "",
+            "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/secondPreview\/133-Zweisitzer-White-Russian-1.jpg",
+            "updatedAt": "2018-03-08T10:43:15+01:00",
+            "position": 0,
+            "size": 0,
+            "width": 0
+          },
+          {
+            "availabilities": [
+              {
+                "imageId": 52,
+                "value": 116,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 117,
+                "imageId": 52
+              },
+              {
+                "value": 124,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "value": 120,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 110,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "type": "listing",
+                "value": -1,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "value": 107,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "value": 132,
+                "imageId": 52
+              },
+              {
+                "value": 131,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 126,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 139
+              },
+              {
+                "value": 138,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 135
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 4
+              },
+              {
+                "value": 5,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 130,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "type": "marketplace",
+                "value": 104,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 114
+              },
+              {
+                "type": "marketplace",
+                "value": 6,
+                "imageId": 52
+              },
+              {
+                "value": 111,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "value": -1,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 102
+              },
+              {
+                "imageId": 52,
+                "value": 3,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 119
+              },
+              {
+                "value": 143,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "value": 118,
+                "type": "marketplace"
+              },
+              {
+                "value": 105,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": -1,
+                "imageId": 52,
+                "type": "mandant"
+              },
+              {
+                "imageId": 52,
+                "value": 136,
+                "type": "marketplace"
+              },
+              {
+                "value": 7,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 127
+              },
+              {
+                "value": 122,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 103,
+                "imageId": 52
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 121
+              },
+              {
+                "value": 137,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 115
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 134
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 123
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 108
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 109
+              }
+            ],
+            "width": 0,
+            "names": [
+              {
+                "lang": "de",
+                "imageId": 52,
+                "name": "",
+                "alternate": ""
+              }
+            ],
+            "hasLinkedVariations": "0",
+            "md5Checksum": "",
+            "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/preview\/133-Zweisitzer-White-Russian-2.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/middle\/133-Zweisitzer-White-Russian-2.jpg",
+            "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/full\/133-Zweisitzer-White-Russian-2.jpg",
+            "itemId": 133,
+            "attributeValueImages": [],
+            "height": 0,
+            "md5ChecksumOriginal": "",
+            "createdAt": "2014-01-15T00:08:17+01:00",
+            "id": 52,
+            "size": 0,
+            "type": "internal",
+            "position": 1,
+            "fileType": "jpg",
+            "storageProviderId": "2",
+            "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/secondPreview\/133-Zweisitzer-White-Russian-2.jpg",
+            "path": "S3:133:133-Zweisitzer-White-Russian-2.jpg",
+            "updatedAt": "2018-03-08T10:43:15+01:00"
+          }
+        ],
+        "item": {
+          "id": 133,
+          "position": 0,
+          "add_cms_page": "0",
+          "condition": 0,
+          "free1": null,
+          "free2": null,
+          "free3": null,
+          "free4": null,
+          "free5": null,
+          "free6": null,
+          "free7": "0",
+          "free8": "0",
+          "free9": "0",
+          "free10": "0",
+          "free11": "0",
+          "free12": "0",
+          "free13": "0",
+          "free14": "0",
+          "free15": "0",
+          "free16": "0",
+          "free17": "0",
+          "free18": "0",
+          "free19": "0",
+          "free20": "0",
+          "gimahhot": "0",
+          "storeSpecial": 2,
+          "ownerId": null,
+          "manufacturerId": 1,
+          "producingCountryId": 1,
+          "revenueAccount": 0,
+          "couponRestriction": 0,
+          "conditionApi": 0,
+          "createdAt": "2014-01-15T00:00:00+01:00",
+          "updatedAt": "2021-11-24T14:10:59+01:00",
+          "isSubscribable": false,
+          "amazonFbaPlatform": 0,
+          "isShippableByAmazon": false,
+          "amazonProductType": 0,
+          "amazonFedas": "",
+          "ebayPresetId": null,
+          "ebayCategory": null,
+          "ebayCategory2": null,
+          "ebayStoreCategory": null,
+          "ebayStoreCategory2": null,
+          "rakutenCategoryId": 0,
+          "flagOne": 7,
+          "flagTwo": 7,
+          "ageRestriction": 0,
+          "feedback": 0,
+          "itemType": "default",
+          "stockType": 0,
+          "sitemapPublished": "0",
+          "isSerialNumber": false,
+          "isShippingPackage": false,
+          "maximumOrderQuantity": 0,
+          "variationCount": "7",
+          "customsTariffNumber": "",
+          "mainVariationId": 1031,
+          "inactive": true
+        }
+      }
+    },
+    {
+      "categories": [
+        {
+          "categoryId": 18,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "barcodes": [],
+      "additionalSkus": null,
+      "attributeValues": [
+        {
+          "attributeId": 3,
+          "attributeValueSetId": 19,
+          "valueId": 9,
+          "attributeValue": {
+            "id": 9,
+            "position": 0,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "en",
+                "name": "S",
+                "valueId": "9"
+              }
+            ],
+            "attributeId": 3,
+            "backendName": "S",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2021-11-23 14:20:00"
+          }
+        },
+        {
+          "attributeId": 1,
+          "attributeValueSetId": 19,
+          "valueId": 12,
+          "attributeValue": {
+            "id": 12,
+            "position": 0,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "en",
+                "name": "blue",
+                "valueId": "12"
+              }
+            ],
+            "attributeId": 1,
+            "backendName": "blue",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2021-11-23 14:22:18"
+          }
+        }
+      ],
+      "bundleComponents": null,
+      "clients": [
+        {
+          "plentyId": 37811
+        }
+      ],
+      "defaultCategories": null,
+      "images": [],
+      "marketIdentNumbers": null,
+      "markets": null,
+      "salesPrices": [
+        {
+          "salesPriceId": 1,
+          "price": 2300,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        },
+        {
+          "salesPriceId": 2,
+          "price": 0,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        }
+      ],
+      "skus": null,
+      "supplier": null,
+      "warehouses": null,
+      "properties": [],
+      "tags": [],
+      "comments": null,
+      "id": 1125,
+      "timestamps": null,
+      "unit": {
+        "unitId": 1,
+        "unitCombinationId": 1,
+        "content": 1
+      },
+      "base": {
+        "isMain": false,
+        "mainVariationId": 1031,
+        "itemId": 133,
+        "position": 0,
+        "isActive": true,
+        "number": "133-blue-s",
+        "model": "",
+        "externalId": "",
+        "availability": 1,
+        "estimatedAvailableAt": null,
+        "purchasePrice": 0,
+        "movingAveragePrice": 0,
+        "priceCalculationId": null,
+        "priceCalculationUUID": null,
+        "picking": null,
+        "stockLimitation": 1,
+        "isVisibleIfNetStockIsPositive": true,
+        "isInvisibleIfNetStockIsNotPositive": true,
+        "isAvailableIfNetStockIsPositive": false,
+        "isUnavailableIfNetStockIsNotPositive": false,
+        "isVisibleInListIfNetStockIsPositive": false,
+        "isInvisibleInListIfNetStockIsNotPositive": false,
+        "mainWarehouseId": 1,
+        "maximumOrderQuantity": 0,
+        "minimumOrderQuantity": 0,
+        "intervalOrderQuantity": 0,
+        "availableUntil": null,
+        "releasedAt": null,
+        "name": "",
+        "weightG": 0,
+        "weightNetG": 0,
+        "widthMM": 0,
+        "lengthMM": 0,
+        "heightMM": 0,
+        "extraShippingCharge1": 0,
+        "extraShippingCharge2": 0,
+        "unitsContained": 1,
+        "palletTypeId": null,
+        "packingUnits": 0,
+        "packingUnitTypeId": 0,
+        "transportationCosts": 0,
+        "storageCosts": 0,
+        "customs": 0,
+        "operatingCosts": 0,
+        "vatId": 0,
+        "bundleType": null,
+        "automaticClientVisibility": 1,
+        "automaticListVisibility": 3,
+        "isHiddenInCategoryList": false,
+        "defaultShippingCosts": null,
+        "mayShowUnitPrice": true,
+        "parentVariationId": null,
+        "parentVariationQuantity": null,
+        "singleItemCount": null,
+        "hasCalculatedBundleWeight": null,
+        "hasCalculatedBundleNetWeight": null,
+        "hasCalculatedBundlePurchasePrice": null,
+        "hasCalculatedBundleMovingAveragePrice": null,
+        "customsTariffNumber": "",
+        "categoriesInherited": true,
+        "referrerInherited": true,
+        "clientsInherited": true,
+        "salesPricesInherited": true,
+        "supplierInherited": true,
+        "warehousesInherited": true,
+        "propertiesInherited": true,
+        "tagsInherited": true,
+        "characteristics": [
+          {
+            "valueTexts": [],
+            "propertySelectionId": null,
+            "valueFile": null,
+            "surcharge": 0,
+            "valueFloat": null,
+            "id": 17,
+            "updatedAt": "2019-07-11 09:00:19",
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 3,
+            "valueInt": null,
+            "propertySelection": [],
+            "variationId": 1031,
+            "itemId": 133
+          },
+          {
+            "valueTexts": [],
+            "surcharge": 0,
+            "valueFile": null,
+            "valueFloat": null,
+            "propertySelection": [],
+            "updatedAt": "2019-07-11 09:00:26",
+            "propertySelectionId": null,
+            "valueInt": 158,
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 2,
+            "variationId": 1031,
+            "itemId": 133,
+            "id": 18
+          },
+          {
+            "valueTexts": [],
+            "propertySelectionId": null,
+            "valueFile": null,
+            "surcharge": 0,
+            "valueFloat": null,
+            "id": 19,
+            "updatedAt": "2019-07-11 09:00:26",
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 1,
+            "valueInt": 22220,
+            "propertySelection": [],
+            "variationId": 1031,
+            "itemId": 133
+          }
+        ],
+        "images": [
+          {
+            "availabilities": [
+              {
+                "value": 135,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "value": 4,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 132,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 123,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 105
+              },
+              {
+                "type": "marketplace",
+                "value": 102,
+                "imageId": 51
+              },
+              {
+                "value": 110,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "value": 139,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 104
+              },
+              {
+                "type": "marketplace",
+                "value": 5,
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": -1,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 121,
+                "imageId": 51
+              },
+              {
+                "value": 138,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 7,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 115,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "value": 108,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 124,
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": 3,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 103
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 134
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 126
+              },
+              {
+                "imageId": 51,
+                "value": 114,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 120
+              },
+              {
+                "type": "listing",
+                "imageId": 51,
+                "value": -1
+              },
+              {
+                "value": 136,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 116
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 137
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 107
+              },
+              {
+                "type": "marketplace",
+                "value": 130,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 122,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 51
+              },
+              {
+                "value": 111,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": 131,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 143
+              },
+              {
+                "value": 118,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "type": "mandant",
+                "value": -1,
+                "imageId": 51
+              },
+              {
+                "value": 127,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 6
+              },
+              {
+                "value": 109,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "value": 117,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 119,
+                "type": "marketplace",
+                "imageId": 51
+              }
+            ],
+            "names": [
+              {
+                "imageId": 51,
+                "lang": "de",
+                "name": "",
+                "alternate": ""
+              }
+            ],
+            "itemId": 133,
+            "attributeValueImages": [],
+            "type": "internal",
+            "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/preview\/133-Zweisitzer-White-Russian-1.jpg",
+            "hasLinkedVariations": "0",
+            "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/full\/133-Zweisitzer-White-Russian-1.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/middle\/133-Zweisitzer-White-Russian-1.jpg",
+            "fileType": "jpg",
+            "height": 0,
+            "storageProviderId": "2",
+            "id": 51,
+            "path": "S3:133:133-Zweisitzer-White-Russian-1.jpg",
+            "md5Checksum": "",
+            "createdAt": "2014-01-15T00:08:15+01:00",
+            "md5ChecksumOriginal": "",
+            "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/secondPreview\/133-Zweisitzer-White-Russian-1.jpg",
+            "updatedAt": "2018-03-08T10:43:15+01:00",
+            "position": 0,
+            "size": 0,
+            "width": 0
+          },
+          {
+            "availabilities": [
+              {
+                "imageId": 52,
+                "value": 116,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 117,
+                "imageId": 52
+              },
+              {
+                "value": 124,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "value": 120,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 110,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "type": "listing",
+                "value": -1,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "value": 107,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "value": 132,
+                "imageId": 52
+              },
+              {
+                "value": 131,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 126,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 139
+              },
+              {
+                "value": 138,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 135
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 4
+              },
+              {
+                "value": 5,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 130,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "type": "marketplace",
+                "value": 104,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 114
+              },
+              {
+                "type": "marketplace",
+                "value": 6,
+                "imageId": 52
+              },
+              {
+                "value": 111,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "value": -1,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 102
+              },
+              {
+                "imageId": 52,
+                "value": 3,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 119
+              },
+              {
+                "value": 143,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "value": 118,
+                "type": "marketplace"
+              },
+              {
+                "value": 105,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": -1,
+                "imageId": 52,
+                "type": "mandant"
+              },
+              {
+                "imageId": 52,
+                "value": 136,
+                "type": "marketplace"
+              },
+              {
+                "value": 7,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 127
+              },
+              {
+                "value": 122,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 103,
+                "imageId": 52
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 121
+              },
+              {
+                "value": 137,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 115
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 134
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 123
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 108
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 109
+              }
+            ],
+            "width": 0,
+            "names": [
+              {
+                "lang": "de",
+                "imageId": 52,
+                "name": "",
+                "alternate": ""
+              }
+            ],
+            "hasLinkedVariations": "0",
+            "md5Checksum": "",
+            "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/preview\/133-Zweisitzer-White-Russian-2.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/middle\/133-Zweisitzer-White-Russian-2.jpg",
+            "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/full\/133-Zweisitzer-White-Russian-2.jpg",
+            "itemId": 133,
+            "attributeValueImages": [],
+            "height": 0,
+            "md5ChecksumOriginal": "",
+            "createdAt": "2014-01-15T00:08:17+01:00",
+            "id": 52,
+            "size": 0,
+            "type": "internal",
+            "position": 1,
+            "fileType": "jpg",
+            "storageProviderId": "2",
+            "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/secondPreview\/133-Zweisitzer-White-Russian-2.jpg",
+            "path": "S3:133:133-Zweisitzer-White-Russian-2.jpg",
+            "updatedAt": "2018-03-08T10:43:15+01:00"
+          }
+        ],
+        "item": {
+          "id": 133,
+          "position": 0,
+          "add_cms_page": "0",
+          "condition": 0,
+          "free1": null,
+          "free2": null,
+          "free3": null,
+          "free4": null,
+          "free5": null,
+          "free6": null,
+          "free7": "0",
+          "free8": "0",
+          "free9": "0",
+          "free10": "0",
+          "free11": "0",
+          "free12": "0",
+          "free13": "0",
+          "free14": "0",
+          "free15": "0",
+          "free16": "0",
+          "free17": "0",
+          "free18": "0",
+          "free19": "0",
+          "free20": "0",
+          "gimahhot": "0",
+          "storeSpecial": 2,
+          "ownerId": null,
+          "manufacturerId": 1,
+          "producingCountryId": 1,
+          "revenueAccount": 0,
+          "couponRestriction": 0,
+          "conditionApi": 0,
+          "createdAt": "2014-01-15T00:00:00+01:00",
+          "updatedAt": "2021-11-24T14:10:59+01:00",
+          "isSubscribable": false,
+          "amazonFbaPlatform": 0,
+          "isShippableByAmazon": false,
+          "amazonProductType": 0,
+          "amazonFedas": "",
+          "ebayPresetId": null,
+          "ebayCategory": null,
+          "ebayCategory2": null,
+          "ebayStoreCategory": null,
+          "ebayStoreCategory2": null,
+          "rakutenCategoryId": 0,
+          "flagOne": 7,
+          "flagTwo": 7,
+          "ageRestriction": 0,
+          "feedback": 0,
+          "itemType": "default",
+          "stockType": 0,
+          "sitemapPublished": "0",
+          "isSerialNumber": false,
+          "isShippingPackage": false,
+          "maximumOrderQuantity": 0,
+          "variationCount": "7",
+          "customsTariffNumber": "",
+          "mainVariationId": 1031,
+          "inactive": true
+        }
+      }
+    },
+    {
+      "categories": [
+        {
+          "categoryId": 18,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "barcodes": [],
+      "additionalSkus": null,
+      "attributeValues": [
+        {
+          "attributeId": 1,
+          "attributeValueSetId": 17,
+          "valueId": 1,
+          "attributeValue": {
+            "id": 1,
+            "position": 1,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "en",
+                "name": "black",
+                "valueId": "1"
+              }
+            ],
+            "attributeId": 1,
+            "backendName": "black",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2014-01-15 00:32:01"
+          }
+        },
+        {
+          "attributeId": 3,
+          "attributeValueSetId": 17,
+          "valueId": 9,
+          "attributeValue": {
+            "id": 9,
+            "position": 0,
+            "image": "",
+            "comment": "",
+            "valueNames": [
+              {
+                "lang": "en",
+                "name": "S",
+                "valueId": "9"
+              }
+            ],
+            "attributeId": 3,
+            "backendName": "S",
+            "amazonValue": "",
+            "ottoValue": "",
+            "neckermannAtEpValue": "",
+            "laRedouteValue": "",
+            "tracdelightValue": "",
+            "percentageDistribution": 0,
+            "updatedAt": "2021-11-23 14:20:00"
+          }
+        }
+      ],
+      "bundleComponents": null,
+      "clients": [
+        {
+          "plentyId": 37811
+        }
+      ],
+      "defaultCategories": null,
+      "images": [],
+      "marketIdentNumbers": null,
+      "markets": null,
+      "salesPrices": [
+        {
+          "salesPriceId": 1,
+          "price": 2300,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        },
+        {
+          "salesPriceId": 2,
+          "price": 0,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        }
+      ],
+      "skus": null,
+      "supplier": null,
+      "warehouses": null,
+      "properties": [],
+      "tags": [],
+      "comments": null,
+      "id": 1126,
+      "timestamps": null,
+      "unit": {
+        "unitId": 1,
+        "unitCombinationId": 1,
+        "content": 1
+      },
+      "base": {
+        "isMain": false,
+        "mainVariationId": 1031,
+        "itemId": 133,
+        "position": 0,
+        "isActive": true,
+        "number": "133-black-s",
+        "model": "",
+        "externalId": "",
+        "availability": 1,
+        "estimatedAvailableAt": null,
+        "purchasePrice": 0,
+        "movingAveragePrice": 0,
+        "priceCalculationId": null,
+        "priceCalculationUUID": null,
+        "picking": null,
+        "stockLimitation": 1,
+        "isVisibleIfNetStockIsPositive": true,
+        "isInvisibleIfNetStockIsNotPositive": true,
+        "isAvailableIfNetStockIsPositive": false,
+        "isUnavailableIfNetStockIsNotPositive": false,
+        "isVisibleInListIfNetStockIsPositive": false,
+        "isInvisibleInListIfNetStockIsNotPositive": false,
+        "mainWarehouseId": 1,
+        "maximumOrderQuantity": 0,
+        "minimumOrderQuantity": 0,
+        "intervalOrderQuantity": 0,
+        "availableUntil": null,
+        "releasedAt": null,
+        "name": "",
+        "weightG": 0,
+        "weightNetG": 0,
+        "widthMM": 0,
+        "lengthMM": 0,
+        "heightMM": 0,
+        "extraShippingCharge1": 0,
+        "extraShippingCharge2": 0,
+        "unitsContained": 1,
+        "palletTypeId": null,
+        "packingUnits": 0,
+        "packingUnitTypeId": 0,
+        "transportationCosts": 0,
+        "storageCosts": 0,
+        "customs": 0,
+        "operatingCosts": 0,
+        "vatId": 0,
+        "bundleType": null,
+        "automaticClientVisibility": 1,
+        "automaticListVisibility": 3,
+        "isHiddenInCategoryList": false,
+        "defaultShippingCosts": null,
+        "mayShowUnitPrice": true,
+        "parentVariationId": null,
+        "parentVariationQuantity": null,
+        "singleItemCount": null,
+        "hasCalculatedBundleWeight": null,
+        "hasCalculatedBundleNetWeight": null,
+        "hasCalculatedBundlePurchasePrice": null,
+        "hasCalculatedBundleMovingAveragePrice": null,
+        "customsTariffNumber": "",
+        "categoriesInherited": true,
+        "referrerInherited": true,
+        "clientsInherited": true,
+        "salesPricesInherited": true,
+        "supplierInherited": true,
+        "warehousesInherited": true,
+        "propertiesInherited": true,
+        "tagsInherited": true,
+        "characteristics": [
+          {
+            "valueTexts": [],
+            "propertySelectionId": null,
+            "valueFile": null,
+            "surcharge": 0,
+            "valueFloat": null,
+            "id": 17,
+            "updatedAt": "2019-07-11 09:00:19",
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 3,
+            "valueInt": null,
+            "propertySelection": [],
+            "variationId": 1031,
+            "itemId": 133
+          },
+          {
+            "valueTexts": [],
+            "surcharge": 0,
+            "valueFile": null,
+            "valueFloat": null,
+            "propertySelection": [],
+            "updatedAt": "2019-07-11 09:00:26",
+            "propertySelectionId": null,
+            "valueInt": 158,
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 2,
+            "variationId": 1031,
+            "itemId": 133,
+            "id": 18
+          },
+          {
+            "valueTexts": [],
+            "propertySelectionId": null,
+            "valueFile": null,
+            "surcharge": 0,
+            "valueFloat": null,
+            "id": 19,
+            "updatedAt": "2019-07-11 09:00:26",
+            "createdAt": "2019-07-11 09:00:19",
+            "propertyId": 1,
+            "valueInt": 22220,
+            "propertySelection": [],
+            "variationId": 1031,
+            "itemId": 133
+          }
+        ],
+        "images": [
+          {
+            "availabilities": [
+              {
+                "value": 135,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "value": 4,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 132,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 123,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 105
+              },
+              {
+                "type": "marketplace",
+                "value": 102,
+                "imageId": 51
+              },
+              {
+                "value": 110,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "value": 139,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 104
+              },
+              {
+                "type": "marketplace",
+                "value": 5,
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": -1,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 121,
+                "imageId": 51
+              },
+              {
+                "value": 138,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 7,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 115,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "value": 108,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 124,
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": 3,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 103
+              },
+              {
+                "type": "marketplace",
+                "imageId": 51,
+                "value": 134
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 126
+              },
+              {
+                "imageId": 51,
+                "value": 114,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 120
+              },
+              {
+                "type": "listing",
+                "imageId": 51,
+                "value": -1
+              },
+              {
+                "value": 136,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 116
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 137
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 107
+              },
+              {
+                "type": "marketplace",
+                "value": 130,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 122,
+                "imageId": 51
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 51
+              },
+              {
+                "value": 111,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "imageId": 51,
+                "value": 131,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 143
+              },
+              {
+                "value": 118,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "type": "mandant",
+                "value": -1,
+                "imageId": 51
+              },
+              {
+                "value": 127,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 51,
+                "type": "marketplace",
+                "value": 6
+              },
+              {
+                "value": 109,
+                "imageId": 51,
+                "type": "marketplace"
+              },
+              {
+                "value": 117,
+                "type": "marketplace",
+                "imageId": 51
+              },
+              {
+                "value": 119,
+                "type": "marketplace",
+                "imageId": 51
+              }
+            ],
+            "names": [
+              {
+                "imageId": 51,
+                "lang": "de",
+                "name": "",
+                "alternate": ""
+              }
+            ],
+            "itemId": 133,
+            "attributeValueImages": [],
+            "type": "internal",
+            "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/preview\/133-Zweisitzer-White-Russian-1.jpg",
+            "hasLinkedVariations": "0",
+            "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/full\/133-Zweisitzer-White-Russian-1.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/middle\/133-Zweisitzer-White-Russian-1.jpg",
+            "fileType": "jpg",
+            "height": 0,
+            "storageProviderId": "2",
+            "id": 51,
+            "path": "S3:133:133-Zweisitzer-White-Russian-1.jpg",
+            "md5Checksum": "",
+            "createdAt": "2014-01-15T00:08:15+01:00",
+            "md5ChecksumOriginal": "",
+            "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/secondPreview\/133-Zweisitzer-White-Russian-1.jpg",
+            "updatedAt": "2018-03-08T10:43:15+01:00",
+            "position": 0,
+            "size": 0,
+            "width": 0
+          },
+          {
+            "availabilities": [
+              {
+                "imageId": 52,
+                "value": 116,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 117,
+                "imageId": 52
+              },
+              {
+                "value": 124,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "value": 120,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 110,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "type": "listing",
+                "value": -1,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "value": 107,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "value": 132,
+                "imageId": 52
+              },
+              {
+                "value": 131,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 126,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 139
+              },
+              {
+                "value": 138,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 135
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 4
+              },
+              {
+                "value": 5,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": 130,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "type": "marketplace",
+                "value": 104,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 114
+              },
+              {
+                "type": "marketplace",
+                "value": 6,
+                "imageId": 52
+              },
+              {
+                "value": 111,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "value": -1,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 102
+              },
+              {
+                "imageId": 52,
+                "value": 3,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 119
+              },
+              {
+                "value": 143,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "value": 118,
+                "type": "marketplace"
+              },
+              {
+                "value": 105,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "value": -1,
+                "imageId": 52,
+                "type": "mandant"
+              },
+              {
+                "imageId": 52,
+                "value": 136,
+                "type": "marketplace"
+              },
+              {
+                "value": 7,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 127
+              },
+              {
+                "value": 122,
+                "imageId": 52,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 103,
+                "imageId": 52
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 121
+              },
+              {
+                "value": 137,
+                "type": "marketplace",
+                "imageId": 52
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 115
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 134
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 123
+              },
+              {
+                "imageId": 52,
+                "type": "marketplace",
+                "value": 108
+              },
+              {
+                "type": "marketplace",
+                "imageId": 52,
+                "value": 109
+              }
+            ],
+            "width": 0,
+            "names": [
+              {
+                "lang": "de",
+                "imageId": 52,
+                "name": "",
+                "alternate": ""
+              }
+            ],
+            "hasLinkedVariations": "0",
+            "md5Checksum": "",
+            "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/preview\/133-Zweisitzer-White-Russian-2.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/middle\/133-Zweisitzer-White-Russian-2.jpg",
+            "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/full\/133-Zweisitzer-White-Russian-2.jpg",
+            "itemId": 133,
+            "attributeValueImages": [],
+            "height": 0,
+            "md5ChecksumOriginal": "",
+            "createdAt": "2014-01-15T00:08:17+01:00",
+            "id": 52,
+            "size": 0,
+            "type": "internal",
+            "position": 1,
+            "fileType": "jpg",
+            "storageProviderId": "2",
+            "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/133\/secondPreview\/133-Zweisitzer-White-Russian-2.jpg",
+            "path": "S3:133:133-Zweisitzer-White-Russian-2.jpg",
+            "updatedAt": "2018-03-08T10:43:15+01:00"
+          }
+        ],
+        "item": {
+          "id": 133,
+          "position": 0,
+          "add_cms_page": "0",
+          "condition": 0,
+          "free1": null,
+          "free2": null,
+          "free3": null,
+          "free4": null,
+          "free5": null,
+          "free6": null,
+          "free7": "0",
+          "free8": "0",
+          "free9": "0",
+          "free10": "0",
+          "free11": "0",
+          "free12": "0",
+          "free13": "0",
+          "free14": "0",
+          "free15": "0",
+          "free16": "0",
+          "free17": "0",
+          "free18": "0",
+          "free19": "0",
+          "free20": "0",
+          "gimahhot": "0",
+          "storeSpecial": 2,
+          "ownerId": null,
+          "manufacturerId": 1,
+          "producingCountryId": 1,
+          "revenueAccount": 0,
+          "couponRestriction": 0,
+          "conditionApi": 0,
+          "createdAt": "2014-01-15T00:00:00+01:00",
+          "updatedAt": "2021-11-24T14:10:59+01:00",
+          "isSubscribable": false,
+          "amazonFbaPlatform": 0,
+          "isShippableByAmazon": false,
+          "amazonProductType": 0,
+          "amazonFedas": "",
+          "ebayPresetId": null,
+          "ebayCategory": null,
+          "ebayCategory2": null,
+          "ebayStoreCategory": null,
+          "ebayStoreCategory2": null,
+          "rakutenCategoryId": 0,
+          "flagOne": 7,
+          "flagTwo": 7,
+          "ageRestriction": 0,
+          "feedback": 0,
+          "itemType": "default",
+          "stockType": 0,
+          "sitemapPublished": "0",
+          "isSerialNumber": false,
+          "isShippingPackage": false,
+          "maximumOrderQuantity": 0,
+          "variationCount": "7",
+          "customsTariffNumber": "",
+          "mainVariationId": 1031,
+          "inactive": true
+        }
+      }
+    }
+  ]
+}

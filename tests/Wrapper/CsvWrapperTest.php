@@ -749,4 +749,170 @@ class CsvWrapperTest extends TestCase
 
         $this->csvWrapper->wrap(0, 1, $items, $variations);
     }
+
+    public function testSeparatedVariationsIsGroupedBasedOnTwoGroupableAttributes(): void
+    {
+        $this->registryServiceMock->method('getPluginConfigurations')
+            ->with('Ceres')
+            ->willReturn(
+                [
+                    'global.enableOldUrlPattern' => false,
+                    'item.variation_show_type' => 'all'
+                ]
+            );
+
+        $this->exporterMock->expects($this->exactly(5))->method('createItem')->willReturnOnConsecutiveCalls(
+            new CSVItem(108),
+            new CSVItem(108),
+            new CSVItem(108),
+            new CSVItem(108),
+            new CSVItem(108)
+        );
+
+        $itemResponse = $this->getMockResponse(
+            'ItemResponse/response_for_items_separation_with_two_attributes_test.json'
+        );
+        $items = ItemParser::parse($itemResponse);
+
+        $variationResponse = $this->getMockResponse(
+            'Pim/Variations/response_with_two_groupable_and_one_not_attributes_test.json'
+        );
+        $variations = PimVariationsParser::parse($variationResponse);
+
+        $attributeResponse = $this->getMockResponse('AttributeResponse/response_for_separating_items.json');
+        $attributes = AttributeParser::parse($attributeResponse);
+        $this->registryServiceMock->method('getAttribute')
+            ->withConsecutive([3], [4], [1], [1], [4], [3], [3], [4], [1], [3], [4], [1], [3], [4], [1])
+            ->willReturnOnConsecutiveCalls(
+                $attributes->findOne(['id' => 3]),
+                $attributes->findOne(['id' => 4]),
+                $attributes->findOne(['id' => 1]),
+                $attributes->findOne(['id' => 1]),
+                $attributes->findOne(['id' => 4]),
+                $attributes->findOne(['id' => 3]),
+                $attributes->findOne(['id' => 3]),
+                $attributes->findOne(['id' => 4]),
+                $attributes->findOne(['id' => 1]),
+                $attributes->findOne(['id' => 3]),
+                $attributes->findOne(['id' => 4]),
+                $attributes->findOne(['id' => 1]),
+                $attributes->findOne(['id' => 3]),
+                $attributes->findOne(['id' => 4]),
+                $attributes->findOne(['id' => 1]),
+            );
+
+        $this->exporterMock->expects($this->once())
+            ->method('serializeItemsToFile')
+            ->with(
+                self::TEST_EXPORT_PATH,
+                $this->callback(function (array $items) {
+                    $this->assertCount(4, $items);
+
+                    $expectedIds = [
+                        '108_1152',
+                        '108_1160',
+                        '108_1167',
+                        '108_1168'
+                    ];
+
+                    $expectedOrderNumbers = [
+                        'yellow-yes-xl|1152|108',
+                        'green-yes-xs|1160|108',
+                        'yellow-no-l|1167|108',
+                        'orange-no-l|1168|108|orange-no-m|1171'
+                    ];
+
+                    foreach ($items as $key => $item) {
+                        $line = $item->getCsvFragment();
+                        $columnValues = explode("\t", $line);
+                        $this->assertEquals($expectedIds[$key], $columnValues[0]);
+                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[1]);
+                    }
+
+                    return true;
+                })
+            );
+
+        $this->csvWrapper->wrap(0, 1, $items, $variations);
+    }
+
+    public function testSeparatedVariationsIsGroupedBasedOnOneGroupableAttribute(): void
+    {
+        $this->registryServiceMock->method('getPluginConfigurations')
+            ->with('Ceres')
+            ->willReturn(
+                [
+                    'global.enableOldUrlPattern' => false,
+                    'item.variation_show_type' => 'all'
+                ]
+            );
+
+        $this->exporterMock->expects($this->exactly(4))->method('createItem')->willReturnOnConsecutiveCalls(
+            new CSVItem(133),
+            new CSVItem(133),
+            new CSVItem(133),
+            new CSVItem(133),
+        );
+
+        $itemResponse = $this->getMockResponse(
+            'ItemResponse/response_for_items_separation_with_one_group_attribute_test.json'
+        );
+        $items = ItemParser::parse($itemResponse);
+
+        $variationResponse = $this->getMockResponse(
+            'Pim/Variations/response_with_one_groupable_and_one_not_attributes.json'
+        );
+        $variations = PimVariationsParser::parse($variationResponse);
+
+        $attributeResponse = $this->getMockResponse('AttributeResponse/response_for_separating_items.json');
+        $attributes = AttributeParser::parse($attributeResponse);
+        $this->registryServiceMock->method('getAttribute')
+            ->withConsecutive([3], [1], [3], [1], [3], [1], [3], [1], [3], [1], [1], [3])
+            ->willReturnOnConsecutiveCalls(
+                $attributes->findOne(['id' => 3]),
+                $attributes->findOne(['id' => 1]),
+                $attributes->findOne(['id' => 3]),
+                $attributes->findOne(['id' => 1]),
+                $attributes->findOne(['id' => 3]),
+                $attributes->findOne(['id' => 1]),
+                $attributes->findOne(['id' => 3]),
+                $attributes->findOne(['id' => 1]),
+                $attributes->findOne(['id' => 3]),
+                $attributes->findOne(['id' => 1]),
+                $attributes->findOne(['id' => 1]),
+                $attributes->findOne(['id' => 3]),
+            );
+
+        $this->exporterMock->expects($this->once())
+            ->method('serializeItemsToFile')
+            ->with(
+                self::TEST_EXPORT_PATH,
+                $this->callback(function (array $items) {
+                    $this->assertCount(3, $items);
+
+                    $expectedIds = [
+                        '133_1118',
+                        '133_1119',
+                        '133_1126'
+                    ];
+
+                    $expectedOrderNumbers = [
+                        '133-green-xl|1118|133|133-green-l|1121',
+                        '133-blue-xl|1119|133|133-blue-l|1122|133-blue-s|1125',
+                        '133-black-s|1126|133'
+                    ];
+
+                    foreach ($items as $key => $item) {
+                        $line = $item->getCsvFragment();
+                        $columnValues = explode("\t", $line);
+                        $this->assertEquals($expectedIds[$key], $columnValues[0]);
+                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[1]);
+                    }
+
+                    return true;
+                })
+            );
+
+        $this->csvWrapper->wrap(0, 1, $items, $variations);
+    }
 }
