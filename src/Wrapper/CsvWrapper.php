@@ -205,7 +205,7 @@ class CsvWrapper extends Wrapper
             }
         }
 
-        return ($groupableAttributesCount == 0 || count($attributeValues) > 1) ? $key : (string)$variation->getId();
+        return ($groupableAttributesCount === 0 || count($attributeValues) > 1) ? $key : (string)$variation->getId();
     }
 
     private function shouldExportGroupableAttributeVariantsSeparately(): bool
