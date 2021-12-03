@@ -822,11 +822,19 @@ class CsvWrapperTest extends TestCase
                         'orange-no-l|1168|108|orange-no-m|1171'
                     ];
 
+                    $expectedImagesUrls = [
+                        'https://cdn03.plentymarkets.com/item/images/108/middle/108-Barsessel-Black-Mamba-1.jpg',
+                        'https://cdn03.plentymarkets.com/item/images/108/middle/108-Barsessel-Black-Mamba-2.jpg',
+                        'https://cdn03.plentymarkets.com/item/images/108/middle/108-Barsessel-Black-Mamba-3.jpg',
+                        'https://cdn03.plentymarkets.com/item/images/108/middle/108-Barsessel-Black-Mamba-4.jpg'
+                    ];
+
                     foreach ($items as $key => $item) {
                         $line = $item->getCsvFragment();
                         $columnValues = explode("\t", $line);
                         $this->assertEquals($expectedIds[$key], $columnValues[0]);
                         $this->assertEquals($expectedOrderNumbers[$key], $columnValues[1]);
+                        $this->assertEquals($expectedImagesUrls[$key], $columnValues[10]);
                     }
 
                     return true;

@@ -84,8 +84,15 @@ class CsvWrapper extends Wrapper
 
             list($groupedVariations, $separateVariations) = $this->splitVariationsByGroupability($productVariations);
 
-            foreach ($separateVariations as $separateVariation) {
-                if ($item = $this->wrapItem($product, $separateVariation, Product::WRAP_MODE_SEPARATE_VARIATIONS)) {
+            foreach ($separateVariations as $key => $separateVariation) {
+                $item = $this->wrapItem(
+                    $product,
+                    $separateVariation,
+                    Product::WRAP_MODE_SEPARATE_VARIATIONS,
+                    (string)$key
+                );
+
+                if ($item) {
                     $items[] = $item;
                 }
             }
@@ -132,7 +139,8 @@ class CsvWrapper extends Wrapper
     private function wrapItem(
         ProductEntity $product,
         array $productVariations,
-        int $wrapMode
+        int $wrapMode,
+        string $variationAttributes = ''
     ): ?Item {
         $productWrapper = new Product(
             $this->exporter,
@@ -141,7 +149,8 @@ class CsvWrapper extends Wrapper
             $this->registryService,
             $product,
             $productVariations,
-            $wrapMode
+            $wrapMode,
+            $variationAttributes
         );
         $item = $productWrapper->processProductData();
 

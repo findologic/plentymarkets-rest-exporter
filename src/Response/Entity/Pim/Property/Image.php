@@ -44,7 +44,7 @@ class Image extends Entity
     /** @var string */
     private $urlPreview;
 
-    /** @var array Unknown data. */
+    /** @var ImageAttributeValue[]. */
     private $attributeValueImages = [];
 
     /** @var ImageName[] */
@@ -97,6 +97,7 @@ class Image extends Entity
         $this->urlSecondPreview = $this->getStringProperty('urlSecondPreview', $data);
         $this->createdAt = $this->getDateTimeProperty('createdAt', $data);
         $this->updatedAt = $this->getDateTimeProperty('updatedAt', $data);
+        $this->attributeValueImages = $this->getEntities(ImageAttributeValue::class, 'attributeValueImages', $data);
     }
 
     public function getData(): array

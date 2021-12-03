@@ -171,7 +171,6 @@ class PimVariationResponseTest extends TestCase
             '131/preview/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg',
             $image->getUrlPreview()
         );
-        $this->assertEmpty($image->getAttributeValueImages());
         $this->assertSame('internal', $image->getType());
         $this->assertSame(40783, $image->getSize());
         $this->assertSame(2, $image->getStorageProviderId());
@@ -189,12 +188,15 @@ class PimVariationResponseTest extends TestCase
         unset($expectedImageData['availabilities']);
         unset($expectedImageData['createdAt']);
         unset($expectedImageData['updatedAt']);
+        unset($expectedImageData['updatedAt']);
+        unset($expectedImageData['attributeValueImages']);
 
         $actualImageData = $image->getData();
         unset($actualImageData['names']);
         unset($actualImageData['availabilities']);
         unset($actualImageData['createdAt']);
         unset($actualImageData['updatedAt']);
+        unset($actualImageData['attributeValueImages']);
 
         $this->assertEquals($expectedImageData, $actualImageData);
 
@@ -210,6 +212,13 @@ class PimVariationResponseTest extends TestCase
         $this->assertSame('marketplace', $imageAvailability->getType());
         $this->assertSame(139, $imageAvailability->getValue());
         $this->assertEquals($rawVariation['images'][0]['availabilities'][0], $imageAvailability->getData());
+
+        $attributeValuesImage = $image->getAttributeValueImages()[0];
+        $this->assertSame(46, $attributeValuesImage->getItemId());
+        $this->assertSame(1, $attributeValuesImage->getValueId());
+        $this->assertSame(1, $attributeValuesImage->getAttributeId());
+        $this->assertSame(22, $attributeValuesImage->getImageId());
+        $this->assertEquals($rawVariation['images'][0]['attributeValueImages'][0], $attributeValuesImage->getData());
 
         $base = $variation->getBase();
         $this->assertTrue($base->isMain());
