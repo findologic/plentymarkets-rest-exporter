@@ -55,7 +55,7 @@ class Product
 
     private int $wrapMode;
 
-    private string $variationAttributes;
+    private string $variationAttributesKey;
 
     /**
      * @param PimVariation[] $variationEntities
@@ -68,7 +68,7 @@ class Product
         ProductEntity $productEntity,
         array $variationEntities,
         int $wrapMode = self::WRAP_MODE_DEFAULT,
-        string $variationAttributes = ''
+        string $variationAttributeKey = ''
     ) {
         $this->exporter = $exporter;
         $this->item = $exporter->createItem($productEntity->getId());
@@ -78,7 +78,7 @@ class Product
         $this->variationEntities = $variationEntities;
         $this->storeConfiguration = $storeConfiguration;
         $this->wrapMode = $wrapMode;
-        $this->variationAttributes = $variationAttributes;
+        $this->variationAttributesKey = $variationAttributeKey;
     }
 
     /**
@@ -201,7 +201,7 @@ class Product
                 $this->registryService,
                 $variationEntity,
                 $this->wrapMode,
-                $this->variationAttributes
+                $this->variationAttributesKey
             );
 
             $variation->processData();

@@ -834,7 +834,7 @@ class CsvWrapperTest extends TestCase
                         $columnValues = explode("\t", $line);
                         $this->assertEquals($expectedIds[$key], $columnValues[0]);
                         $this->assertEquals($expectedOrderNumbers[$key], $columnValues[1]);
-                        $this->assertEquals($expectedImagesUrls[$key], $columnValues[10]);
+                        $this->assertSame($expectedImagesUrls[$key], $columnValues[10]);
                     }
 
                     return true;

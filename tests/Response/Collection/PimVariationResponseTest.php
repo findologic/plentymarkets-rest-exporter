@@ -188,7 +188,6 @@ class PimVariationResponseTest extends TestCase
         unset($expectedImageData['availabilities']);
         unset($expectedImageData['createdAt']);
         unset($expectedImageData['updatedAt']);
-        unset($expectedImageData['updatedAt']);
         unset($expectedImageData['attributeValueImages']);
 
         $actualImageData = $image->getData();

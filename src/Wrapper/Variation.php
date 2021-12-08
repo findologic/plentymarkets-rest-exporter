@@ -98,7 +98,7 @@ class Variation
     protected $packageSize;
 
     /** @var string */
-    protected $variationAttributes;
+    protected $variationAttributesKey;
 
     /** @var int */
     protected $wrapMode;
@@ -110,12 +110,12 @@ class Variation
         RegistryService $registryService,
         PimVariation $variationEntity,
         int $wrapMode = Product::WRAP_MODE_DEFAULT,
-        string $variationAttributes = ''
+        string $variationAttributesKey = ''
     ) {
         $this->config = $config;
         $this->variationEntity = $variationEntity;
         $this->registryService = $registryService;
-        $this->variationAttributes = $variationAttributes;
+        $this->variationAttributesKey = $variationAttributesKey;
         $this->wrapMode = $wrapMode;
     }
 
@@ -431,70 +431,42 @@ class Variation
     private function processImages(): void
     {
         $images = array_merge($this->variationEntity->getImages(), $this->variationEntity->getBase()->getImages());
-        $variationAttributes = explode('/', $this->variationAttributes);
-
+        $variationAttributes = explode('/', $this->variationAttributesKey);
+        $defaultWrapModeImage = null;
         // Sort images by position.
         usort($images, fn(PimImage $a, PimImage $b) => $a->getPosition() <=> $b->getPosition());
 
-        if ($this->wrapMode === Product::WRAP_MODE_SEPARATE_VARIATIONS) {
-            $this->setImageForSeparatedVariation($images, $variationAttributes);
-
-            if ($this->image !== null) {
-                return;
-            }
-        }
-
-        $this->setImageAvailabilityForDefaultWrapMode($images);
-    }
-
-    private function setImageForSeparatedVariation(array $images, array $variationAttributes): void
-    {
         foreach ($images as $image) {
             $imageAvailabilities = $image->getAvailabilities();
             foreach ($imageAvailabilities as $imageAvailability) {
-                if ($imageAvailability->getType() === Availability::STORE) {
-                    $imageAttributeValues = $image->getAttributeValueImages();
-
-                    if ($this->checkImageAvailability($imageAttributeValues, $variationAttributes)) {
-                        $this->image = new Image($image->getUrlMiddle());
-
-                        return;
-                    }
+                if ($imageAvailability->getType() !== Availability::STORE) {
+                    continue;
                 }
-            }
-        }
-    }
 
-    private function checkImageAvailability(array $imageAttributeValues, array $variationAttributes): bool
-    {
-        $count = 0;
-
-        foreach ($imageAttributeValues as $imageAttributeValue) {
-            foreach ($variationAttributes as $variationAttribute) {
-                $attributeData = explode('_', $variationAttribute);
-                $imageAttributeId = $imageAttributeValue->getAttributeId();
-                $imageValueId = $imageAttributeValue->getValueId();
-
-                if ($imageAttributeId == $attributeData[0] && $imageValueId == $attributeData[1]) {
-                    $count++;
-                }
-            }
-        }
-
-        return $count === count($variationAttributes);
-    }
-
-    private function setImageAvailabilityForDefaultWrapMode(array $images): void
-    {
-        foreach ($images as $image) {
-            $imageAvailabilities = $image->getAvailabilities();
-            foreach ($imageAvailabilities as $imageAvailability) {
-                if ($imageAvailability->getType() === Availability::STORE) {
+                if ($this->wrapMode === Product::WRAP_MODE_DEFAULT) {
                     $this->image = new Image($image->getUrlMiddle());
 
                     return;
                 }
+
+                if (!$defaultWrapModeImage) {
+                    $defaultWrapModeImage = $image;
+                }
+
+                $separatedVariation = new SeparatedVariation($this->variationEntity, $this->registryService);
+
+                if (!$separatedVariation->isImageAvailable($image->getAttributeValueImages(), $variationAttributes)) {
+                    continue;
+                }
+
+                $this->image = new Image($image->getUrlMiddle());
+
+                return;
             }
+        }
+
+        if (!$this->image && $defaultWrapModeImage) {
+            $this->image = new Image($defaultWrapModeImage->getUrlMiddle());
         }
     }
 
