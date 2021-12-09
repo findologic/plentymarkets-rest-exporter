@@ -140,7 +140,7 @@ class CsvWrapper extends Wrapper
         ProductEntity $product,
         array $productVariations,
         int $wrapMode,
-        string $variationAttributes = ''
+        string $variationGroupKey = ''
     ): ?Item {
         $productWrapper = new Product(
             $this->exporter,
@@ -150,7 +150,7 @@ class CsvWrapper extends Wrapper
             $product,
             $productVariations,
             $wrapMode,
-            $variationAttributes
+            $variationGroupKey
         );
         $item = $productWrapper->processProductData();
 

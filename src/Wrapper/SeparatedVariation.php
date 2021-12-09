@@ -10,8 +10,10 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
 
 class SeparatedVariation
 {
-    private Variation $variation;
+    private const MULTIPLE_KEYS_SEPARATOR = '/';
+    private const ATTRIBUTE_VALUE_SEPARATOR = '_';
 
+    private Variation $variation;
     private RegistryService $registryService;
 
     public function __construct(
@@ -33,13 +35,13 @@ class SeparatedVariation
 
         foreach ($imageAttributeValues as $imageAttributeValue) {
             foreach ($variationAttributes as $variationAttribute) {
-                $attributeData = explode('_', $variationAttribute);
-                $imageAttributeId = $imageAttributeValue->getAttributeId();
-                $imageValueId = $imageAttributeValue->getValueId();
-                $variationAttributeId = $attributeData[0];
-                $variationValueId = $attributeData[1];
+                $attributeData = explode(self::ATTRIBUTE_VALUE_SEPARATOR, $variationAttribute);
+                $imageAttributeId = (string)$imageAttributeValue->getAttributeId();
+                $imageValueId = (string)$imageAttributeValue->getValueId();
+                $variationAttributeId = (string)$attributeData[0];
+                $variationValueId = (string)$attributeData[1];
 
-                if ($imageAttributeId != $variationAttributeId || $imageValueId != $variationValueId) {
+                if ($imageAttributeId !== $variationAttributeId || $imageValueId !== $variationValueId) {
                     continue;
                 }
 
@@ -50,6 +52,11 @@ class SeparatedVariation
         return $imageAvailable;
     }
 
+    /*
+     * This method generates variation group key. It searches for attributes with groupable property
+     * and generates keys from groupable attributes ids and values. If there is just a one attribute,
+     * then we returning a variation id for separating variations by one attribute.
+     */
     public function getVariationGroupKey(): string
     {
         $attributeValues = $this->variation->getAttributeValues();
@@ -59,17 +66,23 @@ class SeparatedVariation
         foreach ($attributeValues as $attributeValue) {
             $attribute = $this->registryService->getAttribute($attributeValue->getId());
 
-            if ($attribute && $attribute->isGroupable()) {
-                $groupableAttributes++;
-
-                if ($key !== '') {
-                    $key .= '/';
-                }
-
-                $key .= $attributeValue->getId() . '_' . $attributeValue->getValue()->getId();
+            if (!$attribute || !$attribute->isGroupable()) {
+                continue;
             }
+
+            $groupableAttributes++;
+
+            if ($key !== '') {
+                $key .= self::MULTIPLE_KEYS_SEPARATOR;
+            }
+
+            $key .= $attributeValue->getId() . self::ATTRIBUTE_VALUE_SEPARATOR . $attributeValue->getValue()->getId();
         }
 
-        return ($groupableAttributes === 0 || count($attributeValues) > 1) ? $key : (string)$this->variation->getId();
+        if ($groupableAttributes === 0 || count($attributeValues) > 1) {
+            return $key;
+        }
+
+        return (string)$this->variation->getId();
     }
 }

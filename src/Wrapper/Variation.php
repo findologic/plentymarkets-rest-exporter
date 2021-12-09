@@ -97,11 +97,9 @@ class Variation
     /** @var string|null */
     protected $packageSize;
 
-    /** @var string */
-    protected $variationAttributesKey;
+    protected string $variationGroupKey;
 
-    /** @var int */
-    protected $wrapMode;
+    protected int $wrapMode;
 
     protected bool $hasCategories = false;
 
@@ -110,12 +108,12 @@ class Variation
         RegistryService $registryService,
         PimVariation $variationEntity,
         int $wrapMode = Product::WRAP_MODE_DEFAULT,
-        string $variationAttributesKey = ''
+        string $variationGroupKey = ''
     ) {
         $this->config = $config;
         $this->variationEntity = $variationEntity;
         $this->registryService = $registryService;
-        $this->variationAttributesKey = $variationAttributesKey;
+        $this->variationGroupKey = $variationGroupKey;
         $this->wrapMode = $wrapMode;
     }
 
@@ -431,7 +429,7 @@ class Variation
     private function processImages(): void
     {
         $images = array_merge($this->variationEntity->getImages(), $this->variationEntity->getBase()->getImages());
-        $variationAttributes = explode('/', $this->variationAttributesKey);
+        $variationAttributes = explode('/', $this->variationGroupKey);
         $defaultWrapModeImage = null;
         // Sort images by position.
         usort($images, fn(PimImage $a, PimImage $b) => $a->getPosition() <=> $b->getPosition());
@@ -454,7 +452,6 @@ class Variation
                 }
 
                 $separatedVariation = new SeparatedVariation($this->variationEntity, $this->registryService);
-
                 if (!$separatedVariation->isImageAvailable($image->getAttributeValueImages(), $variationAttributes)) {
                     continue;
                 }
