@@ -26,7 +26,7 @@ class SeparatedVariation
 
     /**
      * @param ImageAttributeValue[] $imageAttributeValues
-     * @param array $variationAttributes
+     * @param array<int, string> $variationAttributes
      * @return bool
      */
     public function isImageAvailable(array $imageAttributeValues, array $variationAttributes): bool

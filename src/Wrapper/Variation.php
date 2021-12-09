@@ -429,10 +429,25 @@ class Variation
     private function processImages(): void
     {
         $images = array_merge($this->variationEntity->getImages(), $this->variationEntity->getBase()->getImages());
-        $variationAttributes = explode('/', $this->variationGroupKey);
-        $defaultWrapModeImage = null;
+
         // Sort images by position.
         usort($images, fn(PimImage $a, PimImage $b) => $a->getPosition() <=> $b->getPosition());
+
+        $variantImage = $this->getVariantImage($images);
+
+        if ($variantImage) {
+            $this->image = $variantImage;
+        }
+    }
+
+    /**
+     * @param PimImage[] $images
+     * @return Image|null
+     */
+    private function getVariantImage(array $images): ?Image
+    {
+        $defaultWrapModeImage = null;
+        $variationAttributes = explode('/', $this->variationGroupKey);
 
         foreach ($images as $image) {
             $imageAvailabilities = $image->getAvailabilities();
@@ -442,9 +457,7 @@ class Variation
                 }
 
                 if ($this->wrapMode === Product::WRAP_MODE_DEFAULT) {
-                    $this->image = new Image($image->getUrlMiddle());
-
-                    return;
+                    return new Image($image->getUrlMiddle());
                 }
 
                 if (!$defaultWrapModeImage) {
@@ -456,15 +469,15 @@ class Variation
                     continue;
                 }
 
-                $this->image = new Image($image->getUrlMiddle());
-
-                return;
+                return new Image($image->getUrlMiddle());
             }
         }
 
         if (!$this->image && $defaultWrapModeImage) {
-            $this->image = new Image($defaultWrapModeImage->getUrlMiddle());
+            return new Image($defaultWrapModeImage->getUrlMiddle());
         }
+
+        return null;
     }
 
     private function processVatRate(): void
