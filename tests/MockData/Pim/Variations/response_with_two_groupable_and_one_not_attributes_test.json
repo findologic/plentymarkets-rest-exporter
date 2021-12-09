@@ -1495,7 +1495,20 @@
               }
             ],
             "storageProviderId": "2",
-            "attributeValueImages": [],
+            "attributeValueImages": [
+              {
+                "itemId": "108",
+                "valueId": "13",
+                "imageId": "22",
+                "attributeId": "4"
+              },
+              {
+                "itemId": "108",
+                "valueId": "15",
+                "imageId": "22",
+                "attributeId": "1"
+              }
+            ],
             "md5ChecksumOriginal": "",
             "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/preview\/108-Barsessel-Black-Mamba.jpg",
             "path": "S3:108:108-Barsessel-Black-Mamba.jpg",
@@ -1506,7 +1519,7 @@
             "itemId": 108,
             "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/secondPreview\/108-Barsessel-Black-Mamba.jpg",
             "hasLinkedVariations": "0",
-            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/middle\/108-Barsessel-Black-Mamba.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/item\/images\/108\/middle\/108-Barsessel-Black-Mamba-1.jpg",
             "updatedAt": "2018-03-08T10:43:11+01:00",
             "type": "internal"
           }
@@ -3062,7 +3075,20 @@
               }
             ],
             "storageProviderId": "2",
-            "attributeValueImages": [],
+            "attributeValueImages": [
+              {
+                "itemId": "108",
+                "valueId": "13",
+                "imageId": "22",
+                "attributeId": "4"
+              },
+              {
+                "itemId": "108",
+                "valueId": "11",
+                "imageId": "22",
+                "attributeId": "1"
+              }
+            ],
             "md5ChecksumOriginal": "",
             "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/preview\/108-Barsessel-Black-Mamba.jpg",
             "path": "S3:108:108-Barsessel-Black-Mamba.jpg",
@@ -3073,7 +3099,7 @@
             "itemId": 108,
             "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/secondPreview\/108-Barsessel-Black-Mamba.jpg",
             "hasLinkedVariations": "0",
-            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/middle\/108-Barsessel-Black-Mamba.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/item\/images\/108\/middle\/108-Barsessel-Black-Mamba-2.jpg",
             "updatedAt": "2018-03-08T10:43:11+01:00",
             "type": "internal"
           }
@@ -4629,7 +4655,20 @@
               }
             ],
             "storageProviderId": "2",
-            "attributeValueImages": [],
+            "attributeValueImages": [
+              {
+                "itemId": "108",
+                "valueId": "14",
+                "imageId": "22",
+                "attributeId": "4"
+              },
+              {
+                "itemId": "108",
+                "valueId": "15",
+                "imageId": "22",
+                "attributeId": "1"
+              }
+            ],
             "md5ChecksumOriginal": "",
             "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/preview\/108-Barsessel-Black-Mamba.jpg",
             "path": "S3:108:108-Barsessel-Black-Mamba.jpg",
@@ -4640,7 +4679,7 @@
             "itemId": 108,
             "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/secondPreview\/108-Barsessel-Black-Mamba.jpg",
             "hasLinkedVariations": "0",
-            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/middle\/108-Barsessel-Black-Mamba.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/item\/images\/108\/middle\/108-Barsessel-Black-Mamba-3.jpg",
             "updatedAt": "2018-03-08T10:43:11+01:00",
             "type": "internal"
           }
@@ -6196,7 +6235,20 @@
               }
             ],
             "storageProviderId": "2",
-            "attributeValueImages": [],
+            "attributeValueImages": [
+              {
+                "itemId": "108",
+                "valueId": "14",
+                "imageId": "22",
+                "attributeId": "4"
+              },
+              {
+                "itemId": "108",
+                "valueId": "16",
+                "imageId": "22",
+                "attributeId": "1"
+              }
+            ],
             "md5ChecksumOriginal": "",
             "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/preview\/108-Barsessel-Black-Mamba.jpg",
             "path": "S3:108:108-Barsessel-Black-Mamba.jpg",
@@ -6207,7 +6259,7 @@
             "itemId": 108,
             "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/secondPreview\/108-Barsessel-Black-Mamba.jpg",
             "hasLinkedVariations": "0",
-            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/middle\/108-Barsessel-Black-Mamba.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/item\/images\/108\/middle\/108-Barsessel-Black-Mamba-4.jpg",
             "updatedAt": "2018-03-08T10:43:11+01:00",
             "type": "internal"
           }
@@ -7763,7 +7815,20 @@
               }
             ],
             "storageProviderId": "2",
-            "attributeValueImages": [],
+            "attributeValueImages": [
+              {
+                "itemId": "108",
+                "valueId": "14",
+                "imageId": "22",
+                "attributeId": "4"
+              },
+              {
+                "itemId": "108",
+                "valueId": "16",
+                "imageId": "22",
+                "attributeId": "1"
+              }
+            ],
             "md5ChecksumOriginal": "",
             "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/preview\/108-Barsessel-Black-Mamba.jpg",
             "path": "S3:108:108-Barsessel-Black-Mamba.jpg",
@@ -7774,7 +7839,7 @@
             "itemId": 108,
             "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/secondPreview\/108-Barsessel-Black-Mamba.jpg",
             "hasLinkedVariations": "0",
-            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/108\/middle\/108-Barsessel-Black-Mamba.jpg",
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/item\/images\/108\/middle\/108-Barsessel-Black-Mamba.jpg",
             "updatedAt": "2018-03-08T10:43:11+01:00",
             "type": "internal"
           }

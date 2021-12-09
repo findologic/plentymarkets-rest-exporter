@@ -84,8 +84,15 @@ class CsvWrapper extends Wrapper
 
             list($groupedVariations, $separateVariations) = $this->splitVariationsByGroupability($productVariations);
 
-            foreach ($separateVariations as $separateVariation) {
-                if ($item = $this->wrapItem($product, $separateVariation, Product::WRAP_MODE_SEPARATE_VARIATIONS)) {
+            foreach ($separateVariations as $key => $separateVariation) {
+                $item = $this->wrapItem(
+                    $product,
+                    $separateVariation,
+                    Product::WRAP_MODE_SEPARATE_VARIATIONS,
+                    (string)$key
+                );
+
+                if ($item) {
                     $items[] = $item;
                 }
             }
@@ -132,7 +139,8 @@ class CsvWrapper extends Wrapper
     private function wrapItem(
         ProductEntity $product,
         array $productVariations,
-        int $wrapMode
+        int $wrapMode,
+        string $variationGroupKey = ''
     ): ?Item {
         $productWrapper = new Product(
             $this->exporter,
@@ -141,7 +149,8 @@ class CsvWrapper extends Wrapper
             $this->registryService,
             $product,
             $productVariations,
-            $wrapMode
+            $wrapMode,
+            $variationGroupKey
         );
         $item = $productWrapper->processProductData();
 
@@ -171,7 +180,8 @@ class CsvWrapper extends Wrapper
         $separateVariations = [];
 
         foreach ($productVariations as $variation) {
-            $key = $this->getVariationGroupKey($variation);
+            $separateVariation = new SeparatedVariation($variation, $this->registryService);
+            $key = $separateVariation->getVariationGroupKey();
 
             if ($key !== '') {
                 $separateVariations[$key][] = $variation;
@@ -183,29 +193,6 @@ class CsvWrapper extends Wrapper
         }
 
         return [$groupedVariations, $separateVariations];
-    }
-
-    private function getVariationGroupKey($variation): string
-    {
-        $attributeValues = $variation->getAttributeValues();
-        $groupableAttributesCount = 0;
-        $key = '';
-
-        foreach ($attributeValues as $attributeValue) {
-            $attribute = $this->registryService->getAttribute($attributeValue->getId());
-
-            if ($attribute && $attribute->isGroupable()) {
-                $groupableAttributesCount++;
-
-                if ($key !== '') {
-                    $key .= '/';
-                }
-
-                $key .= $attributeValue->getId() . '_' . $attributeValue->getValue()->getId();
-            }
-        }
-
-        return ($groupableAttributesCount === 0 || count($attributeValues) > 1) ? $key : (string)$variation->getId();
     }
 
     private function shouldExportGroupableAttributeVariantsSeparately(): bool

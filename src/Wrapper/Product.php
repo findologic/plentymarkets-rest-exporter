@@ -55,6 +55,8 @@ class Product
 
     private int $wrapMode;
 
+    private string $variationGroupKey;
+
     /**
      * @param PimVariation[] $variationEntities
      */
@@ -65,7 +67,8 @@ class Product
         RegistryService $registryService,
         ProductEntity $productEntity,
         array $variationEntities,
-        int $wrapMode = self::WRAP_MODE_DEFAULT
+        int $wrapMode = self::WRAP_MODE_DEFAULT,
+        string $variationGroupKey = ''
     ) {
         $this->exporter = $exporter;
         $this->item = $exporter->createItem($productEntity->getId());
@@ -75,6 +78,7 @@ class Product
         $this->variationEntities = $variationEntities;
         $this->storeConfiguration = $storeConfiguration;
         $this->wrapMode = $wrapMode;
+        $this->variationGroupKey = $variationGroupKey;
     }
 
     /**
@@ -193,7 +197,14 @@ class Product
                 continue;
             }
 
-            $variation = new Variation($this->config, $this->registryService, $variationEntity);
+            $variation = new Variation(
+                $this->config,
+                $this->registryService,
+                $variationEntity,
+                $this->wrapMode,
+                $this->variationGroupKey
+            );
+
             $variation->processData();
 
             if (!$hasImage && $variation->getImage()) {

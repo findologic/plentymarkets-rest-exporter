@@ -18,6 +18,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage\Availability;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\AttributeValueName;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Image as PimImage;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\ImageAttributeValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Tag;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\TagName;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
@@ -96,16 +97,24 @@ class Variation
     /** @var string|null */
     protected $packageSize;
 
+    protected string $variationGroupKey;
+
+    protected int $wrapMode;
+
     protected bool $hasCategories = false;
 
     public function __construct(
         Config $config,
         RegistryService $registryService,
-        PimVariation $variationEntity
+        PimVariation $variationEntity,
+        int $wrapMode = Product::WRAP_MODE_DEFAULT,
+        string $variationGroupKey = ''
     ) {
         $this->config = $config;
         $this->variationEntity = $variationEntity;
         $this->registryService = $registryService;
+        $this->variationGroupKey = $variationGroupKey;
+        $this->wrapMode = $wrapMode;
     }
 
     public function processData(): void
@@ -424,17 +433,51 @@ class Variation
         // Sort images by position.
         usort($images, fn(PimImage $a, PimImage $b) => $a->getPosition() <=> $b->getPosition());
 
-        /** @var ItemImage $image */
+        $variantImage = $this->getVariantImage($images);
+
+        if ($variantImage) {
+            $this->image = $variantImage;
+        }
+    }
+
+    /**
+     * @param PimImage[] $images
+     * @return Image|null
+     */
+    private function getVariantImage(array $images): ?Image
+    {
+        $defaultWrapModeImage = null;
+        $variationAttributes = explode('/', $this->variationGroupKey);
+
         foreach ($images as $image) {
             $imageAvailabilities = $image->getAvailabilities();
             foreach ($imageAvailabilities as $imageAvailability) {
-                if ($imageAvailability->getType() === Availability::STORE) {
-                    $this->image = new Image($image->getUrlMiddle());
-
-                    return;
+                if ($imageAvailability->getType() !== Availability::STORE) {
+                    continue;
                 }
+
+                if ($this->wrapMode === Product::WRAP_MODE_DEFAULT) {
+                    return new Image($image->getUrlMiddle());
+                }
+
+                if (!$defaultWrapModeImage) {
+                    $defaultWrapModeImage = $image;
+                }
+
+                $separatedVariation = new SeparatedVariation($this->variationEntity, $this->registryService);
+                if (!$separatedVariation->isImageAvailable($image->getAttributeValueImages(), $variationAttributes)) {
+                    continue;
+                }
+
+                return new Image($image->getUrlMiddle());
             }
         }
+
+        if (!$this->image && $defaultWrapModeImage) {
+            return new Image($defaultWrapModeImage->getUrlMiddle());
+        }
+
+        return null;
     }
 
     private function processVatRate(): void

@@ -279,7 +279,14 @@
           "itemId": 131,
           "urlPreview": "https://cdn03.plentymarkets.com/0pb05rir4h9r/item/images/131/preview/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg",
           "id": 46,
-          "attributeValueImages": [],
+          "attributeValueImages": [
+            {
+              "itemId": "46",
+              "valueId": "1",
+              "imageId": "22",
+              "attributeId": "1"
+            }
+          ],
           "names": [
             {
               "name": "",
