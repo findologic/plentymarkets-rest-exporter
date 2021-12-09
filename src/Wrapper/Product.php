@@ -101,6 +101,7 @@ class Product
 
         $variationCount = $this->processVariations();
         if ($variationCount === 0 && $this->config->isExportUnavailableVariations()) {
+            $this->item = $this->exporter->createItem($this->productEntity->getId());
             $variationCount = $this->processVariations(false);
         }
         if ($variationCount === 0) {

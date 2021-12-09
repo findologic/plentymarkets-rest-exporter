@@ -202,6 +202,8 @@ class ProductTest extends TestCase
     public function testProductWithAllVariationsMatchingConfigurationAvailabilityAreExportedIfConfigured()
     {
         $this->exporterMock = $this->getExporter();
+        $expectedImage = 'https://cdn03.plentymarkets.com/0pb05rir4h9r/' .
+            'item/images/131/middle/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg';
 
         $this->config->setAvailabilityId(5);
         $this->config->setExportUnavailableVariations(true);
@@ -218,6 +220,7 @@ class ProductTest extends TestCase
         $line = $item->getCsvFragment();
         $columnValues = explode("\t", $line);
         $this->assertEquals('S-000813-C|modeeeel|1004|106|3213213213213|101|1005|107', $columnValues[1]);
+        $this->assertSame($expectedImage, $columnValues[10]);
     }
 
     public function testMatchingAvailabilityExportSettingDoesNotOverrideOtherVariationExportabilityChecks()
