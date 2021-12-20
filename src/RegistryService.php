@@ -392,7 +392,7 @@ class RegistryService
 
     protected function fetchItemProperties(): void
     {
-        $with = 'names,selections';
+        $with = ['names', 'selections'];
         $propertyRequest = new ItemPropertyRequest($with);
 
         foreach (Utils::sendIterableRequest($this->client, $propertyRequest) as $response) {
