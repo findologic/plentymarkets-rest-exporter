@@ -1,0 +1,615 @@
+{
+  "page": 1,
+  "totalsCount": 1,
+  "isLastPage": true,
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100,
+  "entries": [
+    {
+      "categories": [
+        {
+          "categoryId": 17,
+          "position": 0,
+          "isNeckermannPrimary": true
+        }
+      ],
+      "barcodes": [],
+      "additionalSkus": null,
+      "attributeValues": [],
+      "bundleComponents": null,
+      "clients": [
+        {
+          "plentyId": 37811
+        }
+      ],
+      "defaultCategories": null,
+      "images": [],
+      "marketIdentNumbers": null,
+      "markets": null,
+      "salesPrices": [
+        {
+          "salesPriceId": 1,
+          "price": 222,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        },
+        {
+          "salesPriceId": 2,
+          "price": 245,
+          "updatedAt": "2016-09-05T13:25:20+02:00",
+          "createdAt": "2016-09-05T13:25:20+02:00"
+        }
+      ],
+      "skus": null,
+      "supplier": null,
+      "warehouses": null,
+      "properties": [
+        {
+          "id": "14",
+          "propertyId": 7,
+          "groupId": 1,
+          "markup": 0,
+          "value": null,
+          "values": [
+            {
+              "id": "14",
+              "lang": "0",
+              "value": "8",
+              "description": ""
+            }
+          ],
+          "selectionValues": [
+            {
+              "id": "4",
+              "selectionId": "8"
+            }
+          ],
+          "property": {
+            "id": 7,
+            "cast": "multiSelection",
+            "type": "item",
+            "position": 5,
+            "createdAt": "2021-07-15 12:35:07",
+            "updatedAt": "2021-07-15 12:35:07",
+            "names": [
+              {
+                "id": 2,
+                "propertyId": 7,
+                "lang": "de",
+                "name": "test-multiselect-property",
+                "description": "",
+                "createdAt": "2021-07-15 12:35:07",
+                "updatedAt": "2021-07-15 12:35:07"
+              },
+              {
+                "id": 3,
+                "propertyId": 7,
+                "lang": "en",
+                "name": "test-multiselect-property",
+                "description": "For PLENTY-198",
+                "createdAt": "2021-07-15 12:35:07",
+                "updatedAt": "2021-07-15 12:35:07"
+              }
+            ],
+            "groups": [
+              {
+                "id": 1,
+                "position": 0,
+                "createdAt": "2021-07-15 12:35:07",
+                "updatedAt": "2021-07-15 12:35:07",
+                "names": [
+                  {
+                    "id": 2,
+                    "groupId": 1,
+                    "lang": "de",
+                    "name": "ATt",
+                    "description": "Ta",
+                    "createdAt": "2021-07-15 12:35:07",
+                    "updatedAt": "2021-07-15 12:35:07"
+                  },
+                  {
+                    "id": 1,
+                    "groupId": 1,
+                    "lang": "en",
+                    "name": "Attributes",
+                    "description": "",
+                    "createdAt": "2021-07-15 12:35:07",
+                    "updatedAt": "2021-07-15 12:35:07"
+                  }
+                ],
+                "options": [
+                  {
+                    "id": 2,
+                    "groupId": 1,
+                    "type": "groupType",
+                    "value": "select",
+                    "createdAt": "2021-07-15 12:35:07",
+                    "updatedAt": "2021-07-15 12:35:07"
+                  },
+                  {
+                    "id": 1,
+                    "groupId": 1,
+                    "type": "surchargeType",
+                    "value": "flat",
+                    "createdAt": "2021-07-15 12:35:07",
+                    "updatedAt": "2021-07-15 12:35:07"
+                  }
+                ]
+              }
+            ],
+            "selections": [
+              {
+                "id": 8,
+                "propertyId": 7,
+                "position": 0,
+                "createdAt": "2021-07-15 12:35:07",
+                "updatedAt": "2021-07-15 12:35:07",
+                "names": [
+                  {
+                    "id": 15,
+                    "selectionId": 8,
+                    "lang": "en",
+                    "name": "value1",
+                    "description": "",
+                    "createdAt": "2021-07-15 12:35:07",
+                    "updatedAt": "2021-07-15 12:35:07"
+                  },
+                  {
+                    "id": 18,
+                    "selectionId": 8,
+                    "lang": "de",
+                    "name": "value1",
+                    "description": "",
+                    "createdAt": "2021-07-15 12:35:07",
+                    "updatedAt": "2021-07-15 12:35:07"
+                  }
+                ]
+              },
+              {
+                "id": 9,
+                "propertyId": 7,
+                "position": 0,
+                "createdAt": "2021-07-15 12:35:07",
+                "updatedAt": "2021-07-15 12:35:07",
+                "names": [
+                  {
+                    "id": 16,
+                    "selectionId": 9,
+                    "lang": "en",
+                    "name": "value2",
+                    "description": "",
+                    "createdAt": "2021-07-15 12:35:07",
+                    "updatedAt": "2021-07-15 12:35:07"
+                  },
+                  {
+                    "id": 17,
+                    "selectionId": 9,
+                    "lang": "de",
+                    "name": "value2",
+                    "description": "",
+                    "createdAt": "2021-07-15 12:35:07",
+                    "updatedAt": "2021-07-15 12:35:07"
+                  }
+                ]
+              }
+            ],
+            "options": [
+              {
+                "id": 1201,
+                "propertyId": 7,
+                "type": "referrers",
+                "value": "10.00",
+                "createdAt": "2021-09-24 15:18:01",
+                "updatedAt": "2021-09-24 15:18:01"
+              }
+            ]
+          }
+        }
+      ],
+      "tags": [],
+      "comments": null,
+      "id": 1022,
+      "timestamps": null,
+      "unit": {
+        "unitId": 1,
+        "unitCombinationId": 1,
+        "content": 1
+      },
+      "base": {
+        "isMain": true,
+        "mainVariationId": null,
+        "itemId": 124,
+        "position": 0,
+        "isActive": true,
+        "number": "118",
+        "model": "",
+        "externalId": "",
+        "availability": 1,
+        "availabilityId": 1,
+        "estimatedAvailableAt": null,
+        "purchasePrice": 0,
+        "movingAveragePrice": 0,
+        "priceCalculationId": null,
+        "priceCalculationUUID": null,
+        "picking": null,
+        "stockLimitation": 1,
+        "isVisibleIfNetStockIsPositive": true,
+        "isInvisibleIfNetStockIsNotPositive": true,
+        "isAvailableIfNetStockIsPositive": false,
+        "isUnavailableIfNetStockIsNotPositive": false,
+        "isVisibleInListIfNetStockIsPositive": false,
+        "isInvisibleInListIfNetStockIsNotPositive": false,
+        "mainWarehouseId": 1,
+        "maximumOrderQuantity": null,
+        "minimumOrderQuantity": null,
+        "intervalOrderQuantity": null,
+        "availableUntil": null,
+        "releasedAt": null,
+        "name": "",
+        "weightG": 0,
+        "weightNetG": 0,
+        "widthMM": 0,
+        "lengthMM": 0,
+        "heightMM": 0,
+        "extraShippingCharge1": 0,
+        "extraShippingCharge2": 0,
+        "unitsContained": 1,
+        "palletTypeId": null,
+        "packingUnits": 0,
+        "packingUnitTypeId": 0,
+        "transportationCosts": 0,
+        "storageCosts": 0,
+        "customs": 0,
+        "operatingCosts": 0,
+        "vatId": 0,
+        "bundleType": null,
+        "automaticClientVisibility": 0,
+        "automaticListVisibility": 3,
+        "isHiddenInCategoryList": false,
+        "defaultShippingCosts": null,
+        "mayShowUnitPrice": true,
+        "parentVariationId": null,
+        "parentVariationQuantity": null,
+        "singleItemCount": null,
+        "hasCalculatedBundleWeight": null,
+        "hasCalculatedBundleNetWeight": null,
+        "hasCalculatedBundlePurchasePrice": null,
+        "hasCalculatedBundleMovingAveragePrice": null,
+        "customsTariffNumber": null,
+        "categoriesInherited": false,
+        "referrerInherited": false,
+        "clientsInherited": false,
+        "salesPricesInherited": false,
+        "supplierInherited": false,
+        "warehousesInherited": false,
+        "propertiesInherited": false,
+        "tagsInherited": false,
+        "characteristics": [
+          {
+            "propertyId": 3,
+            "variationId": 1022,
+            "itemId": 124,
+            "updatedAt": "2019-07-11 09:02:41",
+            "valueFile": null,
+            "valueTexts": [],
+            "valueInt": null,
+            "createdAt": "2019-07-11 09:02:41",
+            "surcharge": 0,
+            "propertySelection": [],
+            "propertySelectionId": null,
+            "id": 44,
+            "valueFloat": null
+          }
+        ],
+        "images": [
+          {
+            "availabilities": [
+              {
+                "imageId": 38,
+                "value": 139,
+                "type": "marketplace"
+              },
+              {
+                "value": 131,
+                "imageId": 38,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 38,
+                "type": "marketplace",
+                "value": 3
+              },
+              {
+                "type": "marketplace",
+                "value": 117,
+                "imageId": 38
+              },
+              {
+                "value": 110,
+                "imageId": 38,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 38,
+                "type": "marketplace",
+                "value": 6
+              },
+              {
+                "type": "marketplace",
+                "value": 108,
+                "imageId": 38
+              },
+              {
+                "value": 105,
+                "type": "marketplace",
+                "imageId": 38
+              },
+              {
+                "imageId": 38,
+                "value": 137,
+                "type": "marketplace"
+              },
+              {
+                "value": 126,
+                "imageId": 38,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 38,
+                "value": 120,
+                "type": "marketplace"
+              },
+              {
+                "value": 138,
+                "imageId": 38,
+                "type": "marketplace"
+              },
+              {
+                "value": 116,
+                "imageId": 38,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "value": 135,
+                "imageId": 38
+              },
+              {
+                "imageId": 38,
+                "type": "marketplace",
+                "value": 133
+              },
+              {
+                "type": "marketplace",
+                "value": 104,
+                "imageId": 38
+              },
+              {
+                "type": "marketplace",
+                "imageId": 38,
+                "value": 132
+              },
+              {
+                "type": "marketplace",
+                "imageId": 38,
+                "value": 134
+              },
+              {
+                "type": "marketplace",
+                "value": 143,
+                "imageId": 38
+              },
+              {
+                "type": "listing",
+                "value": -1,
+                "imageId": 38
+              },
+              {
+                "value": -1,
+                "type": "marketplace",
+                "imageId": 38
+              },
+              {
+                "type": "marketplace",
+                "value": 130,
+                "imageId": 38
+              },
+              {
+                "imageId": 38,
+                "type": "marketplace",
+                "value": 7
+              },
+              {
+                "type": "marketplace",
+                "imageId": 38,
+                "value": 102
+              },
+              {
+                "type": "marketplace",
+                "imageId": 38,
+                "value": 118
+              },
+              {
+                "type": "marketplace",
+                "imageId": 38,
+                "value": 136
+              },
+              {
+                "imageId": 38,
+                "value": 109,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 38,
+                "type": "marketplace",
+                "value": 114
+              },
+              {
+                "imageId": 38,
+                "value": 123,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 38,
+                "type": "marketplace",
+                "value": 115
+              },
+              {
+                "value": 121,
+                "type": "marketplace",
+                "imageId": 38
+              },
+              {
+                "type": "marketplace",
+                "value": 106,
+                "imageId": 38
+              },
+              {
+                "imageId": 38,
+                "type": "marketplace",
+                "value": 124
+              },
+              {
+                "value": 122,
+                "imageId": 38,
+                "type": "marketplace"
+              },
+              {
+                "value": 107,
+                "imageId": 38,
+                "type": "marketplace"
+              },
+              {
+                "imageId": 38,
+                "type": "mandant",
+                "value": -1
+              },
+              {
+                "imageId": 38,
+                "value": 127,
+                "type": "marketplace"
+              },
+              {
+                "value": 103,
+                "imageId": 38,
+                "type": "marketplace"
+              },
+              {
+                "type": "marketplace",
+                "imageId": 38,
+                "value": 5
+              },
+              {
+                "imageId": 38,
+                "type": "marketplace",
+                "value": 111
+              },
+              {
+                "type": "marketplace",
+                "imageId": 38,
+                "value": 119
+              },
+              {
+                "imageId": 38,
+                "value": 4,
+                "type": "marketplace"
+              }
+            ],
+            "url": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/124\/full\/124-Sessel-King-George.jpg",
+            "md5ChecksumOriginal": "",
+            "hasLinkedVariations": "0",
+            "md5Checksum": "",
+            "path": "S3:124:124-Sessel-King-George.jpg",
+            "attributeValueImages": [],
+            "urlMiddle": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/124\/middle\/124-Sessel-King-George.jpg",
+            "size": 0,
+            "names": [
+              {
+                "name": "",
+                "imageId": 38,
+                "alternate": "",
+                "lang": "de"
+              }
+            ],
+            "storageProviderId": "2",
+            "urlPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/124\/preview\/124-Sessel-King-George.jpg",
+            "position": 0,
+            "itemId": 124,
+            "createdAt": "2014-01-13T18:04:37+01:00",
+            "type": "internal",
+            "updatedAt": "2018-03-08T10:43:13+01:00",
+            "urlSecondPreview": "https:\/\/cdn03.plentymarkets.com\/v3b53of2xcyu\/item\/images\/124\/secondPreview\/124-Sessel-King-George.jpg",
+            "fileType": "jpg",
+            "height": 0,
+            "width": 0,
+            "id": 38
+          }
+        ],
+        "item": {
+          "id": 124,
+          "position": 0,
+          "add_cms_page": "0",
+          "condition": 0,
+          "free1": null,
+          "free2": null,
+          "free3": null,
+          "free4": null,
+          "free5": null,
+          "free6": null,
+          "free7": "0",
+          "free8": "0",
+          "free9": "0",
+          "free10": "0",
+          "free11": "0",
+          "free12": "0",
+          "free13": "0",
+          "free14": "0",
+          "free15": "0",
+          "free16": "0",
+          "free17": "0",
+          "free18": "0",
+          "free19": "0",
+          "free20": "0",
+          "gimahhot": "0",
+          "storeSpecial": 3,
+          "ownerId": null,
+          "manufacturerId": 1,
+          "producingCountryId": 1,
+          "revenueAccount": 0,
+          "couponRestriction": 0,
+          "conditionApi": 0,
+          "createdAt": "2014-01-13T00:00:00+01:00",
+          "updatedAt": "2020-04-07T12:43:54+02:00",
+          "isSubscribable": false,
+          "amazonFbaPlatform": 0,
+          "isShippableByAmazon": false,
+          "amazonProductType": 0,
+          "amazonFedas": "",
+          "ebayPresetId": null,
+          "ebayCategory": null,
+          "ebayCategory2": null,
+          "ebayStoreCategory": null,
+          "ebayStoreCategory2": null,
+          "rakutenCategoryId": null,
+          "flagOne": 14,
+          "flagTwo": 0,
+          "ageRestriction": 0,
+          "feedback": 0,
+          "itemType": "default",
+          "stockType": 0,
+          "sitemapPublished": "0",
+          "isSerialNumber": false,
+          "isShippingPackage": false,
+          "maximumOrderQuantity": 0,
+          "variationCount": "1",
+          "customsTariffNumber": "",
+          "mainVariationId": 1022,
+          "inactive": true
+        }
+      },
+      "inheritance": null
+    }
+  ]
+}

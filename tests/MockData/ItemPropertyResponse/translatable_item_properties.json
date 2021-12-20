@@ -1,0 +1,44 @@
+{
+  "page": 1,
+  "totalsCount": 3,
+  "isLastPage": true,
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 3,
+  "itemsPerPage": 100,
+  "entries": [
+    {
+      "id": 3,
+      "position": 15,
+      "unit": "AA",
+      "propertyGroupId": 1,
+      "backendName": "Third PropertyS",
+      "valueType": "empty",
+      "isSearchable": true,
+      "isOderProperty": false,
+      "isShownOnItemPage": true,
+      "isShownOnItemList": true,
+      "isShownAtCheckout": false,
+      "isShownInPdf": false,
+      "comment": "",
+      "surcharge": 0,
+      "isShownAsAdditionalCosts": false,
+      "updatedAt": "2021-12-20T08:24:11+00:00",
+      "names": [
+        {
+          "propertyId": "3",
+          "lang": "de",
+          "name": "third test de",
+          "description": ""
+        },
+        {
+          "propertyId": "3",
+          "lang": "en",
+          "name": "Third Property EN",
+          "description": ""
+        }
+      ],
+      "selections": []
+    }
+  ]
+}
