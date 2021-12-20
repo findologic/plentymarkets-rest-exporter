@@ -1,0 +1,37 @@
+{
+  "page": 1,
+  "totalsCount": 2,
+  "isLastPage": true,
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 2,
+  "itemsPerPage": "100",
+  "entries": [
+    {
+      "id": 1,
+      "position": 0,
+      "createdAt": "2021-07-15T11:35:07+01:00",
+      "updatedAt": "2021-07-15T11:35:07+01:00",
+      "names": [
+        {
+          "id": 1,
+          "groupId": 1,
+          "lang": "en",
+          "name": "Test Group EN",
+          "description": "",
+          "createdAt": "2021-07-15T11:35:07+01:00",
+          "updatedAt": "2021-07-15T11:35:07+01:00"
+        },
+        {
+          "id": 2,
+          "groupId": 1,
+          "lang": "de",
+          "name": "Test Group DE",
+          "description": "Ta",
+          "createdAt": "2021-07-15T11:35:07+01:00",
+          "updatedAt": "2021-07-15T11:35:07+01:00"
+        }
+      ]
+    }
+  ]
+}

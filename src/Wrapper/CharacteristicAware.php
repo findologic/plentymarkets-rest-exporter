@@ -102,7 +102,7 @@ trait CharacteristicAware
 
         switch ($propertyType) {
             case CastType::EMPTY:
-                return $variationProperty->getBackendName();
+                return $this->getCharacteristicName($variationProperty, $variationProperty->getBackendName());
             case CastType::TEXT:
                 /** @var CharacteristicText|null $text */
                 $text = Translator::translate($characteristic->getValueTexts(), $this->config->getLanguage());
