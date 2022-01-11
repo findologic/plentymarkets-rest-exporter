@@ -366,25 +366,12 @@ class Product
     private function buildProductUrl(string $urlPath): string
     {
         if ($this->shouldUseCallistoUrl()) {
-            return sprintf(
-                '%s://%s%s/%s/a-%s',
-                $this->config->getProtocol(),
-                $this->getWebStoreHost(),
-                $this->getLanguageUrlPrefix(),
-                trim($urlPath, '/'),
-                $this->productEntity->getId()
-            );
+            $url = $this->getCallistoUrl($urlPath);
+        } else {
+            $url = $this->getPlentyShopUrl($urlPath);
         }
 
-        return sprintf(
-            '%s://%s%s/%s_%s_%s',
-            $this->config->getProtocol(),
-            $this->getWebStoreHost(),
-            $this->getLanguageUrlPrefix(),
-            trim($urlPath, '/'),
-            $this->productEntity->getId(),
-            $this->wrapMode ? $this->variationEntities[0]->getId() : $this->productEntity->getMainVariationId()
-        );
+        return $url;
     }
 
     private function shouldUseCallistoUrl(): bool
@@ -396,6 +383,40 @@ class Product
         }
 
         return filter_var($config['global.enableOldUrlPattern'], FILTER_VALIDATE_BOOLEAN);
+    }
+
+    private function getCallistoUrl(string $urlPath): string
+    {
+        return sprintf(
+            '%s://%s%s/%s/a-%s',
+            $this->config->getProtocol(),
+            $this->getWebStoreHost(),
+            $this->getLanguageUrlPrefix(),
+            trim($urlPath, '/'),
+            $this->productEntity->getId()
+        );
+    }
+
+    private function getPlentyShopUrl(string $urlPath): string
+    {
+        $productUrl = sprintf(
+            '%s://%s%s/%s_%s',
+            $this->config->getProtocol(),
+            $this->getWebStoreHost(),
+            $this->getLanguageUrlPrefix(),
+            trim($urlPath, '/'),
+            $this->productEntity->getId(),
+        );
+
+        $config = $this->registryService->getPluginConfigurations('Ceres');
+        if (isset($config['item.show_please_select'])) {
+            return $productUrl;
+        } else {
+            $variationId = $this->wrapMode ?
+                $this->variationEntities[0]->getId() : $this->productEntity->getMainVariationId();
+
+            return sprintf($productUrl . '_%s', $variationId);
+        }
     }
 
     private function getWebStoreHost(): string
