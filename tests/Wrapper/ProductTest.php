@@ -853,15 +853,16 @@ class ProductTest extends TestCase
         return [
             'Url with variation id when "item.show_please_select" disabled' => [
                 'plentyShopConfig' => [
-                    'global.enableOldUrlPattern' => false
+                    'item.show_please_select' => false,
+                    'global.enableOldUrlPattern' => false,
                 ],
                 'baseUrlPath' => $baseUrlPath,
                 'expectedProductUrl' => $baseUrlPath . '_0_0'
             ],
             'Url with variation id when "item.show_please_select" enabled' => [
                 'plentyShopConfig' => [
+                    'item.show_please_select' => true,
                     'global.enableOldUrlPattern' => false,
-                    'item.show_please_select' => true
                 ],
                 'baseUrlPath' => $baseUrlPath,
                 'expectedProductUrl' => $baseUrlPath . '_0'
