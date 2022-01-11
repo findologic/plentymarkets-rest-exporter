@@ -57,6 +57,8 @@ class Product
 
     private string $variationGroupKey;
 
+    private array $plentyShopConfig;
+
     /**
      * @param PimVariation[] $variationEntities
      */
@@ -79,6 +81,7 @@ class Product
         $this->storeConfiguration = $storeConfiguration;
         $this->wrapMode = $wrapMode;
         $this->variationGroupKey = $variationGroupKey;
+        $this->plentyShopConfig = $this->registryService->getPluginConfigurations('Ceres');
     }
 
     /**
@@ -374,13 +377,11 @@ class Product
 
     private function shouldUseCallistoUrl(): bool
     {
-        $config = $this->registryService->getPluginConfigurations('Ceres');
-
-        if (!isset($config['global.enableOldUrlPattern'])) {
+        if (!isset($this->plentyShopConfig['global.enableOldUrlPattern'])) {
             return true;
         }
 
-        return filter_var($config['global.enableOldUrlPattern'], FILTER_VALIDATE_BOOLEAN);
+        return filter_var($this->plentyShopConfig['global.enableOldUrlPattern'], FILTER_VALIDATE_BOOLEAN);
     }
 
     private function getCallistoUrl(string $urlPath): string
@@ -406,8 +407,7 @@ class Product
             $this->productEntity->getId(),
         );
 
-        $config = $this->registryService->getPluginConfigurations('Ceres');
-        if (isset($config['item.show_please_select'])) {
+        if (isset($this->plentyShopConfig['item.show_please_select'])) {
             return $productUrl;
         } else {
             $variationId = $this->wrapMode ?
