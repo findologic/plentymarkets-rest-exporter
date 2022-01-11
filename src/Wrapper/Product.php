@@ -406,10 +406,10 @@ class Product
             trim($urlPath, '/'),
             $this->productEntity->getId(),
         );
-
-        if (isset($this->plentyShopConfig['item.show_please_select']) &&
-            filter_var($this->plentyShopConfig['item.show_please_select'], FILTER_VALIDATE_BOOLEAN)) {
-
+        
+        if (        isset($this->plentyShopConfig['item.show_please_select']) &&
+            filter_var($this->plentyShopConfig['item.show_please_select'], FILTER_VALIDATE_BOOLEAN)
+        ) {
             return $productUrl;
         } else {
             $variationId = $this->wrapMode ?
