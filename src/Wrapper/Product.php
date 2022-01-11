@@ -366,12 +366,10 @@ class Product
     private function buildProductUrl(string $urlPath): string
     {
         if ($this->shouldUseCallistoUrl()) {
-            $url = $this->getCallistoUrl($urlPath);
+            return $this->getCallistoUrl($urlPath);
         } else {
-            $url = $this->getPlentyShopUrl($urlPath);
+            return $this->getPlentyShopUrl($urlPath);
         }
-
-        return $url;
     }
 
     private function shouldUseCallistoUrl(): bool
