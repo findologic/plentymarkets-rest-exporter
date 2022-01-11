@@ -874,8 +874,8 @@ class ProductTest extends TestCase
     public function testPlentyShopUrlWithoutVariationIdIsUsedWhenConfigured(
         $plentyShopConfig,
         $baseUrlPath,
-        $expectedProductUrl): void
-    {
+        $expectedProductUrl
+    ): void {
         $this->exporterMock = $this->getExporter();
 
         $rawVariation = $this->getMockResponse('Pim/Variations/response.json');
