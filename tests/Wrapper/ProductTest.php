@@ -847,6 +847,84 @@ class ProductTest extends TestCase
         );
     }
 
+    public function itemShowPleaseSelectProvider()
+    {
+        $baseUrlPath = 'awesome-url-path/somewhere-in-the-store';
+        return [
+            'Url with variation id when "item.show_please_select" disabled' => [
+                'plentyShopConfig' => [
+                    'global.enableOldUrlPattern' => false
+                ],
+                'baseUrlPath' => $baseUrlPath,
+                'expectedProductUrl' => $baseUrlPath . '_0_0'
+            ],
+            'Url with variation id when "item.show_please_select" enabled' => [
+                'plentyShopConfig' => [
+                    'global.enableOldUrlPattern' => false,
+                    'item.show_please_select' => true
+                ],
+                'baseUrlPath' => $baseUrlPath,
+                'expectedProductUrl' => $baseUrlPath . '_0'
+            ]
+        ];
+    }
+    /**
+     * @dataProvider itemShowPleaseSelectProvider
+     */
+    public function testPlentyShopUrlWithoutVariationIdIsUsedWhenConfigured(
+        $plentyShopConfig,
+        $baseUrlPath,
+        $expectedProductUrl): void
+    {
+        $this->exporterMock = $this->getExporter();
+
+        $rawVariation = $this->getMockResponse('Pim/Variations/response.json');
+        $variations = PimVariationsParser::parse($rawVariation);
+
+        $rawWebStores = $this->getMockResponse('WebStoreResponse/response.json');
+        $webStores = WebStoreParser::parse($rawWebStores);
+
+        $this->storeConfigurationMock->expects($this->exactly(2))
+            ->method('getDisplayItemName')
+            ->willReturn(1);
+
+        $this->storeConfigurationMock->expects($this->once())->method('getDefaultLanguage')
+            ->willReturn('de');
+
+        $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
+        $this->registryServiceMock->expects($this->once())
+            ->method('getPluginConfigurations')
+            ->with('Ceres')
+            ->willReturn($plentyShopConfig);
+
+        $text = new Text([
+            'lang' => 'de',
+            'name1' => 'Pretty awesome name!',
+            'name2' => 'wrong',
+            'name3' => 'wrong',
+            'shortDescription' => 'Easy, transparent, sexy',
+            'metaDescription' => 'my father gave me a small loan of a million dollar.',
+            'description' => 'That is the best item, and I am a bit longer text.',
+            'technicalData' => 'Interesting technical information.',
+            'urlPath' => $baseUrlPath,
+            'keywords' => 'get me out',
+        ]);
+
+        $this->itemMock->expects($this->once())
+            ->method('getTexts')
+            ->willReturn([$text]);
+
+        $this->variationEntityMocks[] = $variations->first();
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $this->assertSame(
+            'https://plenty-testshop.de/' . $expectedProductUrl,
+            $item->getUrl()->getValues()['']
+        );
+    }
+
     private function getProduct(): Product
     {
         return new Product(
