@@ -847,11 +847,11 @@ class ProductTest extends TestCase
         );
     }
 
-    public function itemShowPleaseSelectProvider()
+    public function itemShowPleaseSelectProvider(): array
     {
         $baseUrlPath = 'awesome-url-path/somewhere-in-the-store';
         return [
-            'Url with variation id when "item.show_please_select" disabled' => [
+            'url with variation id when "item.show_please_select" disabled' => [
                 'plentyShopConfig' => [
                     'item.show_please_select' => false,
                     'global.enableOldUrlPattern' => false,
@@ -859,7 +859,7 @@ class ProductTest extends TestCase
                 'baseUrlPath' => $baseUrlPath,
                 'expectedProductUrl' => $baseUrlPath . '_0_0'
             ],
-            'Url without variation id when "item.show_please_select" enabled' => [
+            'url without variation id when "item.show_please_select" enabled' => [
                 'plentyShopConfig' => [
                     'item.show_please_select' => true,
                     'global.enableOldUrlPattern' => false,
@@ -869,13 +869,14 @@ class ProductTest extends TestCase
             ]
         ];
     }
+
     /**
      * @dataProvider itemShowPleaseSelectProvider
      */
-    public function testPlentyShopUrlWithoutVariationIdIsUsedWhenConfigured(
-        $plentyShopConfig,
-        $baseUrlPath,
-        $expectedProductUrl
+    public function testPlentyShopUrlIncludesVariationIdWhenConfigured(
+        array $plentyShopConfig,
+        string $baseUrlPath,
+        string $expectedProductUrl
     ): void {
         $this->exporterMock = $this->getExporter();
 

@@ -381,7 +381,7 @@ class Product
             return true;
         }
 
-        return filter_var($this->plentyShopConfig['global.enableOldUrlPattern'], FILTER_VALIDATE_BOOLEAN);
+        return Utils::filterBoolean($this->plentyShopConfig['global.enableOldUrlPattern']);
     }
 
     private function getCallistoUrl(string $urlPath): string
@@ -408,7 +408,7 @@ class Product
         );
 
         if (isset($this->plentyShopConfig['item.show_please_select'])) {
-            if (filter_var($this->plentyShopConfig['item.show_please_select'], FILTER_VALIDATE_BOOLEAN)) {
+            if (Utils::filterBoolean($this->plentyShopConfig['item.show_please_select'])) {
                 return $productUrl;
             }
         }
