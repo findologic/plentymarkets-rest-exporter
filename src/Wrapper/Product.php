@@ -407,7 +407,7 @@ class Product
             $this->productEntity->getId(),
         );
 
-        if (isset($this->plentyShopConfig['item.show_please_select']) {
+        if (isset($this->plentyShopConfig['item.show_please_select'])) {
             if (filter_var($this->plentyShopConfig['item.show_please_select'], FILTER_VALIDATE_BOOLEAN)) {
                 return $productUrl;
             }
