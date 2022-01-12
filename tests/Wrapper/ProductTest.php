@@ -859,7 +859,7 @@ class ProductTest extends TestCase
                 'baseUrlPath' => $baseUrlPath,
                 'expectedProductUrl' => $baseUrlPath . '_0_0'
             ],
-            'Url with variation id when "item.show_please_select" enabled' => [
+            'Url without variation id when "item.show_please_select" enabled' => [
                 'plentyShopConfig' => [
                     'item.show_please_select' => true,
                     'global.enableOldUrlPattern' => false,

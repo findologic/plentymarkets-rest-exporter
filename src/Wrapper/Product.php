@@ -406,17 +406,17 @@ class Product
             trim($urlPath, '/'),
             $this->productEntity->getId(),
         );
-        
-        if (        isset($this->plentyShopConfig['item.show_please_select']) &&
-            filter_var($this->plentyShopConfig['item.show_please_select'], FILTER_VALIDATE_BOOLEAN)
-        ) {
-            return $productUrl;
-        } else {
-            $variationId = $this->wrapMode ?
-                $this->variationEntities[0]->getId() : $this->productEntity->getMainVariationId();
 
-            return sprintf($productUrl . '_%s', $variationId);
+        if (isset($this->plentyShopConfig['item.show_please_select']) {
+            if (filter_var($this->plentyShopConfig['item.show_please_select'], FILTER_VALIDATE_BOOLEAN)) {
+                return $productUrl;
+            }
         }
+
+        $variationId = $this->wrapMode ?
+            $this->variationEntities[0]->getId() : $this->productEntity->getMainVariationId();
+
+        return sprintf($productUrl . '_%s', $variationId);
     }
 
     private function getWebStoreHost(): string
