@@ -447,24 +447,29 @@ class Variation
     private function getVariantImage(array $images): ?Image
     {
         $defaultWrapModeImage = null;
-        $variationAttributes = explode('/', $this->variationGroupKey);
 
         foreach ($images as $image) {
             $imageAvailabilities = $image->getAvailabilities();
             foreach ($imageAvailabilities as $imageAvailability) {
+                $checkIfGroupable = true;
+
                 if ($imageAvailability->getType() !== Availability::STORE) {
                     continue;
-                }
-
-                if ($this->wrapMode === Product::WRAP_MODE_DEFAULT) {
-                    return new Image($image->getUrlMiddle());
                 }
 
                 if (!$defaultWrapModeImage) {
                     $defaultWrapModeImage = $image;
                 }
 
+                if ($this->wrapMode === Product::WRAP_MODE_DEFAULT) {
+                    $checkIfGroupable = false;
+                }
+
                 $separatedVariation = new SeparatedVariation($this->variationEntity, $this->registryService);
+                $variationAttributes =  $separatedVariation->getVariationAttributes(
+                    $this->variationGroupKey,
+                    $checkIfGroupable
+                );
                 if (!$separatedVariation->isImageAvailable($image->getAttributeValueImages(), $variationAttributes)) {
                     continue;
                 }

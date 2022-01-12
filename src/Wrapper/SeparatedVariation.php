@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Attribute;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\ImageAttributeValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
 
@@ -36,6 +37,11 @@ class SeparatedVariation
         foreach ($imageAttributeValues as $imageAttributeValue) {
             foreach ($variationAttributes as $variationAttribute) {
                 $attributeData = explode(self::ATTRIBUTE_VALUE_SEPARATOR, $variationAttribute);
+
+                if (count($attributeData) !== 2) {
+                    continue;
+                }
+
                 $imageAttributeId = (string)$imageAttributeValue->getAttributeId();
                 $imageValueId = (string)$imageAttributeValue->getValueId();
                 $variationAttributeId = (string)$attributeData[0];
@@ -57,16 +63,14 @@ class SeparatedVariation
      * and generates keys from groupable attributes ids and values. If there is just a one attribute,
      * then we returning a variation id for separating variations by one attribute.
      */
-    public function getVariationGroupKey(): string
+    public function getVariationGroupKey(bool $force = false, bool $checkIfGroupable = true): string
     {
         $attributeValues = $this->variation->getAttributeValues();
         $groupableAttributes = 0;
         $key = '';
 
         foreach ($attributeValues as $attributeValue) {
-            $attribute = $this->registryService->getAttribute($attributeValue->getId());
-
-            if (!$attribute || !$attribute->isGroupable()) {
+            if ($checkIfGroupable && !$this->checkIfGroupable($attributeValue)) {
                 continue;
             }
 
@@ -79,10 +83,30 @@ class SeparatedVariation
             $key .= $attributeValue->getId() . self::ATTRIBUTE_VALUE_SEPARATOR . $attributeValue->getValue()->getId();
         }
 
-        if ($groupableAttributes === 0 || count($attributeValues) > 1) {
+        if ($groupableAttributes === 0 || count($attributeValues) > 1 || $force) {
             return $key;
         }
 
         return (string)$this->variation->getId();
+    }
+
+    public function getVariationAttributes(string $variationAttr, bool $checkIfGroupable): array
+    {
+        if (strpos($variationAttr, self::ATTRIBUTE_VALUE_SEPARATOR)) {
+            return explode(self::MULTIPLE_KEYS_SEPARATOR, $variationAttr);
+        }
+
+        return explode(self::MULTIPLE_KEYS_SEPARATOR, $this->getVariationGroupKey(true, $checkIfGroupable));
+    }
+
+    private function checkIfGroupable(Attribute $attributeValue): bool
+    {
+        $attribute = $this->registryService->getAttribute($attributeValue->getId());
+
+        if (!$attribute || !$attribute->isGroupable()) {
+            return false;
+        }
+
+        return true;
     }
 }

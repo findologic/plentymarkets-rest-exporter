@@ -29,6 +29,12 @@ class Product
 
     public const WRAP_MODE_SEPARATE_VARIATIONS = 1;
 
+    private const VARIATION_ID = 'id';
+
+    private const PRICE = 'price';
+
+    private const IMAGE = 'image';
+
     /** @var Item */
     private $item;
 
@@ -56,6 +62,8 @@ class Product
     private int $wrapMode;
 
     private string $variationGroupKey;
+
+    private ?int $cheapestVariationId = null;
 
     /**
      * @param PimVariation[] $variationEntities
@@ -183,6 +191,7 @@ class Product
     {
         $hasImage = false;
         $hasCategories = false;
+        $hasPrice = false;
         $variationsProcessed = 0;
         $prices = [];
         $insteadPrices = [];
@@ -191,6 +200,8 @@ class Product
         $baseUnit = null;
         $packageSize = null;
         $variationId = null;
+        $variationsPriceData = [];
+        $defaultImg = null;
 
         foreach ($this->variationEntities as $variationEntity) {
             if (!$this->shouldExportVariation($variationEntity, $checkAvailability)) {
@@ -207,9 +218,21 @@ class Product
 
             $variation->processData();
 
-            if (!$hasImage && $variation->getImage()) {
+            if (!$hasImage && $variation->getImage() && $this->registryService->shouldUseLegacyCallistoUrl()) {
                 $this->item->addImage($variation->getImage());
                 $hasImage = true;
+            }
+
+            if (!$defaultImg && $variation->getImage()) {
+                $defaultImg = $variation->getImage();
+            }
+
+            if (!$this->registryService->shouldUseLegacyCallistoUrl() && $variation->getPrice() !== 0.0) {
+                $variationsPriceData[] = [
+                    self::VARIATION_ID => $variation->getId(),
+                    self::PRICE => $variation->getPrice(),
+                    self::IMAGE => $variation->getImage()
+                ];
             }
 
             foreach ($variation->getGroups() as $group) {
@@ -257,6 +280,27 @@ class Product
             $variationsProcessed++;
         }
 
+        if (!empty($variationsPriceData)) {
+            $priceColumn = array_column($variationsPriceData, self::PRICE);
+            array_multisort($priceColumn, SORT_ASC, $variationsPriceData);
+            $cheapestVariationData = reset($variationsPriceData);
+            $this->cheapestVariationId = $cheapestVariationData[self::VARIATION_ID];
+
+            if (!$hasImage && !empty($cheapestVariationData) && $cheapestVariationData[self::IMAGE]) {
+                $this->item->addImage($cheapestVariationData[self::IMAGE]);
+                $hasImage = true;
+            }
+
+            if (!$hasPrice && $cheapestVariationData[self::PRICE]) {
+                $this->item->addPrice($cheapestVariationData[self::PRICE]);
+                $hasPrice = true;
+            }
+        }
+
+        if (!$hasImage && $defaultImg) {
+            $this->item->addImage($defaultImg);
+        }
+
         // If no children have categories, we're skipping this product.
         if (!$hasCategories) {
             return 0;
@@ -267,7 +311,7 @@ class Product
             $this->item->setTaxRate($variation->getVatRate());
         }
 
-        if ($prices) {
+        if ($prices && !$hasPrice) {
             $this->item->addPrice(min($prices));
         }
 
@@ -365,7 +409,7 @@ class Product
 
     private function buildProductUrl(string $urlPath): string
     {
-        if ($this->shouldUseCallistoUrl()) {
+        if ($this->registryService->shouldUseLegacyCallistoUrl()) {
             return sprintf(
                 '%s://%s%s/%s/a-%s',
                 $this->config->getProtocol(),
@@ -376,6 +420,9 @@ class Product
             );
         }
 
+        $cheapestVariationId = ($this->cheapestVariationId !== null) ?
+            $this->cheapestVariationId : $this->productEntity->getMainVariationId();
+
         return sprintf(
             '%s://%s%s/%s_%s_%s',
             $this->config->getProtocol(),
@@ -383,19 +430,8 @@ class Product
             $this->getLanguageUrlPrefix(),
             trim($urlPath, '/'),
             $this->productEntity->getId(),
-            $this->wrapMode ? $this->variationEntities[0]->getId() : $this->productEntity->getMainVariationId()
+            $this->wrapMode ? $this->variationEntities[0]->getId() : $cheapestVariationId
         );
-    }
-
-    private function shouldUseCallistoUrl(): bool
-    {
-        $config = $this->registryService->getPluginConfigurations('Ceres');
-
-        if (!isset($config['global.enableOldUrlPattern'])) {
-            return true;
-        }
-
-        return filter_var($config['global.enableOldUrlPattern'], FILTER_VALIDATE_BOOLEAN);
     }
 
     private function getWebStoreHost(): string
