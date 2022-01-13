@@ -723,6 +723,56 @@ class VariationTest extends TestCase
         $this->assertEqualsCanonicalizing($expectedExportedAttributes, $wrapper->getAttributes());
     }
 
+    /**
+     * @dataProvider emptyCharacteristicIsExportedWithTranslatedNameTestProvider
+     */
+    public function testEmptyCharacteristicIsExportedWithTranslatedName(
+        string $language,
+        array $expectedAttributes
+    ): void {
+        $config = $this->getDefaultConfig();
+        $config->setLanguage($language);
+
+        $variationEntity = $this->getVariationEntity(
+            'Pim/Variations/response_variation_with_translatable_characteristics.json'
+        );
+
+        $wrapper = new VariationWrapper(
+            $config,
+            $this->registryServiceMock,
+            $variationEntity
+        );
+
+        $characteristicEntity = ItemPropertyParser::parse(
+            $this->getMockResponse('ItemPropertyResponse/translatable_item_properties.json')
+        )->first();
+        $propertyGroupEntity = ItemPropertyGroupParser::parse(
+            $this->getMockResponse('ItemPropertyGroupResponse/empty_with_names.json')
+        )->first();
+
+        $this->registryServiceMock->expects($this->any())->method('getItemProperty')
+            ->willReturn($characteristicEntity);
+        $this->registryServiceMock->expects($this->any())->method('getItemPropertyGroup')
+            ->willReturn($propertyGroupEntity);
+
+        $wrapper->processData();
+        $this->assertEqualsCanonicalizing($expectedAttributes, $wrapper->getAttributes());
+    }
+
+    public function emptyCharacteristicIsExportedWithTranslatedNameTestProvider(): array
+    {
+        return [
+            'using EN language' => [
+                'en',
+                [new Attribute('Test Group EN', ['Third Property EN'])]
+            ],
+            'using DE language' => [
+                'de',
+                [new Attribute('Test Group DE', ['third test de'])]
+            ],
+        ];
+    }
+
     public function testTextCharacteristicsAreExportedProperly(): void
     {
         $expectedExportedAttributes = [

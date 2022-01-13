@@ -110,6 +110,14 @@ class Utils
         return $_ENV[$key];
     }
 
+    /**
+     * @param mixed $value
+     */
+    public static function filterBoolean($value): bool
+    {
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
+
     private static function getCustomerLoginConfiguration(
         string $customerLoginUri,
         string $shopkey,

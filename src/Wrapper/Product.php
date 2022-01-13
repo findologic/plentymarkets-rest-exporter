@@ -65,6 +65,8 @@ class Product
 
     private ?int $cheapestVariationId = null;
 
+    private array $plentyShopConfig;
+
     /**
      * @param PimVariation[] $variationEntities
      */
@@ -87,6 +89,7 @@ class Product
         $this->storeConfiguration = $storeConfiguration;
         $this->wrapMode = $wrapMode;
         $this->variationGroupKey = $variationGroupKey;
+        $this->plentyShopConfig = $this->registryService->getPluginConfigurations('Ceres');
     }
 
     /**
@@ -410,28 +413,48 @@ class Product
     private function buildProductUrl(string $urlPath): string
     {
         if ($this->registryService->shouldUseLegacyCallistoUrl()) {
-            return sprintf(
-                '%s://%s%s/%s/a-%s',
-                $this->config->getProtocol(),
-                $this->getWebStoreHost(),
-                $this->getLanguageUrlPrefix(),
-                trim($urlPath, '/'),
-                $this->productEntity->getId()
-            );
+            return $this->getCallistoUrl($urlPath);
+        } else {
+            return $this->getPlentyShopUrl($urlPath);
         }
+    }
 
-        $cheapestVariationId = ($this->cheapestVariationId !== null) ?
-            $this->cheapestVariationId : $this->productEntity->getMainVariationId();
-
+    private function getCallistoUrl(string $urlPath): string
+    {
         return sprintf(
-            '%s://%s%s/%s_%s_%s',
+            '%s://%s%s/%s/a-%s',
             $this->config->getProtocol(),
             $this->getWebStoreHost(),
             $this->getLanguageUrlPrefix(),
             trim($urlPath, '/'),
             $this->productEntity->getId(),
-            $this->wrapMode ? $this->variationEntities[0]->getId() : $cheapestVariationId
         );
+    }
+
+    private function getPlentyShopUrl(string $urlPath): string
+    {
+        $productUrl = sprintf(
+            '%s://%s%s/%s_%s',
+            $this->config->getProtocol(),
+            $this->getWebStoreHost(),
+            $this->getLanguageUrlPrefix(),
+            trim($urlPath, '/'),
+            $this->productEntity->getId(),
+        );
+
+        if (isset($this->plentyShopConfig['item.show_please_select'])) {
+            if (Utils::filterBoolean($this->plentyShopConfig['item.show_please_select'])) {
+                return $productUrl;
+            }
+        }
+
+        $cheapestVariationId = ($this->cheapestVariationId !== null) ?
+            $this->cheapestVariationId : $this->productEntity->getMainVariationId();
+
+        $variationId = $this->wrapMode ?
+            $this->variationEntities[0]->getId() : $cheapestVariationId;
+
+        return sprintf($productUrl . '_%s', $variationId);
     }
 
     private function getWebStoreHost(): string

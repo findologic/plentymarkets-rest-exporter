@@ -403,7 +403,8 @@ class RegistryService
 
     protected function fetchItemProperties(): void
     {
-        $propertyRequest = new ItemPropertyRequest();
+        $with = ['names', 'selections'];
+        $propertyRequest = new ItemPropertyRequest($with);
 
         foreach (Utils::sendIterableRequest($this->client, $propertyRequest) as $response) {
             $propertyResponse = ItemPropertyParser::parse($response);

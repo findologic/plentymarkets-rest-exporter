@@ -8,7 +8,7 @@ class ItemPropertyRequest extends Request implements IterableRequestInterface
 {
     use IterableRequest;
 
-    public function __construct(?string $with = null, ?string $updatedAt = null, ?string $groupId = null)
+    public function __construct(?array $with = null, ?string $updatedAt = null, ?string $groupId = null)
     {
         parent::__construct(
             'GET',
