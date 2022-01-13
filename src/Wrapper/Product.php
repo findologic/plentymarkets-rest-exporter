@@ -57,6 +57,8 @@ class Product
 
     private string $variationGroupKey;
 
+    private array $plentyShopConfig;
+
     /**
      * @param PimVariation[] $variationEntities
      */
@@ -79,6 +81,7 @@ class Product
         $this->storeConfiguration = $storeConfiguration;
         $this->wrapMode = $wrapMode;
         $this->variationGroupKey = $variationGroupKey;
+        $this->plentyShopConfig = $this->registryService->getPluginConfigurations('Ceres');
     }
 
     /**
@@ -366,36 +369,54 @@ class Product
     private function buildProductUrl(string $urlPath): string
     {
         if ($this->shouldUseCallistoUrl()) {
-            return sprintf(
-                '%s://%s%s/%s/a-%s',
-                $this->config->getProtocol(),
-                $this->getWebStoreHost(),
-                $this->getLanguageUrlPrefix(),
-                trim($urlPath, '/'),
-                $this->productEntity->getId()
-            );
+            return $this->getCallistoUrl($urlPath);
+        } else {
+            return $this->getPlentyShopUrl($urlPath);
+        }
+    }
+
+    private function shouldUseCallistoUrl(): bool
+    {
+        if (!isset($this->plentyShopConfig['global.enableOldUrlPattern'])) {
+            return true;
         }
 
+        return Utils::filterBoolean($this->plentyShopConfig['global.enableOldUrlPattern']);
+    }
+
+    private function getCallistoUrl(string $urlPath): string
+    {
         return sprintf(
-            '%s://%s%s/%s_%s_%s',
+            '%s://%s%s/%s/a-%s',
+            $this->config->getProtocol(),
+            $this->getWebStoreHost(),
+            $this->getLanguageUrlPrefix(),
+            trim($urlPath, '/'),
+            $this->productEntity->getId()
+        );
+    }
+
+    private function getPlentyShopUrl(string $urlPath): string
+    {
+        $productUrl = sprintf(
+            '%s://%s%s/%s_%s',
             $this->config->getProtocol(),
             $this->getWebStoreHost(),
             $this->getLanguageUrlPrefix(),
             trim($urlPath, '/'),
             $this->productEntity->getId(),
-            $this->wrapMode ? $this->variationEntities[0]->getId() : $this->productEntity->getMainVariationId()
         );
-    }
 
-    private function shouldUseCallistoUrl(): bool
-    {
-        $config = $this->registryService->getPluginConfigurations('Ceres');
-
-        if (!isset($config['global.enableOldUrlPattern'])) {
-            return true;
+        if (isset($this->plentyShopConfig['item.show_please_select'])) {
+            if (Utils::filterBoolean($this->plentyShopConfig['item.show_please_select'])) {
+                return $productUrl;
+            }
         }
 
-        return filter_var($config['global.enableOldUrlPattern'], FILTER_VALIDATE_BOOLEAN);
+        $variationId = $this->wrapMode ?
+            $this->variationEntities[0]->getId() : $this->productEntity->getMainVariationId();
+
+        return sprintf($productUrl . '_%s', $variationId);
     }
 
     private function getWebStoreHost(): string
