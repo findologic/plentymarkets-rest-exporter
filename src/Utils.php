@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
 use FINDOLOGIC\Export\Helpers\DataHelper;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
 use GuzzleHttp\Client as GuzzleClient;
@@ -71,18 +72,18 @@ class Utils
      *
      * @param string|null $shopkey
      * @param GuzzleClient|null $client
-     * @return Config
+     * @return FindologicConfig
      */
     public static function getExportConfiguration(
         ?string $shopkey,
         ?GuzzleClient $client = null
-    ): Config {
+    ): FindologicConfig {
         $customerLoginUri = static::env('CUSTOMER_LOGIN_URL');
         if ($shopkey && $customerLoginUri) {
             return static::getCustomerLoginConfiguration($customerLoginUri, $shopkey, $client ?? new GuzzleClient());
         }
 
-        return Config::fromEnvironment();
+        return FindologicConfig::fromEnvironment();
     }
 
     /**
@@ -122,14 +123,14 @@ class Utils
         string $customerLoginUri,
         string $shopkey,
         GuzzleClient $client
-    ): Config {
+    ): FindologicConfig {
         $response = $client->get($customerLoginUri, [
             RequestOptions::QUERY => ['shopkey' => $shopkey]
         ]);
 
         $rawData = json_decode($response->getBody()->__toString(), true);
 
-        return Config::fromArray($rawData, true);
+        return FindologicConfig::fromArray($rawData, true);
     }
 
     private static function parseIsLastPage(ResponseInterface $response): bool

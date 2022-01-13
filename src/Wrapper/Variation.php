@@ -9,7 +9,7 @@ use FINDOLOGIC\Export\Data\Image;
 use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Property;
 use FINDOLOGIC\Export\Data\Usergroup;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
@@ -31,7 +31,7 @@ class Variation
     use CharacteristicAware;
     use PropertyAware;
 
-    /** @var Config */
+    /** @var FindologicConfig */
     protected $config;
 
     /** @var RegistryService */
@@ -104,11 +104,11 @@ class Variation
     protected bool $hasCategories = false;
 
     public function __construct(
-        Config $config,
-        RegistryService $registryService,
-        PimVariation $variationEntity,
-        int $wrapMode = Product::WRAP_MODE_DEFAULT,
-        string $variationGroupKey = ''
+        FindologicConfig $config,
+        RegistryService  $registryService,
+        PimVariation     $variationEntity,
+        int              $wrapMode = Product::WRAP_MODE_DEFAULT,
+        string           $variationGroupKey = ''
     ) {
         $this->config = $config;
         $this->variationEntity = $variationEntity;

@@ -7,7 +7,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 use Carbon\Carbon;
 use FINDOLOGIC\Export\Exporter as LibflexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
@@ -40,7 +40,7 @@ abstract class Exporter
     /** @var LoggerInterface */
     protected $customerLogger;
 
-    /** @var Config */
+    /** @var FindologicConfig */
     protected $config;
 
     /** @var Wrapper */
@@ -74,14 +74,14 @@ abstract class Exporter
     protected $exportEndTime = 0;
 
     public function __construct(
-        LoggerInterface $internalLogger,
-        LoggerInterface $customerLogger,
-        Config $config,
-        ?Client $client = null,
-        ?RegistryService $registryService = null,
-        ?ItemRequest $itemRequest = null,
+        LoggerInterface      $internalLogger,
+        LoggerInterface      $customerLogger,
+        FindologicConfig     $config,
+        ?Client              $client = null,
+        ?RegistryService     $registryService = null,
+        ?ItemRequest         $itemRequest = null,
         ?PimVariationRequest $pimVariationRequest = null,
-        LibflexportExporter $fileExporter = null
+        LibflexportExporter  $fileExporter = null
     ) {
         $this->internalLogger = $internalLogger;
         $this->customerLogger = $customerLogger;
@@ -113,7 +113,7 @@ abstract class Exporter
      * Builds a new exporter instance. Use Exporter::TYPE_CSV / Exporter::TYPE_XML to get the respective type.
      *
      * @param int $type Exporter::TYPE_CSV / Exporter::TYPE_XML
-     * @param Config $config
+     * @param FindologicConfig $config
      * @param LoggerInterface $internalLogger
      * @param LoggerInterface $customerLogger
      * @param Client|null $client
@@ -125,15 +125,15 @@ abstract class Exporter
      * @return Exporter
      */
     public static function buildInstance(
-        int $type,
-        Config $config,
-        LoggerInterface $internalLogger,
-        LoggerInterface $customerLogger,
-        ?string $exportPath = null,
-        ?string $fileNamePrefix = null,
-        ?Client $client = null,
-        ?RegistryService $registryService = null,
-        ?ItemRequest $itemRequest = null,
+        int                  $type,
+        FindologicConfig     $config,
+        LoggerInterface      $internalLogger,
+        LoggerInterface      $customerLogger,
+        ?string              $exportPath = null,
+        ?string              $fileNamePrefix = null,
+        ?Client              $client = null,
+        ?RegistryService     $registryService = null,
+        ?ItemRequest         $itemRequest = null,
         ?PimVariationRequest $pimVariationRequest = null,
         ?LibflexportExporter $fileExporter = null
     ): Exporter {

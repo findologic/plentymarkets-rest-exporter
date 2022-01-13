@@ -13,7 +13,7 @@ use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Ordernumber;
 use FINDOLOGIC\Export\Data\Property;
 use FINDOLOGIC\Export\Exporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
@@ -38,7 +38,7 @@ class Product
     /** @var Item */
     private $item;
 
-    /** @var Config */
+    /** @var FindologicConfig */
     private $config;
 
     /** @var RegistryService */
@@ -65,20 +65,18 @@ class Product
 
     private ?int $cheapestVariationId = null;
 
-    private array $plentyShopConfig;
-
     /**
      * @param PimVariation[] $variationEntities
      */
     public function __construct(
-        Exporter $exporter,
-        Config $config,
+        Exporter           $exporter,
+        FindologicConfig   $config,
         StoreConfiguration $storeConfiguration,
-        RegistryService $registryService,
-        ProductEntity $productEntity,
-        array $variationEntities,
-        int $wrapMode = self::WRAP_MODE_DEFAULT,
-        string $variationGroupKey = ''
+        RegistryService    $registryService,
+        ProductEntity      $productEntity,
+        array              $variationEntities,
+        int                $wrapMode = self::WRAP_MODE_DEFAULT,
+        string             $variationGroupKey = ''
     ) {
         $this->exporter = $exporter;
         $this->item = $exporter->createItem($productEntity->getId());
@@ -89,7 +87,6 @@ class Product
         $this->storeConfiguration = $storeConfiguration;
         $this->wrapMode = $wrapMode;
         $this->variationGroupKey = $variationGroupKey;
-        $this->plentyShopConfig = $this->registryService->getPluginConfigurations('Ceres');
     }
 
     /**
@@ -221,7 +218,8 @@ class Product
 
             $variation->processData();
 
-            if (!$hasImage && $variation->getImage() && $this->registryService->shouldUseLegacyCallistoUrl()) {
+            $shouldUseCallistoUrls = $this->registryService->getPlentyShopConfig()->shouldUseLegacyCallistoUrl();
+            if (!$hasImage && $variation->getImage() && $shouldUseCallistoUrls) {
                 $this->item->addImage($variation->getImage());
                 $hasImage = true;
             }
@@ -230,7 +228,7 @@ class Product
                 $defaultImg = $variation->getImage();
             }
 
-            if (!$this->registryService->shouldUseLegacyCallistoUrl() && $variation->getPrice() !== 0.0) {
+            if (!$shouldUseCallistoUrls && $variation->getPrice() !== 0.0) {
                 $variationsPriceData[] = [
                     self::VARIATION_ID => $variation->getId(),
                     self::PRICE => $variation->getPrice(),
@@ -412,7 +410,7 @@ class Product
 
     private function buildProductUrl(string $urlPath): string
     {
-        if ($this->registryService->shouldUseLegacyCallistoUrl()) {
+        if ($this->registryService->getPlentyShopConfig()->shouldUseLegacyCallistoUrl()) {
             return $this->getCallistoUrl($urlPath);
         } else {
             return $this->getPlentyShopUrl($urlPath);

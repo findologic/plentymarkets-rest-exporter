@@ -6,7 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 
 use FINDOLOGIC\Export\Exporter as LibflexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PimVariationRequest;
@@ -18,14 +18,14 @@ use Psr\Log\LoggerInterface;
 class CsvExporter extends Exporter
 {
     public function __construct(
-        LoggerInterface $internalLogger,
-        LoggerInterface $customerLogger,
-        Config $config,
-        string $exportPath,
-        ?string $fileNamePrefix,
-        ?Client $client = null,
-        ?RegistryService $registryService = null,
-        ?ItemRequest $pimRequest = null,
+        LoggerInterface      $internalLogger,
+        LoggerInterface      $customerLogger,
+        FindologicConfig     $config,
+        string               $exportPath,
+        ?string              $fileNamePrefix,
+        ?Client              $client = null,
+        ?RegistryService     $registryService = null,
+        ?ItemRequest         $pimRequest = null,
         ?PimVariationRequest $pimVariationRequest = null,
         ?LibflexportExporter $fileExporter = null
     ) {

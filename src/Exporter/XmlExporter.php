@@ -6,7 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 
 use FINDOLOGIC\Export\Exporter as LibflexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PimVariationRequest;
@@ -17,12 +17,12 @@ use Psr\Log\LoggerInterface;
 class XmlExporter extends Exporter
 {
     public function __construct(
-        LoggerInterface $internalLogger,
-        LoggerInterface $customerLogger,
-        Config $config,
-        ?Client $client = null,
-        ?RegistryService $registryService = null,
-        ?ItemRequest $itemRequest = null,
+        LoggerInterface      $internalLogger,
+        LoggerInterface      $customerLogger,
+        FindologicConfig     $config,
+        ?Client              $client = null,
+        ?RegistryService     $registryService = null,
+        ?ItemRequest         $itemRequest = null,
         ?PimVariationRequest $pimVariationRequest = null,
         ?LibflexportExporter $fileExporter = null
     ) {

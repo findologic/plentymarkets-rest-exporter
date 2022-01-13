@@ -6,7 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 
 use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Exporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
@@ -18,15 +18,13 @@ use Psr\Log\LoggerInterface;
 
 class CsvWrapper extends Wrapper
 {
-    public const VARIANT_MODE_ALL = 'all';
-
     protected string $exportPath;
 
     protected ?string $fileNamePrefix;
 
     private Exporter $exporter;
 
-    private Config $config;
+    private FindologicConfig $config;
 
     private RegistryService $registryService;
 
@@ -41,11 +39,11 @@ class CsvWrapper extends Wrapper
     private array $skippedProducts = [];
 
     public function __construct(
-        string $path,
-        ?string $fileNamePrefix,
-        Exporter $exporter,
-        Config $config,
-        RegistryService $registryService,
+        string           $path,
+        ?string          $fileNamePrefix,
+        Exporter         $exporter,
+        FindologicConfig $config,
+        RegistryService  $registryService,
         ?LoggerInterface $internalLogger,
         ?LoggerInterface $customerLogger
     ) {
@@ -172,7 +170,7 @@ class CsvWrapper extends Wrapper
      */
     private function splitVariationsByGroupability(array $productVariations): array
     {
-        if (!$this->shouldExportGroupableAttributeVariantsSeparately()) {
+        if (!$this->registryService->getPlentyShopConfig()->shouldExportGroupableAttributeVariantsSeparately()) {
             return [$productVariations, []];
         }
 
@@ -193,17 +191,6 @@ class CsvWrapper extends Wrapper
         }
 
         return [$groupedVariations, $separateVariations];
-    }
-
-    private function shouldExportGroupableAttributeVariantsSeparately(): bool
-    {
-        $config = $this->registryService->getPluginConfigurations('Ceres');
-
-        if (!isset($config['item.variation_show_type'])) {
-            return true;
-        }
-
-        return $config['item.variation_show_type'] === self::VARIANT_MODE_ALL;
     }
 
     private function shouldExportProduct(ProductResponseItem $product, PimVariationResponse $variations): bool

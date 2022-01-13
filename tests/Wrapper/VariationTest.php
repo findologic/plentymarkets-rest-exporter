@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 
 use FINDOLOGIC\Export\Data\Attribute;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
@@ -39,7 +39,7 @@ class VariationTest extends TestCase
     /** @var Registry|MockObject */
     private $registryMock;
 
-    /** @var Config */
+    /** @var FindologicConfig */
     private $defaultConfig;
 
     /** @var RegistryService|MockObject */
