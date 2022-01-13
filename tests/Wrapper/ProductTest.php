@@ -966,7 +966,7 @@ class ProductTest extends TestCase
             $item->getUrl()->getValues()['']
         );
     }
-    
+
     private function getProduct(): Product
     {
         return new Product(
