@@ -427,7 +427,7 @@ class Product
             $this->getWebStoreHost(),
             $this->getLanguageUrlPrefix(),
             trim($urlPath, '/'),
-            $this->productEntity->getId(),
+            $this->productEntity->getId()
         );
     }
 
