@@ -558,6 +558,23 @@ class ProductTest extends TestCase
         $this->assertEquals($expectedImg, $columnValues[10]);
     }
 
+    public function testProductWithoutImagesNotFail(): void
+    {
+        $this->exporterMock = $this->getExporter();
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_item_without_any_images_test.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+        $this->registryServiceMock->expects($this->any())->method('shouldUseLegacyCallistoUrl')->willReturn(false);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+        $this->assertEmpty($columnValues[10]);
+    }
+
     public function testExportMainVariationIdWhenAvailable()
     {
         $this->exporterMock = $this->getExporter();
