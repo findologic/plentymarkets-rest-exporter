@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 
 use FINDOLOGIC\Export\Data\Attribute;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\Definition\CastType;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
@@ -24,7 +24,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
  *
  * @property VariationEntity $variationEntity
  * @property RegistryService $registryService
- * @property Config $config
+ * @property FindologicConfig $config
  * @property Attribute[] $attributes
  */
 trait CharacteristicAware

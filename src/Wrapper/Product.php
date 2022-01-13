@@ -13,7 +13,7 @@ use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Ordernumber;
 use FINDOLOGIC\Export\Data\Property;
 use FINDOLOGIC\Export\Exporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
@@ -32,7 +32,7 @@ class Product
     /** @var Item */
     private $item;
 
-    /** @var Config */
+    /** @var FindologicConfig */
     private $config;
 
     /** @var RegistryService */
@@ -57,20 +57,18 @@ class Product
 
     private string $variationGroupKey;
 
-    private array $plentyShopConfig;
-
     /**
      * @param PimVariation[] $variationEntities
      */
     public function __construct(
-        Exporter $exporter,
-        Config $config,
+        Exporter           $exporter,
+        FindologicConfig   $config,
         StoreConfiguration $storeConfiguration,
-        RegistryService $registryService,
-        ProductEntity $productEntity,
-        array $variationEntities,
-        int $wrapMode = self::WRAP_MODE_DEFAULT,
-        string $variationGroupKey = ''
+        RegistryService    $registryService,
+        ProductEntity      $productEntity,
+        array              $variationEntities,
+        int                $wrapMode = self::WRAP_MODE_DEFAULT,
+        string             $variationGroupKey = ''
     ) {
         $this->exporter = $exporter;
         $this->item = $exporter->createItem($productEntity->getId());
@@ -81,7 +79,6 @@ class Product
         $this->storeConfiguration = $storeConfiguration;
         $this->wrapMode = $wrapMode;
         $this->variationGroupKey = $variationGroupKey;
-        $this->plentyShopConfig = $this->registryService->getPluginConfigurations('Ceres');
     }
 
     /**
@@ -368,7 +365,7 @@ class Product
 
     private function buildProductUrl(string $urlPath): string
     {
-        if ($this->shouldUseCallistoUrl()) {
+        if ($this->registryService->getPlentyShopConfig()->shouldUseLegacyCallistoUrl()) {
             return $this->getCallistoUrl($urlPath);
         } else {
             return $this->getPlentyShopUrl($urlPath);

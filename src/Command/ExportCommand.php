@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Command;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client;
@@ -172,7 +172,7 @@ class ExportCommand extends Command
     /**
      * @codeCoverageIgnore Creating an instance here would run an actual export.
      */
-    private function getExporter(int $type, Config $config): Exporter
+    private function getExporter(int $type, FindologicConfig $config): Exporter
     {
         if ($this->exporter) {
             return $this->exporter;

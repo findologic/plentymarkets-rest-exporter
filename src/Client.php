@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\Debug\Debugger;
 use FINDOLOGIC\PlentyMarketsRestExporter\Debug\DebuggerInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Debug\DummyDebugger;
@@ -40,35 +41,21 @@ class Client
     private const
         REST_PATH = 'rest';
 
-    /** @var GuzzleClient */
-    private $client;
-
-    /** @var Config */
-    private $config;
-
-    /** @var LoggerInterface */
-    private $internalLogger;
-
-    /** @var LoggerInterface */
-    private $customerLogger;
-
-    /** @var DebuggerInterface */
-    private $debugger;
-
-    /** @var ResponseInterface Used for rate limiting. */
-    private $lastResponse;
-
-    /** @var string */
-    private $accessToken;
-
-    /** @var string */
-    private $refreshToken;
+    private GuzzleClient $client;
+    private FindologicConfig $config;
+    private LoggerInterface $internalLogger;
+    private LoggerInterface $customerLogger;
+    private DebuggerInterface $debugger;
+    /** Used for rate limit */
+    private ResponseInterface $lastResponse;
+    private string $accessToken;
+    private string $refreshToken;
 
     public function __construct(
-        GuzzleClient $httpClient,
-        Config $config,
-        ?LoggerInterface $internalLogger = null,
-        ?LoggerInterface $customerLogger = null,
+        GuzzleClient       $httpClient,
+        FindologicConfig   $config,
+        ?LoggerInterface   $internalLogger = null,
+        ?LoggerInterface   $customerLogger = null,
         ?DebuggerInterface $debugger = null
     ) {
         $this->client = $httpClient;

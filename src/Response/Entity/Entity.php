@@ -6,6 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
 use Carbon\Carbon;
 use DateTimeInterface;
+use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 
 abstract class Entity
 {
@@ -18,7 +19,7 @@ abstract class Entity
 
     protected function getBoolProperty(string $key, array $data, ?bool $default = null): ?bool
     {
-        return isset($data[$key]) ? filter_var($data[$key], FILTER_VALIDATE_BOOLEAN) : $default;
+        return isset($data[$key]) ? Utils::filterBoolean($data[$key]) : $default;
     }
 
     protected function getIntProperty(string $key, array $data, ?int $default = null): ?int

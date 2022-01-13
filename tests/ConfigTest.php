@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use PHPUnit\Framework\TestCase;
 
 class ConfigTest extends TestCase
@@ -21,7 +21,7 @@ class ConfigTest extends TestCase
         $expectedRrpId = 2637;
         $expectedDebug = true;
 
-        $config = new Config([
+        $config = new FindologicConfig([
             'domain' => $expectedDomain,
             'username' => $expectedUsername,
             'password' => $expectedPassword,
@@ -77,7 +77,7 @@ class ConfigTest extends TestCase
             ]
         ];
 
-        $config = Config::fromArray($customerLoginResponse);
+        $config = FindologicConfig::fromArray($customerLoginResponse);
 
         $this->assertSame($expectedDomain, $config->getDomain());
         $this->assertSame($expectedUsername, $config->getUsername());
@@ -94,14 +94,14 @@ class ConfigTest extends TestCase
      */
     public function testExportReferrerIdConfigIsCastedCorrectly($rawConfigValue, $expectedCastConfigValue): void
     {
-        $config = new Config(['exportReferrerId' => $rawConfigValue]);
+        $config = new FindologicConfig(['exportReferrerId' => $rawConfigValue]);
 
         $this->assertSame($expectedCastConfigValue, $config->getExportReferrerId());
     }
 
     public function testExportFreeTextFieldsConfigDefaultValueIsSetCorrectly(): void
     {
-        $config = new Config();
+        $config = new FindologicConfig();
         $expectedResult = true;
 
         $this->assertSame($expectedResult, $config->getExportFreeTextFields());

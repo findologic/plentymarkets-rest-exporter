@@ -7,7 +7,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 use Carbon\Carbon;
 use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
@@ -35,7 +35,7 @@ class ClientTest extends TestCase
     /** @var GuzzleClient|MockObject */
     private $guzzleClientMock;
 
-    /** @var Config */
+    /** @var FindologicConfig */
     private $config;
 
     public function setUp(): void

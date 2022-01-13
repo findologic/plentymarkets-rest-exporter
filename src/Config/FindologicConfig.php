@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace FINDOLOGIC\PlentyMarketsRestExporter;
+namespace FINDOLOGIC\PlentyMarketsRestExporter\Config;
 
 use Exception;
 
 /**
  * Holds Plentymarkets-relevant configuration from the customer-login.
  */
-class Config
+class FindologicConfig
 {
     private string $domain;
 
@@ -68,7 +68,7 @@ class Config
         }
 
         $plentyConfig = $shop['plentymarkets'];
-        return new Config([
+        return new FindologicConfig([
             'domain' => $shop['url'],
             'username' => $shop['export_username'],
             'password' => $shop['export_password'],
@@ -89,9 +89,9 @@ class Config
         ]);
     }
 
-    public static function fromEnvironment(): Config
+    public static function fromEnvironment(): FindologicConfig
     {
-        return new Config([
+        return new FindologicConfig([
             'domain' => Utils::env('EXPORT_DOMAIN'),
             'username' => Utils::env('EXPORT_USERNAME'),
             'password' => Utils::env('EXPORT_PASSWORD'),
