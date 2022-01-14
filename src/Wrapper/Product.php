@@ -372,15 +372,6 @@ class Product
         }
     }
 
-    private function shouldUseCallistoUrl(): bool
-    {
-        if (!isset($this->plentyShopConfig['global.enableOldUrlPattern'])) {
-            return true;
-        }
-
-        return Utils::filterBoolean($this->plentyShopConfig['global.enableOldUrlPattern']);
-    }
-
     private function getCallistoUrl(string $urlPath): string
     {
         return sprintf(
@@ -404,10 +395,8 @@ class Product
             $this->productEntity->getId(),
         );
 
-        if (isset($this->plentyShopConfig['item.show_please_select'])) {
-            if (Utils::filterBoolean($this->plentyShopConfig['item.show_please_select'])) {
-                return $productUrl;
-            }
+        if ($this->registryService->getPlentyShop()->getItemShowPleaseSelect()) {
+            return $productUrl;
         }
 
         $variationId = $this->wrapMode ?
