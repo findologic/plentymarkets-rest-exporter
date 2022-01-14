@@ -13,7 +13,7 @@ use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Ordernumber;
 use FINDOLOGIC\Export\Data\Property;
 use FINDOLOGIC\Export\Exporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
@@ -32,7 +32,7 @@ class Product
     /** @var Item */
     private $item;
 
-    /** @var FindologicConfig */
+    /** @var Config */
     private $config;
 
     /** @var RegistryService */
@@ -61,14 +61,14 @@ class Product
      * @param PimVariation[] $variationEntities
      */
     public function __construct(
-        Exporter           $exporter,
-        FindologicConfig   $config,
+        Exporter $exporter,
+        Config $config,
         StoreConfiguration $storeConfiguration,
-        RegistryService    $registryService,
-        ProductEntity      $productEntity,
-        array              $variationEntities,
-        int                $wrapMode = self::WRAP_MODE_DEFAULT,
-        string             $variationGroupKey = ''
+        RegistryService $registryService,
+        ProductEntity $productEntity,
+        array $variationEntities,
+        int $wrapMode = self::WRAP_MODE_DEFAULT,
+        string $variationGroupKey = ''
     ) {
         $this->exporter = $exporter;
         $this->item = $exporter->createItem($productEntity->getId());
@@ -365,7 +365,7 @@ class Product
 
     private function buildProductUrl(string $urlPath): string
     {
-        if ($this->registryService->getPlentyShopConfig()->shouldUseLegacyCallistoUrl()) {
+        if ($this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl()) {
             return $this->getCallistoUrl($urlPath);
         } else {
             return $this->getPlentyShopUrl($urlPath);

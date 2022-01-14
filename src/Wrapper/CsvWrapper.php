@@ -6,7 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 
 use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Exporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
@@ -24,7 +24,7 @@ class CsvWrapper extends Wrapper
 
     private Exporter $exporter;
 
-    private FindologicConfig $config;
+    private Config $config;
 
     private RegistryService $registryService;
 
@@ -39,11 +39,11 @@ class CsvWrapper extends Wrapper
     private array $skippedProducts = [];
 
     public function __construct(
-        string           $path,
-        ?string          $fileNamePrefix,
-        Exporter         $exporter,
-        FindologicConfig $config,
-        RegistryService  $registryService,
+        string $path,
+        ?string $fileNamePrefix,
+        Exporter $exporter,
+        Config $config,
+        RegistryService $registryService,
         ?LoggerInterface $internalLogger,
         ?LoggerInterface $customerLogger
     ) {
@@ -64,7 +64,8 @@ class CsvWrapper extends Wrapper
         int $total,
         ItemResponse $products,
         PimVariationResponse $variations
-    ): void {
+    ): void
+    {
         /** @var Item[] $items */
         $items = [];
         foreach ($products->all() as $product) {
@@ -170,7 +171,7 @@ class CsvWrapper extends Wrapper
      */
     private function splitVariationsByGroupability(array $productVariations): array
     {
-        if (!$this->registryService->getPlentyShopConfig()->shouldExportGroupableAttributeVariantsSeparately()) {
+        if (!$this->registryService->getPlentyShop()->shouldExportGroupableAttributeVariantsSeparately()) {
             return [$productVariations, []];
         }
 

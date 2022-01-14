@@ -7,7 +7,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 use Carbon\Carbon;
 use DateTime;
 use FINDOLOGIC\Export\Exporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
@@ -38,7 +38,7 @@ class ProductTest extends TestCase
     /** @var Exporter|MockObject */
     private $exporterMock;
 
-    /** @var FindologicConfig */
+    /** @var Config */
     private $config;
 
     /** @var Item|MockObject */

@@ -6,7 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 
 use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
@@ -41,7 +41,7 @@ class RegistryServiceTest extends TestCase
     /** @var RegistryService */
     private $registryService;
 
-    /** @var FindologicConfig */
+    /** @var Config */
     private $defaultConfig;
 
     /** @var Logger|MockObject */
@@ -703,7 +703,7 @@ class RegistryServiceTest extends TestCase
      */
     private function getRegistryServiceMockForSpecificFetchMethods(
         array  $excludedMethods = [],
-        FindologicConfig $config = null
+        Config $config = null
     ): MockObject {
         $allMethods = [
             'fetchWebStores',

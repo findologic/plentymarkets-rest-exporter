@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 
 trait ConfigHelper
 {
-    public function getDefaultConfig(array $overrides = []): FindologicConfig
+    public function getDefaultConfig(array $overrides = []): Config
     {
-        return new FindologicConfig(array_merge([
+        return new Config(array_merge([
             'domain' => 'plenty-testshop.de',
             'username' => 'user',
             'password' => 'pretty secure, I think!',

@@ -6,7 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 
 use FINDOLOGIC\Export\CSV\CSVItem;
 use FINDOLOGIC\Export\Exporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
@@ -45,9 +45,9 @@ class CsvWrapperTest extends TestCase
     private $csvWrapper;
 
     /**
-     * @var FindologicConfig
+     * @var Config
      */
-    private FindologicConfig $config;
+    private Config $config;
 
     /**
      * @var Logger|MockObject

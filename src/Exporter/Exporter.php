@@ -7,7 +7,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 use Carbon\Carbon;
 use FINDOLOGIC\Export\Exporter as LibflexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
@@ -34,54 +34,29 @@ abstract class Exporter
     public const SUCCESS = 0;
     public const FAILURE = 1;
 
-    /** @var LoggerInterface */
-    protected $internalLogger;
-
-    /** @var LoggerInterface */
-    protected $customerLogger;
-
-    /** @var FindologicConfig */
-    protected $config;
-
-    /** @var Wrapper */
-    protected $wrapper;
-
-    /** @var Client */
-    protected $client;
-
-    /** @var Registry */
-    protected $registry;
-
-    /** @var RegistryService */
-    protected $registryService;
-
-    /** @var ItemRequest */
-    protected $itemRequest;
-
-    /** @var PimVariationRequest */
-    protected $itemVariationRequest;
-
-    /** @var LibflexportExporter */
-    protected $fileExporter;
-
-    /** @var int */
-    protected $offset = 0;
-
-    /** @var float */
-    protected $exportStartTime = 0;
-
-    /** @var float */
-    protected $exportEndTime = 0;
+    protected LoggerInterface $internalLogger;
+    protected LoggerInterface $customerLogger;
+    protected Config $config;
+    protected Wrapper $wrapper;
+    protected Client $client;
+    protected Registry $registry;
+    protected RegistryService $registryService;
+    protected ItemRequest $itemRequest;
+    protected PimVariationRequest $itemVariationRequest;
+    protected LibflexportExporter $fileExporter;
+    protected int $offset = 0;
+    protected float $exportStartTime = 0;
+    protected float $exportEndTime = 0;
 
     public function __construct(
-        LoggerInterface      $internalLogger,
-        LoggerInterface      $customerLogger,
-        FindologicConfig     $config,
-        ?Client              $client = null,
-        ?RegistryService     $registryService = null,
-        ?ItemRequest         $itemRequest = null,
+        LoggerInterface $internalLogger,
+        LoggerInterface $customerLogger,
+        Config $config,
+        ?Client $client = null,
+        ?RegistryService $registryService = null,
+        ?ItemRequest $itemRequest = null,
         ?PimVariationRequest $pimVariationRequest = null,
-        LibflexportExporter  $fileExporter = null
+        LibflexportExporter $fileExporter = null
     ) {
         $this->internalLogger = $internalLogger;
         $this->customerLogger = $customerLogger;
@@ -113,7 +88,7 @@ abstract class Exporter
      * Builds a new exporter instance. Use Exporter::TYPE_CSV / Exporter::TYPE_XML to get the respective type.
      *
      * @param int $type Exporter::TYPE_CSV / Exporter::TYPE_XML
-     * @param FindologicConfig $config
+     * @param Config $config
      * @param LoggerInterface $internalLogger
      * @param LoggerInterface $customerLogger
      * @param Client|null $client
@@ -125,15 +100,15 @@ abstract class Exporter
      * @return Exporter
      */
     public static function buildInstance(
-        int                  $type,
-        FindologicConfig     $config,
-        LoggerInterface      $internalLogger,
-        LoggerInterface      $customerLogger,
-        ?string              $exportPath = null,
-        ?string              $fileNamePrefix = null,
-        ?Client              $client = null,
-        ?RegistryService     $registryService = null,
-        ?ItemRequest         $itemRequest = null,
+        int $type,
+        Config $config,
+        LoggerInterface $internalLogger,
+        LoggerInterface $customerLogger,
+        ?string $exportPath = null,
+        ?string $fileNamePrefix = null,
+        ?Client $client = null,
+        ?RegistryService $registryService = null,
+        ?ItemRequest $itemRequest = null,
         ?PimVariationRequest $pimVariationRequest = null,
         ?LibflexportExporter $fileExporter = null
     ): Exporter {

@@ -7,7 +7,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Exporter;
 use Exception;
 use FINDOLOGIC\Export\Exporter as LibFlexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
@@ -31,7 +31,7 @@ class ExporterTest extends TestCase
 
     private const EXPORTER_LOCATION = '/tmp/rest-exporter/';
 
-    /** @var FindologicConfig */
+    /** @var Config */
     private $config;
 
     /** @var DummyLogger */
@@ -57,7 +57,7 @@ class ExporterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->config = new FindologicConfig();
+        $this->config = new Config();
         $this->config->setLanguage('de');
         $this->logger = new DummyLogger();
         $this->clientMock = $this->getMockBuilder(Client::class)

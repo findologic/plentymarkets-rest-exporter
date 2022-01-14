@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config\PlentyShopConfig;
 use FINDOLOGIC\PlentyMarketsRestExporter\Definition\PropertyOptionType;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
@@ -58,21 +56,21 @@ class RegistryService
 {
     protected LoggerInterface $internalLogger;
     protected LoggerInterface $customerLogger;
-    protected FindologicConfig $findologicConfig;
-    protected PlentyShopConfig $plentyShopConfig;
+    protected Config $config;
+    protected PlentyShop $plentyShop;
     protected Client $client;
     protected Registry $registry;
 
     public function __construct(
-        LoggerInterface  $internalLogger,
-        LoggerInterface  $customerLogger,
-        FindologicConfig $config,
-        ?Client          $client = null,
-        ?Registry        $registry = null
+        LoggerInterface $internalLogger,
+        LoggerInterface $customerLogger,
+        Config $config,
+        ?Client $client = null,
+        ?Registry $registry = null
     ) {
         $this->internalLogger = $internalLogger;
         $this->customerLogger = $customerLogger;
-        $this->findologicConfig = $config;
+        $this->config = $config;
         $this->client = $client ?? new Client(new GuzzleClient(), $config, $internalLogger, $customerLogger);
         $this->registry = $registry ?? new Registry();
     }
@@ -94,7 +92,7 @@ class RegistryService
         $this->fetchPropertySelections();
         $this->fetchItemPropertyGroups();
         $this->fetchPluginConfigurations();
-        $this->createPlentyShopConfig();
+        $this->createPlentyShop();
     }
 
     public function getWebStore(): WebStore
@@ -214,7 +212,7 @@ class RegistryService
         /** @var SalesPrice $defaultSalesPrice */
         $defaultSalesPrice = $this->get('defaultPrice');
 
-        return $this->findologicConfig->getPriceId() ?? $defaultSalesPrice->getId();
+        return $this->config->getPriceId() ?? $defaultSalesPrice->getId();
     }
 
     public function getRrpId(): ?int
@@ -222,16 +220,16 @@ class RegistryService
         /** @var SalesPrice $defaultRrpId */
         $defaultRrpId = $this->get('defaultRrpId');
 
-        if ($rrpId = $this->findologicConfig->getRrpId()) {
+        if ($rrpId = $this->config->getRrpId()) {
             return $rrpId;
         }
 
         return $defaultRrpId ? $defaultRrpId->getId() : null;
     }
 
-    public function getPlentyShopConfig(): PlentyShopConfig
+    public function getPlentyShop(): PlentyShop
     {
-        return $this->plentyShopConfig;
+        return $this->plentyShop;
     }
 
     public function getPluginConfigurations($pluginName = null): array
@@ -244,7 +242,7 @@ class RegistryService
 
         return $configs[$pluginName] ?? [];
     }
-    
+
     protected function fetchWebStores(): void
     {
         $webStoreRequest = new WebStoreRequest();
@@ -254,13 +252,13 @@ class RegistryService
         $this->set('allWebStores', $webStores);
 
         $webStore = $webStores->findOne([
-            'id' => $this->findologicConfig->getMultiShopId()
+            'id' => $this->config->getMultiShopId()
         ]);
 
         if (!$webStore) {
             throw new CustomerException(sprintf(
                 'Could not find a web store with the multishop id "%d"',
-                $this->findologicConfig->getMultiShopId()
+                $this->config->getMultiShopId()
             ));
         }
 
@@ -278,7 +276,7 @@ class RegistryService
             $categoryResponse = CategoryParser::parse($response);
             $categoriesMatchingCriteria = $categoryResponse->find([
                 'details' => [
-                    'lang' => strtoupper($this->findologicConfig->getLanguage()),
+                    'lang' => strtoupper($this->config->getLanguage()),
                     'plentyId' => $webStore->getStoreIdentifier()
                 ]
             ]);
@@ -495,14 +493,14 @@ class RegistryService
         $this->set('pluginConfigurations', $allConfigurations);
     }
 
-    private function createPlentyShopConfig(): void
+    private function createPlentyShop(): void
     {
-        $this->plentyShopConfig = new PlentyShopConfig($this->getPluginConfigurations('Ceres'));
+        $this->plentyShop = new PlentyShop($this->getPluginConfigurations('Ceres'));
     }
 
     private function isPropertyExportable(Property $property): bool
     {
-        $referrerId = $this->findologicConfig->getExportReferrerId();
+        $referrerId = $this->config->getExportReferrerId();
 
         if ($referrerId === null) {
             return true;
@@ -523,14 +521,14 @@ class RegistryService
 
     private function set(string $key, $data)
     {
-        $shop = md5($this->findologicConfig->getDomain());
+        $shop = md5($this->config->getDomain());
 
         $this->registry->set($shop . '_' . $key, $data);
     }
 
     private function get(string $key)
     {
-        $shop = md5($this->findologicConfig->getDomain());
+        $shop = md5($this->config->getDomain());
 
         return $this->registry->get($shop . '_' . $key);
     }

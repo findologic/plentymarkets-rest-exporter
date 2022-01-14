@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Debug\Debugger;
 use FINDOLOGIC\PlentyMarketsRestExporter\Debug\DebuggerInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Debug\DummyDebugger;
@@ -42,7 +42,7 @@ class Client
         REST_PATH = 'rest';
 
     private GuzzleClient $client;
-    private FindologicConfig $config;
+    private Config $config;
     private LoggerInterface $internalLogger;
     private LoggerInterface $customerLogger;
     private DebuggerInterface $debugger;
@@ -52,10 +52,10 @@ class Client
     private string $refreshToken;
 
     public function __construct(
-        GuzzleClient       $httpClient,
-        FindologicConfig   $config,
-        ?LoggerInterface   $internalLogger = null,
-        ?LoggerInterface   $customerLogger = null,
+        GuzzleClient $httpClient,
+        Config $config,
+        ?LoggerInterface $internalLogger = null,
+        ?LoggerInterface $customerLogger = null,
         ?DebuggerInterface $debugger = null
     ) {
         $this->client = $httpClient;

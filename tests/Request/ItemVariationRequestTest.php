@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Request;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config\FindologicConfig;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use GuzzleHttp\Client as GuzzleClient;
@@ -20,7 +20,7 @@ class ItemVariationRequestTest extends TestCase
 {
     use ConfigHelper;
 
-    /** @var FindologicConfig */
+    /** @var Config */
     private $defaultConfig;
 
     /** @var Logger|MockObject */
