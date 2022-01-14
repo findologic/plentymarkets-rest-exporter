@@ -32,7 +32,7 @@ class Base extends Entity
     private bool $isVisibleInListIfNetStockIsPositive;
     private bool $isInvisibleInListIfNetStockIsNotPositive;
     private int $mainWarehouseId;
-    private int $maximumOrderQuantity;
+    private ?int $maximumOrderQuantity;
     private ?int $minimumOrderQuantity;
     private ?int $intervalOrderQuantity;
     private ?DateTimeInterface $availableUntil;

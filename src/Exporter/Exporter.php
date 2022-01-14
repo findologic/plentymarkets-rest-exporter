@@ -43,7 +43,7 @@ abstract class Exporter
     protected RegistryService $registryService;
     protected ItemRequest $itemRequest;
     protected PimVariationRequest $itemVariationRequest;
-    protected LibflexportExporter $fileExporter;
+    protected ?LibflexportExporter $fileExporter;
     protected int $offset = 0;
     protected float $exportStartTime = 0;
     protected float $exportEndTime = 0;
@@ -56,7 +56,7 @@ abstract class Exporter
         ?RegistryService $registryService = null,
         ?ItemRequest $itemRequest = null,
         ?PimVariationRequest $pimVariationRequest = null,
-        LibflexportExporter $fileExporter = null
+        ?LibflexportExporter $fileExporter = null
     ) {
         $this->internalLogger = $internalLogger;
         $this->customerLogger = $customerLogger;
