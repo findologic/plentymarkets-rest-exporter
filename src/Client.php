@@ -47,9 +47,9 @@ class Client
     private LoggerInterface $customerLogger;
     private DebuggerInterface $debugger;
     /** Used for rate limit */
-    private ResponseInterface $lastResponse;
-    private string $accessToken;
-    private string $refreshToken;
+    private ?ResponseInterface $lastResponse = null;
+    private string $accessToken = '';
+    private string $refreshToken = '';
 
     public function __construct(
         GuzzleClient $httpClient,
