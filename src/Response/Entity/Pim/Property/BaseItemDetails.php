@@ -61,7 +61,7 @@ class BaseItemDetails extends Entity
     private string $sitemapPublished;
     private bool $isSerialNumber;
     private bool $isShippingPackage;
-    private int $maximumOrderQuantity;
+    private ?int $maximumOrderQuantity;
     private int $variationCount;
     private string $customsTariffNumber;
     private int $mainVariationId;
