@@ -10,7 +10,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class Image extends Entity
 {
     private ?int $id;
-    private int $itemId;
+    private ?int $itemId;
     private string $md5Checksum;
     private string $md5ChecksumOriginal;
     private int $width;
@@ -22,7 +22,7 @@ class Image extends Entity
     private bool $hasLinkedVariations;
     private string $urlPreview;
     /** @var ImageAttributeValue[]. */
-    private array $attributeValueImages = [];
+    private array $attributeValueImages;
     /** @var ImageName[] */
     private array $names;
     /** @var ImageAvailability[] */
