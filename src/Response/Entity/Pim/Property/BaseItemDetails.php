@@ -51,7 +51,7 @@ class BaseItemDetails extends Entity
     private ?int $ebayCategory2;
     private ?int $ebayStoreCategory;
     private ?int $ebayStoreCategory2;
-    private int $rakutenCategoryId;
+    private ?int $rakutenCategoryId;
     private int $flagOne;
     private int $flagTwo;
     private ?int $ageRestriction;

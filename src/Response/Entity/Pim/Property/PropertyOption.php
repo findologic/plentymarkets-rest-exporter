@@ -13,7 +13,7 @@ class PropertyOption extends Entity
     /** @var PropertyOptionValue[] */
     private array $values;
     private int $propertyId;
-    private string $typeOptionIdentifier;
+    private ?string $typeOptionIdentifier;
     private DateTimeInterface $createdAt;
     private DateTimeInterface $updatedAt;
 
