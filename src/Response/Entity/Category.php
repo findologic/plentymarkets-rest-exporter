@@ -8,32 +8,16 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\CategoryDetail
 
 class Category extends Entity
 {
-    /** @var int */
-    private $id;
-
-    /** @var int|null */
-    private $parentCategoryId;
-
-    /** @var int */
-    private $level;
-
-    /** @var string */
-    private $type;
-
-    /** @var string */
-    private $linklist;
-
-    /** @var string */
-    private $right;
-
-    /** @var string */
-    private $sitemap;
-
-    /** @var bool */
-    private $hasChildren;
-
+    private int $id;
+    private ?int $parentCategoryId;
+    private int $level;
+    private string $type;
+    private string $linklist;
+    private string $right;
+    private string $sitemap;
+    private bool $hasChildren;
     /** @var CategoryDetails[] */
-    private $details = [];
+    private array $details = [];
 
     public function __construct(array $data)
     {

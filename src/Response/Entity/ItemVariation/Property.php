@@ -11,8 +11,7 @@ class Property extends Relation
 {
     public const PROPERTY_TYPE_ITEM = 'item';
 
-    /** @var SelectionProperty|null */
-    private $propertyRelation;
+    private ?SelectionProperty $propertyRelation;
 
     public function __construct(array $data)
     {

@@ -8,53 +8,23 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute\Name;
 
 class Attribute extends Entity
 {
-    /** @var int */
-    private $id;
-
-    /** @var string */
-    private $backendName;
-
-    /** @var int */
-    private $position;
-
-    /** @var bool */
-    private $isSurchargePercental;
-
-    /** @var bool */
-    private $isLinkableToImage;
-
-    /** @var string */
-    private $amazonAttribute;
-
-    /** @var string */
-    private $fruugoAttribute;
-
-    /** @var int */
-    private $pixmaniaAttribute;
-
-    /** @var string */
-    private $ottoAttribute;
-
-    /** @var string */
-    private $googleShoppingAttribute;
-
-    /** @var int */
-    private $neckermannAtEpAttribute;
-
-    /** @var string */
-    private $typeOfSelectionInOnlineStore;
-
-    /** @var int */
-    private $laRedouteAttribute;
-
-    /** @var bool */
-    private $isGroupable;
-
-    /** @var string */
-    private $updatedAt;
-
+    private int $id;
+    private string $backendName;
+    private int $position;
+    private bool $isSurchargePercental;
+    private bool $isLinkableToImage;
+    private string $amazonAttribute;
+    private string $fruugoAttribute;
+    private int $pixmaniaAttribute;
+    private string $ottoAttribute;
+    private string $googleShoppingAttribute;
+    private int $neckermannAtEpAttribute;
+    private string $typeOfSelectionInOnlineStore;
+    private int $laRedouteAttribute;
+    private bool $isGroupable;
+    private string $updatedAt;
     /** @var Name[] */
-    private $names = [];
+    private array $names;
 
     public function __construct(array $data)
     {

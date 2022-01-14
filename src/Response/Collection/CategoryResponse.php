@@ -13,7 +13,7 @@ class CategoryResponse extends IterableResponse implements CollectionInterface, 
     use EntityCollection;
 
     /** @var Category[] */
-    private $categories;
+    private array $categories;
 
     /**
      * @param Category[] $categories

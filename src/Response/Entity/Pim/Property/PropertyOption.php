@@ -9,23 +9,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class PropertyOption extends Entity
 {
-    /** @var int */
-    private $id;
-
+    private int $id;
     /** @var PropertyOptionValue[] */
-    private $values;
-
-    /** @var int */
-    private $propertyId;
-
-    /** @var string */
-    private $typeOptionIdentifier;
-
-    /** @var DateTimeInterface */
-    private $createdAt;
-
-    /** @var DateTimeInterface */
-    private $updatedAt;
+    private array $values;
+    private int $propertyId;
+    private string $typeOptionIdentifier;
+    private DateTimeInterface $createdAt;
+    private DateTimeInterface $updatedAt;
 
     public function __construct(array $data)
     {

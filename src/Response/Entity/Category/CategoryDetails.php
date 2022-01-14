@@ -11,80 +11,31 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Translatable;
 
 class CategoryDetails extends Entity implements Translatable
 {
-    /** @var int */
-    private $categoryId;
-
-    /** @var string */
-    private $lang;
-
-    /** @var string */
-    private $name;
-
-    /** @var string */
-    private $description;
-
-    /** @var string */
-    private $description2;
-
-    /** @var string */
-    private $shortDescription;
-
-    /** @var string */
-    private $metaKeywords;
-
-    /** @var string */
-    private $metaDescription;
-
-    /** @var string */
-    private $nameUrl;
-
-    /** @var string */
-    private $metaTitle;
-
-    /** @var int */
-    private $position;
-
-    /** @var DateTimeInterface */
-    private $updatedAt;
-
-    /** @var string */
-    private $updatedBy;
-
-    /** @var string */
-    private $itemListView;
-
-    /** @var string */
-    private $singleItemView;
-
-    /** @var string */
-    private $pageView;
-
-    /** @var string|null */
-    private $fullText;
-
-    /** @var string */
-    private $metaRobots;
-
-    /** @var string */
-    private $canonicalLink;
-
-    /** @var string */
-    private $previewUrl;
-
-    /** @var string|null */
-    private $image;
-
-    /** @var string|null */
-    private $imagePath;
-
-    /** @var string|null */
-    private $image2;
-
-    /** @var string|null */
-    private $image2Path;
-
-    /** @var int */
-    private $plentyId;
+    private int $categoryId;
+    private string $lang;
+    private string $name;
+    private string $description;
+    private string $description2;
+    private string $shortDescription;
+    private string $metaKeywords;
+    private string $metaDescription;
+    private string $nameUrl;
+    private string $metaTitle;
+    private int $position;
+    private DateTimeInterface $updatedAt;
+    private string $updatedBy;
+    private string $itemListView;
+    private string $singleItemView;
+    private string $pageView;
+    private ?string $fullText;
+    private string $metaRobots;
+    private string $canonicalLink;
+    private string $previewUrl;
+    private ?string $image;
+    private ?string $imagePath;
+    private ?string $image2;
+    private ?string $image2Path;
+    private int $plentyId;
 
     public function __construct(array $data)
     {

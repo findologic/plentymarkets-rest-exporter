@@ -8,26 +8,14 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Unit\Name;
 
 class Unit extends Entity
 {
-    /** @var int */
-    private $id;
-
-    /** @var int */
-    private $position;
-
-    /** @var string */
-    private $unitOfMeasurement;
-
-    /** @var bool */
-    private $isDecimalPlacesAllowed;
-
-    /** @var string */
-    private $updatedAt;
-
-    /** @var string */
-    private $createdAt;
-
+    private int $id;
+    private int $position;
+    private string $unitOfMeasurement;
+    private bool $isDecimalPlacesAllowed;
+    private string $updatedAt;
+    private string $createdAt;
     /** @var Name[] */
-    private $names = [];
+    private array $names = [];
 
     public function __construct(array $data)
     {

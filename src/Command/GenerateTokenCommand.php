@@ -18,8 +18,7 @@ class GenerateTokenCommand extends Command
 {
     protected static $defaultName = 'generate:token';
 
-    /** @var GuzzleClient|null */
-    private $client;
+    private ?GuzzleClient $client;
 
     public function __construct(GuzzleClient $client = null)
     {

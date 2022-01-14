@@ -9,17 +9,10 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Translatable;
 
 class TagName extends Entity implements Translatable
 {
-    /** @var int */
-    private $id;
-
-    /** @var int */
-    private $tagId;
-
-    /** @var string */
-    private $lang;
-
-    /** @var string */
-    private $name;
+    private int $id;
+    private int $tagId;
+    private string $lang;
+    private string $name;
 
     public function __construct(array $data)
     {

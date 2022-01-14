@@ -19,8 +19,7 @@ class Registry
 
     private const CACHE_LIFETIME = 60 * 60 * 24;
 
-    /** @var AbstractAdapter */
-    private $cache;
+    private AbstractAdapter $cache;
 
     public function __construct(?AbstractAdapter $cache = null)
     {

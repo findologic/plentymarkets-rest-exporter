@@ -6,26 +6,13 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response;
 
 abstract class IterableResponse extends Response
 {
-    /** @var int */
-    protected $page;
-
-    /** @var int */
-    protected $totalsCount;
-
-    /** @var bool */
-    protected $isLastPage;
-
-    /** @var int */
-    protected $lastPageNumber;
-
-    /** @var int */
-    protected $firstOnPage;
-
-    /** @var int */
-    protected $lastOnPage;
-
-    /** @var int */
-    protected $itemsPerPage;
+    protected int $page;
+    protected int $totalsCount;
+    protected bool $isLastPage;
+    protected int $lastPageNumber;
+    protected int $firstOnPage;
+    protected int $lastOnPage;
+    protected int $itemsPerPage;
 
     public function getPage(): int
     {

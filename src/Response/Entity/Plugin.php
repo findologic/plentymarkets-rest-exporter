@@ -12,167 +12,63 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Plugin\UpdateInformatio
 
 class Plugin extends Entity
 {
-    /** @var int|null */
-    private $id;
-
-    /** @var string|null */
-    private $name;
-
-    /** @var string|null */
-    private $last_build_production;
-
-    /** @var string|null */
-    private $last_build_stage;
-
-    /** @var string|null */
-    private $created_at;
-
-    /** @var string|null */
-    private $updated_at;
-
-    /** @var string|null */
-    private $position;
-
-    /** @var bool|null */
-    private $activeProductive;
-
-    /** @var bool|null */
-    private $activeStage;
-
-    /** @var bool|null */
-    private $inStage;
-
-    /** @var bool|null */
-    private $inProductive;
-
-    /** @var string|null */
-    private $type;
-
-    /** @var string|null */
-    private $version;
-
-    /** @var string|null */
-    private $description;
-
-    /** @var string|null */
-    private $namespace;
-
-    /** @var string|null */
-    private $author;
-
-    /** @var string[] */
-    private $keywords = [];
-
-    /** @var string[] */
-    private $require = [];
-
-    /** @var string[] */
-    private $runOnBuild = [];
-
-    /** @var string[] */
-    private $checkOnBuild = [];
-
-    /** @var string|null */
-    private $authorIcon;
-
-    /** @var string|null */
-    private $pluginIcon;
-
-    /** @var bool|null */
-    private $isConnectedWithGit;
-
-    /** @var string[] */
-    private $dependencies = [];
-
-    /** @var array */
-    private $javaScriptFiles = [];
-
+    private ?int $id;
+    private ?string $name;
+    private ?string $last_build_production;
+    private ?string $last_build_stage;
+    private ?string $created_at;
+    private ?string $updated_at;
+    private ?string $position;
+    private ?bool $activeProductive;
+    private ?bool $activeStage;
+    private ?bool $inStage;
+    private ?bool $inProductive;
+    private ?string $type;
+    private ?string $version;
+    private ?string $description;
+    private ?string $namespace;
+    private ?string $author;
+    private array $keywords;
+    private array $require;
+    private array $runOnBuild;
+    private array $checkOnBuild;
+    private ?string $authorIcon;
+    private ?string $pluginIcon;
+    private ?bool $isConnectedWithGit;
+    private array $dependencies;
+    private array $javaScriptFiles;
     /** @var Container[] */
-    private $containers = [];
-
+    private array $containers;
     /** @var DataProvider[] */
-    private $dataProviders = [];
-
-    /** @var string|null */
-    private $source;
-
-    /** @var UpdateInformation|null */
-    private $updateInformation;
-
-    /** @var bool|null */
-    private $isClosedSource;
-
-    /** @var string|null */
-    private $license;
-
-    /** @var string[] */
-    private $shortDescription = [];
-
-    /** @var string[] */
-    private $categories;
-
-    /** @var float|null */
-    private $price;
-
-    /** @var string|null */
-    private $email;
-
-    /** @var string|null */
-    private $phone;
-
-    /** @var string[] */
-    private $marketplaceName = [];
-
-    /** @var array */
-    private $subscriptionInformation = [];
-
-    /** @var string|null */
-    private $versionStage;
-
-    /** @var string|null */
-    private $versionProductive;
-
-    /** @var array */
-    private $marketplaceVariations = [];
-
-    /** @var string|null */
-    private $webhookUrl;
-
-    /** @var bool|null */
-    private $isExternalTool;
-
-    /** @var array */
-    private $directDownloadLinks = [];
-
-    /** @var string|null */
-    private $forwardLink;
-
-    /** @var array */
-    private $notInstalledRequirements = [];
-
-    /** @var array */
-    private $notActiveStageRequirements = [];
-
-    /** @var array */
-    private $notActiveProductiveRequirements = [];
-
-    /** @var string[] */
-    private $pluginSetIds = [];
-
-    /** @var bool|null */
-    private $installed;
-
-    /** @var string|null */
-    private $branch;
-
-    /** @var string|null */
-    private $commit;
-
+    private array $dataProviders;
+    private ?string $source;
+    private ?UpdateInformation $updateInformation;
+    private ?bool $isClosedSource;
+    private ?string $license;
+    private array $shortDescription;
+    private array $categories;
+    private ?float $price;
+    private ?string $email;
+    private ?string $phone;
+    private array $marketplaceName;
+    private array $subscriptionInformation;
+    private ?string $versionStage;
+    private ?string $versionProductive;
+    private array $marketplaceVariations;
+    private ?string $webhookUrl;
+    private ?bool $isExternalTool;
+    private array $directDownloadLinks;
+    private ?string $forwardLink;
+    private array $notInstalledRequirements;
+    private array $notActiveStageRequirements;
+    private array $notActiveProductiveRequirements;
+    private array $pluginSetIds;
+    private ?bool $installed;
+    private ?string $branch;
+    private ?string $commit;
     /** @var PluginSetEntry[] */
-    private $pluginSetEntries = [];
-
-    /** @var Repository */
-    private $repository;
+    private array $pluginSetEntries;
+    private Repository $repository;
 
     public function __construct(array $data)
     {

@@ -15,11 +15,8 @@ class Debugger implements DebuggerInterface
         DEBUG_DIR = __DIR__ . '/../../var/debug',
         DEBUG_EXTENSION = 'json';
 
-    /** @var string */
-    private $debugDir;
-
-    /** @var int */
-    private $encodingOptions;
+    private string $debugDir;
+    private int $encodingOptions;
 
     public function __construct(
         ?string $debugDir = null,

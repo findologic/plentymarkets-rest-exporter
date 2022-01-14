@@ -14,56 +14,29 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class SalesPrice extends Entity
 {
-    /** @var int */
-    private $id;
-
-    /** @var int */
-    private $position;
-
-    /** @var float */
-    private $minimumOrderQuantity;
-
-    /** @var string */
-    private $type;
-
-    /** @var bool */
-    private $isCustomerPrice;
-
-    /** @var bool */
-    private $isDisplayedByDefault;
-
-    /** @var bool */
-    private $isLiveConversion;
-
-    /** @var string */
-    private $createdAt;
-
-    /** @var string */
-    private $updatedAt;
-
-    /** @var string */
-    private $interval;
-
+    private int $id;
+    private int $position;
+    private float $minimumOrderQuantity;
+    private string $type;
+    private bool $isCustomerPrice;
+    private bool $isDisplayedByDefault;
+    private bool $isLiveConversion;
+    private string $createdAt;
+    private string $updatedAt;
+    private string $interval;
     /** @var Name[] */
-    private $names = [];
-
-    /** @var array  */
-    private $accounts = [];
-
+    private array $names = [];
+    private array $accounts;
     /** @var Country[] */
-    private $countries = [];
-
+    private array $countries = [];
     /** @var Currency[] */
-    private $currencies = [];
-
+    private array $currencies = [];
     /** @var CustomerClass[] */
-    private $customerClasses = [];
-
+    private array $customerClasses = [];
     /** @var Referrer[] */
-    private $referrers = [];
-
+    private array $referrers = [];
     /** @var Client[] */
-    private $clients = [];
+    private array $clients = [];
 
     public function __construct(array $data)
     {

@@ -10,23 +10,12 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class VariationAttributeValue extends Entity
 {
-    /** @var int */
-    private $attributeValueSetId;
-
-    /** @var int */
-    private $attributeId;
-
-    /** @var int */
-    private $valueId;
-
-    /** @var bool */
-    private $isLinkableToImage;
-
-    /** @var Attribute|null */
-    private $attribute;
-
-    /** @var AttributeValue|null */
-    private $attributeValue;
+    private int $attributeValueSetId;
+    private int $attributeId;
+    private int $valueId;
+    private bool $isLinkableToImage;
+    private ?Attribute $attribute;
+    private ?AttributeValue $attributeValue;
 
     public function __construct(array $data)
     {

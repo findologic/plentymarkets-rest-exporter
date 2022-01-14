@@ -9,14 +9,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Translatable;
 
 class CharacteristicText extends Entity implements Translatable
 {
-    /** @var int */
-    private $id;
-
-    /** @var string */
-    private $value;
-
-    /** @var string */
-    private $lang;
+    private int $id;
+    private string $value;
+    private string $lang;
 
     public function __construct(array $data)
     {

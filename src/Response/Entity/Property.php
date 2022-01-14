@@ -12,28 +12,19 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Option;
 class Property extends Entity
 {
     private ?int $id;
-
     private ?string $cast;
-
     private ?string $type;
-
     private ?int $position;
-
     private ?string $createdAt;
-
     private ?string $updatedAt;
-
     /** @var Group[] */
-    private array $groups = [];
-
+    private array $groups;
     /** @var Name[] */
-    private array $names = [];
-
+    private array $names;
     /** @var Option[] */
-    private array $options = [];
-
+    private array $options;
     /** @var Amazon[] */
-    private array $amazon = [];
+    private array $amazon;
 
     private bool $skipExport = false;
 

@@ -8,11 +8,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class SalesPrice extends Entity
 {
-    /** @var int */
-    private $id;
-
-    /** @var float */
-    private $price;
+    private int $id;
+    private float $price;
 
     public function __construct(array $data)
     {

@@ -30,17 +30,10 @@ class ExportCommand extends Command
 
     protected static $defaultName = 'export:start';
 
-    /** @var LoggerInterface */
-    private $internalLogger;
-
-    /** @var LoggerInterface */
-    private $customerLogger;
-
-    /** @var Exporter|null */
-    private $exporter;
-
-    /** @var Client|null */
-    private $client;
+    private LoggerInterface $internalLogger;
+    private LoggerInterface $customerLogger;
+    private ?Exporter $exporter;
+    private ?Client $client;
 
     public function __construct(
         ?LoggerInterface $internalLogger = null,

@@ -9,35 +9,16 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Translatable;
 
 class Text extends Entity implements Translatable
 {
-    /** @var string */
-    private $lang;
-
-    /** @var string */
-    private $name1;
-
-    /** @var string */
-    private $name2;
-
-    /** @var string */
-    private $name3;
-
-    /** @var string */
-    private $shortDescription;
-
-    /** @var string */
-    private $metaDescription;
-
-    /** @var string */
-    private $description;
-
-    /** @var string */
-    private $technicalData;
-
-    /** @var string */
-    private $urlPath;
-
-    /** @var string */
-    private $keywords;
+    private string $lang;
+    private string $name1;
+    private string $name2;
+    private string $name3;
+    private string $shortDescription;
+    private string $metaDescription;
+    private string $description;
+    private string $technicalData;
+    private string $urlPath;
+    private string $keywords;
 
     public function __construct(array $data)
     {

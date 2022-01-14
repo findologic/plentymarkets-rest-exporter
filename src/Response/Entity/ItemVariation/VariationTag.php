@@ -9,26 +9,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class VariationTag extends Entity
 {
-    /** @var string */
-    private $tagId;
-
-    /** @var string */
-    private $tagType;
-
-    /** @var string */
-    private $relationshipValue;
-
-    /** @var string */
-    private $relationshipUUID5;
-
-    /** @var string */
-    private $createdAt;
-
-    /** @var string */
-    private $updatedAt;
-
-    /** @var Tag|null */
-    private $tag;
+    private string $tagId;
+    private string $tagType;
+    private string $relationshipValue;
+    private string $relationshipUUID5;
+    private string $createdAt;
+    private string $updatedAt;
+    private ?Tag $tag;
 
     public function __construct(array $data)
     {

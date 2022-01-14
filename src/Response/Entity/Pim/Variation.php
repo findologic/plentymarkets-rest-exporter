@@ -23,32 +23,31 @@ class Variation extends Entity
 {
     public const EXCLUSION_TAG_NAME = 'findologic-exclude';
 
-    /** @var int */
-    private $id;
+    private int $id;
 
     /** @var Category[] */
-    private $categories;
+    private array $categories;
 
     /** @var Barcode[] */
-    private $barcodes;
+    private array $barcodes;
 
     /** @var null Unknown data */
     private $additionalSkus = null;
 
     /** @var Attribute[] */
-    private $attributeValues;
+    private array $attributeValues;
 
     /** @var null Unknown data */
     private $bundleComponents = null;
 
     /** @var Client[] */
-    private $clients;
+    private array $clients;
 
     /** @var null Unknown data */
     private $defaultCategories = null;
 
     /** @var SalesPrice[] */
-    private $salesPrices;
+    private array $salesPrices;
 
     /** @var null Unknown data */
     private $skus = null;
@@ -60,10 +59,10 @@ class Variation extends Entity
     private $warehouses = null;
 
     /** @var Property[] */
-    private $properties;
+    private array $properties;
 
     /** @var Tag[] */
-    private $tags;
+    private array $tags;
 
     /** @var null Unknown data */
     private $comments = null;
@@ -71,17 +70,15 @@ class Variation extends Entity
     /** @var null Unknown data */
     private $timestamps = null;
 
-    /** @var Unit|null */
-    private $unit = null;
+    private ?Unit $unit = null;
 
     /** @var Characteristic[] */
-    private $characteristics;
+    private array $characteristics;
 
     /** @var Image[] */
-    private $images;
+    private array $images;
 
-    /** @var Base */
-    private $base;
+    private Base $base;
 
     public function __construct(array $data)
     {

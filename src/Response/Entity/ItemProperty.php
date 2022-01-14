@@ -8,56 +8,23 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty\Name;
 
 class ItemProperty extends Entity
 {
-    /** @var int */
-    private $id;
-
-    /** @var int */
-    private $position;
-
-    /** @var int|null */
-    private $propertyGroupId;
-
-    /** @var string */
-    private $unit;
-
-    /** @var string */
-    private $backendName;
-
-    /** @var string */
-    private $comment;
-
-    /** @var string */
-    private $valueType;
-
-    /** @var bool */
-    private $isSearchable;
-
-    /** @var bool */
-    private $isOderProperty;
-
-    /** @var bool */
-    private $isShownOnItemPage;
-
-    /** @var bool */
-    private $isShownOnItemList;
-
-    /** @var bool */
-    private $isShownAtCheckout;
-
-    /** @var bool */
-    private $isShownInPdf;
-
-    /** @var bool */
-    private $isShownAsAdditionalCosts;
-
-    /** @var float */
-    private $surcharge;
-
-    /** @var string */
-    private $updatedAt;
-
-    /** @var Name[] */
-    private $names;
+    private int $id;
+    private int $position;
+    private ?int $propertyGroupId;
+    private string $unit;
+    private string $backendName;
+    private string $comment;
+    private string $valueType;
+    private bool $isSearchable;
+    private bool $isOderProperty;
+    private bool $isShownOnItemPage;
+    private bool $isShownOnItemList;
+    private bool $isShownAtCheckout;
+    private bool $isShownInPdf;
+    private bool $isShownAsAdditionalCosts;
+    private float $surcharge;
+    private string $updatedAt;
+    private array $names;
 
     public function __construct(array $data)
     {

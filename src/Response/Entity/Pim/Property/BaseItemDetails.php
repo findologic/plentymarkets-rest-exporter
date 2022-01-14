@@ -9,182 +9,65 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class BaseItemDetails extends Entity
 {
-    /** @var int */
-    private $id;
-
-    /** @var int */
-    private $position;
-
-    /** @var string */
-    private $addCmsPage;
-
-    /** @var int */
-    private $condition;
-
-    /** @var string|null */
-    private $free1;
-
-    /** @var string|null */
-    private $free2;
-
-    /** @var string|null */
-    private $free3;
-
-    /** @var string|null */
-    private $free4;
-
-    /** @var string|null */
-    private $free5;
-
-    /** @var string|null */
-    private $free6;
-
-    /** @var string|null */
-    private $free7;
-
-    /** @var string|null */
-    private $free8;
-
-    /** @var string|null */
-    private $free9;
-
-    /** @var string|null */
-    private $free10;
-
-    /** @var string|null */
-    private $free11;
-
-    /** @var string|null */
-    private $free12;
-
-    /** @var string|null */
-    private $free13;
-
-    /** @var string|null */
-    private $free14;
-
-    /** @var string|null */
-    private $free15;
-
-    /** @var string|null */
-    private $free16;
-
-    /** @var string|null */
-    private $free17;
-
-    /** @var string|null */
-    private $free18;
-
-    /** @var string|null */
-    private $free19;
-
-    /** @var string|null */
-    private $free20;
-
-    /** @var string */
-    private $gimahhot;
-
-    /** @var int */
-    private $storeSpecial;
-
-    /** @var int|null */
-    private $ownerId;
-
-    /** @var int|null */
-    private $manufacturerId;
-
-    /** @var int|null */
-    private $producingCountryId;
-
-    /** @var float */
-    private $revenueAccount;
-
-    /** @var int */
-    private $couponRestriction;
-
-    /** @var int */
-    private $conditionApi;
-
-    /** @var bool */
-    private $isSubscribable;
-
-    /** @var int */
-    private $amazonFbaPlatform;
-
-    /** @var bool */
-    private $isShippableByAmazon;
-
-    /** @var int */
-    private $amazonProductType;
-
-    /** @var string */
-    private $amazonFedas;
-
-    /** @var int|null */
-    private $ebayPresetId;
-
-    /** @var int|null */
-    private $ebayCategory;
-
-    /** @var int|null */
-    private $ebayCategory2;
-
-    /** @var int|null */
-    private $ebayStoreCategory;
-
-    /** @var int|null */
-    private $ebayStoreCategory2;
-
-    /** @var int */
-    private $rakutenCategoryId;
-
-    /** @var int */
-    private $flagOne;
-
-    /** @var int */
-    private $flagTwo;
-
-    /** @var int */
-    private $ageRestriction;
-
-    /** @var int */
-    private $feedback;
-
-    /** @var string */
-    private $itemType;
-
-    /** @var int */
-    private $stockType;
-
-    /** @var string */
-    private $sitemapPublished;
-
-    /** @var bool */
-    private $isSerialNumber;
-
-    /** @var bool */
-    private $isShippingPackage;
-
-    /** @var int */
-    private $maximumOrderQuantity;
-
-    /** @var int */
-    private $variationCount;
-
-    /** @var string */
-    private $customsTariffNumber;
-
-    /** @var int */
-    private $mainVariationId;
-
-    /** @var bool */
-    private $inactive;
-
-    /** @var DateTimeInterface */
-    private $createdAt;
-
-    /** @var DateTimeInterface */
-    private $updatedAt;
+    private int $id;
+    private int $position;
+    private string $addCmsPage;
+    private int $condition;
+    private ?string $free1;
+    private ?string $free2;
+    private ?string $free3;
+    private ?string $free4;
+    private ?string $free5;
+    private ?string $free6;
+    private ?string $free7;
+    private ?string $free8;
+    private ?string $free9;
+    private ?string $free10;
+    private ?string $free11;
+    private ?string $free12;
+    private ?string $free13;
+    private ?string $free14;
+    private ?string $free15;
+    private ?string $free16;
+    private ?string $free17;
+    private ?string $free18;
+    private ?string $free19;
+    private ?string $free20;
+    private string $gimahhot;
+    private int $storeSpecial;
+    private ?int $ownerId;
+    private ?int $manufacturerId;
+    private ?int $producingCountryId;
+    private float $revenueAccount;
+    private int $couponRestriction;
+    private int $conditionApi;
+    private bool $isSubscribable;
+    private int $amazonFbaPlatform;
+    private bool $isShippableByAmazon;
+    private int $amazonProductType;
+    private string $amazonFedas;
+    private ?int $ebayPresetId;
+    private ?int $ebayCategory;
+    private ?int $ebayCategory2;
+    private ?int $ebayStoreCategory;
+    private ?int $ebayStoreCategory2;
+    private int $rakutenCategoryId;
+    private int $flagOne;
+    private int $flagTwo;
+    private ?int $ageRestriction;
+    private int $feedback;
+    private string $itemType;
+    private int $stockType;
+    private string $sitemapPublished;
+    private bool $isSerialNumber;
+    private bool $isShippingPackage;
+    private int $maximumOrderQuantity;
+    private int $variationCount;
+    private string $customsTariffNumber;
+    private int $mainVariationId;
+    private bool $inactive;
+    private DateTimeInterface $createdAt;
+    private DateTimeInterface $updatedAt;
 
     public function __construct(array $data)
     {

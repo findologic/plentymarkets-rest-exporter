@@ -13,7 +13,7 @@ class PropertyResponse extends IterableResponse implements CollectionInterface, 
     use EntityCollection;
 
     /** @var Property[] */
-    private $properties;
+    private array $properties;
 
     /**
      * @param Property[] $properties

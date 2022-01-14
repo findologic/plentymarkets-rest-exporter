@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
 use FINDOLOGIC\Export\Helpers\DataHelper;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
 use GuzzleHttp\Client as GuzzleClient;

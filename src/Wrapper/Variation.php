@@ -109,8 +109,7 @@ class Variation
         PimVariation $variationEntity,
         int $wrapMode = Product::WRAP_MODE_DEFAULT,
         string $variationGroupKey = ''
-    )
-    {
+    ) {
         $this->config = $config;
         $this->variationEntity = $variationEntity;
         $this->registryService = $registryService;

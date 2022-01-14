@@ -13,11 +13,9 @@ use Symfony\Component\Finder\Finder;
 
 abstract class ClearDirectoryBaseCommand extends Command
 {
-    private $filesystem;
-    private $finder;
-
-    /** @var string */
-    private $directory;
+    private ?Filesystem $filesystem;
+    private ?Finder $finder;
+    private string $directory;
 
     public function __construct(string $name = null, ?Filesystem $fileSystem = null, ?Finder $finder = null)
     {

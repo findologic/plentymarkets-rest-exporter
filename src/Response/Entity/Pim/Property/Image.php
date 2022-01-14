@@ -9,70 +9,31 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Image extends Entity
 {
-    /** @var int */
-    private $id;
-
-    /** @var int */
-    private $itemId;
-
-    /** @var string */
-    private $md5Checksum;
-
-    /** @var string */
-    private $md5ChecksumOriginal;
-
-    /** @var int */
-    private $width;
-
-    /** @var int */
-    private $height;
-
+    private int $id;
+    private int $itemId;
+    private string $md5Checksum;
+    private string $md5ChecksumOriginal;
+    private int $width;
+    private int $height;
     private ?int $position;
-
-    /** @var string */
-    private $url;
-
-    /** @var string */
-    private $fileType;
-
-    /** @var string */
-    private $urlMiddle;
-
-    /** @var bool */
-    private $hasLinkedVariations;
-
-    /** @var string */
-    private $urlPreview;
-
+    private string $url;
+    private string $fileType;
+    private string $urlMiddle;
+    private bool $hasLinkedVariations;
+    private string $urlPreview;
     /** @var ImageAttributeValue[]. */
-    private $attributeValueImages = [];
-
+    private array $attributeValueImages = [];
     /** @var ImageName[] */
-    private $names;
-
+    private array $names;
     /** @var ImageAvailability[] */
-    private $availabilities;
-
-    /** @var string */
-    private $type;
-
-    /** @var int */
-    private $size;
-
-    /** @var int */
-    private $storageProviderId;
-
-    /** @var string */
-    private $path;
-
-    /** @var string */
-    private $urlSecondPreview;
-
-    /** @var DateTimeInterface */
-    private $createdAt;
-
-    /** @var DateTimeInterface */
-    private $updatedAt;
+    private array $availabilities;
+    private string $type;
+    private int $size;
+    private int $storageProviderId;
+    private string $path;
+    private string $urlSecondPreview;
+    private DateTimeInterface $createdAt;
+    private DateTimeInterface $updatedAt;
 
     public function __construct(array $data)
     {

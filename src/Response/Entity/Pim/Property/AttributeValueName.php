@@ -9,14 +9,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Translatable;
 
 class AttributeValueName extends Entity implements Translatable
 {
-    /** @var int */
-    private $id;
-
-    /** @var string */
-    private $name;
-
-    /** @var string */
-    private $lang;
+    private int $id;
+    private string $name;
+    private string $lang;
 
     public function __construct(array $data)
     {

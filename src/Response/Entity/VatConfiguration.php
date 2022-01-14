@@ -8,41 +8,19 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\VatConfiguration\VatRat
 
 class VatConfiguration extends Entity
 {
-    /** @var int */
-    private $id;
-
-    /** @var int */
-    private $countryId;
-
-    /** @var string */
-    private $taxIdNumber;
-
-    /** @var string */
-    private $startedAt;
-
-    /** @var string|null */
-    private $invalidFrom;
-
-    /** @var int */
-    private $locationId;
-
-    /** @var string */
-    private $marginScheme;
-
-    /** @var bool */
-    private $isRestrictedToDigitalItems;
-
-    /** @var bool */
-    private $isStandard;
-
-    /** @var string */
-    private $createdAt;
-
-    /** @var string */
-    private $updatedAt;
-
+    private int $id;
+    private int $countryId;
+    private string $taxIdNumber;
+    private string $startedAt;
+    private ?string $invalidFrom;
+    private int $locationId;
+    private string $marginScheme;
+    private bool $isRestrictedToDigitalItems;
+    private bool $isStandard;
+    private string $createdAt;
+    private string $updatedAt;
     /** @var VatRate[] */
-    private $vatRates = [];
+    private array $vatRates = [];
 
     public function __construct(array $data)
     {

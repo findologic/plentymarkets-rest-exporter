@@ -469,7 +469,7 @@ class RegistryService
             } catch (PermissionException $e) {
                 $this->customerLogger->error(
                     'Required permissions \'Plugins > Configurations > Show\' have not been granted. ' .
-                    'Product-URLs will be exported in Callisto format'
+                    'Product-URLs will be exported in Callisto format.'
                 );
 
                 $this->set('pluginConfigurations', $allConfigurations);
