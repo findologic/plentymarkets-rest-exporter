@@ -64,8 +64,7 @@ class CsvWrapper extends Wrapper
         int $total,
         ItemResponse $products,
         PimVariationResponse $variations
-    ): void
-    {
+    ): void {
         /** @var Item[] $items */
         $items = [];
         foreach ($products->all() as $product) {
