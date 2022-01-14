@@ -9,7 +9,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Image extends Entity
 {
-    private int $id;
+    private ?int $id;
     private int $itemId;
     private string $md5Checksum;
     private string $md5ChecksumOriginal;
