@@ -100,7 +100,7 @@ class CsvWrapper extends Wrapper
             }
         }
 
-        if($this->fileNamePrefix) {
+        if ($this->fileNamePrefix) {
             $this->exporter->setFileNamePrefix($this->fileNamePrefix);
         }
 
