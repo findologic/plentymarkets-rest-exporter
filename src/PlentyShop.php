@@ -16,7 +16,7 @@ class PlentyShop
     private ?string $variationShowType;
     private ?bool $itemShowPleaseSelect;
 
-    public function __construct(array $config)
+    public function __construct(array $config = [])
     {
         $this->enableOldUrlPattern = isset($config[self::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN]) ?
             Utils::filterBoolean($config[self::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN]) : null;
@@ -30,7 +30,7 @@ class PlentyShop
 
     public function shouldUseLegacyCallistoUrl(): bool
     {
-        if (!$this->enableOldUrlPattern) {
+        if (!isset($this->enableOldUrlPattern)) {
             return true;
         }
 

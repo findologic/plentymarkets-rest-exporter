@@ -31,77 +31,40 @@ class Variation
     use CharacteristicAware;
     use PropertyAware;
 
-    /** @var Config */
-    protected $config;
-
-    /** @var RegistryService */
-    protected $registryService;
-
-    /** @var PimVariation */
-    protected $variationEntity;
-
-    /** @var bool */
-    protected $isMain;
-
-    /** @var int|null */
-    protected $position;
-
-    /** @var int|null */
-    protected $vatId;
-
-    /** @var string */
-    protected $number;
-
-    /** @var string|null */
-    protected $model;
-
-    /** @var int */
-    protected $id;
-
-    /** @var int */
-    protected $itemId;
-
+    protected Config $config;
+    protected RegistryService $registryService;
+    protected PimVariation $variationEntity;
+    protected bool $isMain;
+    protected ?int $position;
+    protected ?int $vatId;
+    protected string $number;
+    protected ?string $model;
+    protected int $id;
+    protected int $itemId;
     /** @var string[] */
-    protected $barcodes = [];
-
-    /** @var float */
-    protected $price = 0.0;
-
-    /** @var float */
-    protected $insteadPrice = 0.0;
-
-    /** @var array */
-    protected $prices = [];
+    protected array $barcodes = [];
+    protected float $price = 0.0;
+    protected float $insteadPrice = 0.0;
+    protected array $prices = [];
+    protected ?Image $image = null;
+    protected float $vatRate = 0.0;
+    protected ?string $baseUnit = null;
+    protected ?string $packageSize = null;
+    protected string $variationGroupKey;
+    protected int $wrapMode;
+    protected bool $hasCategories = false;
 
     /** @var Attribute[] */
-    protected $attributes = [];
+    protected array $attributes = [];
 
     /** @var Property[] */
-    protected $properties = [];
+    protected array $properties = [];
 
     /** @var Usergroup[] */
-    protected $groups = [];
+    protected array $groups = [];
 
     /** @var Keyword[] */
-    protected $tags = [];
-
-    /** @var Image */
-    protected $image;
-
-    /** @var float */
-    protected $vatRate;
-
-    /** @var string|null */
-    protected $baseUnit;
-
-    /** @var string|null */
-    protected $packageSize;
-
-    protected string $variationGroupKey;
-
-    protected int $wrapMode;
-
-    protected bool $hasCategories = false;
+    protected array $tags = [];
 
     public function __construct(
         Config $config,

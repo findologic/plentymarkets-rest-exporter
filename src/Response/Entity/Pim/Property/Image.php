@@ -11,29 +11,29 @@ class Image extends Entity
 {
     private ?int $id;
     private ?int $itemId;
-    private string $md5Checksum;
-    private string $md5ChecksumOriginal;
-    private int $width;
-    private int $height;
+    private ?string $md5Checksum;
+    private ?string $md5ChecksumOriginal;
+    private ?int $width;
+    private ?int $height;
     private ?int $position;
-    private string $url;
-    private string $fileType;
-    private string $urlMiddle;
-    private bool $hasLinkedVariations;
-    private string $urlPreview;
+    private ?string $url;
+    private ?string $fileType;
+    private ?string $urlMiddle;
+    private ?bool $hasLinkedVariations;
+    private ?string $urlPreview;
     /** @var ImageAttributeValue[]. */
-    private array $attributeValueImages;
+    private ?array $attributeValueImages;
     /** @var ImageName[] */
-    private array $names;
+    private ?array $names;
     /** @var ImageAvailability[] */
-    private array $availabilities;
-    private string $type;
-    private int $size;
-    private int $storageProviderId;
-    private string $path;
-    private string $urlSecondPreview;
-    private DateTimeInterface $createdAt;
-    private DateTimeInterface $updatedAt;
+    private ?array $availabilities;
+    private ?string $type;
+    private ?int $size;
+    private ?int $storageProviderId;
+    private ?string $path;
+    private ?string $urlSecondPreview;
+    private ?DateTimeInterface $createdAt;
+    private ?DateTimeInterface $updatedAt;
 
     public function __construct(array $data)
     {

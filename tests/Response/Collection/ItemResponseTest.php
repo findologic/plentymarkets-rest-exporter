@@ -8,16 +8,15 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use PHPUnit\Framework\TestCase;
 
 class ItemResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private $response;
-
-    /** @var ItemResponse */
-    private $itemResponse;
+    private GuzzleResponse $response;
+    private ItemResponse $itemResponse;
 
     public function setUp(): void
     {

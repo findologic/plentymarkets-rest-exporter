@@ -8,8 +8,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Barcode extends Entity
 {
-    private int $id;
-    private string $code;
+    private ?int $id;
+    private ?string $code;
 
     public function __construct(array $data)
     {

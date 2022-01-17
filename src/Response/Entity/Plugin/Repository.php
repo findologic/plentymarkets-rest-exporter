@@ -8,29 +8,14 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Repository extends Entity
 {
-    /** @var int|null */
-    private $id;
-
-    /** @var string|null */
-    private $remoteUrl;
-
-    /** @var string|null */
-    private $username;
-
-    /** @var string|null */
-    private $branch;
-
-    /** @var string|null */
-    private $webhookToken;
-
-    /** @var string|null */
-    private $autoFetch;
-
-    /** @var string|null */
-    private $createdAt;
-
-    /** @var string|null */
-    private $updatedAt;
+    private ?int $id;
+    private ?string $remoteUrl;
+    private ?string $username;
+    private ?string $branch;
+    private ?string $webhookToken;
+    private ?string $autoFetch;
+    private ?string $createdAt;
+    private ?string $updatedAt;
 
     public function __construct(array $data)
     {

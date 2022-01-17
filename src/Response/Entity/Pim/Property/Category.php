@@ -8,9 +8,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Category extends Entity
 {
-    private int $id;
-    private int $position;
-    private bool $isNeckermannPrimary;
+    private ?int $id;
+    private ?int $position;
+    private ?bool $isNeckermannPrimary;
 
     public function __construct(array $data)
     {

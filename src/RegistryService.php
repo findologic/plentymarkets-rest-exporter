@@ -493,7 +493,7 @@ class RegistryService
         $this->set('pluginConfigurations', $allConfigurations);
     }
 
-    private function createPlentyShop(): void
+    public function createPlentyShop(): void
     {
         $this->plentyShop = new PlentyShop($this->getPluginConfigurations('Ceres'));
     }

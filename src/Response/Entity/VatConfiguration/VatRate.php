@@ -8,14 +8,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class VatRate extends Entity
 {
-    /** @var int */
-    private $id;
-
-    /** @var string */
-    private $name;
-
-    /** @var float */
-    private $vatRate;
+    private int $id;
+    private string $name;
+    private float $vatRate;
 
     public function __construct(array $data)
     {

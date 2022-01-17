@@ -8,380 +8,133 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Configuration extends Entity
 {
-    /** @var string|null */
-    private $name;
-
-    /** @var string|null */
-    private $defaultLanguage;
-
-    /** @var string|null */
-    private $defaultLayout;
-
-    /** @var int|null */
-    private $defaultShippingCountryId;
-
-    /** @var int|null */
-    private $displayPriceColumn;
-
-    /** @var int|null */
-    private $displayPriceNetto;
-
-    /** @var int|null */
-    private $doctype;
-
-    /** @var string|null */
-    private $faviconPath;
-
-    /** @var int|null */
-    private $frontPageContentPageId;
-
-    /** @var int|null */
-    private $maxLoginAttempts;
-
-    /** @var int|null */
-    private $error404ContentPageId;
-
-    /** @var int|null */
-    private $cancellationRightsContentPageId;
-
-    /** @var int|null */
-    private $helpContentPageId;
-
-    /** @var int|null */
-    private $itemNotFoundContentPageId;
-
-    /** @var int|null */
-    private $privacyPolicyContentPageId;
-
-    /** @var int|null */
-    private $shippingContentPageId;
-
-    /** @var int|null */
-    private $termsConditionsContentPageId;
-
-    /** @var int|null */
-    private $socialMedia;
-
-    /** @var string|null */
-    private $urlFacebook;
-
-    /** @var string|null */
-    private $urlGooglePlus;
-
-    /** @var string|null */
-    private $urlTwitter;
-
-    /** @var int|null */
-    private $displayItemOnly4Customer;
-
-    /** @var int|null */
-    private $displayItemName;
-
-    /** @var int|null */
-    private $attributeVariantCheck;
-
-    /** @var int|null */
-    private $attributeSelectDefaultOption;
-
-    /** @var string|null */
-    private $urlItemCategory;
-
-    /** @var string|null */
-    private $urlItemContent;
-
-    /** @var string|null */
-    private $urlTitleItemName;
-
-    /** @var string|null */
-    private $urlTitleItemContent;
-
-    /** @var string|null */
-    private $urlNeedle;
-
-    /** @var string|null */
-    private $urlFileExtension;
-
-    /** @var string|null */
-    private $urlLinking;
-
+    private ?string $name;
+    private ?string $defaultLanguage;
+    private ?string $defaultLayout;
+    private ?int $defaultShippingCountryId;
+    private ?int $displayPriceColumn;
+    private ?int $displayPriceNetto;
+    private ?int $doctype;
+    private ?string $faviconPath;
+    private ?int $frontPageContentPageId;
+    private ?int $maxLoginAttempts;
+    private ?int $error404ContentPageId;
+    private ?int $cancellationRightsContentPageId;
+    private ?int $helpContentPageId;
+    private ?int $itemNotFoundContentPageId;
+    private ?int $privacyPolicyContentPageId;
+    private ?int $shippingContentPageId;
+    private ?int $termsConditionsContentPageId;
+    private ?int $socialMedia;
+    private ?string $urlFacebook;
+    private ?string $urlGooglePlus;
+    private ?string $urlTwitter;
+    private ?int $displayItemOnly4Customer;
+    private ?int $displayItemName;
+    private ?int $attributeVariantCheck;
+    private ?int $attributeSelectDefaultOption;
+    private ?string $urlItemCategory;
+    private ?string $urlItemContent;
+    private ?string $urlTitleItemName;
+    private ?string $urlTitleItemContent;
+    private ?string $urlNeedle;
+    private ?string $urlFileExtension;
+    private ?string $urlLinking;
     /** @var string[] */
     private $languageList = [];
-
-    /** @var string|null */
-    private $domain;
-
-    /** @var string|null */
-    private $domainSsl;
-
-    /** @var string|null */
-    private $rootDir;
-
-    /** @var string|null */
-    private $loginMode;
-
-    /** @var int|null */
-    private $attributesDropDown;
-
-    /** @var int|null */
-    private $attributeWithMarkup;
-
-    /** @var int|null */
-    private $categoryItemCount;
-
-    /** @var int|null */
-    private $categoryLevelLimit;
-
-    /** @var int|null */
-    private $currencyConversion;
-
-    /** @var int|null */
-    private $dontSplitItemBundle;
-
-    /** @var int|null */
-    private $dhlPackstationValidation;
-
-    /** @var int|null */
-    private $sessionLifetime;
-
-    /** @var int|null */
-    private $useCharacterCrossSelling;
-
-    /** @var int|null */
-    private $useDynamicCrossSelling;
-
-    /** @var string|null */
-    private $defaultCurrency;
-
-    /** @var int|null */
-    private $languageMode;
-
-    /** @var int|null */
-    private $itemCategorySorting1;
-
-    /** @var int|null */
-    private $itemCategorySorting2;
-
-    /** @var int|null */
-    private $itemSortByMonthlySales;
-
-    /** @var string|null */
-    private $itemAvailabilityDisabledList;
-
+    private ?string $domain;
+    private ?string $domainSsl;
+    private ?string $rootDir;
+    private ?string $loginMode;
+    private ?int $attributesDropDown;
+    private ?int $attributeWithMarkup;
+    private ?int $categoryItemCount;
+    private ?int $categoryLevelLimit;
+    private ?int $currencyConversion;
+    private ?int $dontSplitItemBundle;
+    private ?int $dhlPackstationValidation;
+    private ?int $sessionLifetime;
+    private ?int $useCharacterCrossSelling;
+    private ?int $useDynamicCrossSelling;
+    private ?string $defaultCurrency;
+    private ?int $languageMode;
+    private ?int $itemCategorySorting1;
+    private ?int $itemCategorySorting2;
+    private ?int $itemSortByMonthlySales;
+    private ?string $itemAvailabilityDisabledList;
     /** @var string|ItemMeasureUnit[]|null */
     private $itemMeasureUnit;
-
-    /** @var int|null */
-    private $showBasePriceActive;
-
-    /** @var int|null */
-    private $jumpPaymentActive;
-
-    /** @var int|null */
-    private $jumpShippingActive;
-
-    /** @var int|null */
-    private $showContentTermsFsk;
-
-    /** @var int|null */
-    private $newsletterRegistrationActive;
-
-    /** @var int|null */
-    private $minimumOrderValue;
-
-    /** @var int|null */
-    private $ipAddressSaveInactive;
-
-    /** @var int|null */
-    private $reuseOrderActive;
-
-    /** @var int|null */
-    private $editOrderActive;
-
-    /** @var int|null */
-    private $currencySymbol;
-
-    /** @var int|null */
-    private $dhlAllowPackstationActive;
-
-    /** @var int|null */
-    private $dhlLimitOrderAmountForPackstation;
-
-    /** @var int|null */
-    private $watchlistActive;
-
-    /** @var int|null */
-    private $itemwishlistActive;
-
-    /** @var int|null */
-    private $couponVisibilityActive;
-
-    /** @var int|null */
-    private $itemlistPrice;
-
-    /** @var int|null */
-    private $itemlistWeight;
-
-    /** @var int|null */
-    private $schedulerActive;
-
-    /** @var int|null */
-    private $changeEmailActive;
-
-    /** @var int|null */
-    private $changePasswordActive;
-
-    /** @var int|null */
-    private $changePasswordSendmail;
-
-    /** @var int|null */
-    private $logoutHiddenActive;
-
-    /** @var int|null */
-    private $displayStatusInactive;
-
-    /** @var int|null */
-    private $displayWeightInactive;
-
-    /** @var int|null */
-    private $displayInvoiceDownload;
-
-    /** @var int|null */
-    private $displayShippingDateActive;
-
-    /** @var int|null */
-    private $quickloginValidDays;
-
-    /** @var int|null */
-    private $paymentMethodsContentPageId;
-
-    /** @var int|null */
-    private $contactContentPageId;
-
-    /** @var int|null */
-    private $legalDisclosureContentPageId;
-
-    /** @var int|null */
-    private $bankContentPageId;
-
-    /** @var array */
-    private $browserLanguage = [];
-
-    /** @var int|null */
-    private $webstoreId;
-
-    /** @var string|null */
-    private $itemSearchEngine;
-
-    /** @var int|null */
-    private $itemMaxRatingPoints;
-
-    /** @var int|null */
-    private $itemCommentsActive;
-
-    /** @var int|null */
-    private $customerLoginMethod;
-
-    /** @var int|null */
-    private $documentsActive;
-
-    /** @var int|null */
-    private $dynamicExportActive;
-
-    /** @var int|null */
-    private $retoureMethod;
-
-    /** @var int|null */
-    private $editSchedulerPaymentMethodActive;
-
-    /** @var int|null */
-    private $showSEPAMandateDownload;
-
-    /** @var array */
-    private $defaultShippingCountryList = [];
-
-    /** @var int|null */
-    private $useDefaultShippingCountryAsShopCountry;
-
-    /** @var int|null */
-    private $defaultParcelServiceId;
-
-    /** @var int|null */
-    private $defaultParcelServicePresetId;
-
-    /** @var int|null */
-    private $defaultMethodOfPaymentId;
-
-    /** @var int|null */
-    private $ignoreCouponMinOrderValueActive;
-
-    /** @var int|null */
-    private $externalVatCheckInactive;
-
-    /** @var int|null */
-    private $customerRegistrationCheck;
-
-    /** @var int|null */
-    private $defaultAccountingLocation;
-
-    /** @var string|null */
-    private $ebayAccount;
-
-    /** @var int|null */
-    private $itemRatingActive;
-
-    /** @var string|null */
-    private $itemNewFeedbackVisibility;
-
-    /** @var int|null */
-    private $itemCustomerNameVisibility;
-
-    /** @var int|null */
-    private $categoryRatingActive;
-
-    /** @var int|null */
-    private $categoryMaxRatingPoints;
-
-    /** @var int|null */
-    private $categoryCommentsActive;
-
-    /** @var string|null */
-    private $categoryNewFeedbackVisibility;
-
-    /** @var int|null */
-    private $categoryCustomerNameVisibility;
-
-    /** @var int|null */
-    private $blogRatingActive;
-
-    /** @var int|null */
-    private $blogMaxRatingPoints;
-
-    /** @var int|null */
-    private $blogCommentsActive;
-
-    /** @var string|null */
-    private $blogNewFeedbackVisibility;
-
-    /** @var int|null */
-    private $blogCustomerNameVisibility;
-
-    /** @var int|null */
-    private $feedbackRatingActive;
-
-    /** @var int|null */
-    private $feedbackMaxRatingPoints;
-
-    /** @var int|null */
-    private $feedbackCommentsActive;
-
-    /** @var string|null */
-    private $feedbackNewFeedbackVisibility;
-
-    /** @var int|null */
-    private $feedbackCustomerNameVisibility;
-
-    /** @var int|null */
-    private $urlTrailingSlash;
+    private ?int $showBasePriceActive;
+    private ?int $jumpPaymentActive;
+    private ?int $jumpShippingActive;
+    private ?int $showContentTermsFsk;
+    private ?int $newsletterRegistrationActive;
+    private ?int $minimumOrderValue;
+    private ?int $ipAddressSaveInactive;
+    private ?int $reuseOrderActive;
+    private ?int $editOrderActive;
+    private ?int $currencySymbol;
+    private ?int $dhlAllowPackstationActive;
+    private ?int $dhlLimitOrderAmountForPackstation;
+    private ?int $watchlistActive;
+    private ?int $itemwishlistActive;
+    private ?int $couponVisibilityActive;
+    private ?int $itemlistPrice;
+    private ?int $itemlistWeight;
+    private ?int $schedulerActive;
+    private ?int $changeEmailActive;
+    private ?int $changePasswordActive;
+    private ?int $changePasswordSendmail;
+    private ?int $logoutHiddenActive;
+    private ?int $displayStatusInactive;
+    private ?int $displayWeightInactive;
+    private ?int $displayInvoiceDownload;
+    private ?int $displayShippingDateActive;
+    private ?int $quickloginValidDays;
+    private ?int $paymentMethodsContentPageId;
+    private ?int $contactContentPageId;
+    private ?int $legalDisclosureContentPageId;
+    private ?int $bankContentPageId;
+    private array $browserLanguage;
+    private ?int $webstoreId;
+    private ?string $itemSearchEngine;
+    private ?int $itemMaxRatingPoints;
+    private ?int $itemCommentsActive;
+    private ?int $customerLoginMethod;
+    private ?int $documentsActive;
+    private ?int $dynamicExportActive;
+    private ?int $retoureMethod;
+    private ?int $editSchedulerPaymentMethodActive;
+    private ?int $showSEPAMandateDownload;
+    private array $defaultShippingCountryList;
+    private ?int $useDefaultShippingCountryAsShopCountry;
+    private ?int $defaultParcelServiceId;
+    private ?int $defaultParcelServicePresetId;
+    private ?int $defaultMethodOfPaymentId;
+    private ?int $ignoreCouponMinOrderValueActive;
+    private ?int $externalVatCheckInactive;
+    private ?int $customerRegistrationCheck;
+    private ?int $defaultAccountingLocation;
+    private ?string $ebayAccount;
+    private ?int $itemRatingActive;
+    private ?string $itemNewFeedbackVisibility;
+    private ?int $itemCustomerNameVisibility;
+    private ?int $categoryRatingActive;
+    private ?int $categoryMaxRatingPoints;
+    private ?int $categoryCommentsActive;
+    private ?string $categoryNewFeedbackVisibility;
+    private ?int $categoryCustomerNameVisibility;
+    private ?int $blogRatingActive;
+    private ?int $blogMaxRatingPoints;
+    private ?int $blogCommentsActive;
+    private ?string $blogNewFeedbackVisibility;
+    private ?int $blogCustomerNameVisibility;
+    private ?int $feedbackRatingActive;
+    private ?int $feedbackMaxRatingPoints;
+    private ?int $feedbackCommentsActive;
+    private ?string $feedbackNewFeedbackVisibility;
+    private ?int $feedbackCustomerNameVisibility;
+    private ?int $urlTrailingSlash;
 
     public function __construct(array $data)
     {

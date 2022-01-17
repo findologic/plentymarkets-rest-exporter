@@ -10,13 +10,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Translatable;
 
 class PropertyRelationValue extends Entity implements Translatable
 {
-    private int $id;
-    private int $relationId;
-    private string $value;
-    private string $lang;
+    private ?int $id;
+    private ?int $relationId;
+    private ?string $value;
+    private ?string $lang;
     private ?string $description;
-    private DateTimeInterface $createdAt;
-    private DateTimeInterface $updatedAt;
+    private ?DateTimeInterface $createdAt;
+    private ?DateTimeInterface $updatedAt;
 
     public function __construct(array $data)
     {

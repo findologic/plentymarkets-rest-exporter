@@ -15,6 +15,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\PlentyShop;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
@@ -38,8 +39,7 @@ class ProductTest extends TestCase
     /** @var Exporter|MockObject */
     private $exporterMock;
 
-    /** @var Config */
-    private $config;
+    private Config $config;
 
     /** @var Item|MockObject */
     private $itemMock;
@@ -293,14 +293,8 @@ class ProductTest extends TestCase
             ->method('getUnit')
             ->willReturn($units->first());
 
-        $this->registryServiceMock->expects($this->once())
-            ->method('getPluginConfigurations')
-            ->with('Ceres')
-            ->willReturn(
-                [
-                    'global.enableOldUrlPattern' => false
-                ]
-            );
+        $plentyShop = new PlentyShop([PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->registryServiceMock->method('getPriceId')->willReturn($expectedPriceId);
 
@@ -378,10 +372,8 @@ class ProductTest extends TestCase
 
         $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
 
-        $this->registryServiceMock->expects($this->once())
-            ->method('getPluginConfigurations')
-            ->with('Ceres')
-            ->willReturn(['global.enableOldUrlPattern' => false]);
+        $plentyShop = new PlentyShop([PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $text = new Text([
             'lang' => $expectedLanguagePrefix,
@@ -764,7 +756,7 @@ class ProductTest extends TestCase
             ->willReturn('de');
 
         $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
-        $this->registryServiceMock->expects($this->once())->method('getPluginConfigurations')->willReturn([]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn(new PlentyShop());
 
         $text = new Text([
             'lang' => 'de',
@@ -814,10 +806,8 @@ class ProductTest extends TestCase
             ->willReturn('de');
 
         $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
-        $this->registryServiceMock->expects($this->once())
-            ->method('getPluginConfigurations')
-            ->with('Ceres')
-            ->willReturn(['global.enableOldUrlPattern' => true]);
+        $plentyShop = new PlentyShop([PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => true]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $text = new Text([
             'lang' => 'de',
@@ -853,16 +843,16 @@ class ProductTest extends TestCase
         return [
             'url with variation id when "item.show_please_select" disabled' => [
                 'plentyShopConfig' => [
-                    'item.show_please_select' => false,
-                    'global.enableOldUrlPattern' => false,
+                    PlentyShop::KEY_ITEM_SHOW_PLEASE_SELECT => false,
+                    PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false,
                 ],
                 'baseUrlPath' => $baseUrlPath,
                 'expectedProductUrl' => $baseUrlPath . '_0_0'
             ],
             'url without variation id when "item.show_please_select" enabled' => [
                 'plentyShopConfig' => [
-                    'item.show_please_select' => true,
-                    'global.enableOldUrlPattern' => false,
+                    PlentyShop::KEY_ITEM_SHOW_PLEASE_SELECT => true,
+                    PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false,
                 ],
                 'baseUrlPath' => $baseUrlPath,
                 'expectedProductUrl' => $baseUrlPath . '_0'
@@ -894,10 +884,9 @@ class ProductTest extends TestCase
             ->willReturn('de');
 
         $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
-        $this->registryServiceMock->expects($this->once())
-            ->method('getPluginConfigurations')
-            ->with('Ceres')
-            ->willReturn($plentyShopConfig);
+
+        $plentyShop = new PlentyShop($plentyShopConfig);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $text = new Text([
             'lang' => 'de',

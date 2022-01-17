@@ -21,6 +21,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\PlentyShop;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
@@ -223,12 +224,14 @@ class RegistryServiceTest extends TestCase
                 [$registryKey . '_categories', $expectedPluginConfigurations],
             );
 
+        $plentyShopConfig = [];
         $this->registryMock->expects($this->any())
             ->method('get')
             ->willReturnOnConsecutiveCalls(
                 $expectedWebStore,
                 $expectedWebStore,
                 $expectedWebStore,
+                $plentyShopConfig,
                 new CategoryResponse(1, 1, true, []),
                 $expectedSalesPrice,
                 $expectedAttribute,
@@ -292,7 +295,8 @@ class RegistryServiceTest extends TestCase
             'pluginSetId' => 44,
             'configuration' => []
         ]);
-        $this->registryMock->method('get')->willReturn($expectedWebStore);
+        $plentyShopConfig = [];
+        $this->registryMock->method('get')->willReturnOnConsecutiveCalls($expectedWebStore, $plentyShopConfig);
 
         $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
         $expectedException = new PermissionException('The REST client does not have access rights for method asdasd');

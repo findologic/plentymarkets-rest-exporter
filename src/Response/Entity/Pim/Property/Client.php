@@ -8,7 +8,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Client extends Entity
 {
-    private int $plentyId;
+    private ?int $plentyId;
 
     public function __construct(array $data)
     {

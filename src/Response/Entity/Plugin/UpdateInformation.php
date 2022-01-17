@@ -8,8 +8,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class UpdateInformation extends Entity
 {
-    /** @var bool|null */
-    private $hasUpdate;
+    private ?bool $hasUpdate;
 
     /** @var mixed */
     private $updateVariationId;

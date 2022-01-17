@@ -8,8 +8,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Tag extends Entity
 {
-    private int $id;
-    private TagData $tagData;
+    private ?int $id;
+    private ?TagData $tagData;
 
     public function __construct(array $data)
     {

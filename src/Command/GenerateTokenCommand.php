@@ -48,7 +48,7 @@ class GenerateTokenCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $shopkey = Utils::validateAndGetShopkey($input->getArgument('shopkey'));
-        $config = Utils::getExportConfiguration($shopkey);
+        $config = Utils::getExportConfiguration($shopkey, $this->client);
 
         $io->writeln(sprintf('Generating token for service %s...', $config->getDomain()));
 

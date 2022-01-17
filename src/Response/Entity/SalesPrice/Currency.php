@@ -8,17 +8,10 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Currency extends Entity
 {
-    /** @var int */
-    private $salesPriceId;
-
-    /** @var string */
-    private $currency;
-
-    /** @var string */
-    private $createdAt;
-
-    /** @var string */
-    private $updatedAt;
+    private int $salesPriceId;
+    private string $currency;
+    private string $createdAt;
+    private string $updatedAt;
 
     public function __construct(array $data)
     {

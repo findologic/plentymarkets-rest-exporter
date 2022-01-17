@@ -31,10 +31,10 @@ class ExporterTest extends TestCase
 
     private const EXPORTER_LOCATION = '/tmp/rest-exporter/';
 
-    /** @var Config */
-    private $config;
+    private Config $config;
+    private ?string $fileNamePrefix;
 
-    /** @var DummyLogger */
+    /** @var DummyLogger|MockObject */
     private $logger;
 
     /** @var Client|MockObject */
@@ -52,8 +52,6 @@ class ExporterTest extends TestCase
     /** @var LibFlexportExporter|MockObject */
     private $fileExporterMock;
 
-    /** @var null|string */
-    private $fileNamePrefix;
 
     protected function setUp(): void
     {

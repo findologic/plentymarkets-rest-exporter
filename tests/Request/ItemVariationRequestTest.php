@@ -20,14 +20,11 @@ class ItemVariationRequestTest extends TestCase
 {
     use ConfigHelper;
 
-    /** @var Config */
-    private $defaultConfig;
+    private Config $defaultConfig;
+    private Client $client;
 
     /** @var Logger|MockObject */
     private $loggerMock;
-
-    /** @var Client */
-    private $client;
 
     /** @var GuzzleClient|MockObject */
     private $guzzleClientMock;
@@ -45,7 +42,8 @@ class ItemVariationRequestTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $responseBodyMock = $this->getMockBuilder(StreamInterface::class)->getMock();
-        $responseBodyMock->method('__toString')->willReturn('{"accessToken":"111","refreshToken":true}');
+        $responseBodyMock->method('__toString')
+            ->willReturn('{"accessToken":"111","refreshToken":"222"}');
         $this->responseMock = $this->getMockBuilder(ResponseInterface::class)->getMock();
         $this->responseMock->method('getStatusCode')->willReturn(200);
         $this->responseMock->method('getBody')->willReturn($responseBodyMock);

@@ -26,35 +26,18 @@ use GuzzleHttp\Psr7\Uri;
 class Product
 {
     public const WRAP_MODE_DEFAULT = 0;
-
     public const WRAP_MODE_SEPARATE_VARIATIONS = 1;
 
-    /** @var Item */
-    private $item;
-
-    /** @var Config */
-    private $config;
-
-    /** @var RegistryService */
-    private $registryService;
-
-    /** @var ProductEntity */
-    private $productEntity;
-
+    private Item $item;
+    private Config $config;
+    private RegistryService $registryService;
+    private ProductEntity $productEntity;
     /** @var PimVariation[] */
-    private $variationEntities;
-
-    /** @var string|null */
-    private $reason = null;
-
-    /** @var StoreConfiguration  */
-    private $storeConfiguration;
-
-    /** @var Exporter */
-    private $exporter;
-
+    private array $variationEntities;
+    private ?string $reason = null;
+    private StoreConfiguration $storeConfiguration;
+    private Exporter $exporter;
     private int $wrapMode;
-
     private string $variationGroupKey;
 
     /**

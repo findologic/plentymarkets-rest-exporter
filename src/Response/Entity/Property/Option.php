@@ -9,15 +9,10 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class Option extends Entity
 {
     private ?int $id;
-
     private ?int $propertyId;
-
     private ?string $type;
-
     private ?string $value;
-
     private ?string $createdAt;
-
     private ?string $updatedAt;
 
     public function __construct(array $data)

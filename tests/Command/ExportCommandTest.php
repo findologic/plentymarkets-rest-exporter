@@ -80,7 +80,6 @@ class ExportCommandTest extends TestCase
     public function testExportDoesNotStartWhenFileAlreadyExists(): void
     {
         $this->createTestLog();
-        $this->command = new ExportCommand();
         $this->createTestCsv();
         $this->setUpCommandMocks();
 

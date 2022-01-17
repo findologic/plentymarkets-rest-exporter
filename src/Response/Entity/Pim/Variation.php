@@ -23,7 +23,7 @@ class Variation extends Entity
 {
     public const EXCLUSION_TAG_NAME = 'findologic-exclude';
 
-    private int $id;
+    private ?int $id;
 
     /** @var Category[] */
     private array $categories;
@@ -78,7 +78,7 @@ class Variation extends Entity
     /** @var Image[] */
     private array $images;
 
-    private Base $base;
+    private ?Base $base;
 
     public function __construct(array $data)
     {

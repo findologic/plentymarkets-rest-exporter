@@ -8,17 +8,10 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Referrer extends Entity
 {
-    /** @var int */
-    private $salesPriceId;
-
-    /** @var int */
-    private $referrerId;
-
-    /** @var string */
-    private $createdAt;
-
-    /** @var string */
-    private $updatedAt;
+    private int $salesPriceId;
+    private int $referrerId;
+    private string $createdAt;
+    private string $updatedAt;
 
     public function __construct(array $data)
     {

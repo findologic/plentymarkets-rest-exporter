@@ -8,14 +8,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class DataProvider extends Entity
 {
-    /** @var string|null */
-    private $key;
-
-    /** @var string|null */
-    private $name;
-
-    /** @var string|null */
-    private $description;
+    private ?string $key;
+    private ?string $name;
+    private ?string $description;
 
     public function __construct(array $data)
     {

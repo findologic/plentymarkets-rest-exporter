@@ -8,17 +8,10 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class CustomerClass extends Entity
 {
-    /** @var int */
-    private $salesPriceId;
-
-    /** @var int */
-    private $id;
-
-    /** @var string */
-    private $createdAt;
-
-    /** @var string */
-    private $updatedAt;
+    private int $salesPriceId;
+    private int $id;
+    private string $createdAt;
+    private string $updatedAt;
 
     public function __construct(array $data)
     {

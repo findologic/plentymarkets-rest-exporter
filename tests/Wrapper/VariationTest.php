@@ -39,8 +39,7 @@ class VariationTest extends TestCase
     /** @var Registry|MockObject */
     private $registryMock;
 
-    /** @var Config */
-    private $defaultConfig;
+    private Config $defaultConfig;
 
     /** @var RegistryService|MockObject */
     private $registryServiceMock;

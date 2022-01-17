@@ -9,23 +9,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\Tag\Tag\N
 
 class Tag extends Entity
 {
-    /** @var int */
-    private $id;
-
-    /** @var string */
-    private $tagName;
-
-    /** @var string|null */
-    private $color;
-
-    /** @var string */
-    private $createdAt;
-
-    /** @var string */
-    private $updatedAt;
-
+    private int $id;
+    private string $tagName;
+    private ?string $color;
+    private string $createdAt;
+    private string $updatedAt;
     /** @var Name[] */
-    private $names = [];
+    private array $names = [];
 
     public function __construct(array $data)
     {

@@ -5,20 +5,14 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group\GroupRelation;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group\Pivot;
 
 class Group extends Entity
 {
     private ?int $id;
-
     private ?int $position;
-
     private ?string $createdAt;
-
     private ?string $updatedAt;
-
     private ?Pivot $pivot = null;
 
     public function __construct(array $data)

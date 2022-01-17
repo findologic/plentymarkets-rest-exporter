@@ -8,10 +8,10 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class ImageName extends Entity
 {
-    private int $id;
-    private string $lang;
-    private string $name;
-    private string $alternate;
+    private ?int $id;
+    private ?string $lang;
+    private ?string $name;
+    private ?string $alternate;
 
     public function __construct(array $data)
     {
