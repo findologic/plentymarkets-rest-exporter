@@ -29,12 +29,6 @@ class Product
 
     public const WRAP_MODE_SEPARATE_VARIATIONS = 1;
 
-    private const VARIATION_ID = 'id';
-
-    private const PRICE = 'price';
-
-    private const IMAGE = 'image';
-
     /** @var Item */
     private $item;
 
@@ -194,7 +188,6 @@ class Product
     {
         $hasImage = false;
         $hasCategories = false;
-        $hasPrice = false;
         $variationsProcessed = 0;
         $prices = [];
         $insteadPrices = [];
@@ -203,8 +196,8 @@ class Product
         $baseUnit = null;
         $packageSize = null;
         $variationId = null;
-        $variationsPriceData = [];
-        $defaultImg = null;
+        $cheapestVariationData = new CheapestVariation($this->item);
+        $defaultImage = null;
 
         foreach ($this->variationEntities as $variationEntity) {
             if (!$this->shouldExportVariation($variationEntity, $checkAvailability)) {
@@ -226,16 +219,12 @@ class Product
                 $hasImage = true;
             }
 
-            if (!$defaultImg && $variation->getImage()) {
-                $defaultImg = $variation->getImage();
+            if (!$defaultImage && $variation->getImage()) {
+                $defaultImage = $variation->getImage();
             }
 
             if (!$this->registryService->shouldUseLegacyCallistoUrl() && $variation->getPrice() !== 0.0) {
-                $variationsPriceData[] = [
-                    self::VARIATION_ID => $variation->getId(),
-                    self::PRICE => $variation->getPrice(),
-                    self::IMAGE => $variation->getImage()
-                ];
+                $cheapestVariationData->addVariation($variation);
             }
 
             foreach ($variation->getGroups() as $group) {
@@ -283,26 +272,11 @@ class Product
             $variationsProcessed++;
         }
 
-        if (!empty($variationsPriceData)) {
-            $priceColumn = array_column($variationsPriceData, self::PRICE);
-            array_multisort($priceColumn, SORT_ASC, $variationsPriceData);
-            $cheapestVariationData = reset($variationsPriceData);
-            $this->cheapestVariationId = $cheapestVariationData[self::VARIATION_ID];
-
-            if (!$hasImage && !empty($cheapestVariationData) && $cheapestVariationData[self::IMAGE]) {
-                $this->item->addImage($cheapestVariationData[self::IMAGE]);
-                $hasImage = true;
-            }
-
-            if (!$hasPrice && $cheapestVariationData[self::PRICE]) {
-                $this->item->addPrice($cheapestVariationData[self::PRICE]);
-                $hasPrice = true;
-            }
-        }
-
-        if (!$hasImage && $defaultImg) {
-            $this->item->addImage($defaultImg);
-        }
+        $this->cheapestVariationId = $cheapestVariationData->addImageAndPrice(
+            $defaultImage,
+            $prices,
+            $hasImage
+        );
 
         // If no children have categories, we're skipping this product.
         if (!$hasCategories) {
@@ -312,10 +286,6 @@ class Product
         // VatRate should be set from the last variation, therefore this code outside the foreach loop
         if (isset($variation) && $variation->getVatRate() !== null) {
             $this->item->setTaxRate($variation->getVatRate());
-        }
-
-        if ($prices && !$hasPrice) {
-            $this->item->addPrice(min($prices));
         }
 
         if ($insteadPrices) {

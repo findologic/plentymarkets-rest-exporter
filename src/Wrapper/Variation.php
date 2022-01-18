@@ -451,8 +451,6 @@ class Variation
         foreach ($images as $image) {
             $imageAvailabilities = $image->getAvailabilities();
             foreach ($imageAvailabilities as $imageAvailability) {
-                $checkIfGroupable = true;
-
                 if ($imageAvailability->getType() !== Availability::STORE) {
                     continue;
                 }
@@ -461,14 +459,11 @@ class Variation
                     $defaultWrapModeImage = $image;
                 }
 
-                if ($this->wrapMode === Product::WRAP_MODE_DEFAULT) {
-                    $checkIfGroupable = false;
-                }
-
                 $separatedVariation = new SeparatedVariation($this->variationEntity, $this->registryService);
-                $variationAttributes =  $separatedVariation->getVariationAttributes(
+
+                $variationAttributes = $separatedVariation->getVariationAttributes(
                     $this->variationGroupKey,
-                    $checkIfGroupable
+                    $this->wrapMode
                 );
                 if (!$separatedVariation->isImageAvailable($image->getAttributeValueImages(), $variationAttributes)) {
                     continue;
