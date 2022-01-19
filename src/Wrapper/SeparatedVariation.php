@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Attribute;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\ImageAttributeValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
 
@@ -36,6 +37,13 @@ class SeparatedVariation
         foreach ($imageAttributeValues as $imageAttributeValue) {
             foreach ($variationAttributes as $variationAttribute) {
                 $attributeData = explode(self::ATTRIBUTE_VALUE_SEPARATOR, $variationAttribute);
+
+                // If variation has only one groupable attribute, it's key value will be main variation id.
+                // For this reason $attributeData will not contain an attribute id and attribute value id.
+                if (count($attributeData) !== 2) {
+                    continue;
+                }
+
                 $imageAttributeId = (string)$imageAttributeValue->getAttributeId();
                 $imageValueId = (string)$imageAttributeValue->getValueId();
                 $variationAttributeId = (string)$attributeData[0];
@@ -64,9 +72,7 @@ class SeparatedVariation
         $key = '';
 
         foreach ($attributeValues as $attributeValue) {
-            $attribute = $this->registryService->getAttribute($attributeValue->getId());
-
-            if (!$attribute || !$attribute->isGroupable()) {
+            if (!$this->isAttributeGroupable($attributeValue)) {
                 continue;
             }
 
@@ -84,5 +90,44 @@ class SeparatedVariation
         }
 
         return (string)$this->variation->getId();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getVariationAttributes(string $variationAttributes, int $wrapMode): array
+    {
+        if (strpos($variationAttributes, self::ATTRIBUTE_VALUE_SEPARATOR)) {
+            return explode(self::MULTIPLE_KEYS_SEPARATOR, $variationAttributes);
+        }
+
+        return explode(self::MULTIPLE_KEYS_SEPARATOR, $this->getVariationGroupKeyForImageProcessing($wrapMode));
+    }
+
+    private function isAttributeGroupable(Attribute $attribute): bool
+    {
+        $attributeData = $this->registryService->getAttribute($attribute->getId());
+
+        return ($attributeData && $attributeData->isGroupable());
+    }
+
+    public function getVariationGroupKeyForImageProcessing(int $wrapMode): string
+    {
+        $attributeValues = $this->variation->getAttributeValues();
+        $key = '';
+
+        foreach ($attributeValues as $attributeValue) {
+            if ($wrapMode === Product::WRAP_MODE_SEPARATE_VARIATIONS && !$this->isAttributeGroupable($attributeValue)) {
+                continue;
+            }
+
+            if ($key !== '') {
+                $key .= self::MULTIPLE_KEYS_SEPARATOR;
+            }
+
+            $key .= $attributeValue->getId() . self::ATTRIBUTE_VALUE_SEPARATOR . $attributeValue->getValue()->getId();
+        }
+
+        return $key;
     }
 }

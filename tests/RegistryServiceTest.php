@@ -699,6 +699,41 @@ class RegistryServiceTest extends TestCase
     }
 
     /**
+     * @dataProvider shouldUseLegacyCallistUrlTestProvider
+     */
+    public function testShouldUseLegacyCallistUrl(
+        array $configData,
+        bool $expectedResult
+    ): void {
+        $key = md5($this->defaultConfig->getDomain());
+        $this->registryMock->expects($this->exactly(2))
+            ->method('get')
+            ->with($key . '_pluginConfigurations')
+            ->willReturn($configData);
+
+        $this->assertEquals($configData['Ceres'], $this->registryService->getPluginConfigurations('Ceres'));
+        $this->assertEquals($expectedResult, $this->registryService->shouldUseLegacyCallistoUrl());
+    }
+
+    public function shouldUseLegacyCallistUrlTestProvider(): array
+    {
+        return [
+            'no enable old url pattern config' => [
+                ['Ceres' => ['global.test' => false]],
+                true
+            ],
+            'with enable old url pattern config set to false' => [
+                ['Ceres' => ['global.enableOldUrlPattern' => false]],
+                false
+            ],
+            'with enable old url pattern config set to true' => [
+                ['Ceres' => ['global.enableOldUrlPattern' => true]],
+                true
+            ],
+        ];
+    }
+
+    /**
      * @return RegistryService&MockObject
      */
     private function getRegistryServiceMockForSpecificFetchMethods(
