@@ -38,6 +38,10 @@ class SeparatedVariation
             foreach ($variationAttributes as $variationAttribute) {
                 $attributeData = explode(self::ATTRIBUTE_VALUE_SEPARATOR, $variationAttribute);
 
+                /**
+                 * if variation has only one groupable attribute, it's key value will be main variation id.
+                 * For this reason $attributeData will not contain an attribute id and attribute value id.
+                 */
                 if (count($attributeData) !== 2) {
                     continue;
                 }

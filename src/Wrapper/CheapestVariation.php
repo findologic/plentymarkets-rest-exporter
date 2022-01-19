@@ -33,6 +33,11 @@ class CheapestVariation
         ];
     }
 
+    /**
+     * If variations data is set in the cheapestVariationsData variable
+     * this method will return cheapest variation id, otherwise it will return null
+     * @param float[] $prices
+     */
     public function addImageAndPrice(
         ?Image $defaultImage,
         array $prices,
@@ -45,16 +50,19 @@ class CheapestVariation
             return null;
         }
 
-        $cheapestVariationData = $this->getCheapestVariation();
-        $this->item->addPrice($cheapestVariationData[self::PRICE]);
+        $cheapestVariationsData = $this->getCheapestVariation();
+        $this->item->addPrice($cheapestVariationsData[self::PRICE]);
 
         if (!$hasImage) {
-            $this->item->addImage($cheapestVariationData[self::IMAGE]);
+            $this->item->addImage($cheapestVariationsData[self::IMAGE]);
         }
 
-        return $cheapestVariationData[self::VARIATION_ID];
+        return $cheapestVariationsData[self::VARIATION_ID];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getCheapestVariation(): array
     {
         $priceColumn = array_column($this->cheapestVariationsData, self::PRICE);
@@ -72,6 +80,9 @@ class CheapestVariation
         $this->item->addImage($defaultImage);
     }
 
+    /**
+     * @param float[] $prices
+     */
     private function setDefaultPrice(array $prices): void
     {
         if (empty($prices)) {

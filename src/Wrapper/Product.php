@@ -196,7 +196,7 @@ class Product
         $baseUnit = null;
         $packageSize = null;
         $variationId = null;
-        $cheapestVariationData = new CheapestVariation($this->item);
+        $cheapestVariations = new CheapestVariation($this->item);
         $defaultImage = null;
 
         foreach ($this->variationEntities as $variationEntity) {
@@ -224,7 +224,7 @@ class Product
             }
 
             if (!$this->registryService->shouldUseLegacyCallistoUrl() && $variation->getPrice() !== 0.0) {
-                $cheapestVariationData->addVariation($variation);
+                $cheapestVariations->addVariation($variation);
             }
 
             foreach ($variation->getGroups() as $group) {
@@ -272,7 +272,7 @@ class Product
             $variationsProcessed++;
         }
 
-        $this->cheapestVariationId = $cheapestVariationData->addImageAndPrice(
+        $this->cheapestVariationId = $cheapestVariations->addImageAndPrice(
             $defaultImage,
             $prices,
             $hasImage
