@@ -243,17 +243,6 @@ class RegistryService
         return $configs[$pluginName] ?? [];
     }
 
-    public function shouldUseLegacyCallistoUrl(): bool
-    {
-        $config = $this->getPluginConfigurations('Ceres');
-
-        if (!isset($config['global.enableOldUrlPattern'])) {
-            return true;
-        }
-
-        return filter_var($config['global.enableOldUrlPattern'], FILTER_VALIDATE_BOOLEAN);
-    }
-
     protected function fetchWebStores(): void
     {
         $webStoreRequest = new WebStoreRequest();

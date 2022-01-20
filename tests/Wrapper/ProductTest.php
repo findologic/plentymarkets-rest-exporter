@@ -535,7 +535,10 @@ class ProductTest extends TestCase
         $variationResponse = $this->getMockResponse($variationResponseFile);
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
-        $this->registryServiceMock->expects($this->any())->method('shouldUseLegacyCallistoUrl')->willReturn(false);
+
+        $plentyShop = new PlentyShop([PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
+
         $this->registryServiceMock->method('getPriceId')->willReturn($expectedPriceId);
 
         $this->storeConfigurationMock->expects($this->any())
@@ -566,7 +569,9 @@ class ProductTest extends TestCase
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_item_without_any_images_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
-        $this->registryServiceMock->expects($this->any())->method('shouldUseLegacyCallistoUrl')->willReturn(false);
+
+        $plentyShop = new PlentyShop([PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $product = $this->getProduct();
         $item = $product->processProductData();
