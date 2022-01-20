@@ -39,6 +39,7 @@ class Product
     private Exporter $exporter;
     private int $wrapMode;
     private string $variationGroupKey;
+    private ?int $cheapestVariationId = null;
 
     /**
      * @param PimVariation[] $variationEntities
@@ -174,6 +175,8 @@ class Product
         $baseUnit = null;
         $packageSize = null;
         $variationId = null;
+        $cheapestVariations = new CheapestVariation($this->item);
+        $defaultImage = null;
 
         foreach ($this->variationEntities as $variationEntity) {
             if (!$this->shouldExportVariation($variationEntity, $checkAvailability)) {
@@ -190,9 +193,18 @@ class Product
 
             $variation->processData();
 
-            if (!$hasImage && $variation->getImage()) {
+            $useCallistoUrl = $this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl();
+            if (!$hasImage && $variation->getImage() && $useCallistoUrl) {
                 $this->item->addImage($variation->getImage());
                 $hasImage = true;
+            }
+
+            if (!$defaultImage && $variation->getImage()) {
+                $defaultImage = $variation->getImage();
+            }
+
+            if (!$useCallistoUrl && $variation->getPrice() !== 0.0) {
+                $cheapestVariations->addVariation($variation);
             }
 
             foreach ($variation->getGroups() as $group) {
@@ -240,6 +252,12 @@ class Product
             $variationsProcessed++;
         }
 
+        $this->cheapestVariationId = $cheapestVariations->addImageAndPrice(
+            $defaultImage,
+            $prices,
+            $hasImage
+        );
+
         // If no children have categories, we're skipping this product.
         if (!$hasCategories) {
             return 0;
@@ -248,10 +266,6 @@ class Product
         // VatRate should be set from the last variation, therefore this code outside the foreach loop
         if (isset($variation) && $variation->getVatRate() !== null) {
             $this->item->setTaxRate($variation->getVatRate());
-        }
-
-        if ($prices) {
-            $this->item->addPrice(min($prices));
         }
 
         if ($insteadPrices) {
@@ -382,8 +396,11 @@ class Product
             return $productUrl;
         }
 
+        $cheapestVariationId = ($this->cheapestVariationId !== null) ?
+            $this->cheapestVariationId : $this->productEntity->getMainVariationId();
+
         $variationId = $this->wrapMode ?
-            $this->variationEntities[0]->getId() : $this->productEntity->getMainVariationId();
+            $this->variationEntities[0]->getId() : $cheapestVariationId;
 
         return sprintf($productUrl . '_%s', $variationId);
     }

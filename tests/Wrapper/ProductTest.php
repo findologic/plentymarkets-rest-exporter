@@ -411,7 +411,7 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         $this->assertSame(
-            'https://plenty-testshop.de/' . $expectedLanguagePrefix . '/' . $expectedUrlPath . '_0_0',
+            'https://plenty-testshop.de/' . $expectedLanguagePrefix . '/' . $expectedUrlPath . '_0_1004',
             $item->getUrl()->getValues()['']
         );
     }
@@ -507,21 +507,73 @@ class ProductTest extends TestCase
         $this->assertEquals($item->getInsteadPrice(), 100);
     }
 
-    public function testImageOfFirstVariationIsUsed(): void
-    {
+    /**
+     * @dataProvider cheapestVariationIsExportedTestProvider
+     */
+    public function testCheapestVariationIsExported(
+        string $variationResponseFile,
+        string $expectedImg,
+        string $expectedPrice,
+        string $expectedUrl
+    ): void {
+        $expectedPriceId = 1;
+        $text = new Text([
+            'lang' => 'de',
+            'name1' => 'Pretty awesome name!',
+            'name2' => 'wrong',
+            'name3' => 'wrong',
+            'shortDescription' => 'Easy, transparent, sexy',
+            'metaDescription' => 'my father gave me a small loan of a million dollar.',
+            'description' => 'That is the best item, and I am a bit longer text.',
+            'technicalData' => 'Interesting technical information.',
+            'urlPath' => 'urlPath',
+            'keywords' => 'keywords from product'
+        ]);
+
         $this->exporterMock = $this->getExporter();
 
-        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_image_test.json');
+        $variationResponse = $this->getMockResponse($variationResponseFile);
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
+        $this->registryServiceMock->expects($this->any())->method('shouldUseLegacyCallistoUrl')->willReturn(false);
+        $this->registryServiceMock->method('getPriceId')->willReturn($expectedPriceId);
+
+        $this->storeConfigurationMock->expects($this->any())
+            ->method('getDisplayItemName')
+            ->willReturn(1);
+
+        $this->itemMock->expects($this->any())
+            ->method('getTexts')
+            ->willReturn([$text]);
+
+        $this->storeConfigurationMock->expects($this->once())->method('getDefaultLanguage')
+            ->willReturn('de');
 
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        // TODO: check item's images property directly once images getter is implemented
         $line = $item->getCsvFragment();
         $columnValues = explode("\t", $line);
-        $this->assertEquals('FirstAvailableImage.jpg', $columnValues[10]);
+        $this->assertEquals($expectedPrice, $columnValues[5]);
+        $this->assertEquals($expectedUrl, $columnValues[9]);
+        $this->assertEquals($expectedImg, $columnValues[10]);
+    }
+
+    public function testProductWithoutImagesNotFail(): void
+    {
+        $this->exporterMock = $this->getExporter();
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_item_without_any_images_test.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+        $this->registryServiceMock->expects($this->any())->method('shouldUseLegacyCallistoUrl')->willReturn(false);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+        $this->assertEmpty($columnValues[10]);
     }
 
     public function testExportMainVariationIdWhenAvailable()
@@ -847,7 +899,7 @@ class ProductTest extends TestCase
                     PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false,
                 ],
                 'baseUrlPath' => $baseUrlPath,
-                'expectedProductUrl' => $baseUrlPath . '_0_0'
+                'expectedProductUrl' => $baseUrlPath . '_0_1004'
             ],
             'url without variation id when "item.show_please_select" enabled' => [
                 'plentyShopConfig' => [
@@ -937,6 +989,30 @@ class ProductTest extends TestCase
     private function getExporter(): Exporter
     {
         return Exporter::create(Exporter::TYPE_CSV, 100, self::AVAILABLE_PROPERTIES);
+    }
+
+    public function cheapestVariationIsExportedTestProvider(): array
+    {
+        return [
+            'cheapest with zero price variation' => [
+                'Pim/Variations/response_for_cheapest_price_test.json',
+                'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/exportedImage.jpeg',
+                '11.33',
+                'https://plenty-testshop.de/urlPath_0_1181'
+            ],
+            'cheapest without store availability' => [
+                'Pim/Variations/response_for_cheapest_price_test_with_no_store_availability_for_image.json',
+                'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/exportedImage.jpeg',
+                '0.01',
+                'https://plenty-testshop.de/urlPath_0_1181'
+            ],
+            'cheapest without an image' => [
+                'Pim/Variations/response_for_cheapest_price_variation_without_image.json',
+                'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/119-Relaxsessel-Woddenfir.jpg',
+                '1.00',
+                'https://plenty-testshop.de/urlPath_0_1179'
+            ]
+        ];
     }
 
     public function exportFreeFieldsConfigurationTestProvider(): array

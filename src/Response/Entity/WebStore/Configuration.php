@@ -161,7 +161,7 @@ class Configuration extends Entity
         $this->urlGooglePlus = $this->getStringProperty('urlGooglePlus', $data);
         $this->urlTwitter = $this->getStringProperty('urlTwitter', $data);
         $this->displayItemOnly4Customer = $this->getIntProperty('displayItemOnly4Customer', $data);
-        $this->displayItemName = $this->getIntProperty('displayItemName', $data);
+        $this->displayItemName = $this->getIntProperty('displayItemName', $data, 1);
         $this->attributeVariantCheck = $this->getIntProperty('attributeVariantCheck', $data);
         $this->attributeSelectDefaultOption = $this->getIntProperty('attributeSelectDefaultOption', $data);
         $this->urlItemCategory = $this->getStringProperty('urlItemCategory', $data);

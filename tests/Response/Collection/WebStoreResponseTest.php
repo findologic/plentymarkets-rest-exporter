@@ -388,4 +388,15 @@ class WebStoreResponseTest extends TestCase
             ]
         ], $firstMeasureUnit->getData());
     }
+
+    public function testDefaultValueIsSetIfNoDisplayItemNameIsFetched(): void
+    {
+        $webStoreResponse = WebStoreParser::parse(
+            $this->getMockResponse('WebStoreResponse/response_without_display_item_name.json')
+        );
+
+        $configuration = $webStoreResponse->first()->getConfiguration();
+
+        $this->assertSame(1, $configuration->getDisplayItemName());
+    }
 }
