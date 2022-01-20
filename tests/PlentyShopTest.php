@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\PlentyShop;
