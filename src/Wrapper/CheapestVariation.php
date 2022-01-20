@@ -53,7 +53,7 @@ class CheapestVariation
         $cheapestVariationsData = $this->getCheapestVariation();
         $this->item->addPrice($cheapestVariationsData[self::PRICE]);
 
-        if (!$hasImage) {
+        if (!$hasImage && $cheapestVariationsData[self::IMAGE]) {
             $this->item->addImage($cheapestVariationsData[self::IMAGE]);
         }
 
