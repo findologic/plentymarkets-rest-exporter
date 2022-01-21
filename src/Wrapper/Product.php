@@ -186,7 +186,7 @@ class Product
 
     protected function processVariations(bool $checkAvailability = true): int
     {
-        $hasImage = false;
+        $itemHasImage = false;
         $hasCategories = false;
         $variationsProcessed = 0;
         $prices = [];
@@ -214,9 +214,9 @@ class Product
 
             $variation->processData();
 
-            if (!$hasImage && $variation->getImage() && $this->registryService->shouldUseLegacyCallistoUrl()) {
+            if (!$itemHasImage && $variation->getImage() && $this->registryService->shouldUseLegacyCallistoUrl()) {
                 $this->item->addImage($variation->getImage());
-                $hasImage = true;
+                $itemHasImage = true;
             }
 
             if (!$defaultImage && $variation->getImage()) {
@@ -275,7 +275,7 @@ class Product
         $this->cheapestVariationId = $cheapestVariations->addImageAndPrice(
             $defaultImage,
             $prices,
-            $hasImage
+            $itemHasImage
         );
 
         // If no children have categories, we're skipping this product.

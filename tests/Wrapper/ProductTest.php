@@ -993,6 +993,12 @@ class ProductTest extends TestCase
     public function cheapestVariationIsExportedTestProvider(): array
     {
         return [
+            'item without images (no default image), no image exported' => [
+                'Pim/Variations/response_for_cheapest_without_images.json',
+                '',
+                '20.43',
+                'https://plenty-testshop.de/urlPath_0_6557'
+            ],
             'cheapest with zero price variation' => [
                 'Pim/Variations/response_for_cheapest_price_test.json',
                 'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/exportedImage.jpeg',
@@ -1005,7 +1011,7 @@ class ProductTest extends TestCase
                 '0.01',
                 'https://plenty-testshop.de/urlPath_0_1181'
             ],
-            'cheapest without an image' => [
+            'cheapest without an image, default image is used' => [
                 'Pim/Variations/response_for_cheapest_price_variation_without_image.json',
                 'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/119-Relaxsessel-Woddenfir.jpg',
                 '1.00',

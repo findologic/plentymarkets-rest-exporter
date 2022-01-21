@@ -41,10 +41,10 @@ class CheapestVariation
     public function addImageAndPrice(
         ?Image $defaultImage,
         array $prices,
-        bool $hasImage = false
+        bool $itemHasImage = false
     ): ?int {
         if (empty($this->cheapestVariationsData)) {
-            $this->setDefaultImage($defaultImage, $hasImage);
+            $this->setDefaultImage($defaultImage, $itemHasImage);
             $this->setDefaultPrice($prices);
 
             return null;
@@ -53,8 +53,8 @@ class CheapestVariation
         $cheapestVariationsData = $this->getCheapestVariation();
         $this->item->addPrice($cheapestVariationsData[self::PRICE]);
 
-        if (!$hasImage) {
-            $this->item->addImage($cheapestVariationsData[self::IMAGE]);
+        if (!$itemHasImage) {
+            $this->setItemImage($cheapestVariationsData, $defaultImage, $itemHasImage);
         }
 
         return $cheapestVariationsData[self::VARIATION_ID];
@@ -71,9 +71,9 @@ class CheapestVariation
         return reset($this->cheapestVariationsData);
     }
 
-    private function setDefaultImage(?Image $defaultImage, bool $hasImage): void
+    private function setDefaultImage(?Image $defaultImage, bool $itemHasImage): void
     {
-        if ($hasImage || !$defaultImage) {
+        if ($itemHasImage || !$defaultImage) {
             return;
         }
 
@@ -90,5 +90,19 @@ class CheapestVariation
         }
 
         $this->item->addPrice(min($prices));
+    }
+
+    /**
+     * @param array<string,string> $cheapestVariationsData
+     */
+    private function setItemImage(array $cheapestVariationsData, ?Image $defaultImage, bool $itemHasImage): void
+    {
+        if (!$cheapestVariationsData[self::IMAGE]) {
+            $this->setDefaultImage($defaultImage, $itemHasImage);
+
+            return;
+        }
+
+        $this->item->addImage($cheapestVariationsData[self::IMAGE]);
     }
 }
