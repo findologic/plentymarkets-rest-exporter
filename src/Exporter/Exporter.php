@@ -17,6 +17,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PimVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Wrapper;
 use GuzzleHttp\Client as GuzzleClient;
@@ -106,7 +107,8 @@ abstract class Exporter
     abstract protected function wrapData(
         int $totalCount,
         ItemResponse $products,
-        PimVariationResponse $variations
+        PimVariationResponse $variations,
+        ?PropertySelectionResponse $propertySelection = null
     ): void;
 
     /**
@@ -221,12 +223,13 @@ abstract class Exporter
 
     protected function exportProducts(): void
     {
+        $propertySelection = $this->registryService->getPropertySelections();
         $page = 1;
 
         do {
             $products = $this->getItems($page);
             $variations = $products->getAllIds() ? $this->getItemVariations($products->getAllIds()) : [];
-            $this->wrapData(count($products->all()), $products, $variations);
+            $this->wrapData(count($products->all()), $products, $variations, $propertySelection);
             $this->offset += ItemVariationRequest::$ITEMS_PER_PAGE;
 
             $page++;

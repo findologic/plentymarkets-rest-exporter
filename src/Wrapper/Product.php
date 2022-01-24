@@ -15,6 +15,7 @@ use FINDOLOGIC\Export\Data\Property;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
@@ -61,6 +62,8 @@ class Product
 
     private array $plentyShopConfig;
 
+    private ?PropertySelectionResponse $propertySelection;
+
     /**
      * @param PimVariation[] $variationEntities
      */
@@ -69,6 +72,7 @@ class Product
         Config $config,
         StoreConfiguration $storeConfiguration,
         RegistryService $registryService,
+        ?PropertySelectionResponse $propertySelection,
         ProductEntity $productEntity,
         array $variationEntities,
         int $wrapMode = self::WRAP_MODE_DEFAULT,
@@ -84,6 +88,7 @@ class Product
         $this->wrapMode = $wrapMode;
         $this->variationGroupKey = $variationGroupKey;
         $this->plentyShopConfig = $this->registryService->getPluginConfigurations('Ceres');
+        $this->propertySelection = $propertySelection;
     }
 
     /**
@@ -208,6 +213,7 @@ class Product
                 $this->config,
                 $this->registryService,
                 $variationEntity,
+                $this->propertySelection,
                 $this->wrapMode,
                 $this->variationGroupKey
             );

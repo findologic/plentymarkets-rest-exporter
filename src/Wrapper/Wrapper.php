@@ -6,6 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 
 abstract class Wrapper
 {
@@ -19,7 +20,8 @@ abstract class Wrapper
         int $start,
         int $total,
         ItemResponse $products,
-        PimVariationResponse $variations
+        PimVariationResponse $variations,
+        ?PropertySelectionResponse $propertySelection
     ): void;
 
     abstract public function getExportPath(): string;
