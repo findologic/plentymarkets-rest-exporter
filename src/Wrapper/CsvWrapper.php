@@ -67,7 +67,7 @@ class CsvWrapper extends Wrapper
         int $total,
         ItemResponse $products,
         PimVariationResponse $variations,
-        ?PropertySelectionResponse $propertySelection
+        ?PropertySelectionResponse $propertySelection = null
     ): void {
         /** @var Item[] $items */
         $items = [];

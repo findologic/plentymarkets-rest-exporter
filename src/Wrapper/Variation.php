@@ -110,7 +110,7 @@ class Variation
         Config $config,
         RegistryService $registryService,
         PimVariation $variationEntity,
-        ?PropertySelectionResponse $propertySelection,
+        ?PropertySelectionResponse $propertySelection = null,
         int $wrapMode = Product::WRAP_MODE_DEFAULT,
         string $variationGroupKey = ''
     ) {
