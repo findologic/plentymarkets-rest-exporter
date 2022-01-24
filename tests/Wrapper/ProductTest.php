@@ -983,7 +983,7 @@ class ProductTest extends TestCase
         );
     }
 
-    private function getPropertySelections(): ?PropertySelectionResponse
+    private function getPropertySelections(): PropertySelectionResponse
     {
         return PropertySelectionParser::parse(
             $this->getMockResponse('PropertySelectionResponse/response.json')
