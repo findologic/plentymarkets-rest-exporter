@@ -1,0 +1,330 @@
+{
+  "page": 1,
+  "totalsCount": 1,
+  "isLastPage": true,
+  "lastPageNumber": 1,
+  "firstOnPage": 1,
+  "lastOnPage": 1,
+  "itemsPerPage": 100,
+  "entries": [
+    {
+      "categories": [
+        {
+          "categoryId": 362,
+          "position": 0,
+          "isNeckermannPrimary": false
+        }
+      ],
+      "barcodes": [
+        {
+          "barcodeId": 4,
+          "code": "2003182911834"
+        }
+      ],
+      "additionalSkus": null,
+      "attributeValues": [],
+      "bundleComponents": null,
+      "clients": [
+        {
+          "plentyId": 15146
+        }
+      ],
+      "defaultCategories": null,
+      "images": [],
+      "marketIdentNumbers": null,
+      "markets": null,
+      "salesPrices": [
+        {
+          "salesPriceId": 1,
+          "price": 20.43,
+          "updatedAt": "2020-10-12T21:05:16+02:00",
+          "createdAt": "2019-06-03T14:39:43+02:00"
+        }
+      ],
+      "skus": null,
+      "supplier": null,
+      "warehouses": null,
+      "properties": [],
+      "tags": [
+        {
+          "tagId": 3,
+          "tag": {
+            "createdAt": "2019-03-14 12:37:56",
+            "updatedAt": "2019-03-14 12:37:56",
+            "names": [
+              {
+                "id": 3,
+                "tagId": "3",
+                "tagLang": "de",
+                "tagName": "Uhrwerk"
+              }
+            ],
+            "clients": [
+              {
+                "id": 5,
+                "tagId": 3,
+                "plentyId": 15146,
+                "createdAt": "2020-08-19 12:47:16",
+                "updatedAt": "2020-08-19 12:47:16"
+              },
+              {
+                "id": 6,
+                "tagId": 3,
+                "plentyId": 34461,
+                "createdAt": "2020-08-19 12:47:16",
+                "updatedAt": "2020-08-19 12:47:16"
+              }
+            ],
+            "id": 3,
+            "tagName": "Uhrwerk",
+            "color": "#fdbddc"
+          }
+        }
+      ],
+      "comments": null,
+      "id": 6557,
+      "timestamps": null,
+      "unit": {
+        "unitId": 1,
+        "unitCombinationId": 1,
+        "content": 1
+      },
+      "base": {
+        "isMain": true,
+        "mainVariationId": null,
+        "itemId": 119,
+        "position": 0,
+        "isActive": true,
+        "number": "VC01",
+        "model": "vc01",
+        "externalId": "",
+        "availability": 1,
+        "availabilityId": 1,
+        "estimatedAvailableAt": null,
+        "purchasePrice": 4.9,
+        "movingAveragePrice": null,
+        "priceCalculationId": null,
+        "priceCalculationUUID": null,
+        "picking": null,
+        "stockLimitation": 1,
+        "isVisibleIfNetStockIsPositive": true,
+        "isInvisibleIfNetStockIsNotPositive": true,
+        "isAvailableIfNetStockIsPositive": true,
+        "isUnavailableIfNetStockIsNotPositive": true,
+        "isVisibleInListIfNetStockIsPositive": false,
+        "isInvisibleInListIfNetStockIsNotPositive": false,
+        "mainWarehouseId": 1,
+        "maximumOrderQuantity": 0,
+        "minimumOrderQuantity": 0,
+        "intervalOrderQuantity": 0,
+        "availableUntil": null,
+        "releasedAt": null,
+        "name": null,
+        "weightG": 0,
+        "weightNetG": 0,
+        "widthMM": 0,
+        "lengthMM": 0,
+        "heightMM": 0,
+        "extraShippingCharge1": 0,
+        "extraShippingCharge2": 0,
+        "unitsContained": 0,
+        "palletTypeId": null,
+        "packingUnits": 0,
+        "packingUnitTypeId": 0,
+        "transportationCosts": 0,
+        "storageCosts": 0,
+        "customs": 0,
+        "operatingCosts": 0,
+        "vatId": 0,
+        "bundleType": null,
+        "automaticClientVisibility": 0,
+        "automaticListVisibility": 3,
+        "isHiddenInCategoryList": false,
+        "defaultShippingCosts": 5.9,
+        "mayShowUnitPrice": true,
+        "parentVariationId": null,
+        "parentVariationQuantity": null,
+        "singleItemCount": null,
+        "hasCalculatedBundleWeight": null,
+        "hasCalculatedBundleNetWeight": null,
+        "hasCalculatedBundlePurchasePrice": null,
+        "hasCalculatedBundleMovingAveragePrice": null,
+        "customsTariffNumber": null,
+        "categoriesInherited": false,
+        "referrerInherited": false,
+        "clientsInherited": false,
+        "salesPricesInherited": false,
+        "supplierInherited": false,
+        "warehousesInherited": false,
+        "propertiesInherited": false,
+        "tagsInherited": false,
+        "characteristics": [
+          {
+            "valueTexts": [],
+            "propertyId": 103,
+            "createdAt": "2018-05-02 13:39:41",
+            "valueFile": null,
+            "propertySelection": [],
+            "updatedAt": "2018-05-02 13:39:38",
+            "surcharge": 0,
+            "id": 188267,
+            "variationId": 6557,
+            "propertySelectionId": null,
+            "valueFloat": null,
+            "valueInt": null,
+            "itemId": 119
+          },
+          {
+            "valueTexts": [],
+            "valueInt": null,
+            "propertyId": 112,
+            "propertySelection": [
+              {
+                "description": "",
+                "propertyId": 112,
+                "name": "Shiojiri (Seiko SII\/Epson\/Morioka\/TMI)",
+                "id": 485,
+                "lang": "de"
+              }
+            ],
+            "itemId": 119,
+            "valueFile": null,
+            "surcharge": 0,
+            "id": 197735,
+            "createdAt": "2018-05-16 14:53:22",
+            "variationId": 6557,
+            "propertySelectionId": 485,
+            "valueFloat": null,
+            "updatedAt": "2018-05-16 14:53:22"
+          },
+          {
+            "surcharge": 0,
+            "itemId": 119,
+            "propertySelection": [],
+            "valueTexts": [
+              {
+                "value": "VC01",
+                "lang": "de",
+                "valueId": 240330
+              }
+            ],
+            "propertyId": 136,
+            "valueFloat": null,
+            "valueInt": null,
+            "id": 240330,
+            "propertySelectionId": null,
+            "updatedAt": "2020-04-07 15:01:08",
+            "createdAt": "2020-04-07 15:01:08",
+            "valueFile": null,
+            "variationId": 6557
+          },
+          {
+            "surcharge": 0,
+            "itemId": 119,
+            "propertySelection": [],
+            "valueTexts": [
+              {
+                "value": "4 \u00be",
+                "lang": "de",
+                "valueId": 240331
+              }
+            ],
+            "propertyId": 137,
+            "valueFloat": null,
+            "valueInt": null,
+            "id": 240331,
+            "propertySelectionId": null,
+            "updatedAt": "2020-04-07 15:01:08",
+            "createdAt": "2020-04-07 15:01:08",
+            "valueFile": null,
+            "variationId": 6557
+          },
+          {
+            "valueFile": null,
+            "propertySelection": [],
+            "updatedAt": "2020-09-22 09:33:43",
+            "surcharge": 0,
+            "id": 255693,
+            "valueTexts": [
+              {
+                "lang": "de",
+                "valueId": 255693,
+                "value": "Uhrwerk"
+              }
+            ],
+            "propertySelectionId": null,
+            "valueFloat": null,
+            "valueInt": null,
+            "itemId": 119,
+            "propertyId": 134,
+            "createdAt": "2020-09-22 09:33:43",
+            "variationId": 6557
+          }
+        ],
+        "images": [],
+        "item": {
+          "id": 119,
+          "position": 0,
+          "add_cms_page": "0",
+          "condition": 0,
+          "free1": "0",
+          "free2": "",
+          "free3": "",
+          "free4": "",
+          "free5": "",
+          "free6": "VC01",
+          "free7": "2",
+          "free8": "0",
+          "free9": "0",
+          "free10": "0",
+          "free11": "0",
+          "free12": "0",
+          "free13": "0",
+          "free14": "0",
+          "free15": "0",
+          "free16": "0",
+          "free17": "0",
+          "free18": "0",
+          "free19": "0",
+          "free20": "0",
+          "gimahhot": "0",
+          "storeSpecial": 0,
+          "ownerId": null,
+          "manufacturerId": 42,
+          "producingCountryId": 1,
+          "revenueAccount": 0,
+          "couponRestriction": 0,
+          "conditionApi": 0,
+          "createdAt": "2013-12-19T00:00:00+01:00",
+          "updatedAt": "2021-08-04T10:00:19+02:00",
+          "isSubscribable": false,
+          "amazonFbaPlatform": 0,
+          "isShippableByAmazon": false,
+          "amazonProductType": 0,
+          "amazonFedas": "",
+          "ebayPresetId": 15,
+          "ebayCategory": 57720,
+          "ebayCategory2": null,
+          "ebayStoreCategory": 294578012,
+          "ebayStoreCategory2": null,
+          "rakutenCategoryId": 16651,
+          "flagOne": 1,
+          "flagTwo": 3,
+          "ageRestriction": 0,
+          "feedback": 0,
+          "itemType": "default",
+          "stockType": 0,
+          "sitemapPublished": "1",
+          "isSerialNumber": false,
+          "isShippingPackage": false,
+          "maximumOrderQuantity": 0,
+          "variationCount": "1",
+          "customsTariffNumber": "",
+          "mainVariationId": 6557,
+          "inactive": true
+        }
+      },
+      "inheritance": null
+    }
+  ]
+}
