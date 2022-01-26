@@ -12,6 +12,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PimVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use Psr\Log\LoggerInterface;
 
 class XmlExporter extends Exporter
@@ -43,8 +44,12 @@ class XmlExporter extends Exporter
     /**
      * @codeCoverageIgnore
      */
-    protected function wrapData(int $totalCount, ItemResponse $products, PimVariationResponse $variations): void
-    {
+    protected function wrapData(
+        int $totalCount,
+        ItemResponse $products,
+        PimVariationResponse $variations,
+        ?PropertySelectionResponse $propertySelection = null
+    ): void {
         // TODO: Implement wrapData() method.
     }
 }

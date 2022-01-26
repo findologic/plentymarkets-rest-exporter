@@ -11,6 +11,7 @@ use FINDOLOGIC\Export\Data\Property;
 use FINDOLOGIC\Export\Data\Usergroup;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\CategoryDetails;
@@ -103,10 +104,13 @@ class Variation
 
     protected bool $hasCategories = false;
 
+    private ?PropertySelectionResponse $propertySelection;
+
     public function __construct(
         Config $config,
         RegistryService $registryService,
         PimVariation $variationEntity,
+        ?PropertySelectionResponse $propertySelection = null,
         int $wrapMode = Product::WRAP_MODE_DEFAULT,
         string $variationGroupKey = ''
     ) {
@@ -115,6 +119,7 @@ class Variation
         $this->registryService = $registryService;
         $this->variationGroupKey = $variationGroupKey;
         $this->wrapMode = $wrapMode;
+        $this->propertySelection = $propertySelection;
     }
 
     public function processData(): void

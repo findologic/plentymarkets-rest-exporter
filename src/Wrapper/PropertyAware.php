@@ -97,11 +97,11 @@ trait PropertyAware
 
                 return null;
             case CastType::SELECTION:
-                if (!$property->getValues() || !$this->registryService->getPropertySelections()) {
+                if (!$property->getValues() || !$this->propertySelection) {
                     return null;
                 }
 
-                $propertySelectionValues = $this->registryService->getPropertySelections()->getPropertySelectionValues(
+                $propertySelectionValues = $this->propertySelection->getPropertySelectionValues(
                     $property->getId(),
                     [$property->getValues()[0]],
                     $this->config->getLanguage()
@@ -113,11 +113,11 @@ trait PropertyAware
 
                 return null;
             case CastType::MULTI_SELECTION:
-                if (!$this->registryService->getPropertySelections()) {
+                if (!$this->propertySelection) {
                     return null;
                 }
 
-                return $this->registryService->getPropertySelections()->getPropertySelectionValues(
+                return $this->propertySelection->getPropertySelectionValues(
                     $property->getId(),
                     $property->getValues(),
                     $this->config->getLanguage()

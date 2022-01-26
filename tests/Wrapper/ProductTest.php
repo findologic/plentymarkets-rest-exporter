@@ -12,10 +12,12 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Base;
@@ -974,11 +976,20 @@ class ProductTest extends TestCase
             $this->config,
             $this->storeConfigurationMock,
             $this->registryServiceMock,
+            $this->getPropertySelections(),
             $this->itemMock,
             $this->variationEntityMocks,
             Product::WRAP_MODE_DEFAULT
         );
     }
+
+    private function getPropertySelections(): PropertySelectionResponse
+    {
+        return PropertySelectionParser::parse(
+            $this->getMockResponse('PropertySelectionResponse/response.json')
+        );
+    }
+
 
     private function getItem(array $data): Item
     {

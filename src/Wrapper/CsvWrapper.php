@@ -11,6 +11,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductResponseItem;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
@@ -65,7 +66,8 @@ class CsvWrapper extends Wrapper
         int $start,
         int $total,
         ItemResponse $products,
-        PimVariationResponse $variations
+        PimVariationResponse $variations,
+        ?PropertySelectionResponse $propertySelection = null
     ): void {
         /** @var Item[] $items */
         $items = [];
@@ -88,6 +90,7 @@ class CsvWrapper extends Wrapper
                 $item = $this->wrapItem(
                     $product,
                     $separateVariation,
+                    $propertySelection,
                     Product::WRAP_MODE_SEPARATE_VARIATIONS,
                     (string)$key
                 );
@@ -97,7 +100,7 @@ class CsvWrapper extends Wrapper
                 }
             }
 
-            if ($item = $this->wrapItem($product, $groupedVariations, Product::WRAP_MODE_DEFAULT)) {
+            if ($item = $this->wrapItem($product, $groupedVariations, $propertySelection, Product::WRAP_MODE_DEFAULT)) {
                 $items[] = $item;
             }
         }
@@ -139,6 +142,7 @@ class CsvWrapper extends Wrapper
     private function wrapItem(
         ProductEntity $product,
         array $productVariations,
+        ?PropertySelectionResponse $propertySelection,
         int $wrapMode,
         string $variationGroupKey = ''
     ): ?Item {
@@ -147,6 +151,7 @@ class CsvWrapper extends Wrapper
             $this->config,
             $this->registryService->getWebStore()->getConfiguration(),
             $this->registryService,
+            $propertySelection,
             $product,
             $productVariations,
             $wrapMode,

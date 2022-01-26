@@ -12,6 +12,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PimVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\CsvWrapper;
 use Psr\Log\LoggerInterface;
 
@@ -62,9 +63,14 @@ class CsvExporter extends Exporter
      * @param int $totalCount
      * @param ItemResponse $products
      * @param PimVariationResponse $variations
+     * @param PropertySelectionResponse|null $propertySelection
      */
-    protected function wrapData(int $totalCount, ItemResponse $products, PimVariationResponse $variations): void
-    {
-        $this->wrapper->wrap($this->offset, $totalCount, $products, $variations);
+    protected function wrapData(
+        int $totalCount,
+        ItemResponse $products,
+        PimVariationResponse $variations,
+        ?PropertySelectionResponse $propertySelection = null
+    ): void {
+        $this->wrapper->wrap($this->offset, $totalCount, $products, $variations, $propertySelection);
     }
 }
