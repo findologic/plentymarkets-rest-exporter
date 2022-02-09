@@ -5,9 +5,6 @@
         bootstrap="tests/bootstrap.php"
         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
 >
-  <php>
-    <env name="CUSTOMER_LOGIN_URL" value="https://clogin.test" force="true"/>
-  </php>
   <coverage>
     <include>
       <directory>src</directory>
