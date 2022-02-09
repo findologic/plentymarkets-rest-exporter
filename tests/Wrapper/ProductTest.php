@@ -12,11 +12,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\PlentyShop;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Base;
@@ -980,11 +982,20 @@ class ProductTest extends TestCase
             $this->config,
             $this->storeConfigurationMock,
             $this->registryServiceMock,
+            $this->getPropertySelections(),
             $this->itemMock,
             $this->variationEntityMocks,
             Product::WRAP_MODE_DEFAULT
         );
     }
+
+    private function getPropertySelections(): PropertySelectionResponse
+    {
+        return PropertySelectionParser::parse(
+            $this->getMockResponse('PropertySelectionResponse/response.json')
+        );
+    }
+
 
     private function getItem(array $data): Item
     {
@@ -999,6 +1010,12 @@ class ProductTest extends TestCase
     public function cheapestVariationIsExportedTestProvider(): array
     {
         return [
+            'item without images (no default image), no image exported' => [
+                'Pim/Variations/response_for_cheapest_without_images.json',
+                '',
+                '20.43',
+                'https://plenty-testshop.de/urlPath_0_6557'
+            ],
             'cheapest with zero price variation' => [
                 'Pim/Variations/response_for_cheapest_price_test.json',
                 'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/exportedImage.jpeg',
@@ -1011,7 +1028,7 @@ class ProductTest extends TestCase
                 '0.01',
                 'https://plenty-testshop.de/urlPath_0_1181'
             ],
-            'cheapest without an image' => [
+            'cheapest without an image, default image is used' => [
                 'Pim/Variations/response_for_cheapest_price_variation_without_image.json',
                 'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/119-Relaxsessel-Woddenfir.jpg',
                 '1.00',

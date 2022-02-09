@@ -444,7 +444,8 @@ class VariationTest extends TestCase
         $wrapper = new VariationWrapper(
             $this->defaultConfig,
             $this->registryServiceMock,
-            $variationEntity
+            $variationEntity,
+            $propertySelections
         );
 
         $this->registryServiceMock->expects($this->exactly(5))
@@ -512,7 +513,8 @@ class VariationTest extends TestCase
         $wrapper = new VariationWrapper(
             $this->defaultConfig,
             $this->registryServiceMock,
-            $variationEntity
+            $variationEntity,
+            $propertySelections
         );
 
         $this->registryServiceMock->expects($this->any())->method('getProperty')->willReturn($propertyEntity);
@@ -543,7 +545,8 @@ class VariationTest extends TestCase
         $wrapper = new VariationWrapper(
             $this->defaultConfig,
             $this->registryServiceMock,
-            $variationEntity
+            $variationEntity,
+            $propertySelections
         );
 
         $this->registryServiceMock->expects($this->any())->method('getProperty')->willReturn($propertyEntity);

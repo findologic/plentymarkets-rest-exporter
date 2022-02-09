@@ -15,6 +15,7 @@ use FINDOLOGIC\Export\Data\Property;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
@@ -40,6 +41,8 @@ class Product
     private int $wrapMode;
     private string $variationGroupKey;
     private ?int $cheapestVariationId = null;
+    private array $plentyShopConfig;
+    private ?PropertySelectionResponse $propertySelection;
 
     /**
      * @param PimVariation[] $variationEntities
@@ -49,6 +52,7 @@ class Product
         Config $config,
         StoreConfiguration $storeConfiguration,
         RegistryService $registryService,
+        ?PropertySelectionResponse $propertySelection,
         ProductEntity $productEntity,
         array $variationEntities,
         int $wrapMode = self::WRAP_MODE_DEFAULT,
@@ -63,6 +67,8 @@ class Product
         $this->storeConfiguration = $storeConfiguration;
         $this->wrapMode = $wrapMode;
         $this->variationGroupKey = $variationGroupKey;
+        $this->propertySelection = $propertySelection;
+        $this->plentyShopConfig = $this->registryService->getPluginConfigurations('Ceres');
     }
 
     /**
@@ -165,7 +171,7 @@ class Product
 
     protected function processVariations(bool $checkAvailability = true): int
     {
-        $hasImage = false;
+        $itemHasImage = false;
         $hasCategories = false;
         $variationsProcessed = 0;
         $prices = [];
@@ -187,16 +193,17 @@ class Product
                 $this->config,
                 $this->registryService,
                 $variationEntity,
+                $this->propertySelection,
                 $this->wrapMode,
                 $this->variationGroupKey
             );
 
             $variation->processData();
-
+            
             $useCallistoUrl = $this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl();
-            if (!$hasImage && $variation->getImage() && $useCallistoUrl) {
+            if (!$itemHasImage && $variation->getImage() && $useCallistoUrl) {
                 $this->item->addImage($variation->getImage());
-                $hasImage = true;
+                $itemHasImage = true;
             }
 
             if (!$defaultImage && $variation->getImage()) {
@@ -255,7 +262,7 @@ class Product
         $this->cheapestVariationId = $cheapestVariations->addImageAndPrice(
             $defaultImage,
             $prices,
-            $hasImage
+            $itemHasImage
         );
 
         // If no children have categories, we're skipping this product.
