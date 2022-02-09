@@ -62,7 +62,6 @@ class GenerateTokenCommandTest extends TestCase
     private function setUpCommandMocks(): void
     {
         $this->mockHandler = new MockHandler([
-            $this->getMockResponse('CustomerLoginResponse/response.json'),
             $this->getMockResponse('LoginResponse/response.json'),
             $this->getMockResponse('WebStoreResponse/response.json')
         ]);
