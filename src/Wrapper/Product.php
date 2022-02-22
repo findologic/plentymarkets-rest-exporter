@@ -362,11 +362,13 @@ class Product
         if (!Utils::isEmpty($manufacturerId)) {
             $manufacturer = $this->registryService->getManufacturer($manufacturerId);
 
-            if (Utils::isEmpty($manufacturer->getName())) {
+            if (Utils::isEmpty($manufacturer->getExternalName()) && Utils::isEmpty($manufacturer->getName())) {
                 return;
             }
 
-            $vendorAttribute = new Attribute('vendor', [$manufacturer->getName()]);
+            $manufacturerName = ($manufacturer->getExternalName()) ?: $manufacturer->getName();
+
+            $vendorAttribute = new Attribute('vendor', [$manufacturerName]);
             $this->item->addMergedAttribute($vendorAttribute);
         }
     }
