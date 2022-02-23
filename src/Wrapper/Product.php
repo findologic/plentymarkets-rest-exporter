@@ -18,6 +18,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Manufacturer;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration as StoreConfiguration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
@@ -362,15 +363,20 @@ class Product
         if (!Utils::isEmpty($manufacturerId)) {
             $manufacturer = $this->registryService->getManufacturer($manufacturerId);
 
-            if (Utils::isEmpty($manufacturer->getExternalName()) && Utils::isEmpty($manufacturer->getName())) {
+            if (!$this->hasManufacturerNameSet($manufacturer)) {
                 return;
             }
 
-            $manufacturerName = ($manufacturer->getExternalName()) ?: $manufacturer->getName();
+            $manufacturerName = $manufacturer->getExternalName() ?: $manufacturer->getName();
 
             $vendorAttribute = new Attribute('vendor', [$manufacturerName]);
             $this->item->addMergedAttribute($vendorAttribute);
         }
+    }
+
+    private function hasManufacturerNameSet(Manufacturer $manufacturer): bool
+    {
+        return !(Utils::isEmpty($manufacturer->getExternalName()) && Utils::isEmpty($manufacturer->getName()));
     }
 
     protected function addFreeTextFields(): void

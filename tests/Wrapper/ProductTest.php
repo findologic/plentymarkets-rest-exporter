@@ -1070,7 +1070,7 @@ class ProductTest extends TestCase
                 'ManufacturerResponse/one.json',
                 'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&vendor=externalNameA',
             ],
-            'manufacturer has not external name, original name is exported' => [
+            'manufacturer has no external name, original name is exported' => [
                 'ManufacturerResponse/without_external_name.json',
                 'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&vendor=nameA',
             ],
