@@ -577,7 +577,7 @@ class ProductTest extends TestCase
         $this->assertEmpty($columnValues[10]);
     }
 
-    public function testCheapestVariationIsUsedWhenNoMainVariationExists()
+    public function testCheapestVariationIsUsed()
     {
         $this->exporterMock = $this->getExporter();
 
