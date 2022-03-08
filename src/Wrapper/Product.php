@@ -318,9 +318,10 @@ class Product
             $this->item->addProperty($packageSizeProperty);
         }
 
-        if ($this->cheapestVariationId || $variationId) {
+        $variationId = $this->cheapestVariationId ?? $variationId;
+        if ($variationId) {
             $variationIdProperty = new Property('variation_id');
-            $variationIdProperty->addValue((string)($this->cheapestVariationId ?? $variationId));
+            $variationIdProperty->addValue((string)$variationId);
             $this->item->addProperty($variationIdProperty);
         }
 

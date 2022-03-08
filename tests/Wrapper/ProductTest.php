@@ -581,7 +581,7 @@ class ProductTest extends TestCase
     {
         $this->exporterMock = $this->getExporter();
 
-        $variationResponse = $this->getMockResponse('Pim/Variations/response_with_no_main_variation.json');
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_lowest_price_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
 
