@@ -594,7 +594,7 @@ class ProductTest extends TestCase
         $this->assertEquals(1005, $columnValues[19]);
     }
 
-    public function testFirstVariationIsUsedWhenNoMainVariationExists()
+    public function testCheapestVariationIsUsedWhenNoMainVariationExists()
     {
         $this->exporterMock = $this->getExporter();
 
@@ -608,7 +608,7 @@ class ProductTest extends TestCase
         // TODO: check item's images property directly once images getter is implemented
         $line = $item->getCsvFragment(self::AVAILABLE_PROPERTIES);
         $columnValues = explode("\t", $line);
-        $this->assertEquals(1004, $columnValues[19]);
+        $this->assertEquals(1005, $columnValues[19]);
     }
 
     public function testGroupsAreSetFromAllVariations()

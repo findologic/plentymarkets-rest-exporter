@@ -2829,11 +2829,11 @@
       "markets": null,
       "salesPrices": [
         {
-          "salesPriceId": 1,
+          "salesPriceId": 0,
           "price": 79
         },
         {
-          "salesPriceId": 2,
+          "salesPriceId": 1,
           "price": 110
         }
       ],

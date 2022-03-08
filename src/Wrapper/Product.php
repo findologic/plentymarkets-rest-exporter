@@ -201,6 +201,7 @@ class Product
         $baseUnit = null;
         $packageSize = null;
         $variationId = null;
+        $mainVariationId = null;
         $cheapestVariations = new CheapestVariation($this->item);
         $defaultImage = null;
 
@@ -249,8 +250,11 @@ class Product
                 $baseUnit = $variation->getBaseUnit();
             }
 
-            if (!$variationId || $variation->isMain()) {
+            if (!$variationId) {
                 $variationId = $variation->getId();
+            }
+            if ($variation->isMain()) {
+                $mainVariationId = $variation->getId();
             }
 
             $position = $variation->getPosition();
@@ -318,9 +322,13 @@ class Product
             $this->item->addProperty($packageSizeProperty);
         }
 
-        if ($variationId) {
+        if ($mainVariationId) {
             $variationIdProperty = new Property('variation_id');
-            $variationIdProperty->addValue((string)$variationId);
+            $variationIdProperty->addValue((string)$mainVariationId);
+            $this->item->addProperty($variationIdProperty);
+        } elseif ($this->cheapestVariationId || $variationId) {
+            $variationIdProperty = new Property('variation_id');
+            $variationIdProperty->addValue((string)($this->cheapestVariationId ?? $variationId));
             $this->item->addProperty($variationIdProperty);
         }
 
