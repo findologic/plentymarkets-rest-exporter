@@ -250,7 +250,7 @@ class Product
                 $baseUnit = $variation->getBaseUnit();
             }
 
-            if (!$variationId || $variation->isMain()) {
+            if (!$variationId) {
                 $variationId = $variation->getId();
             }
 
@@ -319,6 +319,7 @@ class Product
             $this->item->addProperty($packageSizeProperty);
         }
 
+        $variationId = $this->cheapestVariationId ?? $variationId;
         if ($variationId) {
             $variationIdProperty = new Property('variation_id');
             $variationIdProperty->addValue((string)$variationId);
