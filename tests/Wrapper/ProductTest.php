@@ -418,6 +418,38 @@ class ProductTest extends TestCase
         );
     }
 
+    /**
+     * @dataProvider correctManufacturerIsExportedTestProvider
+     */
+    public function testCorrectManufacturerNameIsExported(
+        string $manufacturerMockResponse,
+        string $expectedResult
+    ): void {
+        $this->exporterMock = $this->getExporter();
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/response.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = $variations->all();
+
+        $rawManufacturers = $this->getMockResponse($manufacturerMockResponse);
+        $manufacturers = ManufacturerParser::parse($rawManufacturers);
+
+        $this->registryServiceMock->expects($this->once())
+            ->method('getManufacturer')
+            ->willReturn($manufacturers->first());
+
+        $this->itemMock->expects($this->once())
+            ->method('getManufacturerId')
+            ->willReturn(1);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+
+        $this->assertEquals($expectedResult, $columnValues[11]);
+    }
+
     public function testSortIsSetByTheMainVariation(): void
     {
         $this->exporterMock = $this->getExporter();
@@ -583,11 +615,11 @@ class ProductTest extends TestCase
         $this->assertEmpty($columnValues[10]);
     }
 
-    public function testExportMainVariationIdWhenAvailable()
+    public function testCheapestVariationIsUsed()
     {
         $this->exporterMock = $this->getExporter();
 
-        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_variation_id_test.json');
+        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_lowest_price_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
 
@@ -598,23 +630,6 @@ class ProductTest extends TestCase
         $line = $item->getCsvFragment(self::AVAILABLE_PROPERTIES);
         $columnValues = explode("\t", $line);
         $this->assertEquals(1005, $columnValues[19]);
-    }
-
-    public function testFirstVariationIsUsedWhenNoMainVariationExists()
-    {
-        $this->exporterMock = $this->getExporter();
-
-        $variationResponse = $this->getMockResponse('Pim/Variations/response_with_no_main_variation.json');
-        $variations = PimVariationsParser::parse($variationResponse);
-        $this->variationEntityMocks = $variations->all();
-
-        $product = $this->getProduct();
-        $item = $product->processProductData();
-
-        // TODO: check item's images property directly once images getter is implemented
-        $line = $item->getCsvFragment(self::AVAILABLE_PROPERTIES);
-        $columnValues = explode("\t", $line);
-        $this->assertEquals(1004, $columnValues[19]);
     }
 
     public function testGroupsAreSetFromAllVariations()
@@ -1034,6 +1049,20 @@ class ProductTest extends TestCase
                 '1.00',
                 'https://plenty-testshop.de/urlPath_0_1179'
             ]
+        ];
+    }
+
+    public function correctManufacturerIsExportedTestProvider(): array
+    {
+        return [
+            'manufacturer has external name, external name is exported' => [
+                'ManufacturerResponse/one.json',
+                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&vendor=externalNameA',
+            ],
+            'manufacturer has no external name, original name is exported' => [
+                'ManufacturerResponse/without_external_name.json',
+                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&vendor=nameA',
+            ],
         ];
     }
 
