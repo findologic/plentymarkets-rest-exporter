@@ -8,6 +8,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
+use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\RequestHelper;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Uri;
 use Log4Php\Logger;
@@ -19,6 +20,7 @@ use Psr\Http\Message\StreamInterface;
 class ItemVariationRequestTest extends TestCase
 {
     use ConfigHelper;
+    use RequestHelper;
 
     /** @var Config */
     private $defaultConfig;
@@ -83,7 +85,8 @@ class ItemVariationRequestTest extends TestCase
             ->setStockWarehouseId('4564')
             ->setSupplierId(7987);
 
-        $uri = new Uri('https://plenty-testshop.de/rest/items/variations');
+        $uri = $this->createUri('https://plenty-testshop.de/rest/items/variations');
+
         $modifiedRequest = $request->withUri($uri)->withAddedHeader('Authorization', 'Bearer 111');
 
         // Query contains all parameters, that's why it seems so bloated.
