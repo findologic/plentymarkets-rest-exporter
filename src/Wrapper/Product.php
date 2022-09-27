@@ -13,6 +13,7 @@ use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Ordernumber;
 use FINDOLOGIC\Export\Data\Property;
 use FINDOLOGIC\Export\Exporter;
+use FINDOLOGIC\Export\Helpers\DataHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
@@ -387,7 +388,7 @@ class Product
             $getter = 'getFree' . (string)$field;
 
             $value = (string)$this->productEntity->{$getter}();
-            if (trim($value) === '') {
+            if (trim($value) === '' || mb_strlen($value) > DataHelper::ATTRIBUTE_CHARACTER_LIMIT) {
                 continue;
             }
 
