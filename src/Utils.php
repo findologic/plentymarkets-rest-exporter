@@ -77,9 +77,10 @@ class Utils
         ?string $shopkey,
         ?GuzzleClient $client = null
     ): Config {
-        $customerLoginUri = static::env('CUSTOMER_LOGIN_URL');
-        if ($shopkey && $customerLoginUri) {
-            return static::getCustomerLoginConfiguration($customerLoginUri, $shopkey, $client ?? new GuzzleClient());
+        $importDataBaseUrl = static::env('IMPORT_DATA_URL');
+        if ($shopkey && $importDataBaseUrl) {
+            $importDataUrl = sprintf($importDataBaseUrl, $shopkey);
+            return static::getCustomerLoginConfiguration($importDataUrl, $client ?? new GuzzleClient());
         }
 
         return Config::fromEnvironment();
@@ -120,12 +121,9 @@ class Utils
 
     private static function getCustomerLoginConfiguration(
         string $customerLoginUri,
-        string $shopkey,
         GuzzleClient $client
     ): Config {
-        $response = $client->get($customerLoginUri, [
-            RequestOptions::QUERY => ['shopkey' => $shopkey]
-        ]);
+        $response = $client->get($customerLoginUri);
 
         $rawData = json_decode($response->getBody()->__toString(), true);
 
