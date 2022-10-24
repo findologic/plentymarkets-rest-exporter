@@ -1,4 +1,5 @@
 /.idea/
+/composer.lock
 
 /var/cache/
 !var/cache/.gitkeep

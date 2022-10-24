@@ -18,6 +18,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\WebStoreRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
+use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\RequestHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
@@ -30,6 +31,7 @@ use PHPUnit\Framework\TestCase;
 class ClientTest extends TestCase
 {
     use ConfigHelper;
+    use RequestHelper;
     use ResponseHelper;
 
     /** @var GuzzleClient|MockObject */
@@ -56,7 +58,7 @@ class ClientTest extends TestCase
         $uri = $overrideUri ?? sprintf('https://%s/rest/webstores', $this->config->getDomain());
 
         /** @var Request $request */
-        $request = (new WebStoreRequest())->withUri(new Uri($uri))
+        $request = (new WebStoreRequest())->withUri($this->createUri($uri))
             ->withAddedHeader('Authorization', 'Bearer access token');
 
         return $request;
@@ -65,7 +67,10 @@ class ClientTest extends TestCase
     public function testClientWillAutomaticallyLogin(): void
     {
         $client = $this->getDefaultClient();
-        $expectedLoginRequest = new GuzzleRequest('POST', sprintf('https://%s/rest/login', $this->config->getDomain()));
+        $expectedLoginRequest = new GuzzleRequest(
+            'POST',
+            $this->createUri(sprintf('https://%s/rest/login', $this->config->getDomain()))
+        );
         $expectedWebStoreRequest = $this->getDefaultRequest();
 
         $this->guzzleClientMock->expects($this->exactly(2))
@@ -155,10 +160,13 @@ class ClientTest extends TestCase
     public function testClientSwitchesToHttpIfLoginReturnsARedirectResponse(): void
     {
         $client = $this->getDefaultClient();
-        $expectedLoginRequest = new GuzzleRequest('POST', sprintf('https://%s/rest/login', $this->config->getDomain()));
+        $expectedLoginRequest = new GuzzleRequest(
+            'POST',
+            $this->createUri(sprintf('https://%s/rest/login', $this->config->getDomain()))
+        );
         $expectedSecondLoginRequest = new GuzzleRequest(
             'POST',
-            sprintf('http://%s/rest/login', $this->config->getDomain())
+            $this->createUri(sprintf('http://%s/rest/login', $this->config->getDomain()))
         );
         $expectedWebStoreRequest = $this->getDefaultRequest(sprintf(
             'http://%s/rest/webstores',
@@ -219,7 +227,10 @@ class ClientTest extends TestCase
         $this->expectExceptionMessage($expectedExceptionMessage);
 
         $client = $this->getDefaultClient();
-        $expectedLoginRequest = new GuzzleRequest('POST', sprintf('https://%s/rest/login', $this->config->getDomain()));
+        $expectedLoginRequest = new GuzzleRequest(
+            'POST',
+            $this->createUri(sprintf('https://%s/rest/login', $this->config->getDomain()))
+        );
 
         $this->guzzleClientMock->expects($this->once())
             ->method('send')
@@ -234,7 +245,10 @@ class ClientTest extends TestCase
     public function testRateLimitIsHandled(): void
     {
         $client = $this->getDefaultClient();
-        $expectedLoginRequest = new GuzzleRequest('POST', sprintf('https://%s/rest/login', $this->config->getDomain()));
+        $expectedLoginRequest = new GuzzleRequest(
+            'POST',
+            $this->createUri(sprintf('https://%s/rest/login', $this->config->getDomain()))
+        );
         $expectedWebStoreRequest = $this->getDefaultRequest();
 
         $this->guzzleClientMock->expects($this->exactly(3))
@@ -269,7 +283,10 @@ class ClientTest extends TestCase
     {
         $this->config->setDebug(true);
         $client = $this->getDefaultClient();
-        $expectedLoginRequest = new GuzzleRequest('POST', sprintf('https://%s/rest/login', $this->config->getDomain()));
+        $expectedLoginRequest = new GuzzleRequest(
+            'POST',
+            $this->createUri(sprintf('https://%s/rest/login', $this->config->getDomain()))
+        );
         $expectedWebStoreRequest = $this->getDefaultRequest();
 
         $this->guzzleClientMock->expects($this->exactly(2))
@@ -298,7 +315,7 @@ class ClientTest extends TestCase
         $domain = $this->getDomain();
         $this->config = $this->getDefaultConfig($configs);
         $client = $this->getDefaultClient();
-        $expectedLoginRequest = new GuzzleRequest('POST', sprintf('https://%s/rest/login', $domain));
+        $expectedLoginRequest = new GuzzleRequest('POST', $this->createUri(sprintf('https://%s/rest/login', $domain)));
         $expectedWebStoreRequest = $this->getDefaultWebStoreRequest($domain);
 
         $this->guzzleClientMock->expects($this->exactly(2))
@@ -335,10 +352,10 @@ class ClientTest extends TestCase
 
     private function getDefaultWebStoreRequest(string $domain): Request
     {
-        $uri = $overrideUri ?? sprintf('https://%s/rest/webstores', $domain);
+        $uri = sprintf('https://%s/rest/webstores', $domain);
 
         /** @var Request $request */
-        $request = (new WebStoreRequest())->withUri(new Uri($uri))
+        $request = (new WebStoreRequest())->withUri($this->createUri($uri))
             ->withAddedHeader('Authorization', 'Bearer access token');
 
         return $request;
@@ -348,7 +365,7 @@ class ClientTest extends TestCase
     {
         $uri = sprintf('https://%s/rest/webstores', $this->getDomain());
 
-        return (new WebStoreRequest())->withUri(new Uri($uri));
+        return (new WebStoreRequest())->withUri($this->createUri($uri));
     }
 
     private function getDomain(): string
