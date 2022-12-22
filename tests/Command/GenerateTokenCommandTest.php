@@ -49,9 +49,7 @@ class GenerateTokenCommandTest extends TestCase
         $expectedToken = 'access token';
 
         $commandTester = new CommandTester($this->command);
-        $commandTester->execute([
-            'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD'
-        ]);
+        $commandTester->execute([]);
 
         $this->assertSame(0, $commandTester->getStatusCode());
 

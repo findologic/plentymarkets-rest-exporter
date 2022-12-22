@@ -128,7 +128,7 @@ class UtilsTest extends TestCase
         ?string $shopkey,
         string $expectedDomain
     ): void {
-        $_ENV['CUSTOMER_LOGIN_URL'] = $customerLoginUrl;
+        $_ENV['IMPORT_DATA_URL'] = $customerLoginUrl;
 
         $this->clientMock->expects($this->never())->method('get');
 
