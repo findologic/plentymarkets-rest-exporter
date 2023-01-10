@@ -124,11 +124,11 @@ class UtilsTest extends TestCase
      * @dataProvider configDoesNotCallCustomerLoginProvider
      */
     public function testCustomerLoginIsNotCalledIfConfigDoesNotAllowIt(
-        ?string $customerLoginUrl,
+        ?string $importDataUrl,
         ?string $shopkey,
         string $expectedDomain
     ): void {
-        $_ENV['IMPORT_DATA_URL'] = $customerLoginUrl;
+        $_ENV['IMPORT_DATA_URL'] = $importDataUrl;
 
         $this->clientMock->expects($this->never())->method('get');
 
@@ -155,14 +155,14 @@ class UtilsTest extends TestCase
      * @dataProvider configCallsCustomerLoginProvider
      */
     public function testCustomerLoginIsCalledIfConfigDoesAllowsItAndFailsWhenResponseIsInvalid(
-        ?string $customerLoginUrl,
+        ?string $importDataUrl,
         ?string $shopkey,
         string $expectedDomain
     ): void {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Something went wrong while tying to fetch the importer data');
 
-        $_ENV['CUSTOMER_LOGIN_URL'] = $customerLoginUrl;
+        $_ENV['IMPORT_DATA_URL'] = $importDataUrl;
 
         $this->clientMock->expects($this->once())
             ->method('get')
@@ -180,11 +180,11 @@ class UtilsTest extends TestCase
      * @dataProvider configCallsCustomerLoginProvider
      */
     public function testCustomerLoginIsCalledIfConfigDoesAllowsIt(
-        ?string $customerLoginUrl,
+        ?string $importDataUrl,
         ?string $shopkey,
         string $expectedDomain
     ): void {
-        $_ENV['CUSTOMER_LOGIN_URL'] = $customerLoginUrl;
+        $_ENV['IMPORT_DATA_URL'] = $importDataUrl;
 
         $this->clientMock->expects($this->once())
             ->method('get')
