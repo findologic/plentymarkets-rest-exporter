@@ -57,7 +57,7 @@ class ConfigTest extends TestCase
         $expectedRrpId = 2;
         $expectedUnavailableVariations = false;
 
-        $customerLoginResponse = [
+        $accountResponse = [
             '1234' => [
                 'id' => 1234,
                 'url' => $expectedDomain,
@@ -77,7 +77,7 @@ class ConfigTest extends TestCase
             ]
         ];
 
-        $config = Config::fromArray($customerLoginResponse);
+        $config = Config::fromArray($accountResponse);
 
         $this->assertSame($expectedDomain, $config->getDomain());
         $this->assertSame($expectedUsername, $config->getUsername());

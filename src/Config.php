@@ -7,7 +7,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter;
 use Exception;
 
 /**
- * Holds Plentymarkets-relevant configuration from the customer-login.
+ * Holds Plentymarkets-relevant configuration from the account.
  */
 class Config
 {
