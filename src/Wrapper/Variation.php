@@ -561,7 +561,7 @@ class Variation
             $weight = new Mass($this->variationEntity->getBase()->getWeightNetG(), 'g');
 
             $this->attributes[] = new Attribute(
-                'dimensions_weight_' . $weightUnit,
+                'dimensions_weight_net_' . $weightUnit,
                 [$weight->toUnit($weightUnit)]
             );
         }
