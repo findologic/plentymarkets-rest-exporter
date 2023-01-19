@@ -144,7 +144,7 @@ class ExportCommandTest extends TestCase
     private function setUpCommandMocks(): void
     {
         $this->mockHandler = new MockHandler([
-            $this->getMockResponse('CustomerLoginResponse/response.json')
+            $this->getMockResponse('AccountResponse/response.json')
         ]);
 
         $handlerStack = HandlerStack::create($this->mockHandler);

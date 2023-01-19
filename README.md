@@ -70,7 +70,7 @@ Running tests is as simple as it gets. Either run `composer test`,
 
 #### Using a shopkey to run the export
 
-NOTE: *Running an export with a shopkey requires the option `CUSTOMER_LOGIN_URL` to be set in
+NOTE: *Running an export with a shopkey requires the option `IMPORT_DATA_URL` to be set in
 your environment file!*
 
 You can also run the export for a specific shopkey by calling the export with an
@@ -94,7 +94,7 @@ Configuration changes can be done in your environment files.
 | EXPORT_RRP_ID        | Id of the recommended retail price that should be shown.                                                                                                                                                                                     |
 | EXPORT_LANGUAGE      | Language of the shop. E.g. DE, EN, FR                                                                                                                                                                                                        |
 | DEBUG                | Boolean that if set to true, will log all requests/responses inside of the `debug` folder.                                                                                                                                                   |
-| CUSTOMER_LOGIN_URL   | Adding this to your config allows you to call the export with an additional shopkey parameter.                                                                                                                                               |
+| IMPORT_DATA_URL   | Adding this to your config allows you to call the export with an additional shopkey parameter.                                                                                                                                               |
 
 #### Debugging the export
 

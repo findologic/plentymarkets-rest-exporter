@@ -726,6 +726,28 @@ class ProductTest extends TestCase
         $this->assertEquals($expectedValue, $columnValues[11]);
     }
 
+    public function testTooLongFreeTextFieldsAreIgnored(): void
+    {
+        $expectedValue = 'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&free1=0000000000';
+
+        $this->config = $this->getDefaultConfig(['exportFreeTextFields' => true]);
+        $this->exporterMock = $this->getExporter();
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/too_long_field_not_exported_test.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+
+        $this->itemMock = $this->getItem($variations->first()->getBase()->getItem()->getData());
+
+        $this->variationEntityMocks[] = $variations->first();
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $line = $item->getCsvFragment();
+        $columnValues = explode("\t", $line);
+
+        $this->assertEquals($expectedValue, $columnValues[11]);
+    }
+
     public function testAttributesAreSetFromAllVariations()
     {
         $this->exporterMock = $this->getExporter();

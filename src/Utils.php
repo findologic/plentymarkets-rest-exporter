@@ -66,7 +66,7 @@ class Utils
     }
 
     /**
-     * When a shopkey is set, the customer-login route is used to fetch the import data. Otherwise the configuration
+     * When a shopkey is set, the account route is used to fetch the import data. Otherwise the configuration
      * of the given configPath is used.
      *
      * @param string|null $shopkey
@@ -77,9 +77,10 @@ class Utils
         ?string $shopkey,
         ?GuzzleClient $client = null
     ): Config {
-        $customerLoginUri = static::env('CUSTOMER_LOGIN_URL');
-        if ($shopkey && $customerLoginUri) {
-            return static::getCustomerLoginConfiguration($customerLoginUri, $shopkey, $client ?? new GuzzleClient());
+        $importDataBaseUrl = static::env('IMPORT_DATA_URL');
+        if ($shopkey && $importDataBaseUrl) {
+            $importDataUrl = sprintf($importDataBaseUrl, $shopkey);
+            return static::getImportConfiguration($importDataUrl, $client ?? new GuzzleClient());
         }
 
         return Config::fromEnvironment();
@@ -118,14 +119,11 @@ class Utils
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
-    private static function getCustomerLoginConfiguration(
-        string $customerLoginUri,
-        string $shopkey,
+    private static function getImportConfiguration(
+        string $accountUri,
         GuzzleClient $client
     ): Config {
-        $response = $client->get($customerLoginUri, [
-            RequestOptions::QUERY => ['shopkey' => $shopkey]
-        ]);
+        $response = $client->get($accountUri);
 
         $rawData = json_decode($response->getBody()->__toString(), true);
 

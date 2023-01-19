@@ -39,7 +39,7 @@ class GenerateTokenCommand extends Command
             'shopkey',
             InputArgument::OPTIONAL,
             'Optionally add the shopkey of a specific service. Note that this requires' .
-            ' the env variable "CUSTOMER_LOGIN_URL" to be set in .env.local.',
+            ' the env variable "IMPORT_DATA_URL" to be set in .env.local.',
         );
     }
 
