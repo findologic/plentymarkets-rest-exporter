@@ -47,6 +47,10 @@ class Config
 
     private ?float $exportReferrerId = null;
 
+    private string $exportDimensionUnit = 'mm';
+
+    private string $exportWeightUnit = 'g';
+
     public function __construct(array $rawConfig = [])
     {
         foreach ($rawConfig as $configKey => $configValue) {
@@ -85,6 +89,8 @@ class Config
             'exportOrdernumberVariantBarcodes' => $plentyConfig['export_ordernumber_variant_barcodes'] ?? true,
             'exportFreeTextFields' => $plentyConfig['export_free_text_fields'] ?? true,
             'exportReferrerId' => self::getFloatCastExportReferrerId($plentyConfig['export_referrer_id'] ?? null),
+            'exportDimensionUnit' => $plentyConfig['export_dimension_unit'],
+            'exportWeightUnit' => $plentyConfig['export_weight_unit'],
             'debug' => $debug
         ]);
     }
@@ -108,6 +114,8 @@ class Config
             'exportOrdernumberVariantBarcodes' => (bool)Utils::env('EXPORT_ORDERNUMBER_VARIANT_BARCODES', true),
             'exportFreeTextFields' => (bool)Utils::env('EXPORT_FREE_TEXT_FIELDS', true),
             'exportReferrerId' => self::getFloatCastExportReferrerId(Utils::env('EXPORT_REFERRER_ID')),
+            'exportDimensionUnit' => Utils::env('EXPORT_DIMENSION_UNIT'),
+            'exportWeightUnit' => Utils::env('EXPORT_WEIGHT_UNIT'),
             'debug' => (bool)Utils::env('DEBUG')
         ]);
     }
@@ -329,5 +337,25 @@ class Config
         }
 
         return null;
+    }
+
+    public function getExportDimensionUnit(): string
+    {
+        return $this->exportDimensionUnit;
+    }
+
+    public function setExportDimensionUnit(string $exportDimensionUnit): void
+    {
+        $this->exportDimensionUnit = $exportDimensionUnit;
+    }
+
+    public function getExportWeightUnit(): string
+    {
+        return $this->exportWeightUnit;
+    }
+
+    public function setExportWeightUnit(string $exportWeightUnit): void
+    {
+        $this->exportWeightUnit = $exportWeightUnit;
     }
 }
