@@ -102,18 +102,18 @@ class UtilsTest extends TestCase
         Utils::validateAndGetShopkey($shopkey);
     }
 
-    public function configDoesNotCallCustomerLoginProvider(): array
+    public function configDoesNotCallAccountProvider(): array
     {
         $expectedDomain = 'blubbergurken.io';
 
         return [
-            'config has no customerLoginUri set' => [
-                'customerLoginUri' => null,
+            'config has no accountUri set' => [
+                'accountUri' => null,
                 'shopkey' => self::VALID_SHOPKEY,
                 'expectedDomain' => $expectedDomain,
             ],
-            'config has customerLoginUri set, but no shopkey provided' => [
-                'customerLoginUri' => 'https://customer-login.com',
+            'config has accountUri set, but no shopkey provided' => [
+                'accountUri' => 'https://account.com',
                 'shopkey' => null,
                 'expectedDomain' => $expectedDomain,
             ],
@@ -121,14 +121,14 @@ class UtilsTest extends TestCase
     }
 
     /**
-     * @dataProvider configDoesNotCallCustomerLoginProvider
+     * @dataProvider configDoesNotCallAccountProvider
      */
-    public function testCustomerLoginIsNotCalledIfConfigDoesNotAllowIt(
-        ?string $customerLoginUrl,
+    public function testAccountIsNotCalledIfConfigDoesNotAllowIt(
+        ?string $importDataUrl,
         ?string $shopkey,
         string $expectedDomain
     ): void {
-        $_ENV['CUSTOMER_LOGIN_URL'] = $customerLoginUrl;
+        $_ENV['IMPORT_DATA_URL'] = $importDataUrl;
 
         $this->clientMock->expects($this->never())->method('get');
 
@@ -140,11 +140,11 @@ class UtilsTest extends TestCase
         $this->assertSame($expectedDomain, $config->getDomain());
     }
 
-    public function configCallsCustomerLoginProvider(): array
+    public function configCallsAccountProvider(): array
     {
         return [
-            'config has customerLoginUri and shopkey set' => [
-                'customerLoginUrl' => 'https://customer-login.com',
+            'config has account and shopkey set' => [
+                'accountUrl' => 'https://account.com',
                 'shopkey' => self::VALID_SHOPKEY,
                 'expectedDomain' => 'blubbergurken.io',
             ],
@@ -152,21 +152,21 @@ class UtilsTest extends TestCase
     }
 
     /**
-     * @dataProvider configCallsCustomerLoginProvider
+     * @dataProvider configCallsAccountProvider
      */
-    public function testCustomerLoginIsCalledIfConfigDoesAllowsItAndFailsWhenResponseIsInvalid(
-        ?string $customerLoginUrl,
+    public function testAccountIsCalledIfConfigDoesAllowsItAndFailsWhenResponseIsInvalid(
+        ?string $importDataUrl,
         ?string $shopkey,
         string $expectedDomain
     ): void {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Something went wrong while tying to fetch the importer data');
 
-        $_ENV['CUSTOMER_LOGIN_URL'] = $customerLoginUrl;
+        $_ENV['IMPORT_DATA_URL'] = $importDataUrl;
 
         $this->clientMock->expects($this->once())
             ->method('get')
-            ->willReturn($this->getMockResponse('CustomerLoginResponse/invalid_response.json'));
+            ->willReturn($this->getMockResponse('AccountResponse/invalid_response.json'));
 
         $config = Utils::getExportConfiguration(
             $shopkey,
@@ -177,18 +177,18 @@ class UtilsTest extends TestCase
     }
 
     /**
-     * @dataProvider configCallsCustomerLoginProvider
+     * @dataProvider configCallsAccountProvider
      */
-    public function testCustomerLoginIsCalledIfConfigDoesAllowsIt(
-        ?string $customerLoginUrl,
+    public function testAccountIsCalledIfConfigDoesAllowsIt(
+        ?string $importDataUrl,
         ?string $shopkey,
         string $expectedDomain
     ): void {
-        $_ENV['CUSTOMER_LOGIN_URL'] = $customerLoginUrl;
+        $_ENV['IMPORT_DATA_URL'] = $importDataUrl;
 
         $this->clientMock->expects($this->once())
             ->method('get')
-            ->willReturn($this->getMockResponse('CustomerLoginResponse/response.json'));
+            ->willReturn($this->getMockResponse('AccountResponse/response.json'));
 
         $config = Utils::getExportConfiguration(
             $shopkey,
