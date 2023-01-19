@@ -1073,11 +1073,23 @@ class ProductTest extends TestCase
         return [
             'manufacturer has external name, external name is exported' => [
                 'ManufacturerResponse/one.json',
-                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&vendor=externalNameA',
+                join('&', [
+                    'cat=Sessel+%26+Hocker',
+                    'cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F',
+                    'dimensions_weight_g=17',
+                    'dimensions_weight_g=27',
+                    'vendor=externalNameA',
+                ]),
             ],
             'manufacturer has no external name, original name is exported' => [
                 'ManufacturerResponse/without_external_name.json',
-                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&vendor=nameA',
+                join('&', [
+                    'cat=Sessel+%26+Hocker',
+                    'cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F',
+                    'dimensions_weight_g=17',
+                    'dimensions_weight_g=27',
+                    'vendor=nameA',
+                ]),
             ],
         ];
     }

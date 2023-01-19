@@ -56,6 +56,15 @@ class ConfigTest extends TestCase
         $expectedPriceId = 1;
         $expectedRrpId = 2;
         $expectedUnavailableVariations = false;
+        $expectedReferrerId = 5.05;
+        $expectedOrderNumberProductId = false;
+        $expectedOrderNumberVariantId = false;
+        $expectedOrderNumberVariantNumber = false;
+        $expectedOrderNumberVariantModel = false;
+        $expectedOrderNumberVariantBarcodes = false;
+        $expectedExportFreeTextFields = false;
+        $expectedDimensionUnit = 'm';
+        $expectedWeightUnit = 'kg';
 
         $accountResponse = [
             '1234' => [
@@ -71,8 +80,16 @@ class ConfigTest extends TestCase
                     'availability_id' => $expectedAvailabilityId,
                     'price_id' => $expectedPriceId,
                     'rrp_id' => $expectedRrpId,
-                    'exporter' => 'REST',
-                    'export_unavailable_variants' => $expectedUnavailableVariations
+                    'export_unavailable_variants' => $expectedUnavailableVariations,
+                    'export_referrer_id' => $expectedReferrerId,
+                    'export_ordernumber_product_id' => $expectedOrderNumberProductId,
+                    'export_ordernumber_variant_id' => $expectedOrderNumberVariantId,
+                    'export_ordernumber_variant_number' => $expectedOrderNumberVariantNumber,
+                    'export_ordernumber_variant_model' => $expectedOrderNumberVariantModel,
+                    'export_ordernumber_variant_barcodes' => $expectedOrderNumberVariantBarcodes,
+                    'export_free_text_fields' => $expectedExportFreeTextFields,
+                    'export_dimension_unit' => $expectedDimensionUnit,
+                    'export_weight_unit' => $expectedWeightUnit,
                 ],
             ]
         ];
@@ -87,6 +104,15 @@ class ConfigTest extends TestCase
         $this->assertSame($expectedPriceId, $config->getPriceId());
         $this->assertSame($expectedRrpId, $config->getRrpId());
         $this->assertSame($expectedUnavailableVariations, $config->isExportUnavailableVariations());
+        $this->assertSame($expectedReferrerId, $config->getExportReferrerId());
+        $this->assertSame($expectedOrderNumberProductId, $config->getExportOrdernumberProductId());
+        $this->assertSame($expectedOrderNumberVariantId, $config->getExportOrdernumberVariantId());
+        $this->assertSame($expectedOrderNumberVariantNumber, $config->getExportOrdernumberVariantNumber());
+        $this->assertSame($expectedOrderNumberVariantModel, $config->getExportOrdernumberVariantModel());
+        $this->assertSame($expectedOrderNumberVariantBarcodes, $config->getExportOrdernumberVariantBarcodes());
+        $this->assertSame($expectedExportFreeTextFields, $config->getExportFreeTextFields());
+        $this->assertSame($expectedDimensionUnit, $config->getExportDimensionUnit());
+        $this->assertSame($expectedWeightUnit, $config->getExportWeightUnit());
     }
 
     /**
