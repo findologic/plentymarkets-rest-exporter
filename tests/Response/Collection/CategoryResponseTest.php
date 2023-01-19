@@ -236,7 +236,7 @@ class CategoryResponseTest extends TestCase
 
         $category = new Category($expectedCategoryData);
 
-        // The lang should get upper cased and updatedAt is converted to a DateTime object.
+        // The lang should get upper-cased and updatedAt is converted to a DateTime object.
         $expectedCategoryData['details'][0]['lang'] = 'DE';
         $expectedCategoryData['details'][0]['updatedAt'] = new DateTime(
             $expectedCategoryData['details'][0]['updatedAt']

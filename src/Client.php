@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Debug\Debugger;
 use FINDOLOGIC\PlentyMarketsRestExporter\Debug\DebuggerInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Debug\DummyDebugger;
@@ -17,6 +17,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\RequestOptions;
@@ -76,6 +77,15 @@ class Client
         }
     }
 
+    /**
+     * @throws EmptyResponseException
+     * @throws PermissionException
+     * @throws CustomerException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     * @throws GuzzleException
+     * @throws CriticalException
+     */
     public function send(Request $request): ResponseInterface
     {
         $this->handleRateLimit();
@@ -88,7 +98,10 @@ class Client
         return $response;
     }
 
-    private function sendRequest(GuzzleRequest $request, array $params = null): ResponseInterface
+    /**
+     * @throws GuzzleException
+     */
+    private function sendRequest(RequestInterface $request, array $params = null): ResponseInterface
     {
         $uri = $request->getUri()->__toString();
         if ($request->getMethod() === self::METHOD_GET && !empty($params)) {
@@ -112,6 +125,14 @@ class Client
         return $response;
     }
 
+    /**
+     * @throws EmptyResponseException
+     * @throws PermissionException
+     * @throws CustomerException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     * @throws Exception
+     */
     private function handleResponse(RequestInterface $request, ResponseInterface $response): void
     {
         $this->debugger->save($request, $response);
@@ -140,6 +161,10 @@ class Client
         }
     }
 
+    /**
+     * @throws CriticalException
+     * @throws GuzzleException
+     */
     private function handleLogin(): void
     {
         if (!$this->refreshToken) {
@@ -147,6 +172,10 @@ class Client
         }
     }
 
+    /**
+     * @throws CriticalException
+     * @throws GuzzleException
+     */
     private function doLogin(): void
     {
         $this->customerLogger->debug('Trying to log into the Plentymarkets REST API...');
@@ -171,6 +200,9 @@ class Client
         $this->handleLoginResponse($request, $response);
     }
 
+    /**
+     * @throws CriticalException
+     */
     private function handleLoginResponse(RequestInterface $request, ResponseInterface $response): void
     {
         if ($response->getStatusCode() !== 200) {
@@ -192,10 +224,13 @@ class Client
         $this->refreshToken = $data->refreshToken;
     }
 
+    /**
+     * @throws Exception
+     */
     public function getAccessToken(): string
     {
         if (!$this->accessToken) {
-            throw new \Exception('Login before you can get the accessToken.');
+            throw new Exception('Login before you can get the accessToken.');
         }
 
         return $this->accessToken;
@@ -271,7 +306,7 @@ class Client
         return implode('&', $sanitized);
     }
 
-    private function getRequestOptions(GuzzleRequest $request, array $params): array
+    private function getRequestOptions(RequestInterface $request, array $params): array
     {
         $options = [
             RequestOptions::HTTP_ERRORS => false,

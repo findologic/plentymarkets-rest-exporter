@@ -20,9 +20,9 @@ class Selection extends Entity
 
     private string $updatedAt;
 
-    private Relation $relation;
+    private ?Relation $relation;
 
-    private Property $property;
+    private ?Property $property;
 
     public function __construct(array $data)
     {

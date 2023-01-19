@@ -17,6 +17,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as Variat
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemPropertyGroup\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
+use Psr\Cache\InvalidArgumentException;
 
 /**
  * Note: ItemProperties are synonymous with characteristics. From a route perspective they reference the same
@@ -29,6 +30,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
  */
 trait CharacteristicAware
 {
+    /**
+     * @throws InvalidArgumentException
+     */
     public function processCharacteristics(): void
     {
         foreach ($this->variationEntity->getBase()->getCharacteristics() as $characteristic) {
@@ -46,6 +50,9 @@ trait CharacteristicAware
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     protected function processCharacteristic(ItemProperty $itemProperty, Characteristic $characteristic): ?Attribute
     {
         if ($itemProperty->getValueType() === CastType::EMPTY) {
@@ -106,22 +113,16 @@ trait CharacteristicAware
             case CastType::TEXT:
                 /** @var CharacteristicText|null $text */
                 $text = Translator::translate($characteristic->getValueTexts(), $this->config->getLanguage());
-                if ($text) {
-                    return $text->getValue();
-                }
 
-                return null;
+                return $text?->getValue();
             case CastType::SELECTION:
                 /** @var CharacteristicSelection|null $selection */
                 $selection = Translator::translate(
                     $characteristic->getPropertySelections(),
                     $this->config->getLanguage()
                 );
-                if ($selection) {
-                    return $selection->getName();
-                }
 
-                return null;
+                return $selection?->getName();
             case CastType::INT:
                 return $characteristic->getValueInt();
             case CastType::FLOAT:
@@ -144,6 +145,9 @@ trait CharacteristicAware
         return $default;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     protected function getTranslatedPropertyGroupName(?int $propertyGroupId): ?string
     {
         if (!$propertyGroupId || !$propertyGroup = $this->registryService->getItemPropertyGroup($propertyGroupId)) {

@@ -6,6 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
 
 use DateTime;
 use DateTimeInterface;
+use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Translatable;
 
@@ -61,6 +62,9 @@ class CategoryDetails extends Entity implements Translatable
 
     private int $plentyId;
 
+    /**
+     * @throws Exception
+     */
     public function __construct(array $data)
     {
         $this->categoryId = (int)$data['categoryId'];

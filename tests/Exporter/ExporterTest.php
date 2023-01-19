@@ -280,17 +280,14 @@ class ExporterTest extends TestCase
     {
         $this->clientMock->expects($this->any())->method('send')->willReturnCallback(
             function (RequestInterface $request) {
-                switch (true) {
-                    case $request instanceof ItemRequest:
-                        return $this->getMockResponse('ItemResponse/response.json');
-                    case $request instanceof PimVariationRequest:
-                        return $this->getMockResponse('Pim/Variations/response.json');
-                    default:
-                        throw new InvalidArgumentException(sprintf(
-                            'No client response set up for request class %s.',
-                            get_class($request)
-                        ));
-                }
+                return match (true) {
+                    $request instanceof ItemRequest => $this->getMockResponse('ItemResponse/response.json'),
+                    $request instanceof PimVariationRequest => $this->getMockResponse('Pim/Variations/response.json'),
+                    default => throw new InvalidArgumentException(sprintf(
+                        'No client response set up for request class %s.',
+                        get_class($request)
+                    )),
+                };
             }
         );
     }

@@ -26,17 +26,15 @@ class ClearDirectoryCommandTest extends TestCase
         'CACHE_DIR'
     ];
 
-    private Application $application;
-
     private ClearDataCommand $command;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->application = new Application();
+        $application = new Application();
         $this->command = new ClearDataCommand();
-        $this->application->addCommands([
+        $application->addCommands([
             $this->command,
             new ClearCacheCommand(),
             new ClearDebugDirectoryCommand(),

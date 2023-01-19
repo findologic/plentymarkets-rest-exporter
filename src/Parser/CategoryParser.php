@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Parser;
 
+use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CategoryResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
@@ -13,6 +14,7 @@ class CategoryParser extends Parser
 {
     /**
      * @return CategoryResponse
+     * @throws Exception
      */
     public static function parse(ResponseInterface $rawResponse): Response
     {

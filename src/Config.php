@@ -64,6 +64,9 @@ class Config
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public static function fromArray(array $data, bool $debug = false): self
     {
         $shop = array_values($data)[0] ?? null;

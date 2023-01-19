@@ -10,21 +10,18 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Plugin\Container;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Plugin\DataProvider;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Plugin\PluginSetEntry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
-use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 class PluginFromSetResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private Response $response;
-
     private PluginFromSetResponse $pluginResponse;
 
     public function setUp(): void
     {
-        $this->response = $this->getMockResponse('PluginFromSetResponse/response.json');
-        $this->pluginResponse = PluginsFromSetParser::parse($this->response);
+        $response = $this->getMockResponse('PluginFromSetResponse/response.json');
+        $this->pluginResponse = PluginsFromSetParser::parse($response);
     }
 
     public function testMethodsForEntitySearchInResponse(): void

@@ -10,7 +10,6 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\Currency;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\CustomerClass;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\Referrer;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\Client;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class SalesPrice extends Entity
 {

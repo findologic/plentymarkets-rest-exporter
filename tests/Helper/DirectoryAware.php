@@ -12,7 +12,7 @@ trait DirectoryAware
      * Deletes all given directories recursively.
      *
      * @param string[] $paths
-     * @param bool $throwIfNonExistent If set to true, an exception is thrown if a directory doesnt exist, otherwise
+     * @param bool $throwIfNonExistent If set to true, an exception is thrown if a directory doesn't exist, otherwise
      * it will be silently ignored.
      */
     protected function deleteDirectories(array $paths, bool $throwIfNonExistent = false): void
@@ -29,7 +29,7 @@ trait DirectoryAware
                 continue;
             }
 
-            // PHP is really bad at deleting files recursively. Therefore we go the system approach.
+            // PHP is awful at deleting files recursively. Therefore, we go the system approach.
             exec(sprintf('rm -rf "%s"', $path));
         }
     }
@@ -38,7 +38,7 @@ trait DirectoryAware
      * Creates all given directory paths.
      *
      * @param string[] $paths
-     * @param bool $throwIfNonExistent If set to true, an exception is thrown if a directory doesnt exist, otherwise
+     * @param bool $throwIfNonExistent If set to true, an exception is thrown if a directory doesn't exist, otherwise
      * it will be silently ignored.
      */
     protected function createDirectories(array $paths, bool $throwIfNonExistent = false): void

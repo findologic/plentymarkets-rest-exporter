@@ -16,6 +16,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertyGroup\Name as PropertyGroupName;
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
+use Psr\Cache\InvalidArgumentException;
 
 /**
  * @property VariationEntity $variationEntity
@@ -25,6 +26,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
  */
 trait PropertyAware
 {
+    /**
+     * @throws InvalidArgumentException
+     */
     public function processProperties(): void
     {
         foreach ($this->variationEntity->getProperties() as $property) {
@@ -91,11 +95,8 @@ trait PropertyAware
                     $property->getValues(),
                     $this->config->getLanguage()
                 );
-                if ($propertyValue) {
-                    return $propertyValue->getValue();
-                }
 
-                return null;
+                return $propertyValue?->getValue();
             case CastType::SELECTION:
                 if (!$property->getValues() || !$this->propertySelection) {
                     return null;
@@ -113,11 +114,7 @@ trait PropertyAware
 
                 return null;
             case CastType::MULTI_SELECTION:
-                if (!$this->propertySelection) {
-                    return null;
-                }
-
-                return $this->propertySelection->getPropertySelectionValues(
+                return $this->propertySelection?->getPropertySelectionValues(
                     $property->getId(),
                     $property->getValues(),
                     $this->config->getLanguage()

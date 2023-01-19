@@ -8,6 +8,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Log4Php\Configurators\LoggerConfigurationAdapterXML;
 use Log4Php\Logger;
 use Psr\Log\LoggerInterface;
@@ -86,6 +87,9 @@ class ExportCommand extends Command
         );
     }
 
+    /**
+     * @throws GuzzleException
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

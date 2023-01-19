@@ -8,6 +8,6 @@ class PluginFromSetRequest extends Request
 {
     public function __construct(int $pluginSetId)
     {
-        parent::__construct('GET', "plugin_sets/{$pluginSetId}/plugins");
+        parent::__construct('GET', "plugin_sets/$pluginSetId/plugins");
     }
 }

@@ -34,7 +34,7 @@ class AttributeResponseTest extends TestCase
                 ],
                 'expectedId' => 2
             ],
-            'multjple simple criteria' => [
+            'multiple simple criteria' => [
                 'criteria' => [
                     'backendName' => 'Test',
                     'typeOfSelectionInOnlineStore' => 'dropdown'

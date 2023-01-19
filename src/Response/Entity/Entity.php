@@ -66,7 +66,7 @@ abstract class Entity
      */
     protected function getEntities(string $entityClass, string $field, array $data): array
     {
-        if (!isset($data[$field]) || $data[$field] === null || $data[$field] === []) {
+        if (!isset($data[$field]) || $data[$field] === []) {
             return [];
         }
 

@@ -39,7 +39,6 @@ class PimVariationResponseTest extends TestCase
     public function testPimVariationDataCanBeFetched(): void
     {
         $responseData = json_decode((string)$this->response->getBody(), true);
-        $variations = $this->pimVariationResponse->all();
 
         /** @var Variation $variation */
         $variation = $this->pimVariationResponse->first();

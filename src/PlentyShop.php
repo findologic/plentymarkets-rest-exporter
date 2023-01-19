@@ -23,8 +23,7 @@ class PlentyShop
         $this->enableOldUrlPattern = isset($config[self::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN]) ?
             Utils::filterBoolean($config[self::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN]) : null;
 
-        $this->variationShowType = isset($config[self::KEY_ITEM_VARIATION_SHOW_TYPE]) ?
-            $config[self::KEY_ITEM_VARIATION_SHOW_TYPE] : null;
+        $this->variationShowType = $config[self::KEY_ITEM_VARIATION_SHOW_TYPE] ?? null;
 
         $this->itemShowPleaseSelect = isset($config[self::KEY_ITEM_SHOW_PLEASE_SELECT]) ?
             Utils::filterBoolean($config[self::KEY_ITEM_SHOW_PLEASE_SELECT]) : null;

@@ -302,7 +302,7 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertEquals($wrapper->getVatRate(), 7);
+        $this->assertEquals(7, $wrapper->getVatRate());
     }
 
     public function testTaxRateIsNotSetIfVariationUsesANonStandardVatId(): void

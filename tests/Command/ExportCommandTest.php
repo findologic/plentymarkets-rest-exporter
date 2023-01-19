@@ -30,10 +30,6 @@ class ExportCommandTest extends TestCase
 
     private Exporter|MockObject|null $exportMock;
 
-    private MockHandler $mockHandler;
-
-    private ?Client $clientMock;
-
     private LoggerInterface $logger;
 
     private ExportCommand $command;
@@ -139,18 +135,18 @@ class ExportCommandTest extends TestCase
 
     private function setUpCommandMocks(): void
     {
-        $this->mockHandler = new MockHandler([
+        $mockHandler = new MockHandler([
             $this->getMockResponse('AccountResponse/response.json')
         ]);
 
-        $handlerStack = HandlerStack::create($this->mockHandler);
-        $this->clientMock = new Client(['handler' => $handlerStack]);
+        $handlerStack = HandlerStack::create($mockHandler);
+        $clientMock = new Client(['handler' => $handlerStack]);
 
         $this->exportMock = $this->getMockBuilder(Exporter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->command = new ExportCommand($this->logger, $this->logger, $this->exportMock, $this->clientMock);
+        $this->command = new ExportCommand($this->logger, $this->logger, $this->exportMock, $clientMock);
 
         $this->application->add($this->command);
     }

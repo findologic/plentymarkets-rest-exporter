@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
+use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Definition\PropertyOptionType;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
@@ -50,6 +55,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Unit;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\VatConfiguration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\GuzzleException;
+use Psr\Cache\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
 class RegistryService
@@ -80,6 +87,16 @@ class RegistryService
         $this->registry = $registry ?? new Registry();
     }
 
+    /**
+     * @throws AuthorizationException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws PermissionException
+     * @throws ThrottlingException
+     * @throws InvalidArgumentException
+     * @throws GuzzleException
+     * @throws CriticalException
+     */
     public function warmUp(): void
     {
         $this->customerLogger->info('Starting to initialise necessary data (categories, attributes, etc.).');
@@ -100,6 +117,9 @@ class RegistryService
         $this->createPlentyShop();
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getWebStore(): WebStore
     {
         /** @var WebStore $webStore */
@@ -108,6 +128,9 @@ class RegistryService
         return $webStore;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getAllWebStores(): WebStoreResponse
     {
         /** @var WebStoreResponse $allWebStores */
@@ -116,6 +139,9 @@ class RegistryService
         return $allWebStores;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getCategory(int $id): ?Category
     {
         /** @var Category $category */
@@ -124,6 +150,9 @@ class RegistryService
         return $category;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getAttribute(int $id): ?Attribute
     {
         /** @var Attribute $attribute */
@@ -132,6 +161,9 @@ class RegistryService
         return $attribute;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getVat(int $id): VatConfiguration
     {
         /** @var VatConfiguration $vat */
@@ -140,6 +172,9 @@ class RegistryService
         return $vat;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getStandardVat(): VatConfiguration
     {
         /** @var VatConfiguration $vat */
@@ -148,6 +183,9 @@ class RegistryService
         return $vat;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getSalesPrice(int $id): SalesPrice
     {
         /** @var SalesPrice $salesPrice */
@@ -156,6 +194,9 @@ class RegistryService
         return $salesPrice;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getManufacturer(int $id): Manufacturer
     {
         /** @var Manufacturer $manufacturer */
@@ -164,6 +205,9 @@ class RegistryService
         return $manufacturer;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getProperty(int $id): ?Property
     {
         /** @var Property $property */
@@ -172,6 +216,9 @@ class RegistryService
         return $property;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getPropertyGroup(int $id): ?PropertyGroup
     {
         /** @var PropertyGroup $propertyGroup */
@@ -180,6 +227,9 @@ class RegistryService
         return $propertyGroup;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getItemProperty(int $id): ?ItemProperty
     {
         /** @var ItemProperty $itemProperty */
@@ -188,6 +238,9 @@ class RegistryService
         return $itemProperty;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getUnit(int $id): ?Unit
     {
         /** @var Unit $unit */
@@ -196,6 +249,9 @@ class RegistryService
         return $unit;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getPropertySelections(): ?PropertySelectionResponse
     {
         /** @var PropertySelectionResponse $propertySelection */
@@ -204,6 +260,9 @@ class RegistryService
         return $propertySelection;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getItemPropertyGroup(int $id): ?ItemPropertyGroup
     {
         /** @var ItemPropertyGroup $propertyGroup */
@@ -212,6 +271,9 @@ class RegistryService
         return $propertyGroup;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getPriceId(): int
     {
         /** @var SalesPrice $defaultSalesPrice */
@@ -220,6 +282,9 @@ class RegistryService
         return $this->config->getPriceId() ?? $defaultSalesPrice->getId();
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getRrpId(): ?int
     {
         /** @var SalesPrice $defaultRrpId */
@@ -229,7 +294,7 @@ class RegistryService
             return $rrpId;
         }
 
-        return $defaultRrpId ? $defaultRrpId->getId() : null;
+        return $defaultRrpId?->getId();
     }
 
     public function getPlentyShop(): PlentyShop
@@ -237,6 +302,9 @@ class RegistryService
         return $this->plentyShop;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getPluginConfigurations($pluginName = null): array
     {
         $configs = $this->get('pluginConfigurations');
@@ -248,6 +316,16 @@ class RegistryService
         return $configs[$pluginName] ?? [];
     }
 
+    /**
+     * @throws PermissionException
+     * @throws EmptyResponseException
+     * @throws CustomerException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     * @throws InvalidArgumentException
+     * @throws GuzzleException
+     * @throws CriticalException
+     */
     protected function fetchWebStores(): void
     {
         $webStoreRequest = new WebStoreRequest();
@@ -270,6 +348,16 @@ class RegistryService
         $this->set('webStore', $webStore);
     }
 
+    /**
+     * @throws PermissionException
+     * @throws CustomerException
+     * @throws InvalidArgumentException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     * @throws Exception
+     */
     protected function fetchCategories(): void
     {
         /** @var WebStore $webStore */
@@ -292,6 +380,16 @@ class RegistryService
         }
     }
 
+    /**
+     * @throws EmptyResponseException
+     * @throws PermissionException
+     * @throws CustomerException
+     * @throws GuzzleException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     * @throws InvalidArgumentException
+     * @throws CriticalException
+     */
     protected function fetchVat(): void
     {
         $vatRequest = new VatRequest();
@@ -310,6 +408,16 @@ class RegistryService
         $this->set('standardVat', $standardVat);
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     * @throws CriticalException
+     */
     protected function fetchSalesPrices(): void
     {
         $salesPriceRequest = new SalesPriceRequest();
@@ -333,6 +441,16 @@ class RegistryService
         }
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     * @throws CriticalException
+     */
     protected function fetchAttributes(): void
     {
         $attributeRequest = new AttributeRequest();
@@ -345,6 +463,16 @@ class RegistryService
         }
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     * @throws CriticalException
+     */
     protected function fetchManufacturers(): void
     {
         $manufacturerRequest = new ManufacturerRequest();
@@ -357,6 +485,16 @@ class RegistryService
         }
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     * @throws CriticalException
+     */
     protected function fetchProperties(): void
     {
         $propertyRequest = new PropertyRequest();
@@ -373,6 +511,15 @@ class RegistryService
         }
     }
 
+    /**
+     * @throws EmptyResponseException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     * @throws CriticalException
+     */
     protected function fetchPropertyGroups(): void
     {
         try {
@@ -385,7 +532,7 @@ class RegistryService
                     $this->set('propertyGroup_' . $propertyGroup->getId(), $propertyGroup);
                 }
             }
-        } catch (PermissionException $e) {
+        } catch (PermissionException) {
             $this->customerLogger->warning(
                 'Required permission \'Setup > Property > Group > Show\' has not been granted. ' .
                 'This may cause some properties not to be exported!'
@@ -393,6 +540,16 @@ class RegistryService
         }
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     * @throws CriticalException
+     */
     protected function fetchItemProperties(): void
     {
         $with = ['names', 'selections'];
@@ -407,6 +564,16 @@ class RegistryService
         }
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     * @throws CriticalException
+     */
     protected function fetchUnits(): void
     {
         $unitRequest = new UnitRequest();
@@ -419,6 +586,15 @@ class RegistryService
         }
     }
 
+    /**
+     * @throws EmptyResponseException
+     * @throws CustomerException
+     * @throws InvalidArgumentException
+     * @throws GuzzleException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     * @throws CriticalException
+     */
     protected function fetchPropertySelections(): void
     {
         try {
@@ -434,7 +610,7 @@ class RegistryService
                 'propertySelections',
                 new PropertySelectionResponse(1, count($selections), true, $selections)
             );
-        } catch (PermissionException $e) {
+        } catch (PermissionException) {
             $this->customerLogger->warning(
                 'Required permission \'Setup > Property > Selection > Show\' has not been granted. ' .
                 'This causes selection and multiSelect properties not to be exported!'
@@ -442,6 +618,16 @@ class RegistryService
         }
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     * @throws CriticalException
+     */
     protected function fetchItemPropertyGroups(): void
     {
         $propertyGroupRequest = new ItemPropertyGroupRequest('names');
@@ -455,6 +641,16 @@ class RegistryService
         }
     }
 
+    /**
+     * @throws PermissionException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     * @throws InvalidArgumentException
+     * @throws CriticalException
+     */
     protected function fetchPluginConfigurations(): void
     {
         $allConfigurations = [];
@@ -471,7 +667,7 @@ class RegistryService
 
             try {
                 $response = $this->client->send($pluginConfigurationRequest);
-            } catch (PermissionException $e) {
+            } catch (PermissionException) {
                 $this->customerLogger->error(
                     'Required permissions \'Plugins > Configurations > Show\' have not been granted. ' .
                     'Product-URLs will be exported in Callisto format.'
@@ -498,6 +694,9 @@ class RegistryService
         $this->set('pluginConfigurations', $allConfigurations);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function createPlentyShop(): void
     {
         $this->plentyShop = new PlentyShop($this->getPluginConfigurations('Ceres'));
@@ -524,6 +723,9 @@ class RegistryService
         return false;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function set(string $key, $data): void
     {
         $shop = md5($this->config->getDomain());
@@ -531,6 +733,9 @@ class RegistryService
         $this->registry->set($shop . '_' . $key, $data);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function get(string $key)
     {
         $shop = md5($this->config->getDomain());

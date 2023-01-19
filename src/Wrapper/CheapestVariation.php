@@ -35,7 +35,7 @@ class CheapestVariation
 
     /**
      * If variations data is set in the cheapestVariationsData variable
-     * this method will return cheapest variation id, otherwise it will return null
+     * this method will return the cheapest variation id, otherwise it will return null
      * @param float[] $prices
      */
     public function addImageAndPrice(

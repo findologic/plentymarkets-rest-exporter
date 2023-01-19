@@ -29,6 +29,8 @@ trait EntityCollection
 
     /**
      * @param Entity[] $entities
+     * @param array $criteria
+     *
      * @return Entity|null
      */
     protected function findOneEntityByCriteria(array $entities, array $criteria): ?Entity
@@ -65,7 +67,7 @@ trait EntityCollection
         foreach ($criteria as $criterion => $value) {
             try {
                 $getterReturnValue = $this->callGetter($entity, $criterion);
-            } catch (UnknownGetterException $e) {
+            } catch (UnknownGetterException) {
                 continue;
             }
 
@@ -86,6 +88,9 @@ trait EntityCollection
         return ($expected === $actual);
     }
 
+    /**
+     * @throws UnknownGetterException
+     */
     private function callGetter(Entity $entity, string $property)
     {
         foreach (self::$GETTER_PREFIXES as $getterPrefix) {

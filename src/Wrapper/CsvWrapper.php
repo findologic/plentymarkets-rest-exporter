@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 
+use Exception;
 use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
@@ -15,6 +16,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionRe
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductResponseItem;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
+use Psr\Cache\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
 class CsvWrapper extends Wrapper
@@ -59,6 +61,9 @@ class CsvWrapper extends Wrapper
 
     /**
      * @inheritDoc
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function wrap(
         int $start,
@@ -136,6 +141,9 @@ class CsvWrapper extends Wrapper
 
     /**
      * @param Variation[] $productVariations
+     *
+     * @throws Exception
+     * @throws InvalidArgumentException
      */
     private function wrapItem(
         ProductEntity $product,
@@ -172,6 +180,7 @@ class CsvWrapper extends Wrapper
      * attributes are exported separately if the "Item view" > "Show variations by type" Ceres config is set to "All".
      *
      * @param Variation[] $productVariations
+     * @throws InvalidArgumentException
      */
     private function splitVariationsByGroupability(array $productVariations): array
     {

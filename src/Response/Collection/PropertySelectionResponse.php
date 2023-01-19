@@ -8,7 +8,6 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\PropertyValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation\RelationValue;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertySelection;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 

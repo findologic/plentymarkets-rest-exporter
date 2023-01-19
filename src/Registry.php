@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\CacheItem;
@@ -30,6 +29,9 @@ class Registry
         );
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function set(string $key, mixed $value): self
     {
         /** @var CacheItem $item */
@@ -40,6 +42,9 @@ class Registry
         return $this;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function get(string $key): mixed
     {
         /** @var CacheItem $item */

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
+use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\CategoryDetails;
 
 class Category extends Entity
@@ -27,6 +28,9 @@ class Category extends Entity
     /** @var CategoryDetails[] */
     private array $details = [];
 
+    /**
+     * @throws Exception
+     */
     public function __construct(array $data)
     {
         $this->id = (int)$data['id'];

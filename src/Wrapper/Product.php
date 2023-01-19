@@ -7,6 +7,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use DateTime;
+use Exception;
 use FINDOLOGIC\Export\Data\Attribute;
 use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Data\Keyword;
@@ -25,6 +26,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration 
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Psr7\Uri;
+use PhpUnitsOfMeasure\Exception\NonNumericValue;
+use PhpUnitsOfMeasure\Exception\NonStringUnitName;
+use Psr\Cache\InvalidArgumentException;
 
 class Product
 {
@@ -60,6 +64,7 @@ class Product
 
     /**
      * @param PimVariation[] $variationEntities
+     * @throws InvalidArgumentException
      */
     public function __construct(
         Exporter $exporter,
@@ -93,9 +98,9 @@ class Product
      *   * Settings do not allow the product to be exported.
      *   * Product has no variants.
      *
+     * @throws Exception
+     * @throws InvalidArgumentException
      * @see Product::getReason() To get the reason why the product could not be exported.
-     *
-     * @return Item|null
      */
     public function processProductData(): ?Item
     {
@@ -153,6 +158,9 @@ class Product
         return $this->reason;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     protected function setTexts(): void
     {
         if (!$this->storeConfiguration->getDisplayItemName()) {
@@ -183,6 +191,11 @@ class Product
         }
     }
 
+    /**
+     * @throws NonNumericValue
+     * @throws NonStringUnitName
+     * @throws InvalidArgumentException
+     */
     protected function processVariations(bool $checkAvailability = true): int
     {
         $itemHasImage = false;
@@ -303,13 +316,13 @@ class Product
 
         if ($baseUnit) {
             $baseUnitProperty = new Property('base_unit');
-            $baseUnitProperty->addValue((string)$baseUnit);
+            $baseUnitProperty->addValue($baseUnit);
             $this->item->addProperty($baseUnitProperty);
         }
 
         if ($packageSize) {
             $packageSizeProperty = new Property('package_size');
-            $packageSizeProperty->addValue((string)$packageSize);
+            $packageSizeProperty->addValue($packageSize);
             $this->item->addProperty($packageSizeProperty);
         }
 
@@ -352,6 +365,9 @@ class Product
         return true;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     protected function addManufacturer(): void
     {
         $manufacturerId = $this->productEntity->getManufacturerId();
@@ -377,8 +393,8 @@ class Product
     protected function addFreeTextFields(): void
     {
         foreach (range(1, 20) as $field) {
-            $fieldName = 'free' . (string)$field;
-            $getter = 'getFree' . (string)$field;
+            $fieldName = 'free' . $field;
+            $getter = 'getFree' . $field;
 
             $value = (string)$this->productEntity->{$getter}();
             if (trim($value) === '' || mb_strlen($value) > DataHelper::ATTRIBUTE_CHARACTER_LIMIT) {
@@ -389,6 +405,9 @@ class Product
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function buildProductUrl(string $urlPath): string
     {
         if ($this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl()) {
@@ -398,6 +417,9 @@ class Product
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function getCallistoUrl(string $urlPath): string
     {
         return sprintf(
@@ -410,6 +432,9 @@ class Product
         );
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function getPlentyShopUrl(string $urlPath): string
     {
         $productUrl = sprintf(
@@ -434,6 +459,9 @@ class Product
         return sprintf($productUrl . '_%s', $variationId);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function getWebStoreHost(): string
     {
         $rawUri = $this->registryService->getWebStore()->getConfiguration()->getDomainSsl() ?? '';
@@ -456,7 +484,7 @@ class Product
     }
 
     /**
-     * Returns true if the language of the webStore is the default language. Otherwise false may be returned.
+     * Returns true if the language of the webStore is the default language. Otherwise, false may be returned.
      *
      * @return bool
      */
@@ -479,7 +507,7 @@ class Product
         $ordernumbers = [];
 
         if ($this->config->getExportOrdernumberVariantNumber()) {
-            $ordernumbers[] = (string)$variation->getNumber();
+            $ordernumbers[] = $variation->getNumber();
         }
 
         if ($this->config->getExportOrdernumberVariantModel()) {

@@ -8,6 +8,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Attribute;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\ImageAttributeValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
+use Psr\Cache\InvalidArgumentException;
 
 class SeparatedVariation
 {
@@ -47,8 +48,8 @@ class SeparatedVariation
 
                 $imageAttributeId = (string)$imageAttributeValue->getAttributeId();
                 $imageValueId = (string)$imageAttributeValue->getValueId();
-                $variationAttributeId = (string)$attributeData[0];
-                $variationValueId = (string)$attributeData[1];
+                $variationAttributeId = $attributeData[0];
+                $variationValueId = $attributeData[1];
 
                 if ($imageAttributeId !== $variationAttributeId || $imageValueId !== $variationValueId) {
                     continue;
@@ -63,8 +64,11 @@ class SeparatedVariation
 
     /*
      * This method generates variation group key. It searches for attributes with groupable property
-     * and generates keys from groupable attributes ids and values. If there is just a one attribute,
-     * then we returning a variation id for separating variations by one attribute.
+     * and generates keys from groupable attributes ids and values. If there is just one attribute,
+     * we are returning a variation id for separating variations by one attribute.
+     */
+    /**
+     * @throws InvalidArgumentException
      */
     public function getVariationGroupKey(): string
     {
@@ -95,6 +99,7 @@ class SeparatedVariation
 
     /**
      * @return string[]
+     * @throws InvalidArgumentException
      */
     public function getVariationAttributes(string $variationAttributes, int $wrapMode): array
     {
@@ -105,6 +110,9 @@ class SeparatedVariation
         return explode(self::MULTIPLE_KEYS_SEPARATOR, $this->getVariationGroupKeyForImageProcessing($wrapMode));
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function isAttributeGroupable(Attribute $attribute): bool
     {
         $attributeData = $this->registryService->getAttribute($attribute->getId());
@@ -112,6 +120,9 @@ class SeparatedVariation
         return ($attributeData && $attributeData->isGroupable());
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getVariationGroupKeyForImageProcessing(int $wrapMode): string
     {
         $attributeValues = $this->variation->getAttributeValues();

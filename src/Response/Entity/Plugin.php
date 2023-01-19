@@ -253,8 +253,8 @@ class Plugin extends Entity
             'installed' => $this->installed,
             'branch' => $this->branch,
             'commit' => $this->commit,
-            'updateInformation' => $this->updateInformation ? $this->updateInformation->getData() : null,
-            'repository' => $this->repository ? $this->repository->getData() : null,
+            'updateInformation' => $this->updateInformation?->getData(),
+            'repository' => $this->repository->getData(),
             'containers' => $containers,
             'dataProviders' => $dataProviders,
             'pluginSetEntries' => $pluginSetEntries

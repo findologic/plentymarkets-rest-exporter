@@ -6,6 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 
 use Carbon\Carbon;
 use DateTime;
+use DateTimeInterface;
 use FINDOLOGIC\Export\Data\Attribute;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
@@ -344,7 +345,7 @@ class ProductTest extends TestCase
         $this->assertSame($expectedPackageSize, $columnValues[21]);
 
         $this->assertTrue(
-            DateTime::createFromFormat(DateTime::ISO8601, $item->getDateAdded()->getValues()['']) !== false
+            DateTime::createFromFormat(DateTimeInterface::ATOM, $item->getDateAdded()->getValues()['']) !== false
         );
     }
 
@@ -463,7 +464,7 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $this->assertEquals($item->getSort()->getValues(), ['' => 2]);
+        $this->assertEquals(['' => 2], $item->getSort()->getValues());
     }
 
     public function testKeywordsAreSetFromAllVariations(): void
@@ -535,8 +536,8 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $this->assertEquals($item->getPrice()->getValues(), ['' => 50]);
-        $this->assertEquals($item->getInsteadPrice(), 100);
+        $this->assertEquals(['' => 50], $item->getPrice()->getValues());
+        $this->assertEquals(100, $item->getInsteadPrice());
     }
 
     /**

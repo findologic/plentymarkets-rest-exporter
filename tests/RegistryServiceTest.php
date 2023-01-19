@@ -7,8 +7,11 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
@@ -28,10 +31,12 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 use Log4Php\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Cache\InvalidArgumentException;
 
 class RegistryServiceTest extends TestCase
 {
@@ -71,6 +76,15 @@ class RegistryServiceTest extends TestCase
         );
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     */
     public function testRegistryIsWarmedUp(): void
     {
         $expectedWebStore = new WebStore([
@@ -102,12 +116,6 @@ class RegistryServiceTest extends TestCase
         );
         $parsedCategoryResponse = CategoryParser::parse($this->getMockResponse('CategoryResponse/one.json'));
 
-        $expectedCategories = new CategoryResponse(
-            1,
-            0,
-            true,
-            [] // All categories are filtered out by the criteria.
-        );
         $categoryResponse = new Response(200, [], json_encode($categoryResponseBody));
 
         $vatResponse = $this->getMockResponse('VatResponse/one.json');
@@ -237,6 +245,14 @@ class RegistryServiceTest extends TestCase
         $this->registryService->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws EmptyResponseException
+     * @throws InvalidArgumentException
+     * @throws GuzzleException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     */
     public function testItFailsIfWebStoreDoesNotExist(): void
     {
         $expectedMultiShopId = 1337;
@@ -277,6 +293,15 @@ class RegistryServiceTest extends TestCase
         $this->registryService->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     */
     public function testMissingPluginConfigurationPermissionsAreLoggedAndAllowTheExportToContinue(): void
     {
         $registryServiceMock = $this->getRegistryServiceMockForSpecificFetchMethods(['fetchPluginConfigurations']);
@@ -311,6 +336,15 @@ class RegistryServiceTest extends TestCase
         $registryServiceMock->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws CustomerException
+     * @throws InvalidArgumentException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     */
     public function testMissingPropertySelectionPermissionIsLoggedAndExportContinues(): void
     {
         $registryServiceMock = $this->getRegistryServiceMockForSpecificFetchMethods(['fetchPropertySelections']);
@@ -329,6 +363,15 @@ class RegistryServiceTest extends TestCase
         $registryServiceMock->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     */
     public function testMissingPropertyGroupPermissionIsLoggedAndExportContinues(): void
     {
         $registryServiceMock = $this->getRegistryServiceMockForSpecificFetchMethods(['fetchPropertyGroups']);
@@ -347,6 +390,15 @@ class RegistryServiceTest extends TestCase
         $registryServiceMock->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     */
     public function testExceptionsUnrelatedToPermissionsAreNotHandledWhenFetchingPluginConfigs(): void
     {
         $registryServiceMock = $this->getRegistryServiceMockForSpecificFetchMethods(['fetchPluginConfigurations']);
@@ -379,6 +431,15 @@ class RegistryServiceTest extends TestCase
         $registryServiceMock->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     */
     public function testSetSkipExportFlagForPropertiesWithoutMatchingConfiguredReferrerId(): void
     {
         $config = $this->getDefaultConfig(['exportReferrerId' => '10.00']);
@@ -390,12 +451,10 @@ class RegistryServiceTest extends TestCase
 
         $registryKeyPrefix = md5($this->defaultConfig->getDomain()) . '_property_';
 
-        $expectedSkipPropertyIds = [5, 123];
-
         $this->registryMock->expects($this->exactly(7))->method('set')->with(
             $this->stringStartsWith($registryKeyPrefix),
-            $this->callback(function (Property $property) use ($expectedSkipPropertyIds) {
-                if (!in_array($property->getId(), $expectedSkipPropertyIds)) {
+            $this->callback(function (Property $property) {
+                if (!in_array($property->getId(), [5, 123])) {
                     return true;
                 }
 
@@ -406,6 +465,15 @@ class RegistryServiceTest extends TestCase
         $registryServiceMock->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     */
     public function testPropertySkipExportFlagIsNeverSetWhenNoReferrerIdIsConfigured(): void
     {
         $config = $this->getDefaultConfig(['exportReferrerId' => null]);

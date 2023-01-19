@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
+use Exception;
 use FINDOLOGIC\Export\Helpers\DataHelper;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -20,7 +27,16 @@ class Utils
      *
      * @param Client $client
      * @param Request $request
+     *
      * @return ResponseInterface[]
+     * @throws EmptyResponseException
+     * @throws PermissionException
+     * @throws CustomerException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     * @throws GuzzleException
+     * @throws CriticalException
+     *
      */
     public static function sendIterableRequest(Client $client, Request $request): array
     {
@@ -66,12 +82,13 @@ class Utils
     }
 
     /**
-     * When a shopkey is set, the account route is used to fetch the import data. Otherwise the configuration
+     * When a shopkey is set, the account route is used to fetch the import data. Otherwise, the configuration
      * of the given configPath is used.
      *
      * @param string|null $shopkey
      * @param GuzzleClient|null $client
      * @return Config
+     * @throws GuzzleException
      */
     public static function getExportConfiguration(
         ?string $shopkey,
@@ -112,6 +129,10 @@ class Utils
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     private static function getImportConfiguration(
         string $accountUri,
         GuzzleClient $client
