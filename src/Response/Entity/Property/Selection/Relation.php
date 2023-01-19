@@ -9,7 +9,6 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Rela
 
 class Relation extends Entity
 {
-
     private int $id;
     private int $propertyId;
     private ?string $relationTypeId;

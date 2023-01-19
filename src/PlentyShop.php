@@ -6,7 +6,6 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
 class PlentyShop
 {
-
     public const KEY_GLOBAL_ENABLE_OLD_URL_PATTERN = 'global.enableOldUrlPattern';
     public const KEY_ITEM_VARIATION_SHOW_TYPE = 'item.variation_show_type';
     public const KEY_ITEM_SHOW_PLEASE_SELECT = 'item.show_please_select';
