@@ -9,13 +9,21 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\CategoryDetail
 class Category extends Entity
 {
     private int $id;
+
     private ?int $parentCategoryId;
+
     private int $level;
+
     private string $type;
+
     private string $linklist;
+
     private string $right;
+
     private string $sitemap;
+
     private bool $hasChildren;
+
     /** @var CategoryDetails[] */
     private array $details = [];
 

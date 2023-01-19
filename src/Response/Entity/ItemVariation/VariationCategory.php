@@ -9,8 +9,11 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class VariationCategory extends Entity
 {
     private int $variationId;
+
     private int $categoryId;
+
     private int $position;
+
     private bool $isNeckermannPrimary;
 
     public function __construct(array $data)

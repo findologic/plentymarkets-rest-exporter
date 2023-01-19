@@ -35,13 +35,11 @@ class VariationTest extends TestCase
     use ResponseHelper;
     use ConfigHelper;
 
-    /** @var Registry|MockObject */
-    private $registryMock;
+    private Registry|MockObject $registryMock;
 
     private Config $defaultConfig;
 
-    /** @var RegistryService|MockObject */
-    private $registryServiceMock;
+    private RegistryService|MockObject $registryServiceMock;
 
     public function setUp(): void
     {

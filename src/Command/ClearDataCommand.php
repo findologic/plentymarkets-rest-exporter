@@ -27,7 +27,7 @@ class ClearDataCommand extends Command
             ->setHelp('Clears all files in directories cache, debug, export and logs');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         foreach (self::COMMANDS as $commandName) {

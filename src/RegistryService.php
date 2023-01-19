@@ -55,10 +55,15 @@ use Psr\Log\LoggerInterface;
 class RegistryService
 {
     protected LoggerInterface $internalLogger;
+
     protected LoggerInterface $customerLogger;
+
     protected Config $config;
+
     protected PlentyShop $plentyShop;
+
     protected Client $client;
+
     protected Registry $registry;
 
     public function __construct(
@@ -519,7 +524,7 @@ class RegistryService
         return false;
     }
 
-    private function set(string $key, $data)
+    private function set(string $key, $data): void
     {
         $shop = md5($this->config->getDomain());
 

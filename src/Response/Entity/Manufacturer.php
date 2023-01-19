@@ -7,24 +7,43 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 class Manufacturer extends Entity
 {
     private int $id;
+
     private string $name;
+
     private string $externalName;
+
     private string $logo;
+
     private string $url;
+
     private ?string $street;
+
     private ?string $houseNo;
+
     private ?string $postcode;
+
     private ?string $town;
+
     private ?string $phoneNumber;
+
     private ?string $faxNumber;
+
     private string $email;
+
     private int $countryId;
+
     private int $pixmaniaBrandId;
+
     private int $neckermannBrandId;
+
     private int $neckermannAtEpBrandId;
+
     private int $laRedouteBrandId;
+
     private int $position;
+
     private string $comment;
+
     private ?string $updatedAt;
 
     public function __construct(array $data)

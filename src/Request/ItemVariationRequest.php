@@ -37,7 +37,7 @@ class ItemVariationRequest extends Request implements IterableRequestInterface
     /**
      * @param int[]|null $id
      */
-    public function setId(?array $id)
+    public function setId(?array $id): ItemVariationRequest
     {
         $this->params['id'] = $id;
         return $this;
@@ -46,7 +46,7 @@ class ItemVariationRequest extends Request implements IterableRequestInterface
     /**
      * @param int[]|null $itemId
      */
-    public function setItemId(?array $itemId)
+    public function setItemId(?array $itemId): ItemVariationRequest
     {
         $this->params['itemId'] = $itemId;
         return $this;
@@ -55,7 +55,7 @@ class ItemVariationRequest extends Request implements IterableRequestInterface
     /**
      * @param int[]|null $variationTagId
      */
-    public function setVariationTagId(?array $variationTagId)
+    public function setVariationTagId(?array $variationTagId): ItemVariationRequest
     {
         $this->params['variationTagId'] = $variationTagId;
         return $this;

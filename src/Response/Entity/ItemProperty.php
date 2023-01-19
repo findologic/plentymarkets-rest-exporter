@@ -9,21 +9,37 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty\Name;
 class ItemProperty extends Entity
 {
     private int $id;
+
     private int $position;
+
     private ?int $propertyGroupId;
+
     private string $unit;
+
     private string $backendName;
+
     private string $comment;
+
     private string $valueType;
+
     private bool $isSearchable;
+
     private bool $isOderProperty;
+
     private bool $isShownOnItemPage;
+
     private bool $isShownOnItemList;
+
     private bool $isShownAtCheckout;
+
     private bool $isShownInPdf;
+
     private bool $isShownAsAdditionalCosts;
+
     private float $surcharge;
+
     private string $updatedAt;
+
     private array $names;
 
     public function __construct(array $data)

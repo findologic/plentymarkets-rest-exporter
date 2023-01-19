@@ -10,7 +10,7 @@ use InvalidArgumentException;
 
 trait EntityCollection
 {
-    private static $GETTER_PREFIXES = ['get', 'is', 'has', ''];
+    private static array $GETTER_PREFIXES = ['get', 'is', 'has', ''];
 
     /**
      * @param Entity[] $entities

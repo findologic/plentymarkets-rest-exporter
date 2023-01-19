@@ -11,7 +11,9 @@ class Availability extends Entity
     public const STORE = 'mandant';
 
     private int $imageId;
+
     private string $type;
+
     private string $value;
 
     public function __construct(array $data)

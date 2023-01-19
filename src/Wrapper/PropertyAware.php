@@ -79,7 +79,7 @@ trait PropertyAware
      * @param PimProperty $property
      * @return string[]|string|null
      */
-    protected function getPropertyValue(PimProperty $property)
+    protected function getPropertyValue(PimProperty $property): array|string|null
     {
         switch ($property->getPropertyData()->getCast()) {
             case CastType::EMPTY:

@@ -9,9 +9,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class VariationSalesPrice extends Entity
 {
     private int $variationId;
+
     private int $salesPriceId;
+
     private float $price;
+
     private string $updatedAt;
+
     private string $createdAt;
 
     public function __construct(array $data)

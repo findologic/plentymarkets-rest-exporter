@@ -10,19 +10,31 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class Characteristic extends Entity
 {
     private ?int $id;
+
     private ?int $propertyId;
+
     private ?int $propertySelectionId;
+
     private ?int $itemId;
+
     private ?int $variationId;
+
     private ?int $surcharge;
+
     /** @var CharacteristicText[] */
     private array $valueTexts;
+
     private ?float $valueFloat;
+
     private ?int $valueInt;
+
     private ?string $valueFile;
+
     /** @var CharacteristicSelection[] */
     private array $propertySelections;
+
     private ?DateTimeInterface $createdAt;
+
     private ?DateTimeInterface $updatedAt;
 
     public function __construct(array $data)

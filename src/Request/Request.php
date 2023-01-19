@@ -8,7 +8,7 @@ use GuzzleHttp\Psr7\Request as GuzzleRequest;
 
 abstract class Request extends GuzzleRequest
 {
-    protected $params = [];
+    protected array $params = [];
 
     public function __construct(
         string $method,

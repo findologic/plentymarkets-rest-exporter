@@ -36,17 +36,29 @@ abstract class Exporter
     public const FAILURE = 1;
 
     protected LoggerInterface $internalLogger;
+
     protected LoggerInterface $customerLogger;
+
     protected Config $config;
+
     protected Wrapper $wrapper;
+
     protected Client $client;
+
     protected Registry $registry;
+
     protected RegistryService $registryService;
+
     protected ItemRequest $itemRequest;
+
     protected PimVariationRequest $itemVariationRequest;
+
     protected ?LibflexportExporter $fileExporter;
+
     protected int $offset = 0;
+
     protected float $exportStartTime = 0;
+
     protected float $exportEndTime = 0;
 
     public function __construct(

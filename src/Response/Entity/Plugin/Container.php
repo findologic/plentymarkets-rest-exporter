@@ -9,8 +9,11 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class Container extends Entity
 {
     private ?string $key;
+
     private ?string $name;
+
     private ?string $description;
+
     private ?bool $multiple;
 
     public function __construct(array $data)

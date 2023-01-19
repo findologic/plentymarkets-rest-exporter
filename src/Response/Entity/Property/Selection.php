@@ -11,11 +11,17 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Rela
 class Selection extends Entity
 {
     private int $id;
+
     private int $propertyId;
+
     private int $position;
+
     private string $createdAt;
+
     private string $updatedAt;
+
     private Relation $relation;
+
     private Property $property;
 
     public function __construct(array $data)

@@ -20,20 +20,15 @@ class GenerateTokenCommandTest extends TestCase
 {
     use ResponseHelper;
 
-    /** @var MockHandler */
-    private $mockHandler;
+    private MockHandler $mockHandler;
 
-    /** @var Client|MockObject */
-    private $clientMock;
+    private Client|MockObject $clientMock;
 
-    /** @var Application */
-    private $application;
+    private Application $application;
 
-    /** @var GenerateTokenCommand */
-    private $command;
+    private GenerateTokenCommand $command;
 
-    /** @var Exporter|MockObject */
-    private $exportMock;
+    private Exporter|MockObject $exportMock;
 
     protected function setUp(): void
     {

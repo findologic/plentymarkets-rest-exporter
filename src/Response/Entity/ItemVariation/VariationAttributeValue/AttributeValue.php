@@ -9,17 +9,29 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class AttributeValue extends Entity
 {
     private int $id;
+
     private int $attributeId;
+
     private string $backendName;
+
     private int $position;
+
     private string $image;
+
     private string $comment;
+
     private string $amazonValue;
+
     private string $ottoValue;
+
     private string $neckermannAtEpValue;
+
     private string $laRedouteValue;
+
     private string $tracdelightValue;
+
     private int $percentageDistribution;
+
     private string $updatedAt;
 
     public function __construct(array $data)

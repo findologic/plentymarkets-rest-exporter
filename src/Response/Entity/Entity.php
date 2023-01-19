@@ -52,7 +52,7 @@ abstract class Entity
     /**
      * @param int|string|null $key Provide for data where the index is used as entity name.
      */
-    protected function getEntity(string $class, array $data, $key = null): Entity
+    protected function getEntity(string $class, array $data, mixed $key = null): Entity
     {
         if (is_string($key)) {
             return new $class($key, $data);

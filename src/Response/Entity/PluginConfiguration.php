@@ -7,15 +7,23 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 class PluginConfiguration extends Entity
 {
     private ?string $id;
+
     private ?string $key;
+
     private ?string $value;
+
     private ?int $plugin_id;
+
     private ?string $label;
+
     private ?string $type;
-    /** @var array|mixed */
-    private $possibleValues;
+
+    private mixed $possibleValues;
+
     private ?string $default;
+
     private ?string $tab;
+
     private ?bool $scss;
 
     public function __construct(array $data)

@@ -13,11 +13,17 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemPropertyGroup\Name;
 class ItemPropertyGroup extends Entity
 {
     private int $id;
+
     private ?string $backendName;
+
     private ?string $orderPropertyGroupingType;
+
     private ?bool $isSurchargePercental;
+
     private ?int $ottoComponent;
+
     private ?DateTimeInterface $updatedAt;
+
     /** @var Name[] */
     private array $names = [];
 

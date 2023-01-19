@@ -32,18 +32,30 @@ class Product
     public const WRAP_MODE_SEPARATE_VARIATIONS = 1;
 
     private Item $item;
+
     private Config $config;
+
     private RegistryService $registryService;
+
     private ProductEntity $productEntity;
+
     /** @var PimVariation[] */
     private array $variationEntities;
+
     private ?string $reason = null;
+
     private StoreConfiguration $storeConfiguration;
+
     private Exporter $exporter;
+
     private int $wrapMode;
+
     private string $variationGroupKey;
+
     private ?int $cheapestVariationId = null;
+
     private array $plentyShopConfig;
+
     private ?PropertySelectionResponse $propertySelection;
 
     /**
@@ -201,7 +213,7 @@ class Product
             );
 
             $variation->processData();
-            
+
             $useCallistoUrl = $this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl();
             if (!$itemHasImage && $variation->getImage() && $useCallistoUrl) {
                 $this->item->addImage($variation->getImage());
@@ -433,8 +445,6 @@ class Product
     /**
      * Returns the language URL prefix. This may be relevant for multiple channels.
      * An empty string may be returned if the default store language is already the exported language.
-     *
-     * @return string
      */
     private function getLanguageUrlPrefix(): ?string
     {
@@ -493,7 +503,7 @@ class Product
         return $ordernumbers;
     }
 
-    private function addOrdernumber(string $ordernumber)
+    private function addOrdernumber(string $ordernumber): void
     {
         if (trim($ordernumber) === '') {
             return;

@@ -9,8 +9,11 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class Client extends Entity
 {
     private int $salesPriceId;
+
     private int $plentyId;
+
     private string $createdAt;
+
     private string $updatedAt;
 
     public function __construct(array $data)

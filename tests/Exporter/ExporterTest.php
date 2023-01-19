@@ -32,26 +32,20 @@ class ExporterTest extends TestCase
     private const EXPORTER_LOCATION = '/tmp/rest-exporter/';
 
     private Config $config;
+
     private ?string $fileNamePrefix;
 
-    /** @var DummyLogger|MockObject */
-    private $logger;
+    private DummyLogger|MockObject $logger;
 
-    /** @var Client|MockObject */
-    private $clientMock;
+    private Client|MockObject $clientMock;
 
-    /** @var RegistryService|MockObject */
-    private $registryServiceMock;
+    private RegistryService|MockObject $registryServiceMock;
 
-    /** @var ItemRequest|MockObject */
-    private $itemRequestMock;
+    private ItemRequest|MockObject $itemRequestMock;
 
-    /** @var PimVariationRequest|MockObject */
-    private $variationRequestMock;
+    private PimVariationRequest|MockObject $variationRequestMock;
 
-    /** @var LibFlexportExporter|MockObject */
-    private $fileExporterMock;
-
+    private LibFlexportExporter|MockObject $fileExporterMock;
 
     protected function setUp(): void
     {
@@ -62,6 +56,9 @@ class ExporterTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->registryServiceMock = $this->getMockBuilder(RegistryService::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->itemRequestMock = $this->getMockBuilder(ItemRequest::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->variationRequestMock = $this->getMockBuilder(PimVariationRequest::class)

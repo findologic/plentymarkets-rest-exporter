@@ -38,20 +38,15 @@ class RegistryServiceTest extends TestCase
     use ResponseHelper;
     use ConfigHelper;
 
-    /** @var RegistryService */
-    private $registryService;
+    private RegistryService $registryService;
 
-    /** @var Config */
-    private $defaultConfig;
+    private Config $defaultConfig;
 
-    /** @var Logger|MockObject */
-    private $loggerMock;
+    private Logger|MockObject $loggerMock;
 
-    /** @var Client|MockObject */
-    private $clientMock;
+    private Client|MockObject $clientMock;
 
-    /** @var Registry|MockObject */
-    private $registryMock;
+    private Registry|MockObject $registryMock;
 
     public function setUp(): void
     {

@@ -13,7 +13,7 @@ class PluginConfigurationResponse extends Response implements CollectionInterfac
     use EntityCollection;
 
     /** @var PluginConfiguration[] */
-    private $configurations = [];
+    private array $configurations;
 
     /**
      * @param PluginConfiguration[] $configurations

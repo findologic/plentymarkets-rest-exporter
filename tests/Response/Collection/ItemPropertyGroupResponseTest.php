@@ -6,16 +6,18 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use Carbon\Carbon;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyGroupParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyGroupResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 class ItemPropertyGroupResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private $response;
+    private Response $response;
 
-    private $propertyGroupResponse;
+    private ItemPropertyGroupResponse $propertyGroupResponse;
 
     public function setUp(): void
     {

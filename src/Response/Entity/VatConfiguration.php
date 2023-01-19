@@ -9,16 +9,27 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\VatConfiguration\VatRat
 class VatConfiguration extends Entity
 {
     private int $id;
+
     private int $countryId;
+
     private string $taxIdNumber;
+
     private string $startedAt;
+
     private ?string $invalidFrom;
+
     private int $locationId;
+
     private string $marginScheme;
+
     private bool $isRestrictedToDigitalItems;
+
     private bool $isStandard;
+
     private string $createdAt;
+
     private string $updatedAt;
+
     /** @var VatRate[] */
     private array $vatRates = [];
 

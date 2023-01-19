@@ -9,7 +9,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class ImageAvailability extends Entity
 {
     private ?int $id;
+
     private ?int $value;
+
     private ?string $type;
 
     public function __construct(array $data)

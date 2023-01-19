@@ -9,7 +9,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class Unit extends Entity
 {
     private ?int $unitId;
+
     private ?int $unitCombinationId;
+
     private ?string $content;
 
     public function __construct(array $data)

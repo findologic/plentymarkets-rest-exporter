@@ -31,8 +31,11 @@ class ExportCommand extends Command
     protected static $defaultName = 'export:start';
 
     private LoggerInterface $internalLogger;
+
     private LoggerInterface $customerLogger;
+
     private ?Exporter $exporter;
+
     private ?Client $client;
 
     public function __construct(
@@ -83,7 +86,7 @@ class ExportCommand extends Command
         );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 

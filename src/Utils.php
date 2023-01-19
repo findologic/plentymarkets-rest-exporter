@@ -89,12 +89,8 @@ class Utils
     /**
      * Gets a value from the environment. If that environment variable is not set or does not contain
      * a value, such as "NULL", default may be returned.
-     *
-     * @param string $key
-     * @param mixed $default
-     * @return mixed
      */
-    public static function env(string $key, $default = null)
+    public static function env(string $key, mixed $default = null)
     {
         if (!isset($_ENV[$key]) || (is_string($_ENV[$key]) && static::isEmpty(mb_strtolower($_ENV[$key])))) {
             return $default;
@@ -111,10 +107,7 @@ class Utils
         return $_ENV[$key];
     }
 
-    /**
-     * @param mixed $value
-     */
-    public static function filterBoolean($value): bool
+    public static function filterBoolean(mixed $value): bool
     {
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }

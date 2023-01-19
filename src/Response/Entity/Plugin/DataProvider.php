@@ -9,7 +9,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class DataProvider extends Entity
 {
     private ?string $key;
+
     private ?string $name;
+
     private ?string $description;
 
     public function __construct(array $data)

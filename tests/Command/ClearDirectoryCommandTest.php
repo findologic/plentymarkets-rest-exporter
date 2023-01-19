@@ -26,11 +26,9 @@ class ClearDirectoryCommandTest extends TestCase
         'CACHE_DIR'
     ];
 
-    /** @var Application */
-    private $application;
+    private Application $application;
 
-    /** @var ClearDataCommand */
-    private $command;
+    private ClearDataCommand $command;
 
     protected function setUp(): void
     {

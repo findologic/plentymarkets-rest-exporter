@@ -11,30 +11,54 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class ItemImage extends Entity
 {
     private int $id;
+
     private int $itemId;
+
     private string $type;
+
     private string $fileType;
+
     private string $path;
+
     private int $position;
+
     private string $lastUpdate;
+
     private string $insert;
+
     private string $md5Checksum;
+
     private float $width;
+
     private float $height;
+
     private float $size;
+
     private string $storageProviderId;
+
     private string $md5ChecksumOriginal;
+
     private string $cleanImageName;
+
     private string $url;
+
     private string $urlMiddle;
+
     private string $urlPreview;
+
     private string $urlSecondPreview;
+
     private string $documentUploadPath;
+
     private string $documentUploadPathPreview;
+
     private float $documentUploadPreviewWidth;
+
     private float $documentUploadPreviewHeight;
+
     /** @var Availability[] */
     private array $availabilities = [];
+
     /** @var Name[] */
     private array $names = [];
 

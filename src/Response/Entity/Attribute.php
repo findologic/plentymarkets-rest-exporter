@@ -9,20 +9,35 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute\Name;
 class Attribute extends Entity
 {
     private int $id;
+
     private string $backendName;
+
     private int $position;
+
     private bool $isSurchargePercental;
+
     private bool $isLinkableToImage;
+
     private string $amazonAttribute;
+
     private string $fruugoAttribute;
+
     private int $pixmaniaAttribute;
+
     private string $ottoAttribute;
+
     private string $googleShoppingAttribute;
+
     private int $neckermannAtEpAttribute;
+
     private string $typeOfSelectionInOnlineStore;
+
     private int $laRedouteAttribute;
+
     private bool $isGroupable;
+
     private string $updatedAt;
+
     /** @var Name[] */
     private array $names;
 

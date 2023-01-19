@@ -10,10 +10,15 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class PropertySelection extends Entity
 {
     private ?int $id;
+
     private ?int $propertyId;
+
     private ?PropertyRelation $relation;
+
     private ?int $position;
+
     private ?DateTimeInterface $createdAt;
+
     private ?DateTimeInterface $updatedAt;
 
     public function __construct(array $data)

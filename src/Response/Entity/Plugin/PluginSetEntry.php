@@ -9,13 +9,21 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class PluginSetEntry extends Entity
 {
     private ?int $id;
+
     private ?int $pluginId;
+
     private ?int $pluginSetId;
+
     private ?string $createdAt;
+
     private ?string $updatedAt;
+
     private ?string $deleted_at;
+
     private ?string $branchName;
+
     private ?string $position;
+
     private ?string $commit;
 
     public function __construct(array $data)

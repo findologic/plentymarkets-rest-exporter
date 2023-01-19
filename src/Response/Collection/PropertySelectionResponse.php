@@ -17,7 +17,7 @@ class PropertySelectionResponse extends IterableResponse implements CollectionIn
     use EntityCollection;
 
     /** @var Selection[] */
-    private $selections;
+    private array $selections;
 
     /**
      * @param Selection[] $selections

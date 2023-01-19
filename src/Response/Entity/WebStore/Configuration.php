@@ -9,131 +9,255 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class Configuration extends Entity
 {
     private ?string $name;
+
     private ?string $defaultLanguage;
+
     private ?string $defaultLayout;
+
     private ?int $defaultShippingCountryId;
+
     private ?int $displayPriceColumn;
+
     private ?int $displayPriceNetto;
+
     private ?int $doctype;
+
     private ?string $faviconPath;
+
     private ?int $frontPageContentPageId;
+
     private ?int $maxLoginAttempts;
+
     private ?int $error404ContentPageId;
+
     private ?int $cancellationRightsContentPageId;
+
     private ?int $helpContentPageId;
+
     private ?int $itemNotFoundContentPageId;
+
     private ?int $privacyPolicyContentPageId;
+
     private ?int $shippingContentPageId;
+
     private ?int $termsConditionsContentPageId;
+
     private ?int $socialMedia;
+
     private ?string $urlFacebook;
+
     private ?string $urlGooglePlus;
+
     private ?string $urlTwitter;
+
     private ?int $displayItemOnly4Customer;
+
     private ?int $displayItemName;
+
     private ?int $attributeVariantCheck;
+
     private ?int $attributeSelectDefaultOption;
+
     private ?string $urlItemCategory;
+
     private ?string $urlItemContent;
+
     private ?string $urlTitleItemName;
+
     private ?string $urlTitleItemContent;
+
     private ?string $urlNeedle;
+
     private ?string $urlFileExtension;
+
     private ?string $urlLinking;
+
     /** @var string[] */
-    private $languageList = [];
+    private array $languageList;
+
     private ?string $domain;
+
     private ?string $domainSsl;
+
     private ?string $rootDir;
+
     private ?string $loginMode;
+
     private ?int $attributesDropDown;
+
     private ?int $attributeWithMarkup;
+
     private ?int $categoryItemCount;
+
     private ?int $categoryLevelLimit;
+
     private ?int $currencyConversion;
+
     private ?int $dontSplitItemBundle;
+
     private ?int $dhlPackstationValidation;
+
     private ?int $sessionLifetime;
+
     private ?int $useCharacterCrossSelling;
+
     private ?int $useDynamicCrossSelling;
+
     private ?string $defaultCurrency;
+
     private ?int $languageMode;
+
     private ?int $itemCategorySorting1;
+
     private ?int $itemCategorySorting2;
+
     private ?int $itemSortByMonthlySales;
+
     private ?string $itemAvailabilityDisabledList;
+
     /** @var string|ItemMeasureUnit[]|null */
-    private $itemMeasureUnit;
+    private mixed $itemMeasureUnit;
+
     private ?int $showBasePriceActive;
+
     private ?int $jumpPaymentActive;
+
     private ?int $jumpShippingActive;
+
     private ?int $showContentTermsFsk;
+
     private ?int $newsletterRegistrationActive;
+
     private ?int $minimumOrderValue;
+
     private ?int $ipAddressSaveInactive;
+
     private ?int $reuseOrderActive;
+
     private ?int $editOrderActive;
+
     private ?int $currencySymbol;
+
     private ?int $dhlAllowPackstationActive;
+
     private ?int $dhlLimitOrderAmountForPackstation;
+
     private ?int $watchlistActive;
+
     private ?int $itemwishlistActive;
+
     private ?int $couponVisibilityActive;
+
     private ?int $itemlistPrice;
+
     private ?int $itemlistWeight;
+
     private ?int $schedulerActive;
+
     private ?int $changeEmailActive;
+
     private ?int $changePasswordActive;
+
     private ?int $changePasswordSendmail;
+
     private ?int $logoutHiddenActive;
+
     private ?int $displayStatusInactive;
+
     private ?int $displayWeightInactive;
+
     private ?int $displayInvoiceDownload;
+
     private ?int $displayShippingDateActive;
+
     private ?int $quickloginValidDays;
+
     private ?int $paymentMethodsContentPageId;
+
     private ?int $contactContentPageId;
+
     private ?int $legalDisclosureContentPageId;
+
     private ?int $bankContentPageId;
+
     private array $browserLanguage;
+
     private ?int $webstoreId;
+
     private ?string $itemSearchEngine;
+
     private ?int $itemMaxRatingPoints;
+
     private ?int $itemCommentsActive;
+
     private ?int $customerLoginMethod;
+
     private ?int $documentsActive;
+
     private ?int $dynamicExportActive;
+
     private ?int $retoureMethod;
+
     private ?int $editSchedulerPaymentMethodActive;
+
     private ?int $showSEPAMandateDownload;
+
     private array $defaultShippingCountryList;
+
     private ?int $useDefaultShippingCountryAsShopCountry;
+
     private ?int $defaultParcelServiceId;
+
     private ?int $defaultParcelServicePresetId;
+
     private ?int $defaultMethodOfPaymentId;
+
     private ?int $ignoreCouponMinOrderValueActive;
+
     private ?int $externalVatCheckInactive;
+
     private ?int $customerRegistrationCheck;
+
     private ?int $defaultAccountingLocation;
+
     private ?array $ebayAccount;
+
     private ?int $itemRatingActive;
+
     private ?string $itemNewFeedbackVisibility;
+
     private ?int $itemCustomerNameVisibility;
+
     private ?int $categoryRatingActive;
+
     private ?int $categoryMaxRatingPoints;
+
     private ?int $categoryCommentsActive;
+
     private ?string $categoryNewFeedbackVisibility;
+
     private ?int $categoryCustomerNameVisibility;
+
     private ?int $blogRatingActive;
+
     private ?int $blogMaxRatingPoints;
+
     private ?int $blogCommentsActive;
+
     private ?string $blogNewFeedbackVisibility;
+
     private ?int $blogCustomerNameVisibility;
+
     private ?int $feedbackRatingActive;
+
     private ?int $feedbackMaxRatingPoints;
+
     private ?int $feedbackCommentsActive;
+
     private ?string $feedbackNewFeedbackVisibility;
+
     private ?int $feedbackCustomerNameVisibility;
+
     private ?int $urlTrailingSlash;
 
     public function __construct(array $data)
@@ -678,7 +802,7 @@ class Configuration extends Entity
     /**
      * @return string|ItemMeasureUnit[]|null
      */
-    public function getItemMeasureUnit()
+    public function getItemMeasureUnit(): array|string|null
     {
         return $this->itemMeasureUnit;
     }
@@ -1041,7 +1165,7 @@ class Configuration extends Entity
     /**
      * @return ItemMeasureUnit[]|string|null
      */
-    protected function fetchItemMeasureUnit(array $data)
+    protected function fetchItemMeasureUnit(array $data): array|string|null
     {
         $itemMeasureUnitData = $data['itemMeasureUnit'] ?? null;
 

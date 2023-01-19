@@ -10,7 +10,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Translatable;
 class Name extends Entity implements Translatable
 {
     private int $unitId;
+
     private string $lang;
+
     private string $name;
 
     public function __construct(array $data)

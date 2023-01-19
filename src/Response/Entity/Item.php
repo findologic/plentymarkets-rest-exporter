@@ -9,61 +9,117 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
 class Item extends Entity
 {
     private int $id;
+
     private int $position;
+
     private int $manufacturerId;
+
     private int $stockType;
+
     private string $add_cms_page;
+
     private int $storeSpecial;
+
     private int $condition;
+
     private string $amazonFedas;
+
     private string $updatedAt;
+
     private ?string $free1;
+
     private ?string $free2;
+
     private ?string $free3;
+
     private ?string $free4;
+
     private ?string $free5;
+
     private ?string $free6;
+
     private ?string $free7;
+
     private ?string $free8;
+
     private ?string $free9;
+
     private ?string $free10;
+
     private ?string $free11;
+
     private ?string $free12;
+
     private ?string $free13;
+
     private ?string $free14;
+
     private ?string $free15;
+
     private ?string $free16;
+
     private ?string $free17;
+
     private ?string $free18;
+
     private ?string $free19;
+
     private ?string $free20;
+
     private string $customsTariffNumber;
+
     private int $producingCountryId;
+
     private int $revenueAccount;
+
     private int $couponRestriction;
+
     private int $flagOne;
+
     private int $flagTwo;
+
     private int $ageRestriction;
+
     private string $createdAt;
+
     private int $amazonProductType;
+
     private ?int $ebayPresetId;
+
     private ?int $ebayCategory;
+
     private ?int $ebayCategory2;
+
     private ?int $ebayStoreCategory;
+
     private ?int $ebayStoreCategory2;
+
     private int $amazonFbaPlatform;
+
     private float $feedback;
+
     private string $gimahhot;
+
     private ?float $maxOrderQuantity;
+
     private bool $isSubscribable;
+
     private ?int $rakutenCategoryId;
+
     private bool $isShippingPackage;
+
     private int $conditionApi;
+
     private bool $isSerialNumber;
+
     private bool $isShippableByAmazon;
+
     private ?int $ownerId;
+
     private string $itemType;
+
     private int $mainVariationId;
+
     /** @var Text[] */
     private array $texts = [];
 

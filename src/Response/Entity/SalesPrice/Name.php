@@ -9,10 +9,15 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class Name extends Entity
 {
     private int $salesPriceId;
+
     private string $lang;
+
     private string $nameInternal;
+
     private string $nameExternal;
+
     private string $createdAt;
+
     private string $updatedAt;
 
     public function __construct(array $data)

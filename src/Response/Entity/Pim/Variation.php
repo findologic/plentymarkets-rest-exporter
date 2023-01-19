@@ -31,32 +31,26 @@ class Variation extends Entity
     /** @var Barcode[] */
     private array $barcodes;
 
-    /** @var null Unknown data */
-    private $additionalSkus = null;
+    private mixed $additionalSkus = null;
 
     /** @var Attribute[] */
     private array $attributeValues;
 
-    /** @var null Unknown data */
-    private $bundleComponents = null;
+    private mixed $bundleComponents = null;
 
     /** @var Client[] */
     private array $clients;
 
-    /** @var null Unknown data */
-    private $defaultCategories = null;
+    private mixed $defaultCategories = null;
 
     /** @var SalesPrice[] */
     private array $salesPrices;
 
-    /** @var null Unknown data */
-    private $skus = null;
+    private mixed $skus = null;
 
-    /** @var null Unknown data */
-    private $supplier = null;
+    private mixed $supplier = null;
 
-    /** @var null Unknown data */
-    private $warehouses = null;
+    private mixed $warehouses = null;
 
     /** @var Property[] */
     private array $properties;
@@ -64,11 +58,9 @@ class Variation extends Entity
     /** @var Tag[] */
     private array $tags;
 
-    /** @var null Unknown data */
-    private $comments = null;
+    private mixed $comments = null;
 
-    /** @var null Unknown data */
-    private $timestamps = null;
+    private mixed $timestamps = null;
 
     private ?Unit $unit = null;
 

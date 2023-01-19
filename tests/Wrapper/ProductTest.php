@@ -40,22 +40,18 @@ class ProductTest extends TestCase
 
     private const AVAILABLE_PROPERTIES = ['price_id', 'variation_id', 'base_unit', 'package_size'];
 
-    /** @var Exporter|MockObject */
-    private $exporterMock;
+    private Exporter|MockObject $exporterMock;
 
     private Config $config;
 
-    /** @var Item|MockObject */
-    private $itemMock;
+    private Item|MockObject $itemMock;
 
-    /** @var Configuration|MockObject */
-    private $storeConfigurationMock;
+    private Configuration|MockObject $storeConfigurationMock;
 
-    /** @var RegistryService|MockObject */
-    private $registryServiceMock;
+    private RegistryService|MockObject $registryServiceMock;
 
     /** @var Variation[]|MockObject[] */
-    private $variationEntityMocks = [];
+    private array $variationEntityMocks = [];
 
     protected function setUp(): void
     {

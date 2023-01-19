@@ -34,11 +34,9 @@ class ClientTest extends TestCase
     use RequestHelper;
     use ResponseHelper;
 
-    /** @var GuzzleClient|MockObject */
-    private $guzzleClientMock;
+    private GuzzleClient|MockObject $guzzleClientMock;
 
-    /** @var Config */
-    private $config;
+    private Config $config;
 
     public function setUp(): void
     {

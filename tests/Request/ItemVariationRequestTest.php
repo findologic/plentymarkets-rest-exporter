@@ -23,16 +23,14 @@ class ItemVariationRequestTest extends TestCase
     use RequestHelper;
 
     private Config $defaultConfig;
+
     private Client $client;
 
-    /** @var Logger|MockObject */
-    private $loggerMock;
+    private Logger|MockObject $loggerMock;
 
-    /** @var GuzzleClient|MockObject */
-    private $guzzleClientMock;
+    private GuzzleClient|MockObject $guzzleClientMock;
 
-    /** @var ResponseInterface|MockObject */
-    private $responseMock;
+    private ResponseInterface|MockObject $responseMock;
 
     public function setUp(): void
     {

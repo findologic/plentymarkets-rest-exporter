@@ -15,26 +15,42 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class SalesPrice extends Entity
 {
     private int $id;
+
     private int $position;
+
     private float $minimumOrderQuantity;
+
     private string $type;
+
     private bool $isCustomerPrice;
+
     private bool $isDisplayedByDefault;
+
     private bool $isLiveConversion;
+
     private string $createdAt;
+
     private string $updatedAt;
+
     private string $interval;
+
     /** @var Name[] */
     private array $names = [];
+
     private array $accounts;
+
     /** @var Country[] */
     private array $countries = [];
+
     /** @var Currency[] */
     private array $currencies = [];
+
     /** @var CustomerClass[] */
     private array $customerClasses = [];
+
     /** @var Referrer[] */
     private array $referrers = [];
+
     /** @var Client[] */
     private array $clients = [];
 

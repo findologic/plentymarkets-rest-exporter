@@ -9,11 +9,17 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Unit\Name;
 class Unit extends Entity
 {
     private int $id;
+
     private int $position;
+
     private string $unitOfMeasurement;
+
     private bool $isDecimalPlacesAllowed;
+
     private string $updatedAt;
+
     private string $createdAt;
+
     /** @var Name[] */
     private array $names = [];
 

@@ -42,13 +42,20 @@ class Client
         REST_PATH = 'rest';
 
     private GuzzleClient $client;
+
     private Config $config;
+
     private LoggerInterface $internalLogger;
+
     private LoggerInterface $customerLogger;
+
     private DebuggerInterface $debugger;
+
     /** Used for rate limit */
     private ?ResponseInterface $lastResponse = null;
+
     private string $accessToken = '';
+
     private string $refreshToken = '';
 
     public function __construct(

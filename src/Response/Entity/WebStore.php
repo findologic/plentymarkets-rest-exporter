@@ -9,10 +9,15 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration;
 class WebStore extends Entity
 {
     private int $id;
+
     private string $type;
+
     private int $storeIdentifier;
+
     private string $name;
+
     private int $pluginSetId;
+
     private Configuration $configuration;
 
     public function __construct(array $data)

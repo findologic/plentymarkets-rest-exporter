@@ -9,11 +9,15 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\PropertyGroup\Name;
 class PropertyGroup extends Entity
 {
     private ?int $id;
+
     private ?int $position;
+
     private ?string $createdAt;
+
     private ?string $updatedAt;
+
     /** @var Name[] */
-    private array $names = [];
+    private array $names;
 
     public function __construct(array $data)
     {

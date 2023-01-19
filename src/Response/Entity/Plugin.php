@@ -13,61 +13,114 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Plugin\UpdateInformatio
 class Plugin extends Entity
 {
     private ?int $id;
+
     private ?string $name;
+
     private ?string $last_build_production;
+
     private ?string $last_build_stage;
+
     private ?string $created_at;
+
     private ?string $updated_at;
+
     private ?string $position;
+
     private ?bool $activeProductive;
+
     private ?bool $activeStage;
+
     private ?bool $inStage;
+
     private ?bool $inProductive;
+
     private ?string $type;
+
     private ?string $version;
+
     private ?string $description;
+
     private ?string $namespace;
+
     private ?string $author;
+
     private array $keywords;
+
     private array $require;
+
     private array $runOnBuild;
+
     private array $checkOnBuild;
+
     private ?string $authorIcon;
+
     private ?string $pluginIcon;
+
     private ?bool $isConnectedWithGit;
+
     private array $dependencies;
+
     private array $javaScriptFiles;
+
     /** @var Container[] */
     private array $containers;
+
     /** @var DataProvider[] */
     private array $dataProviders;
+
     private ?string $source;
+
     private ?UpdateInformation $updateInformation;
+
     private ?bool $isClosedSource;
+
     private ?string $license;
+
     private array $shortDescription;
+
     private array $categories;
+
     private ?float $price;
+
     private ?string $email;
+
     private ?string $phone;
+
     private array $marketplaceName;
+
     private array $subscriptionInformation;
+
     private ?string $versionStage;
+
     private ?string $versionProductive;
+
     private array $marketplaceVariations;
+
     private ?string $webhookUrl;
+
     private ?bool $isExternalTool;
+
     private array $directDownloadLinks;
+
     private ?string $forwardLink;
+
     private array $notInstalledRequirements;
+
     private array $notActiveStageRequirements;
+
     private array $notActiveProductiveRequirements;
+
     private array $pluginSetIds;
+
     private ?bool $installed;
+
     private ?string $branch;
+
     private ?string $commit;
+
     /** @var PluginSetEntry[] */
     private array $pluginSetEntries;
+
     private Repository $repository;
 
     public function __construct(array $data)

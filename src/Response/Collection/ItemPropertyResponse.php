@@ -13,7 +13,7 @@ class ItemPropertyResponse extends IterableResponse implements CollectionInterfa
     use EntityCollection;
 
     /** @var Property[] */
-    private $properties;
+    private array $properties;
 
     /**
      * @param Property[] $properties

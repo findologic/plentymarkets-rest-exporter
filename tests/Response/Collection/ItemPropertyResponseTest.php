@@ -5,16 +5,19 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemPropertyResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 class ItemPropertyResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private $response;
+    private Response $response;
 
-    private $propertiesResponse;
+    private ItemPropertyResponse $propertiesResponse;
 
     public function setUp(): void
     {
@@ -68,6 +71,7 @@ class ItemPropertyResponseTest extends TestCase
     public function testPropertyDataCanBeFetched(): void
     {
         $responseData = json_decode((string)$this->response->getBody(), true);
+        /** @var ItemProperty $property */
         $property = $this->propertiesResponse->first();
 
         $this->assertEqualsCanonicalizing($responseData['entries'][0], $property->getData());

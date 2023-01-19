@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyGroupParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertyGroupResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 class PropertyGroupResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private $response;
+    private Response $response;
 
-    private $propertyGroupResponse;
+    private PropertyGroupResponse $propertyGroupResponse;
 
     public function setUp(): void
     {

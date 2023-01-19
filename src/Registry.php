@@ -30,12 +30,7 @@ class Registry
         );
     }
 
-    /**
-     * @param string $key
-     * @param mixed $value
-     * @return $this
-     */
-    public function set(string $key, $value): self
+    public function set(string $key, mixed $value): self
     {
         /** @var CacheItem $item */
         $item = $this->cache->getItem($key);
@@ -45,11 +40,7 @@ class Registry
         return $this;
     }
 
-    /**
-     * @param string $key
-     * @return mixed
-     */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         /** @var CacheItem $item */
         $item = $this->cache->getItem($key);

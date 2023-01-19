@@ -5,25 +5,22 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertyParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertyResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Amazon;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group\GroupRelation;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Group\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Name as PropertyName;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Option;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation\RelationValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 class PropertyResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private $response;
+    private Response $response;
 
-    private $propertyResponse;
+    private PropertyResponse $propertyResponse;
 
     public function setUp(): void
     {

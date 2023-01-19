@@ -31,16 +31,14 @@ class CsvWrapperTest extends TestCase
     private const TEST_EXPORT_PATH = 'some_path';
 
     private CsvWrapper $csvWrapper;
+
     private Config $config;
 
-    /** @var Exporter|MockObject */
-    private $exporterMock;
+    private Exporter|MockObject $exporterMock;
 
-    /** @var RegistryService|MockObject */
-    private $registryServiceMock;
+    private RegistryService|MockObject $registryServiceMock;
 
-    /** @var Logger|MockObject */
-    private $loggerMock;
+    private Logger|MockObject $loggerMock;
 
     public function setUp(): void
     {

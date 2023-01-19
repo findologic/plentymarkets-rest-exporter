@@ -10,63 +10,121 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class BaseItemDetails extends Entity
 {
     private ?int $id;
+
     private ?int $position;
+
     private ?string $addCmsPage;
+
     private ?int $condition;
+
     private ?string $free1;
+
     private ?string $free2;
+
     private ?string $free3;
+
     private ?string $free4;
+
     private ?string $free5;
+
     private ?string $free6;
+
     private ?string $free7;
+
     private ?string $free8;
+
     private ?string $free9;
+
     private ?string $free10;
+
     private ?string $free11;
+
     private ?string $free12;
+
     private ?string $free13;
+
     private ?string $free14;
+
     private ?string $free15;
+
     private ?string $free16;
+
     private ?string $free17;
+
     private ?string $free18;
+
     private ?string $free19;
+
     private ?string $free20;
+
     private ?string $gimahhot;
+
     private ?int $storeSpecial;
+
     private ?int $ownerId;
+
     private ?int $manufacturerId;
+
     private ?int $producingCountryId;
+
     private ?float $revenueAccount;
+
     private ?int $couponRestriction;
+
     private ?int $conditionApi;
+
     private ?bool $isSubscribable;
+
     private ?int $amazonFbaPlatform;
+
     private ?bool $isShippableByAmazon;
+
     private ?int $amazonProductType;
+
     private ?string $amazonFedas;
+
     private ?int $ebayPresetId;
+
     private ?int $ebayCategory;
+
     private ?int $ebayCategory2;
+
     private ?int $ebayStoreCategory;
+
     private ?int $ebayStoreCategory2;
+
     private ?int $rakutenCategoryId;
+
     private ?int $flagOne;
+
     private ?int $flagTwo;
+
     private ?int $ageRestriction;
+
     private ?int $feedback;
+
     private ?string $itemType;
+
     private ?int $stockType;
+
     private ?string $sitemapPublished;
+
     private ?bool $isSerialNumber;
+
     private ?bool $isShippingPackage;
+
     private ?int $maximumOrderQuantity;
+
     private ?int $variationCount;
+
     private ?string $customsTariffNumber;
+
     private ?int $mainVariationId;
+
     private ?bool $inactive;
+
     private ?DateTimeInterface $createdAt;
+
     private ?DateTimeInterface $updatedAt;
 
     public function __construct(array $data)

@@ -9,7 +9,9 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class VariationClient extends Entity
 {
     private int $variationId;
+
     private int $plentyId;
+
     private string $createdAt;
 
     public function __construct(array $data)

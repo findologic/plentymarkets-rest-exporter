@@ -26,21 +26,17 @@ class ExportCommandTest extends TestCase
     use ResponseHelper;
     use DirectoryAware;
 
-    private $application;
+    private Application $application;
 
-    /** @var Exporter|MockObject|null */
-    private $exportMock;
+    private Exporter|MockObject|null $exportMock;
 
-    /** @var MockHandler */
-    private $mockHandler;
+    private MockHandler $mockHandler;
 
-    /** @var Client|null */
-    private $clientMock;
+    private ?Client $clientMock;
 
-    /** @var LoggerInterface */
-    private $logger;
+    private LoggerInterface $logger;
 
-    private $command;
+    private ExportCommand $command;
 
     protected function setUp(): void
     {

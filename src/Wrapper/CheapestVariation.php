@@ -93,7 +93,7 @@ class CheapestVariation
     }
 
     /**
-     * @param array<string,string|float|int> $cheapestVariationsData
+     * @param array<string,string|float|int|Image> $cheapestVariationsData
      */
     private function setItemImage(array $cheapestVariationsData, ?Image $defaultImage, bool $itemHasImage): void
     {

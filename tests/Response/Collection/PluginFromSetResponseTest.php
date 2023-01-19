@@ -10,14 +10,15 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Plugin\Container;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Plugin\DataProvider;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Plugin\PluginSetEntry;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
-use GuzzleHttp\Psr7\Response as GuzzleResponse;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 class PluginFromSetResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private GuzzleResponse $response;
+    private Response $response;
+
     private PluginFromSetResponse $pluginResponse;
 
     public function setUp(): void

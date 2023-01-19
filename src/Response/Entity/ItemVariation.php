@@ -17,93 +17,174 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\Variation
 class ItemVariation extends Entity
 {
     private int $id;
+
     private bool $isMain;
+
     private ?int $mainVariationId;
+
     private int $itemId;
+
     private int $categoryVariationId;
+
     private int $marketVariationId;
+
     private int $clientVariationId;
+
     private int $salesPriceVariationId;
+
     private int $supplierVariationId;
+
     private int $warehouseVariationId;
+
     private int $position;
+
     private bool $isActive;
+
     private string $number;
+
     private string $model;
+
     private string $externalId;
+
     private ?int $parentVariationId;
+
     private ?float $parentVariationQuantity;
+
     private int $availability;
+
     private ?string $estimatedAvailableAt;
+
     private float $purchasePrice;
+
     private string $createdAt;
+
     private string $updatedAt;
+
     private ?string $relatedUpdatedAt;
+
     private ?int $priceCalculationId;
+
     private ?string $picking;
+
     private int $stockLimitation;
+
     private bool $isVisibleIfNetStockIsPositive;
+
     private bool $isInvisibleIfNetStockIsNotPositive;
+
     private bool $isAvailableIfNetStockIsPositive;
+
     private bool $isUnavailableIfNetStockIsNotPositive;
+
     private int $mainWarehouseId;
+
     private ?float $maximumOrderQuantity;
+
     private ?float $minimumOrderQuantity;
+
     private ?float $intervalOrderQuantity;
+
     private ?string $availableUntil;
+
     private ?string $releasedAt;
+
     private int $unitCombinationId;
+
     private string $name;
+
     private int $weightG;
+
     private int $weightNetG;
+
     private int $widthMM;
+
     private int $lengthMM;
+
     private int $heightMM;
+
     private float $extraShippingCharge1;
+
     private float $extraShippingCharge2;
+
     private int $unitsContained;
+
     private ?int $palletTypeId;
+
+
     private int $packingUnits;
+
     private int $packingUnitTypeId;
+
     private float $transportationCosts;
+
     private float $storageCosts;
+
     private float $customs;
+
     private float $operatingCosts;
-    private $vatId;
+
+    private ?int $vatId;
+
     private ?string $bundleType;
+
     private int $automaticClientVisibility;
+
     private bool $isHiddenInCategoryList;
+
     private ?float $defaultShippingCosts;
+
     private bool $mayShowUnitPrice;
-    private $movingAveragePrice;
+
+    private float $movingAveragePrice;
+
     private int $propertyVariationId;
+
     private int $automaticListVisibility;
+
     private bool $isVisibleInListIfNetStockIsPositive;
+
     private bool $isInvisibleInListIfNetStockIsNotPositive;
+
     private int $singleItemCount;
+
     private string $availabilityUpdatedAt;
+
     private int $tagVariationId;
+
     private ?bool $hasCalculatedBundleWeight;
+
     private ?bool $hasCalculatedBundleNetWeight;
+
     private ?bool $hasCalculatedBundlePurchasePrice;
+
     private ?bool $hasCalculatedBundleMovingAveragePrice;
+
     private ?int $salesRank;
+
     /** @var VariationCategory[] */
     private array $variationCategories = [];
+
     /** @var VariationSalesPrice[] */
     private array $variationSalesPrices = [];
+
     /** @var VariationAttributeValue[] */
     private array $variationAttributeValues = [];
+
     /** @var VariationProperty[] */
     private array $variationProperties = [];
+
     /** @var VariationBarcode[] */
     private array $variationBarcodes = [];
+
     /** @var VariationClient[] */
     private array $variationClients = [];
+
     /** @var Property[] */
     private array $properties = [];
+
     /** @var ItemImage[] */
     private array $itemImages = [];
+
     /** @var VariationTag[] */
     private array $tags = [];
 

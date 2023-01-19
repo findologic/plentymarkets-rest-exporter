@@ -5,17 +5,19 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\UnitResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Unit\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 class UnitResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private $response;
+    private Response $response;
 
-    private $unitResponse;
+    private UnitResponse $unitResponse;
 
     public function setUp(): void
     {

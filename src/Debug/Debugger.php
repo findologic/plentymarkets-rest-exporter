@@ -16,6 +16,7 @@ class Debugger implements DebuggerInterface
         DEBUG_EXTENSION = 'json';
 
     private string $debugDir;
+
     private int $encodingOptions;
 
     public function __construct(

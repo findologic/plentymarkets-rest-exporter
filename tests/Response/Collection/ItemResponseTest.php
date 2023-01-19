@@ -16,6 +16,7 @@ class ItemResponseTest extends TestCase
     use ResponseHelper;
 
     private GuzzleResponse $response;
+
     private ItemResponse $itemResponse;
 
     public function setUp(): void

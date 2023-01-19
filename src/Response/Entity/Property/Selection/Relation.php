@@ -10,12 +10,19 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Rela
 class Relation extends Entity
 {
     private int $id;
+
     private int $propertyId;
+
     private ?string $relationTypeId;
+
     private ?int $relationTargetId;
+
     private ?int $selectionRelationId;
+
     private ?string $createdAt;
+
     private ?string $updatedAt;
+
     /** @var RelationValue[] */
     private array $relationValues = [];
 

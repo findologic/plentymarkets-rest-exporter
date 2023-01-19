@@ -10,11 +10,9 @@ class UpdateInformation extends Entity
 {
     private ?bool $hasUpdate;
 
-    /** @var mixed */
-    private $updateVariationId;
+    private mixed $updateVariationId;
 
-    /** @var mixed */
-    private $updateVersion;
+    private mixed $updateVersion;
 
     public function __construct(array $data)
     {
@@ -38,18 +36,12 @@ class UpdateInformation extends Entity
         return $this->hasUpdate;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUpdateVariationId()
+    public function getUpdateVariationId(): mixed
     {
         return $this->updateVariationId;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUpdateVersion()
+    public function getUpdateVersion(): mixed
     {
         return $this->updateVersion;
     }

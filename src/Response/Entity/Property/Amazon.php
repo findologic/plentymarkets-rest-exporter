@@ -9,11 +9,17 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class Amazon extends Entity
 {
     private int $id;
+
     private int $propertyId;
+
     private string $platform;
+
     private string $category;
+
     private string $field;
+
     private string $createdAt;
+
     private string $updatedAt;
 
     public function __construct(array $data)

@@ -35,26 +35,46 @@ class Variation
     use PropertyAware;
 
     protected Config $config;
+
     protected RegistryService $registryService;
+
     protected PimVariation $variationEntity;
+
     protected bool $isMain;
+
     protected ?int $position;
+
     protected ?int $vatId;
+
     protected string $number;
+
     protected ?string $model;
+
     protected int $id;
+
     protected int $itemId;
+
     /** @var string[] */
     protected array $barcodes = [];
+
     protected float $price = 0.0;
+
     protected float $insteadPrice = 0.0;
+
     protected array $prices = [];
+
     protected ?Image $image = null;
+
     protected float $vatRate = 0.0;
+
     protected ?string $baseUnit = null;
+
     protected ?string $packageSize = null;
+
     protected string $variationGroupKey;
+
     protected int $wrapMode;
+
     protected bool $hasCategories = false;
 
     /** @var Attribute[] */

@@ -14,7 +14,9 @@ use Symfony\Component\Finder\Finder;
 abstract class ClearDirectoryBaseCommand extends Command
 {
     private ?Filesystem $filesystem;
+
     private ?Finder $finder;
+
     private string $directory;
 
     public function __construct(string $name = null, ?Filesystem $fileSystem = null, ?Finder $finder = null)
@@ -25,7 +27,7 @@ abstract class ClearDirectoryBaseCommand extends Command
         $this->finder = $finder ?? new Finder();
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 

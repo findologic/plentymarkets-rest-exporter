@@ -15,6 +15,7 @@ class SeparatedVariation
     private const ATTRIBUTE_VALUE_SEPARATOR = '_';
 
     private Variation $variation;
+
     private RegistryService $registryService;
 
     public function __construct(

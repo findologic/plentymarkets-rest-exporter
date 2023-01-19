@@ -10,10 +10,15 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\Tag\Tag\N
 class Tag extends Entity
 {
     private int $id;
+
     private string $tagName;
+
     private ?string $color;
+
     private string $createdAt;
+
     private string $updatedAt;
+
     /** @var Name[] */
     private array $names = [];
 
