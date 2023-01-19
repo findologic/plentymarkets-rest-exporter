@@ -146,7 +146,7 @@ class WebStoreResponseTest extends TestCase
             'externalVatCheckInactive' => 0,
             'customerRegistrationCheck' => 0,
             'defaultAccountingLocation' => 1,
-            'ebayAccount' => '',
+            'ebayAccount' => [''],
             'itemRatingActive' => 0,
             'itemNewFeedbackVisibility' => 'active',
             'itemCustomerNameVisibility' => 1,
@@ -342,7 +342,7 @@ class WebStoreResponseTest extends TestCase
         $this->assertEquals(0, $configuration->getExternalVatCheckInactive());
         $this->assertEquals(0, $configuration->getCustomerRegistrationCheck());
         $this->assertEquals(1, $configuration->getDefaultAccountingLocation());
-        $this->assertEquals('', $configuration->getEbayAccount());
+        $this->assertEquals([''], $configuration->getEbayAccount());
         $this->assertEquals(0, $configuration->getItemRatingActive());
         $this->assertEquals('active', $configuration->getItemNewFeedbackVisibility());
         $this->assertEquals(1, $configuration->getItemCustomerNameVisibility());
