@@ -115,7 +115,7 @@ class Configuration extends Entity
     private ?int $externalVatCheckInactive;
     private ?int $customerRegistrationCheck;
     private ?int $defaultAccountingLocation;
-    private ?string $ebayAccount;
+    private ?array $ebayAccount;
     private ?int $itemRatingActive;
     private ?string $itemNewFeedbackVisibility;
     private ?int $itemCustomerNameVisibility;
@@ -254,7 +254,7 @@ class Configuration extends Entity
         $this->externalVatCheckInactive = $this->getIntProperty('externalVatCheckInactive', $data);
         $this->customerRegistrationCheck = $this->getIntProperty('customerRegistrationCheck', $data);
         $this->defaultAccountingLocation = $this->getIntProperty('defaultAccountingLocation', $data);
-        $this->ebayAccount = $this->getStringProperty('ebayAccount', $data);
+        $this->ebayAccount = $this->getArrayProperty('ebayAccount', $data);
         $this->itemRatingActive = $this->getIntProperty('itemRatingActive', $data);
         $this->itemNewFeedbackVisibility = $this->getStringProperty('itemNewFeedbackVisibility', $data);
         $this->itemCustomerNameVisibility = $this->getIntProperty('itemCustomerNameVisibility', $data);
@@ -938,7 +938,7 @@ class Configuration extends Entity
         return $this->defaultAccountingLocation;
     }
 
-    public function getEbayAccount(): ?string
+    public function getEbayAccount(): ?array
     {
         return $this->ebayAccount;
     }

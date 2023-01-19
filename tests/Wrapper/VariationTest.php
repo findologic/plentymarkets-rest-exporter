@@ -24,7 +24,6 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty as Charact
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property as PropertyEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemPropertyGroup;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Variation as VariationWrapper;
@@ -902,6 +901,82 @@ class VariationTest extends TestCase
             ->willReturn($characteristicEntity);
         $this->registryServiceMock->expects($this->any())->method('getItemPropertyGroup')
             ->willReturn($propertyGroupEntity);
+
+        $wrapper->processData();
+        $this->assertEqualsCanonicalizing($expectedExportedAttributes, $wrapper->getAttributes());
+    }
+
+    public function testDimensionsAreExportedAsAttributes(): void
+    {
+        $expectedExportedAttributes = [
+            new Attribute('dimensions_height_mm', ['300']),
+            new Attribute('dimensions_length_mm', ['200']),
+            new Attribute('dimensions_width_mm', ['100']),
+            new Attribute('dimensions_weight_g', ['2000']),
+            new Attribute('dimensions_weight_net_g', ['1000']),
+        ];
+
+        $variationEntity = $this->getVariationEntity(
+            'Pim/Variations/variation_with_dimensions.json'
+        );
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryServiceMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+        $this->assertEqualsCanonicalizing($expectedExportedAttributes, $wrapper->getAttributes());
+    }
+
+    public function testDimensionsAreExportedWithConfiguredUnit(): void
+    {
+        $expectedExportedAttributes = [
+            new Attribute('dimensions_height_m', ['0.3']),
+            new Attribute('dimensions_length_m', ['0.2']),
+            new Attribute('dimensions_width_m', ['0.1']),
+            new Attribute('dimensions_weight_kg', ['2']),
+            new Attribute('dimensions_weight_net_kg', ['1']),
+        ];
+
+        $variationEntity = $this->getVariationEntity(
+            'Pim/Variations/variation_with_dimensions.json'
+        );
+
+        $config = clone $this->defaultConfig;
+        $config->setExportDimensionUnit('m');
+        $config->setExportWeightUnit('kg');
+
+        $wrapper = new VariationWrapper(
+            $config,
+            $this->registryServiceMock,
+            $variationEntity
+        );
+
+        $wrapper->processData();
+        $this->assertEqualsCanonicalizing($expectedExportedAttributes, $wrapper->getAttributes());
+    }
+
+    public function testDimensionsWithoutValueAreIgnored(): void
+    {
+        $expectedExportedAttributes = [
+            new Attribute('dimensions_height_mm', ['300']),
+            new Attribute('dimensions_length_mm', ['200']),
+            new Attribute('dimensions_width_mm', ['100']),
+            new Attribute('dimensions_weight_g', ['2000']),
+            new Attribute('dimensions_weight_net_g', ['1000']),
+        ];
+
+        $variationEntity = $this->getVariationEntity(
+            'Pim/Variations/variants_with_dimensions.json'
+        );
+
+        $wrapper = new VariationWrapper(
+            $this->defaultConfig,
+            $this->registryServiceMock,
+            $variationEntity
+        );
 
         $wrapper->processData();
         $this->assertEqualsCanonicalizing($expectedExportedAttributes, $wrapper->getAttributes());

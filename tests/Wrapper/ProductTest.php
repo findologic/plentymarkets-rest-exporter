@@ -6,6 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 
 use Carbon\Carbon;
 use DateTime;
+use FINDOLOGIC\Export\Data\Attribute;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
@@ -30,6 +31,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Product;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 class ProductTest extends TestCase
 {
@@ -830,6 +832,34 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         $this->assertEquals(['' => 1], $item->getSalesFrequency()->getValues());
+    }
+
+    public function testDimensionsWithoutValueAreIgnored(): void
+    {
+        $expectedExportedAttributes = [
+            new Attribute('cat', ['Sessel & Hocker']),
+            new Attribute('cat_url', ['/wohnzimmer/sessel-hocker/']),
+            new Attribute('dimensions_height_mm', ['300', '400']),
+            new Attribute('dimensions_length_mm', ['200', '300']),
+            new Attribute('dimensions_width_mm', ['100', '200']),
+            new Attribute('dimensions_weight_g', ['2000', '4000']),
+            new Attribute('dimensions_weight_net_g', ['1000', '2000']),
+        ];
+
+        $this->exporterMock = $this->getExporter();
+
+        $variationResponse = $this->getMockResponse('Pim/Variations/variants_with_dimensions.json');
+        $variations = PimVariationsParser::parse($variationResponse);
+        $this->variationEntityMocks = array_slice($variations->all(), 0, 2);
+
+        $product = $this->getProduct();
+        $item = $product->processProductData();
+
+        $reflector = new ReflectionClass($item);
+        $attributes = $reflector->getProperty('attributes');
+        $attributeValues = $attributes->getValue($item);
+
+        $this->assertEqualsCanonicalizing($expectedExportedAttributes, $attributeValues);
     }
 
     public function testCallistoUrlFormatIsUsedWhenCeresConfigCouldNotBeFetched(): void

@@ -26,6 +26,8 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVar
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Unit\Name as UnitName;
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
+use PhpUnitsOfMeasure\PhysicalQuantity\Length;
+use PhpUnitsOfMeasure\PhysicalQuantity\Mass;
 
 class Variation
 {
@@ -102,6 +104,7 @@ class Variation
         $this->processProperties();
         $this->processVatRate();
         $this->processUnits();
+        $this->processDimensions();
     }
 
     public function isMain(): bool
@@ -473,6 +476,57 @@ class Variation
             if ($name) {
                 $this->baseUnit = $name->getName();
             }
+        }
+    }
+
+    private function processDimensions(): void
+    {
+        $dimensionUnit = $this->config->getExportDimensionUnit();
+        $weightUnit = $this->config->getExportWeightUnit();
+
+        if (!Utils::isEmpty($this->variationEntity->getBase()->getLengthMM())) {
+            $length = new Length($this->variationEntity->getBase()->getLengthMM(), 'mm');
+
+            $this->attributes[] = new Attribute(
+                'dimensions_length_' . $dimensionUnit,
+                [$length->toUnit($dimensionUnit)]
+            );
+        }
+
+        if (!Utils::isEmpty($this->variationEntity->getBase()->getWidthMM())) {
+            $width = new Length($this->variationEntity->getBase()->getWidthMM(), 'mm');
+
+            $this->attributes[] = new Attribute(
+                'dimensions_width_' . $dimensionUnit,
+                [$width->toUnit($dimensionUnit)]
+            );
+        }
+
+        if (!Utils::isEmpty($this->variationEntity->getBase()->getHeightMM())) {
+            $height = new Length($this->variationEntity->getBase()->getHeightMM(), 'mm');
+
+            $this->attributes[] = new Attribute(
+                'dimensions_height_' . $dimensionUnit,
+                [$height->toUnit($dimensionUnit)]
+            );
+        }
+
+        if (!Utils::isEmpty($this->variationEntity->getBase()->getWeightG())) {
+            $weight = new Mass($this->variationEntity->getBase()->getWeightG(), 'g');
+
+            $this->attributes[] = new Attribute(
+                'dimensions_weight_' . $weightUnit,
+                [$weight->toUnit($weightUnit)]
+            );
+        }
+
+        if (!Utils::isEmpty($this->variationEntity->getBase()->getWeightNetG())) {
+            $weight = new Mass($this->variationEntity->getBase()->getWeightNetG(), 'g');
+
+            $this->attributes[] = new Attribute(
+                'dimensions_weight_net_' . $weightUnit,
+                [$weight->toUnit($weightUnit)]
+            );
         }
     }
 
