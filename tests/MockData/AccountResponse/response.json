@@ -90,8 +90,16 @@
       "availability_id": null,
       "price_id": 1,
       "rrp_id": 2,
-      "exporter": "REST",
-      "export_unavailable_variants": false
+      "export_unavailable_variants": false,
+      "export_referrer_id": null,
+      "export_ordernumber_product_id": true,
+      "export_ordernumber_variant_id": true,
+      "export_ordernumber_variant_number": true,
+      "export_ordernumber_variant_model": true,
+      "export_ordernumber_variant_barcodes": true,
+      "export_free_text_fields": true,
+      "export_dimension_unit": "mm",
+      "export_weight_unit": "g"
     },
     "synonyms": "",
     "bonus": "{}",
