@@ -19,7 +19,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 
-class Utils
+final class Utils
 {
     /**
      * Sends an iterable request. Iterable requests will basically return all data from a specific endpoint.
@@ -78,7 +78,7 @@ class Utils
         return $value == 'null' ||
             $value == null ||
             $value == '' ||
-            (is_string($value) && !static::validateStringLength($value));
+            (is_string($value) && !Utils::validateStringLength($value));
     }
 
     /**
@@ -94,10 +94,10 @@ class Utils
         ?string $shopkey,
         ?GuzzleClient $client = null
     ): Config {
-        $importDataBaseUrl = static::env('IMPORT_DATA_URL');
+        $importDataBaseUrl = Utils::env('IMPORT_DATA_URL');
         if ($shopkey && $importDataBaseUrl) {
             $importDataUrl = sprintf($importDataBaseUrl, $shopkey);
-            return static::getImportConfiguration($importDataUrl, $client ?? new GuzzleClient());
+            return Utils::getImportConfiguration($importDataUrl, $client ?? new GuzzleClient());
         }
 
         return Config::fromEnvironment();
@@ -109,7 +109,7 @@ class Utils
      */
     public static function env(string $key, mixed $default = null)
     {
-        if (!isset($_ENV[$key]) || (is_string($_ENV[$key]) && static::isEmpty(mb_strtolower($_ENV[$key])))) {
+        if (!isset($_ENV[$key]) || (is_string($_ENV[$key]) && Utils::isEmpty(mb_strtolower($_ENV[$key])))) {
             return $default;
         }
 
