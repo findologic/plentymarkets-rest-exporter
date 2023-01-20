@@ -92,15 +92,15 @@ class ItemVariation extends Entity
 
     private string $name;
 
-    private int $weightG;
+    private ?int $weightG;
 
-    private int $weightNetG;
+    private ?int $weightNetG;
 
-    private int $widthMM;
+    private ?int $widthMM;
 
-    private int $lengthMM;
+    private ?int $lengthMM;
 
-    private int $heightMM;
+    private ?int $heightMM;
 
     private float $extraShippingCharge1;
 
@@ -109,7 +109,6 @@ class ItemVariation extends Entity
     private int $unitsContained;
 
     private ?int $palletTypeId;
-
 
     private int $packingUnits;
 
@@ -644,27 +643,27 @@ class ItemVariation extends Entity
         return $this->name;
     }
 
-    public function getWeightG(): int
+    public function getWeightG(): ?int
     {
         return $this->weightG;
     }
 
-    public function getWeightNetG(): int
+    public function getWeightNetG(): ?int
     {
         return $this->weightNetG;
     }
 
-    public function getWidthMM(): int
+    public function getWidthMM(): ?int
     {
         return $this->widthMM;
     }
 
-    public function getLengthMM(): int
+    public function getLengthMM(): ?int
     {
         return $this->lengthMM;
     }
 
-    public function getHeightMM(): int
+    public function getHeightMM(): ?int
     {
         return $this->heightMM;
     }

@@ -447,27 +447,27 @@ class Base extends Entity
         return $this->name;
     }
 
-    public function getWeightG(): int
+    public function getWeightG(): ?int
     {
         return $this->weightG;
     }
 
-    public function getWeightNetG(): int
+    public function getWeightNetG(): ?int
     {
         return $this->weightNetG;
     }
 
-    public function getWidthMM(): int
+    public function getWidthMM(): ?int
     {
         return $this->widthMM;
     }
 
-    public function getLengthMM(): int
+    public function getLengthMM(): ?int
     {
         return $this->lengthMM;
     }
 
-    public function getHeightMM(): int
+    public function getHeightMM(): ?int
     {
         return $this->heightMM;
     }
