@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Command;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Command\ExportCommand;
 use FINDOLOGIC\PlentyMarketsRestExporter\Command\GenerateTokenCommand;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
@@ -20,20 +19,11 @@ class GenerateTokenCommandTest extends TestCase
 {
     use ResponseHelper;
 
-    /** @var MockHandler */
-    private $mockHandler;
+    private Application $application;
 
-    /** @var Client|MockObject */
-    private $clientMock;
+    private GenerateTokenCommand $command;
 
-    /** @var Application */
-    private $application;
-
-    /** @var GenerateTokenCommand */
-    private $command;
-
-    /** @var Exporter|MockObject */
-    private $exportMock;
+    private Exporter|MockObject $exportMock;
 
     protected function setUp(): void
     {
@@ -61,19 +51,19 @@ class GenerateTokenCommandTest extends TestCase
 
     private function setUpCommandMocks(): void
     {
-        $this->mockHandler = new MockHandler([
+        $mockHandler = new MockHandler([
             $this->getMockResponse('LoginResponse/response.json'),
             $this->getMockResponse('WebStoreResponse/response.json')
         ]);
 
-        $handlerStack = HandlerStack::create($this->mockHandler);
-        $this->clientMock = new Client(['handler' => $handlerStack]);
+        $handlerStack = HandlerStack::create($mockHandler);
+        $clientMock = new Client(['handler' => $handlerStack]);
 
         $this->exportMock = $this->getMockBuilder(Exporter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->command = new GenerateTokenCommand($this->clientMock);
+        $this->command = new GenerateTokenCommand($clientMock);
 
         $this->application->add($this->command);
     }

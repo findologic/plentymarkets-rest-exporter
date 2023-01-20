@@ -9,26 +9,21 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class TagData extends Entity
 {
-    /** @var int */
-    private $id;
+    private ?int $id;
 
-    /** @var string */
-    private $name;
+    private ?string $name;
 
-    /** @var string */
-    private $color;
+    private ?string $color;
 
     /** @var TagName[] */
-    private $names;
+    private array $names;
 
     /** @var TagClient[] */
-    private $clients;
+    private array $clients;
 
-    /** @var DateTimeInterface */
-    private $createdAt;
+    private ?DateTimeInterface $createdAt;
 
-    /** @var DateTimeInterface */
-    private $updatedAt;
+    private ?DateTimeInterface $updatedAt;
 
     public function __construct(array $data)
     {

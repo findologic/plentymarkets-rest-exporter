@@ -26,8 +26,7 @@ class UtilsTest extends TestCase
     private const CONFIG_PATH = self::TEMP_PATH . '/config.yml';
     private const VALID_SHOPKEY = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
 
-    /** @var Client|MockObject */
-    private $clientMock;
+    private Client|MockObject $clientMock;
 
     public function setUp(): void
     {

@@ -4,15 +4,22 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
+use Exception;
 use FINDOLOGIC\Export\Helpers\DataHelper;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 
-class Utils
+final class Utils
 {
     /**
      * Sends an iterable request. Iterable requests will basically return all data from a specific endpoint.
@@ -20,7 +27,16 @@ class Utils
      *
      * @param Client $client
      * @param Request $request
+     *
      * @return ResponseInterface[]
+     * @throws EmptyResponseException
+     * @throws PermissionException
+     * @throws CustomerException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     * @throws GuzzleException
+     * @throws CriticalException
+     *
      */
     public static function sendIterableRequest(Client $client, Request $request): array
     {
@@ -62,25 +78,26 @@ class Utils
         return $value == 'null' ||
             $value == null ||
             $value == '' ||
-            (is_string($value) && !static::validateStringLength($value));
+            (is_string($value) && !Utils::validateStringLength($value));
     }
 
     /**
-     * When a shopkey is set, the account route is used to fetch the import data. Otherwise the configuration
+     * When a shopkey is set, the account route is used to fetch the import data. Otherwise, the configuration
      * of the given configPath is used.
      *
      * @param string|null $shopkey
      * @param GuzzleClient|null $client
      * @return Config
+     * @throws GuzzleException
      */
     public static function getExportConfiguration(
         ?string $shopkey,
         ?GuzzleClient $client = null
     ): Config {
-        $importDataBaseUrl = static::env('IMPORT_DATA_URL');
+        $importDataBaseUrl = Utils::env('IMPORT_DATA_URL');
         if ($shopkey && $importDataBaseUrl) {
             $importDataUrl = sprintf($importDataBaseUrl, $shopkey);
-            return static::getImportConfiguration($importDataUrl, $client ?? new GuzzleClient());
+            return Utils::getImportConfiguration($importDataUrl, $client ?? new GuzzleClient());
         }
 
         return Config::fromEnvironment();
@@ -89,14 +106,10 @@ class Utils
     /**
      * Gets a value from the environment. If that environment variable is not set or does not contain
      * a value, such as "NULL", default may be returned.
-     *
-     * @param string $key
-     * @param mixed $default
-     * @return mixed
      */
-    public static function env(string $key, $default = null)
+    public static function env(string $key, mixed $default = null)
     {
-        if (!isset($_ENV[$key]) || (is_string($_ENV[$key]) && static::isEmpty(mb_strtolower($_ENV[$key])))) {
+        if (!isset($_ENV[$key]) || (is_string($_ENV[$key]) && Utils::isEmpty(mb_strtolower($_ENV[$key])))) {
             return $default;
         }
 
@@ -111,14 +124,15 @@ class Utils
         return $_ENV[$key];
     }
 
-    /**
-     * @param mixed $value
-     */
-    public static function filterBoolean($value): bool
+    public static function filterBoolean(mixed $value): bool
     {
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     private static function getImportConfiguration(
         string $accountUri,
         GuzzleClient $client

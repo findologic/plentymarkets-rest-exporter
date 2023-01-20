@@ -8,13 +8,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class ImageAttributeValue extends Entity
 {
-    private int $itemId;
+    private ?int $itemId;
 
-    private int $valueId;
+    private ?int $valueId;
 
-    private int $imageId;
+    private ?int $imageId;
 
-    private int $attributeId;
+    private ?int $attributeId;
 
     public function __construct(array $data)
     {

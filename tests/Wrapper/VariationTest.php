@@ -35,14 +35,11 @@ class VariationTest extends TestCase
     use ResponseHelper;
     use ConfigHelper;
 
-    /** @var Registry|MockObject */
-    private $registryMock;
+    private Registry|MockObject $registryMock;
 
-    /** @var Config */
-    private $defaultConfig;
+    private Config $defaultConfig;
 
-    /** @var RegistryService|MockObject */
-    private $registryServiceMock;
+    private RegistryService|MockObject $registryServiceMock;
 
     public function setUp(): void
     {
@@ -305,7 +302,7 @@ class VariationTest extends TestCase
 
         $wrapper->processData();
 
-        $this->assertEquals($wrapper->getVatRate(), 7);
+        $this->assertEquals(7, $wrapper->getVatRate());
     }
 
     public function testTaxRateIsNotSetIfVariationUsesANonStandardVatId(): void

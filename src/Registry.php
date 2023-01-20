@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Response;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\CacheItem;
@@ -19,8 +18,7 @@ class Registry
 
     private const CACHE_LIFETIME = 60 * 60 * 24;
 
-    /** @var AbstractAdapter */
-    private $cache;
+    private AbstractAdapter $cache;
 
     public function __construct(?AbstractAdapter $cache = null)
     {
@@ -32,11 +30,9 @@ class Registry
     }
 
     /**
-     * @param string $key
-     * @param mixed $value
-     * @return $this
+     * @throws InvalidArgumentException
      */
-    public function set(string $key, $value): self
+    public function set(string $key, mixed $value): self
     {
         /** @var CacheItem $item */
         $item = $this->cache->getItem($key);
@@ -47,10 +43,9 @@ class Registry
     }
 
     /**
-     * @param string $key
-     * @return mixed
+     * @throws InvalidArgumentException
      */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         /** @var CacheItem $item */
         $item = $this->cache->getItem($key);

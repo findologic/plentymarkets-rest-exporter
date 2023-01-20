@@ -9,46 +9,33 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
 
 class VariationProperty extends Entity
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var int */
-    private $itemId;
+    private int $itemId;
 
-    /** @var int */
-    private $propertyId;
+    private int $propertyId;
 
-    /** @var int|null */
-    private $propertySelectionId;
+    private ?int $propertySelectionId;
 
-    /** @var int|null */
-    private $valueInt;
+    private ?int $valueInt;
 
-    /** @var float|null */
-    private $valueFloat;
+    private ?float $valueFloat;
 
-    private $valueFile;
+    private mixed $valueFile;
 
-    /** @var float */
-    private $surcharge;
+    private float $surcharge;
 
-    /** @var string */
-    private $updatedAt;
+    private string $updatedAt;
 
-    /** @var string */
-    private $createdAt;
+    private string $createdAt;
 
-    /** @var int */
-    private $variationId;
+    private int $variationId;
 
-    /** @var array|mixed  */
-    private $names = [];
+    private mixed $names;
 
-    /** @var array|mixed  */
-    private $propertySelection = [];
+    private mixed $propertySelection;
 
-    /** @var ItemProperty|null */
-    private $property;
+    private ?ItemProperty $property;
 
     public function __construct(array $data)
     {

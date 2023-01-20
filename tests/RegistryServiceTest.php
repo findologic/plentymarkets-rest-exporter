@@ -7,8 +7,11 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests;
 use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemPropertyParser;
@@ -28,30 +31,27 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 use Log4Php\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Cache\InvalidArgumentException;
 
 class RegistryServiceTest extends TestCase
 {
     use ResponseHelper;
     use ConfigHelper;
 
-    /** @var RegistryService */
-    private $registryService;
+    private RegistryService $registryService;
 
-    /** @var Config */
-    private $defaultConfig;
+    private Config $defaultConfig;
 
-    /** @var Logger|MockObject */
-    private $loggerMock;
+    private Logger|MockObject $loggerMock;
 
-    /** @var Client|MockObject */
-    private $clientMock;
+    private Client|MockObject $clientMock;
 
-    /** @var Registry|MockObject */
-    private $registryMock;
+    private Registry|MockObject $registryMock;
 
     public function setUp(): void
     {
@@ -76,6 +76,15 @@ class RegistryServiceTest extends TestCase
         );
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     */
     public function testRegistryIsWarmedUp(): void
     {
         $expectedWebStore = new WebStore([
@@ -107,12 +116,6 @@ class RegistryServiceTest extends TestCase
         );
         $parsedCategoryResponse = CategoryParser::parse($this->getMockResponse('CategoryResponse/one.json'));
 
-        $expectedCategories = new CategoryResponse(
-            1,
-            0,
-            true,
-            [] // All categories are filtered out by the criteria.
-        );
         $categoryResponse = new Response(200, [], json_encode($categoryResponseBody));
 
         $vatResponse = $this->getMockResponse('VatResponse/one.json');
@@ -223,12 +226,14 @@ class RegistryServiceTest extends TestCase
                 [$registryKey . '_categories', $expectedPluginConfigurations],
             );
 
+        $plentyShopConfig = [];
         $this->registryMock->expects($this->any())
             ->method('get')
             ->willReturnOnConsecutiveCalls(
                 $expectedWebStore,
                 $expectedWebStore,
                 $expectedWebStore,
+                $plentyShopConfig,
                 new CategoryResponse(1, 1, true, []),
                 $expectedSalesPrice,
                 $expectedAttribute,
@@ -240,6 +245,14 @@ class RegistryServiceTest extends TestCase
         $this->registryService->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws EmptyResponseException
+     * @throws InvalidArgumentException
+     * @throws GuzzleException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     */
     public function testItFailsIfWebStoreDoesNotExist(): void
     {
         $expectedMultiShopId = 1337;
@@ -280,6 +293,15 @@ class RegistryServiceTest extends TestCase
         $this->registryService->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     */
     public function testMissingPluginConfigurationPermissionsAreLoggedAndAllowTheExportToContinue(): void
     {
         $registryServiceMock = $this->getRegistryServiceMockForSpecificFetchMethods(['fetchPluginConfigurations']);
@@ -292,7 +314,8 @@ class RegistryServiceTest extends TestCase
             'pluginSetId' => 44,
             'configuration' => []
         ]);
-        $this->registryMock->method('get')->willReturn($expectedWebStore);
+        $plentyShopConfig = [];
+        $this->registryMock->method('get')->willReturnOnConsecutiveCalls($expectedWebStore, $plentyShopConfig);
 
         $pluginSetPluginsResponse = $this->getMockResponse('PluginFromSetResponse/one.json');
         $expectedException = new PermissionException('The REST client does not have access rights for method asdasd');
@@ -305,7 +328,7 @@ class RegistryServiceTest extends TestCase
 
         $this->loggerMock->expects($this->once())->method('error')->with(
             'Required permissions \'Plugins > Configurations > Show\' have not been granted. ' .
-            'Product-URLs will be exported in Callisto format!'
+            'Product-URLs will be exported in Callisto format.'
         );
 
         $this->registryMock->expects($this->once())->method('set');
@@ -313,6 +336,15 @@ class RegistryServiceTest extends TestCase
         $registryServiceMock->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws CustomerException
+     * @throws InvalidArgumentException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     */
     public function testMissingPropertySelectionPermissionIsLoggedAndExportContinues(): void
     {
         $registryServiceMock = $this->getRegistryServiceMockForSpecificFetchMethods(['fetchPropertySelections']);
@@ -331,6 +363,15 @@ class RegistryServiceTest extends TestCase
         $registryServiceMock->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     */
     public function testMissingPropertyGroupPermissionIsLoggedAndExportContinues(): void
     {
         $registryServiceMock = $this->getRegistryServiceMockForSpecificFetchMethods(['fetchPropertyGroups']);
@@ -349,6 +390,15 @@ class RegistryServiceTest extends TestCase
         $registryServiceMock->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     */
     public function testExceptionsUnrelatedToPermissionsAreNotHandledWhenFetchingPluginConfigs(): void
     {
         $registryServiceMock = $this->getRegistryServiceMockForSpecificFetchMethods(['fetchPluginConfigurations']);
@@ -381,6 +431,15 @@ class RegistryServiceTest extends TestCase
         $registryServiceMock->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     */
     public function testSetSkipExportFlagForPropertiesWithoutMatchingConfiguredReferrerId(): void
     {
         $config = $this->getDefaultConfig(['exportReferrerId' => '10.00']);
@@ -392,12 +451,10 @@ class RegistryServiceTest extends TestCase
 
         $registryKeyPrefix = md5($this->defaultConfig->getDomain()) . '_property_';
 
-        $expectedSkipPropertyIds = [5, 123];
-
         $this->registryMock->expects($this->exactly(7))->method('set')->with(
             $this->stringStartsWith($registryKeyPrefix),
-            $this->callback(function (Property $property) use ($expectedSkipPropertyIds) {
-                if (!in_array($property->getId(), $expectedSkipPropertyIds)) {
+            $this->callback(function (Property $property) {
+                if (!in_array($property->getId(), [5, 123])) {
                     return true;
                 }
 
@@ -408,6 +465,15 @@ class RegistryServiceTest extends TestCase
         $registryServiceMock->warmUp();
     }
 
+    /**
+     * @throws PermissionException
+     * @throws InvalidArgumentException
+     * @throws CustomerException
+     * @throws EmptyResponseException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     */
     public function testPropertySkipExportFlagIsNeverSetWhenNoReferrerIdIsConfigured(): void
     {
         $config = $this->getDefaultConfig(['exportReferrerId' => null]);
@@ -696,41 +762,6 @@ class RegistryServiceTest extends TestCase
 
         $this->assertEquals($configData['plugin'], $this->registryService->getPluginConfigurations('plugin'));
         $this->assertEquals($configData, $this->registryService->getPluginConfigurations());
-    }
-
-    /**
-     * @dataProvider shouldUseLegacyCallistUrlTestProvider
-     */
-    public function testShouldUseLegacyCallistUrl(
-        array $configData,
-        bool $expectedResult
-    ): void {
-        $key = md5($this->defaultConfig->getDomain());
-        $this->registryMock->expects($this->exactly(2))
-            ->method('get')
-            ->with($key . '_pluginConfigurations')
-            ->willReturn($configData);
-
-        $this->assertEquals($configData['Ceres'], $this->registryService->getPluginConfigurations('Ceres'));
-        $this->assertEquals($expectedResult, $this->registryService->shouldUseLegacyCallistoUrl());
-    }
-
-    public function shouldUseLegacyCallistUrlTestProvider(): array
-    {
-        return [
-            'no enable old url pattern config' => [
-                ['Ceres' => ['global.test' => false]],
-                true
-            ],
-            'with enable old url pattern config set to false' => [
-                ['Ceres' => ['global.enableOldUrlPattern' => false]],
-                false
-            ],
-            'with enable old url pattern config set to true' => [
-                ['Ceres' => ['global.enableOldUrlPattern' => true]],
-                true
-            ],
-        ];
     }
 
     /**

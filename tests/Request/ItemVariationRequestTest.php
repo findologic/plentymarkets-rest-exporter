@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Request;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\RequestHelper;
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Psr7\Uri;
 use Log4Php\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -22,36 +20,28 @@ class ItemVariationRequestTest extends TestCase
     use ConfigHelper;
     use RequestHelper;
 
-    /** @var Config */
-    private $defaultConfig;
+    private Client $client;
 
-    /** @var Logger|MockObject */
-    private $loggerMock;
+    private GuzzleClient|MockObject $guzzleClientMock;
 
-    /** @var Client */
-    private $client;
-
-    /** @var GuzzleClient|MockObject */
-    private $guzzleClientMock;
-
-    /** @var ResponseInterface|MockObject */
-    private $responseMock;
+    private ResponseInterface|MockObject $responseMock;
 
     public function setUp(): void
     {
-        $this->defaultConfig = $this->getDefaultConfig();
-        $this->loggerMock = $this->getMockBuilder(Logger::class)
+        $defaultConfig = $this->getDefaultConfig();
+        $loggerMock = $this->getMockBuilder(Logger::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->guzzleClientMock = $this->getMockBuilder(GuzzleClient::class)
             ->disableOriginalConstructor()
             ->getMock();
         $responseBodyMock = $this->getMockBuilder(StreamInterface::class)->getMock();
-        $responseBodyMock->method('__toString')->willReturn('{"accessToken":"111","refreshToken":true}');
+        $responseBodyMock->method('__toString')
+            ->willReturn('{"accessToken":"111","refreshToken":"222"}');
         $this->responseMock = $this->getMockBuilder(ResponseInterface::class)->getMock();
         $this->responseMock->method('getStatusCode')->willReturn(200);
         $this->responseMock->method('getBody')->willReturn($responseBodyMock);
-        $this->client = new Client($this->guzzleClientMock, $this->defaultConfig, $this->loggerMock, $this->loggerMock);
+        $this->client = new Client($this->guzzleClientMock, $defaultConfig, $loggerMock, $loggerMock);
     }
 
     public function testParamsGetSanitizedCorrectly()

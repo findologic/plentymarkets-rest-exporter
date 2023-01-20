@@ -4,37 +4,33 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
+use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\CategoryDetails;
 
 class Category extends Entity
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var int|null */
-    private $parentCategoryId;
+    private ?int $parentCategoryId;
 
-    /** @var int */
-    private $level;
+    private int $level;
 
-    /** @var string */
-    private $type;
+    private string $type;
 
-    /** @var string */
-    private $linklist;
+    private string $linklist;
 
-    /** @var string */
-    private $right;
+    private string $right;
 
-    /** @var string */
-    private $sitemap;
+    private string $sitemap;
 
-    /** @var bool */
-    private $hasChildren;
+    private bool $hasChildren;
 
     /** @var CategoryDetails[] */
-    private $details = [];
+    private array $details = [];
 
+    /**
+     * @throws Exception
+     */
     public function __construct(array $data)
     {
         $this->id = (int)$data['id'];

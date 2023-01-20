@@ -8,14 +8,11 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Unit extends Entity
 {
-    /** @var int|null */
-    private $unitId;
+    private ?int $unitId;
 
-    /** @var int|null */
-    private $unitCombinationId;
+    private ?int $unitCombinationId;
 
-    /** @var string|null */
-    private $content;
+    private ?string $content;
 
     public function __construct(array $data)
     {

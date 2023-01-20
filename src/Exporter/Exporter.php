@@ -8,6 +8,12 @@ use Carbon\Carbon;
 use FINDOLOGIC\Export\Exporter as LibflexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Registry;
@@ -21,6 +27,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionRe
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Wrapper;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -35,44 +42,31 @@ abstract class Exporter
     public const SUCCESS = 0;
     public const FAILURE = 1;
 
-    /** @var LoggerInterface */
-    protected $internalLogger;
+    protected LoggerInterface $internalLogger;
 
-    /** @var LoggerInterface */
-    protected $customerLogger;
+    protected LoggerInterface $customerLogger;
 
-    /** @var Config */
-    protected $config;
+    protected Config $config;
 
-    /** @var Wrapper */
-    protected $wrapper;
+    protected Wrapper $wrapper;
 
-    /** @var Client */
-    protected $client;
+    protected Client $client;
 
-    /** @var Registry */
-    protected $registry;
+    protected Registry $registry;
 
-    /** @var RegistryService */
-    protected $registryService;
+    protected RegistryService $registryService;
 
-    /** @var ItemRequest */
-    protected $itemRequest;
+    protected ItemRequest $itemRequest;
 
-    /** @var PimVariationRequest */
-    protected $itemVariationRequest;
+    protected PimVariationRequest $itemVariationRequest;
 
-    /** @var LibflexportExporter */
-    protected $fileExporter;
+    protected ?LibflexportExporter $fileExporter;
 
-    /** @var int */
-    protected $offset = 0;
+    protected int $offset = 0;
 
-    /** @var float */
-    protected $exportStartTime = 0;
+    protected float $exportStartTime = 0;
 
-    /** @var float */
-    protected $exportEndTime = 0;
+    protected float $exportEndTime = 0;
 
     public function __construct(
         LoggerInterface $internalLogger,
@@ -82,7 +76,7 @@ abstract class Exporter
         ?RegistryService $registryService = null,
         ?ItemRequest $itemRequest = null,
         ?PimVariationRequest $pimVariationRequest = null,
-        LibflexportExporter $fileExporter = null
+        ?LibflexportExporter $fileExporter = null
     ) {
         $this->internalLogger = $internalLogger;
         $this->customerLogger = $customerLogger;
@@ -118,12 +112,13 @@ abstract class Exporter
      * @param Config $config
      * @param LoggerInterface $internalLogger
      * @param LoggerInterface $customerLogger
+     * @param string|null $exportPath
+     * @param string|null $fileNamePrefix
      * @param Client|null $client
      * @param RegistryService|null $registryService
      * @param ItemRequest|null $itemRequest
      * @param PimVariationRequest|null $pimVariationRequest
      * @param LibflexportExporter|null $fileExporter
-     * @param string|null $exportPath
      * @return Exporter
      */
     public static function buildInstance(
@@ -141,34 +136,31 @@ abstract class Exporter
     ): Exporter {
         $usedPath = $exportPath ?? Utils::env('EXPORT_DIR', self::DEFAULT_LOCATION);
 
-        switch ($type) {
-            case self::TYPE_CSV:
-                return new CsvExporter(
-                    $internalLogger,
-                    $customerLogger,
-                    $config,
-                    $usedPath,
-                    $fileNamePrefix,
-                    $client,
-                    $registryService,
-                    $itemRequest,
-                    $pimVariationRequest,
-                    $fileExporter
-                );
-            case self::TYPE_XML:
-                return new XmlExporter(
-                    $internalLogger,
-                    $customerLogger,
-                    $config,
-                    $client,
-                    $registryService,
-                    $itemRequest,
-                    $pimVariationRequest,
-                    $fileExporter
-                );
-            default:
-                throw new InvalidArgumentException('Unknown or unsupported exporter type.');
-        }
+        return match ($type) {
+            self::TYPE_CSV => new CsvExporter(
+                $internalLogger,
+                $customerLogger,
+                $config,
+                $usedPath,
+                $fileNamePrefix,
+                $client,
+                $registryService,
+                $itemRequest,
+                $pimVariationRequest,
+                $fileExporter
+            ),
+            self::TYPE_XML => new XmlExporter(
+                $internalLogger,
+                $customerLogger,
+                $config,
+                $client,
+                $registryService,
+                $itemRequest,
+                $pimVariationRequest,
+                $fileExporter
+            ),
+            default => throw new InvalidArgumentException('Unknown or unsupported exporter type.'),
+        };
     }
 
     /**
@@ -221,6 +213,16 @@ abstract class Exporter
         return $this->wrapper;
     }
 
+    /**
+     * @throws EmptyResponseException
+     * @throws PermissionException
+     * @throws CustomerException
+     * @throws GuzzleException
+     * @throws AuthorizationException
+     * @throws ThrottlingException
+     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws CriticalException
+     */
     protected function exportProducts(): void
     {
         $propertySelection = $this->registryService->getPropertySelections();
@@ -236,6 +238,15 @@ abstract class Exporter
         } while (!$products->isLastPage());
     }
 
+    /**
+     * @throws EmptyResponseException
+     * @throws PermissionException
+     * @throws CustomerException
+     * @throws GuzzleException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     * @throws CriticalException
+     */
     private function getItems($page): ItemResponse
     {
         $this->itemRequest->setPage($page);
@@ -244,6 +255,16 @@ abstract class Exporter
         return ItemParser::parse($response);
     }
 
+    /**
+     * @throws PermissionException
+     * @throws EmptyResponseException
+     * @throws CustomerException
+     * @throws GuzzleException
+     * @throws ThrottlingException
+     * @throws AuthorizationException
+     * @throws CriticalException
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
     private function getItemVariations(array $itemIds): PimVariationResponse
     {
         $variations = [];

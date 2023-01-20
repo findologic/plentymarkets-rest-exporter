@@ -15,11 +15,9 @@ class Debugger implements DebuggerInterface
         DEBUG_DIR = __DIR__ . '/../../var/debug',
         DEBUG_EXTENSION = 'json';
 
-    /** @var string */
-    private $debugDir;
+    private string $debugDir;
 
-    /** @var int */
-    private $encodingOptions;
+    private int $encodingOptions;
 
     public function __construct(
         ?string $debugDir = null,
@@ -29,6 +27,9 @@ class Debugger implements DebuggerInterface
         $this->debugDir = $debugDir ?? Utils::env('DEBUG_DIR', self::DEBUG_DIR);
     }
 
+    /**
+     * @throws Exception
+     */
     public function save(RequestInterface $request, ResponseInterface $response): void
     {
         $debugDir = sprintf('%s/%s', $this->getDebugDir(), ltrim($this->getRequestPath($request), '/'));
@@ -80,6 +81,9 @@ class Debugger implements DebuggerInterface
         return $request->getUri()->getPath();
     }
 
+    /**
+     * @throws Exception
+     */
     private function doSave(string $path, string $data): void
     {
         if (!file_exists($path)) {

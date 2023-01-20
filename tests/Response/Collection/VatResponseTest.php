@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\VatResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 class VatResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private $response;
+    private Response $response;
 
-    private $vatResponse;
+    private VatResponse $vatResponse;
 
     public function setUp(): void
     {

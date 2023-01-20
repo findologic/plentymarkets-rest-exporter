@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemVariationParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemVariationResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation;
@@ -24,15 +25,16 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\Variation
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\VariationTag;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Property as SelectionProperty;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 class ItemVariationResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private $response;
+    private Response $response;
 
-    private $itemVariationResponse;
+    private ItemVariationResponse $itemVariationResponse;
 
     public function setUp(): void
     {

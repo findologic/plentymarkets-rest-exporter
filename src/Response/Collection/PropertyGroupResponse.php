@@ -13,7 +13,7 @@ class PropertyGroupResponse extends IterableResponse implements CollectionInterf
     use EntityCollection;
 
     /** @var PropertyGroup[] */
-    private $propertyGroups;
+    private array $propertyGroups;
 
     /**
      * @param PropertyGroup[] $propertyGroups

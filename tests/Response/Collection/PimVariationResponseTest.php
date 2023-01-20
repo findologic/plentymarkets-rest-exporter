@@ -6,6 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use DateTimeInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Attribute;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Barcode;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Base;
@@ -18,15 +19,16 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Tag;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Unit;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 class PimVariationResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private $response;
+    private Response $response;
 
-    private $pimVariationResponse;
+    private PimVariationResponse $pimVariationResponse;
 
     public function setUp(): void
     {
@@ -37,7 +39,6 @@ class PimVariationResponseTest extends TestCase
     public function testPimVariationDataCanBeFetched(): void
     {
         $responseData = json_decode((string)$this->response->getBody(), true);
-        $variations = $this->pimVariationResponse->all();
 
         /** @var Variation $variation */
         $variation = $this->pimVariationResponse->first();

@@ -13,7 +13,7 @@ class ItemResponse extends IterableResponse implements CollectionInterface, Iter
     use EntityCollection;
 
     /** @var Item[] */
-    private $items;
+    private array $items;
 
     /**
      * @param Item[] $items

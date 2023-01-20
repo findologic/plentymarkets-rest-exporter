@@ -15,96 +15,80 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionRe
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\CategoryDetails;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage\Availability;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\AttributeValueName;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Image as PimImage;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\ImageAttributeValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Tag;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\TagName;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Unit\Name as UnitName;
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
+use PhpUnitsOfMeasure\Exception\NonNumericValue;
+use PhpUnitsOfMeasure\Exception\NonStringUnitName;
 use PhpUnitsOfMeasure\PhysicalQuantity\Length;
 use PhpUnitsOfMeasure\PhysicalQuantity\Mass;
+use Psr\Cache\InvalidArgumentException;
 
 class Variation
 {
     use CharacteristicAware;
     use PropertyAware;
 
-    /** @var Config */
-    protected $config;
+    protected Config $config;
 
-    /** @var RegistryService */
-    protected $registryService;
+    protected RegistryService $registryService;
 
-    /** @var PimVariation */
-    protected $variationEntity;
+    protected PimVariation $variationEntity;
 
-    /** @var bool */
-    protected $isMain;
+    protected bool $isMain;
 
-    /** @var int|null */
-    protected $position;
+    protected ?int $position;
 
-    /** @var int|null */
-    protected $vatId;
+    protected ?int $vatId;
 
-    /** @var string */
-    protected $number;
+    protected string $number;
 
-    /** @var string|null */
-    protected $model;
+    protected ?string $model;
 
-    /** @var int */
-    protected $id;
+    protected int $id;
 
-    /** @var int */
-    protected $itemId;
+    protected int $itemId;
 
     /** @var string[] */
-    protected $barcodes = [];
+    protected array $barcodes = [];
 
-    /** @var float */
-    protected $price = 0.0;
+    protected float $price = 0.0;
 
-    /** @var float */
-    protected $insteadPrice = 0.0;
+    protected float $insteadPrice = 0.0;
 
-    /** @var array */
-    protected $prices = [];
+    protected array $prices = [];
 
-    /** @var Attribute[] */
-    protected $attributes = [];
+    protected ?Image $image = null;
 
-    /** @var Property[] */
-    protected $properties = [];
+    protected float $vatRate = 0.0;
 
-    /** @var Usergroup[] */
-    protected $groups = [];
+    protected ?string $baseUnit = null;
 
-    /** @var Keyword[] */
-    protected $tags = [];
-
-    /** @var Image */
-    protected $image;
-
-    /** @var float */
-    protected $vatRate;
-
-    /** @var string|null */
-    protected $baseUnit;
-
-    /** @var string|null */
-    protected $packageSize;
+    protected ?string $packageSize = null;
 
     protected string $variationGroupKey;
 
     protected int $wrapMode;
 
     protected bool $hasCategories = false;
+
+    /** @var Attribute[] */
+    protected array $attributes = [];
+
+    /** @var Property[] */
+    protected array $properties = [];
+
+    /** @var Usergroup[] */
+    protected array $groups = [];
+
+    /** @var Keyword[] */
+    protected array $tags = [];
 
     private ?PropertySelectionResponse $propertySelection;
 
@@ -124,6 +108,19 @@ class Variation
         $this->propertySelection = $propertySelection;
     }
 
+    /**
+     * @throws NonNumericValue
+     * @throws NonStringUnitName
+     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException
+     */
     public function processData(): void
     {
         $this->isMain = $this->variationEntity->getBase()->isMain();
@@ -194,7 +191,7 @@ class Variation
 
     public function getInsteadPrice(): float
     {
-        return (float)$this->insteadPrice;
+        return $this->insteadPrice;
     }
 
     /**
@@ -256,7 +253,7 @@ class Variation
 
     private function processIdentifiers(): void
     {
-        $this->variationEntity->getBase()->getPosition();
+        $this->position = $this->variationEntity->getBase()->getPosition();
         $this->number = $this->variationEntity->getBase()->getNumber();
         $this->model = $this->variationEntity->getBase()->getModel();
         $this->id = $this->variationEntity->getId();
@@ -267,6 +264,9 @@ class Variation
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function processCategories(): void
     {
         $variationCategories = $this->variationEntity->getCategories();
@@ -296,6 +296,9 @@ class Variation
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function buildCategoryPath(Category $category): ?string
     {
         $path = [];
@@ -317,6 +320,9 @@ class Variation
         return implode('_', $path);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function processPrices(): void
     {
         $insteadPriceId = $this->registryService->getRrpId();
@@ -342,6 +348,9 @@ class Variation
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function processAttributes(): void
     {
         foreach ($this->variationEntity->getAttributeValues() as $variationAttributeValue) {
@@ -379,6 +388,9 @@ class Variation
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function processGroups(): void
     {
         $stores = $this->registryService->getAllWebStores();
@@ -390,6 +402,9 @@ class Variation
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function processTags(): void
     {
         $tags = $this->variationEntity->getTags();
@@ -434,6 +449,9 @@ class Variation
         return false;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function processImages(): void
     {
         $images = array_merge($this->variationEntity->getImages(), $this->variationEntity->getBase()->getImages());
@@ -451,6 +469,7 @@ class Variation
     /**
      * @param PimImage[] $images
      * @return Image|null
+     * @throws InvalidArgumentException
      */
     private function getVariantImage(array $images): ?Image
     {
@@ -488,6 +507,9 @@ class Variation
         return null;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function processVatRate(): void
     {
         foreach ($this->registryService->getStandardVat()->getVatRates() as $vatRate) {
@@ -499,6 +521,9 @@ class Variation
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function processUnits(): void
     {
         if (!$unitData = $this->variationEntity->getUnit()) {
@@ -516,6 +541,10 @@ class Variation
         }
     }
 
+    /**
+     * @throws NonNumericValue
+     * @throws NonStringUnitName
+     */
     private function processDimensions(): void
     {
         $dimensionUnit = $this->config->getExportDimensionUnit();
@@ -567,6 +596,9 @@ class Variation
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function getCategoryDetailForCurrentPlentyIdAndLanguage(Category $category): ?CategoryDetails
     {
         /** @var CategoryDetails[] $translatedCategoryDetails */

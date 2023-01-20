@@ -13,7 +13,7 @@ class PimVariationResponse extends IterableResponse implements CollectionInterfa
     use EntityCollection;
 
     /** @var Variation[] */
-    private $pimVariations;
+    private array $pimVariations;
 
     /**
      * @param Variation[] $pimVariations

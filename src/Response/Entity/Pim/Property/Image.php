@@ -9,70 +9,52 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Image extends Entity
 {
-    /** @var int */
-    private $id;
+    private ?int $id;
 
-    /** @var int */
-    private $itemId;
+    private ?int $itemId;
 
-    /** @var string */
-    private $md5Checksum;
+    private ?string $md5Checksum;
 
-    /** @var string */
-    private $md5ChecksumOriginal;
+    private ?string $md5ChecksumOriginal;
 
-    /** @var int */
-    private $width;
+    private ?int $width;
 
-    /** @var int */
-    private $height;
+    private ?int $height;
 
     private ?int $position;
 
-    /** @var string */
-    private $url;
+    private ?string $url;
 
-    /** @var string */
-    private $fileType;
+    private ?string $fileType;
 
-    /** @var string */
-    private $urlMiddle;
+    private ?string $urlMiddle;
 
-    /** @var bool */
-    private $hasLinkedVariations;
+    private ?bool $hasLinkedVariations;
 
-    /** @var string */
-    private $urlPreview;
+    private ?string $urlPreview;
 
     /** @var ImageAttributeValue[]. */
-    private $attributeValueImages = [];
+    private ?array $attributeValueImages;
 
     /** @var ImageName[] */
-    private $names;
+    private ?array $names;
 
     /** @var ImageAvailability[] */
-    private $availabilities;
+    private ?array $availabilities;
 
-    /** @var string */
-    private $type;
+    private ?string $type;
 
-    /** @var int */
-    private $size;
+    private ?int $size;
 
-    /** @var int */
-    private $storageProviderId;
+    private ?int $storageProviderId;
 
-    /** @var string */
-    private $path;
+    private ?string $path;
 
-    /** @var string */
-    private $urlSecondPreview;
+    private ?string $urlSecondPreview;
 
-    /** @var DateTimeInterface */
-    private $createdAt;
+    private ?DateTimeInterface $createdAt;
 
-    /** @var DateTimeInterface */
-    private $updatedAt;
+    private ?DateTimeInterface $updatedAt;
 
     public function __construct(array $data)
     {
@@ -188,10 +170,7 @@ class Image extends Entity
         return $this->urlPreview;
     }
 
-    /**
-     * @return null
-     */
-    public function getAttributeValueImages()
+    public function getAttributeValueImages(): ?array
     {
         return $this->attributeValueImages;
     }

@@ -8,380 +8,257 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Configuration extends Entity
 {
-    /** @var string|null */
-    private $name;
+    private ?string $name;
 
-    /** @var string|null */
-    private $defaultLanguage;
+    private ?string $defaultLanguage;
 
-    /** @var string|null */
-    private $defaultLayout;
+    private ?string $defaultLayout;
 
-    /** @var int|null */
-    private $defaultShippingCountryId;
+    private ?int $defaultShippingCountryId;
 
-    /** @var int|null */
-    private $displayPriceColumn;
+    private ?int $displayPriceColumn;
 
-    /** @var int|null */
-    private $displayPriceNetto;
+    private ?int $displayPriceNetto;
 
-    /** @var int|null */
-    private $doctype;
+    private ?int $doctype;
 
-    /** @var string|null */
-    private $faviconPath;
+    private ?string $faviconPath;
 
-    /** @var int|null */
-    private $frontPageContentPageId;
+    private ?int $frontPageContentPageId;
 
-    /** @var int|null */
-    private $maxLoginAttempts;
+    private ?int $maxLoginAttempts;
 
-    /** @var int|null */
-    private $error404ContentPageId;
+    private ?int $error404ContentPageId;
 
-    /** @var int|null */
-    private $cancellationRightsContentPageId;
+    private ?int $cancellationRightsContentPageId;
 
-    /** @var int|null */
-    private $helpContentPageId;
+    private ?int $helpContentPageId;
 
-    /** @var int|null */
-    private $itemNotFoundContentPageId;
+    private ?int $itemNotFoundContentPageId;
 
-    /** @var int|null */
-    private $privacyPolicyContentPageId;
+    private ?int $privacyPolicyContentPageId;
 
-    /** @var int|null */
-    private $shippingContentPageId;
+    private ?int $shippingContentPageId;
 
-    /** @var int|null */
-    private $termsConditionsContentPageId;
+    private ?int $termsConditionsContentPageId;
 
-    /** @var int|null */
-    private $socialMedia;
+    private ?int $socialMedia;
 
-    /** @var string|null */
-    private $urlFacebook;
+    private ?string $urlFacebook;
 
-    /** @var string|null */
-    private $urlGooglePlus;
+    private ?string $urlGooglePlus;
 
-    /** @var string|null */
-    private $urlTwitter;
+    private ?string $urlTwitter;
 
-    /** @var int|null */
-    private $displayItemOnly4Customer;
+    private ?int $displayItemOnly4Customer;
 
-    /** @var int|null */
-    private $displayItemName;
+    private ?int $displayItemName;
 
-    /** @var int|null */
-    private $attributeVariantCheck;
+    private ?int $attributeVariantCheck;
 
-    /** @var int|null */
-    private $attributeSelectDefaultOption;
+    private ?int $attributeSelectDefaultOption;
 
-    /** @var string|null */
-    private $urlItemCategory;
+    private ?string $urlItemCategory;
 
-    /** @var string|null */
-    private $urlItemContent;
+    private ?string $urlItemContent;
 
-    /** @var string|null */
-    private $urlTitleItemName;
+    private ?string $urlTitleItemName;
 
-    /** @var string|null */
-    private $urlTitleItemContent;
+    private ?string $urlTitleItemContent;
 
-    /** @var string|null */
-    private $urlNeedle;
+    private ?string $urlNeedle;
 
-    /** @var string|null */
-    private $urlFileExtension;
+    private ?string $urlFileExtension;
 
-    /** @var string|null */
-    private $urlLinking;
+    private ?string $urlLinking;
 
     /** @var string[] */
-    private $languageList = [];
+    private array $languageList;
 
-    /** @var string|null */
-    private $domain;
+    private ?string $domain;
 
-    /** @var string|null */
-    private $domainSsl;
+    private ?string $domainSsl;
 
-    /** @var string|null */
-    private $rootDir;
+    private ?string $rootDir;
 
-    /** @var string|null */
-    private $loginMode;
+    private ?string $loginMode;
 
-    /** @var int|null */
-    private $attributesDropDown;
+    private ?int $attributesDropDown;
 
-    /** @var int|null */
-    private $attributeWithMarkup;
+    private ?int $attributeWithMarkup;
 
-    /** @var int|null */
-    private $categoryItemCount;
+    private ?int $categoryItemCount;
 
-    /** @var int|null */
-    private $categoryLevelLimit;
+    private ?int $categoryLevelLimit;
 
-    /** @var int|null */
-    private $currencyConversion;
+    private ?int $currencyConversion;
 
-    /** @var int|null */
-    private $dontSplitItemBundle;
+    private ?int $dontSplitItemBundle;
 
-    /** @var int|null */
-    private $dhlPackstationValidation;
+    private ?int $dhlPackstationValidation;
 
-    /** @var int|null */
-    private $sessionLifetime;
+    private ?int $sessionLifetime;
 
-    /** @var int|null */
-    private $useCharacterCrossSelling;
+    private ?int $useCharacterCrossSelling;
 
-    /** @var int|null */
-    private $useDynamicCrossSelling;
+    private ?int $useDynamicCrossSelling;
 
-    /** @var string|null */
-    private $defaultCurrency;
+    private ?string $defaultCurrency;
 
-    /** @var int|null */
-    private $languageMode;
+    private ?int $languageMode;
 
-    /** @var int|null */
-    private $itemCategorySorting1;
+    private ?int $itemCategorySorting1;
 
-    /** @var int|null */
-    private $itemCategorySorting2;
+    private ?int $itemCategorySorting2;
 
-    /** @var int|null */
-    private $itemSortByMonthlySales;
+    private ?int $itemSortByMonthlySales;
 
-    /** @var string|null */
-    private $itemAvailabilityDisabledList;
+    private ?string $itemAvailabilityDisabledList;
 
     /** @var string|ItemMeasureUnit[]|null */
-    private $itemMeasureUnit;
+    private mixed $itemMeasureUnit;
 
-    /** @var int|null */
-    private $showBasePriceActive;
+    private ?int $showBasePriceActive;
 
-    /** @var int|null */
-    private $jumpPaymentActive;
+    private ?int $jumpPaymentActive;
 
-    /** @var int|null */
-    private $jumpShippingActive;
+    private ?int $jumpShippingActive;
 
-    /** @var int|null */
-    private $showContentTermsFsk;
+    private ?int $showContentTermsFsk;
 
-    /** @var int|null */
-    private $newsletterRegistrationActive;
+    private ?int $newsletterRegistrationActive;
 
-    /** @var int|null */
-    private $minimumOrderValue;
+    private ?int $minimumOrderValue;
 
-    /** @var int|null */
-    private $ipAddressSaveInactive;
+    private ?int $ipAddressSaveInactive;
 
-    /** @var int|null */
-    private $reuseOrderActive;
+    private ?int $reuseOrderActive;
 
-    /** @var int|null */
-    private $editOrderActive;
+    private ?int $editOrderActive;
 
-    /** @var int|null */
-    private $currencySymbol;
+    private ?int $currencySymbol;
 
-    /** @var int|null */
-    private $dhlAllowPackstationActive;
+    private ?int $dhlAllowPackstationActive;
 
-    /** @var int|null */
-    private $dhlLimitOrderAmountForPackstation;
+    private ?int $dhlLimitOrderAmountForPackstation;
 
-    /** @var int|null */
-    private $watchlistActive;
+    private ?int $watchlistActive;
 
-    /** @var int|null */
-    private $itemwishlistActive;
+    private ?int $itemwishlistActive;
 
-    /** @var int|null */
-    private $couponVisibilityActive;
+    private ?int $couponVisibilityActive;
 
-    /** @var int|null */
-    private $itemlistPrice;
+    private ?int $itemlistPrice;
 
-    /** @var int|null */
-    private $itemlistWeight;
+    private ?int $itemlistWeight;
 
-    /** @var int|null */
-    private $schedulerActive;
+    private ?int $schedulerActive;
 
-    /** @var int|null */
-    private $changeEmailActive;
+    private ?int $changeEmailActive;
 
-    /** @var int|null */
-    private $changePasswordActive;
+    private ?int $changePasswordActive;
 
-    /** @var int|null */
-    private $changePasswordSendmail;
+    private ?int $changePasswordSendmail;
 
-    /** @var int|null */
-    private $logoutHiddenActive;
+    private ?int $logoutHiddenActive;
 
-    /** @var int|null */
-    private $displayStatusInactive;
+    private ?int $displayStatusInactive;
 
-    /** @var int|null */
-    private $displayWeightInactive;
+    private ?int $displayWeightInactive;
 
-    /** @var int|null */
-    private $displayInvoiceDownload;
+    private ?int $displayInvoiceDownload;
 
-    /** @var int|null */
-    private $displayShippingDateActive;
+    private ?int $displayShippingDateActive;
 
-    /** @var int|null */
-    private $quickloginValidDays;
+    private ?int $quickloginValidDays;
 
-    /** @var int|null */
-    private $paymentMethodsContentPageId;
+    private ?int $paymentMethodsContentPageId;
 
-    /** @var int|null */
-    private $contactContentPageId;
+    private ?int $contactContentPageId;
 
-    /** @var int|null */
-    private $legalDisclosureContentPageId;
+    private ?int $legalDisclosureContentPageId;
 
-    /** @var int|null */
-    private $bankContentPageId;
+    private ?int $bankContentPageId;
 
-    /** @var array */
-    private $browserLanguage = [];
+    private array $browserLanguage;
 
-    /** @var int|null */
-    private $webstoreId;
+    private ?int $webstoreId;
 
-    /** @var string|null */
-    private $itemSearchEngine;
+    private ?string $itemSearchEngine;
 
-    /** @var int|null */
-    private $itemMaxRatingPoints;
+    private ?int $itemMaxRatingPoints;
 
-    /** @var int|null */
-    private $itemCommentsActive;
+    private ?int $itemCommentsActive;
 
-    /** @var int|null */
-    private $customerLoginMethod;
+    private ?int $customerLoginMethod;
 
-    /** @var int|null */
-    private $documentsActive;
+    private ?int $documentsActive;
 
-    /** @var int|null */
-    private $dynamicExportActive;
+    private ?int $dynamicExportActive;
 
-    /** @var int|null */
-    private $retoureMethod;
+    private ?int $retoureMethod;
 
-    /** @var int|null */
-    private $editSchedulerPaymentMethodActive;
+    private ?int $editSchedulerPaymentMethodActive;
 
-    /** @var int|null */
-    private $showSEPAMandateDownload;
+    private ?int $showSEPAMandateDownload;
 
-    /** @var array */
-    private $defaultShippingCountryList = [];
+    private array $defaultShippingCountryList;
 
-    /** @var int|null */
-    private $useDefaultShippingCountryAsShopCountry;
+    private ?int $useDefaultShippingCountryAsShopCountry;
 
-    /** @var int|null */
-    private $defaultParcelServiceId;
+    private ?int $defaultParcelServiceId;
 
-    /** @var int|null */
-    private $defaultParcelServicePresetId;
+    private ?int $defaultParcelServicePresetId;
 
-    /** @var int|null */
-    private $defaultMethodOfPaymentId;
+    private ?int $defaultMethodOfPaymentId;
 
-    /** @var int|null */
-    private $ignoreCouponMinOrderValueActive;
+    private ?int $ignoreCouponMinOrderValueActive;
 
-    /** @var int|null */
-    private $externalVatCheckInactive;
+    private ?int $externalVatCheckInactive;
 
-    /** @var int|null */
-    private $customerRegistrationCheck;
+    private ?int $customerRegistrationCheck;
 
-    /** @var int|null */
-    private $defaultAccountingLocation;
+    private ?int $defaultAccountingLocation;
 
-    /** @var array|null */
-    private $ebayAccount;
+    private ?array $ebayAccount;
 
-    /** @var int|null */
-    private $itemRatingActive;
+    private ?int $itemRatingActive;
 
-    /** @var string|null */
-    private $itemNewFeedbackVisibility;
+    private ?string $itemNewFeedbackVisibility;
 
-    /** @var int|null */
-    private $itemCustomerNameVisibility;
+    private ?int $itemCustomerNameVisibility;
 
-    /** @var int|null */
-    private $categoryRatingActive;
+    private ?int $categoryRatingActive;
 
-    /** @var int|null */
-    private $categoryMaxRatingPoints;
+    private ?int $categoryMaxRatingPoints;
 
-    /** @var int|null */
-    private $categoryCommentsActive;
+    private ?int $categoryCommentsActive;
 
-    /** @var string|null */
-    private $categoryNewFeedbackVisibility;
+    private ?string $categoryNewFeedbackVisibility;
 
-    /** @var int|null */
-    private $categoryCustomerNameVisibility;
+    private ?int $categoryCustomerNameVisibility;
 
-    /** @var int|null */
-    private $blogRatingActive;
+    private ?int $blogRatingActive;
 
-    /** @var int|null */
-    private $blogMaxRatingPoints;
+    private ?int $blogMaxRatingPoints;
 
-    /** @var int|null */
-    private $blogCommentsActive;
+    private ?int $blogCommentsActive;
 
-    /** @var string|null */
-    private $blogNewFeedbackVisibility;
+    private ?string $blogNewFeedbackVisibility;
 
-    /** @var int|null */
-    private $blogCustomerNameVisibility;
+    private ?int $blogCustomerNameVisibility;
 
-    /** @var int|null */
-    private $feedbackRatingActive;
+    private ?int $feedbackRatingActive;
 
-    /** @var int|null */
-    private $feedbackMaxRatingPoints;
+    private ?int $feedbackMaxRatingPoints;
 
-    /** @var int|null */
-    private $feedbackCommentsActive;
+    private ?int $feedbackCommentsActive;
 
-    /** @var string|null */
-    private $feedbackNewFeedbackVisibility;
+    private ?string $feedbackNewFeedbackVisibility;
 
-    /** @var int|null */
-    private $feedbackCustomerNameVisibility;
+    private ?int $feedbackCustomerNameVisibility;
 
-    /** @var int|null */
-    private $urlTrailingSlash;
+    private ?int $urlTrailingSlash;
 
     public function __construct(array $data)
     {
@@ -925,7 +802,7 @@ class Configuration extends Entity
     /**
      * @return string|ItemMeasureUnit[]|null
      */
-    public function getItemMeasureUnit()
+    public function getItemMeasureUnit(): array|string|null
     {
         return $this->itemMeasureUnit;
     }
@@ -1288,7 +1165,7 @@ class Configuration extends Entity
     /**
      * @return ItemMeasureUnit[]|string|null
      */
-    protected function fetchItemMeasureUnit(array $data)
+    protected function fetchItemMeasureUnit(array $data): array|string|null
     {
         $itemMeasureUnitData = $data['itemMeasureUnit'] ?? null;
 

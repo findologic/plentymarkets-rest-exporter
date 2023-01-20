@@ -31,29 +31,21 @@ class ExporterTest extends TestCase
 
     private const EXPORTER_LOCATION = '/tmp/rest-exporter/';
 
-    /** @var Config */
-    private $config;
+    private Config $config;
 
-    /** @var DummyLogger */
-    private $logger;
+    private ?string $fileNamePrefix;
 
-    /** @var Client|MockObject */
-    private $clientMock;
+    private DummyLogger|MockObject $logger;
 
-    /** @var RegistryService|MockObject */
-    private $registryServiceMock;
+    private Client|MockObject $clientMock;
 
-    /** @var ItemRequest|MockObject */
-    private $itemRequestMock;
+    private RegistryService|MockObject $registryServiceMock;
 
-    /** @var PimVariationRequest|MockObject */
-    private $variationRequestMock;
+    private ItemRequest|MockObject $itemRequestMock;
 
-    /** @var LibFlexportExporter|MockObject */
-    private $fileExporterMock;
+    private PimVariationRequest|MockObject $variationRequestMock;
 
-    /** @var null|string */
-    private $fileNamePrefix;
+    private LibFlexportExporter|MockObject $fileExporterMock;
 
     protected function setUp(): void
     {
@@ -64,6 +56,9 @@ class ExporterTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->registryServiceMock = $this->getMockBuilder(RegistryService::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->itemRequestMock = $this->getMockBuilder(ItemRequest::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->variationRequestMock = $this->getMockBuilder(PimVariationRequest::class)
@@ -285,17 +280,14 @@ class ExporterTest extends TestCase
     {
         $this->clientMock->expects($this->any())->method('send')->willReturnCallback(
             function (RequestInterface $request) {
-                switch (true) {
-                    case $request instanceof ItemRequest:
-                        return $this->getMockResponse('ItemResponse/response.json');
-                    case $request instanceof PimVariationRequest:
-                        return $this->getMockResponse('Pim/Variations/response.json');
-                    default:
-                        throw new InvalidArgumentException(sprintf(
-                            'No client response set up for request class %s.',
-                            get_class($request)
-                        ));
-                }
+                return match (true) {
+                    $request instanceof ItemRequest => $this->getMockResponse('ItemResponse/response.json'),
+                    $request instanceof PimVariationRequest => $this->getMockResponse('Pim/Variations/response.json'),
+                    default => throw new InvalidArgumentException(sprintf(
+                        'No client response set up for request class %s.',
+                        get_class($request)
+                    )),
+                };
             }
         );
     }

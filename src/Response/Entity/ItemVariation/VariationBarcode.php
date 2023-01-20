@@ -8,17 +8,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class VariationBarcode extends Entity
 {
-    /** @var int */
-    private $variationId;
+    private int $variationId;
 
-    /** @var int */
-    private $barcodeId;
+    private int $barcodeId;
 
-    /** @var string */
-    private $code;
+    private string $code;
 
-    /** @var string */
-    private $createdAt;
+    private string $createdAt;
 
     public function __construct(array $data)
     {

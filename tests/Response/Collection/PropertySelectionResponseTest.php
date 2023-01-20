@@ -5,18 +5,20 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Property\Selection\Relation\RelationValue;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 class PropertySelectionResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private $response;
+    private Response $response;
 
-    private $selectionResponse;
+    private PropertySelectionResponse $selectionResponse;
 
     public function setUp(): void
     {

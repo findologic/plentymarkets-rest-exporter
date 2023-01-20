@@ -8,6 +8,6 @@ class PluginConfigurationRequest extends Request
 {
     public function __construct(int $pluginId, int $pluginSetId)
     {
-        parent::__construct('GET', "plugins/{$pluginId}/plugin_sets/{$pluginSetId}/configurations");
+        parent::__construct('GET', "plugins/$pluginId/plugin_sets/$pluginSetId/configurations");
     }
 }

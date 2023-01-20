@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection;
 
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\CollectionInterface;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\IterableResponseInterface;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\EntityCollection;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\IterableResponse;
@@ -16,7 +13,7 @@ class SalesPriceResponse extends IterableResponse implements CollectionInterface
     use EntityCollection;
 
     /** @var SalesPrice[] */
-    private $salesPrices;
+    private array $salesPrices;
 
     /**
      * @param SalesPrice[] $salesPrices

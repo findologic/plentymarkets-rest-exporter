@@ -15,6 +15,7 @@ abstract class Wrapper
      * @param int $total
      * @param ItemResponse $products
      * @param PimVariationResponse $variations
+     * @param PropertySelectionResponse|null $propertySelection
      */
     abstract public function wrap(
         int $start,

@@ -24,16 +24,16 @@ class Property extends Entity
     private ?string $updatedAt;
 
     /** @var Group[] */
-    private array $groups = [];
+    private array $groups;
 
     /** @var Name[] */
-    private array $names = [];
+    private array $names;
 
     /** @var Option[] */
-    private array $options = [];
+    private array $options;
 
     /** @var Amazon[] */
-    private array $amazon = [];
+    private array $amazon;
 
     private bool $skipExport = false;
 

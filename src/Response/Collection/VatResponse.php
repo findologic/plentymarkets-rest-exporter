@@ -13,7 +13,7 @@ class VatResponse extends IterableResponse implements CollectionInterface, Itera
     use EntityCollection;
 
     /** @var VatConfiguration[] */
-    private $vatConfigurations;
+    private array $vatConfigurations;
 
     /**
      * @param VatConfiguration[] $vatConfigurations

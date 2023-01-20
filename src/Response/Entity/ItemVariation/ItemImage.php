@@ -10,80 +10,57 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class ItemImage extends Entity
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var int */
-    private $itemId;
+    private int $itemId;
 
-    /** @var string */
-    private $type;
+    private string $type;
 
-    /** @var string */
-    private $fileType;
+    private string $fileType;
 
-    /** @var string */
-    private $path;
+    private string $path;
 
-    /** @var int */
-    private $position;
+    private int $position;
 
-    /** @var string */
-    private $lastUpdate;
+    private string $lastUpdate;
 
-    /** @var string */
-    private $insert;
+    private string $insert;
 
-    /** @var string */
-    private $md5Checksum;
+    private string $md5Checksum;
 
-    /** @var float */
-    private $width;
+    private float $width;
 
-    /** @var float */
-    private $height;
+    private float $height;
 
-    /** @var float */
-    private $size;
+    private float $size;
 
-    /** @var string */
-    private $storageProviderId;
+    private string $storageProviderId;
 
-    /** @var string */
-    private $md5ChecksumOriginal;
+    private string $md5ChecksumOriginal;
 
-    /** @var string */
-    private $cleanImageName;
+    private string $cleanImageName;
 
-    /** @var string */
-    private $url;
+    private string $url;
 
-    /** @var string */
-    private $urlMiddle;
+    private string $urlMiddle;
 
-    /** @var string */
-    private $urlPreview;
+    private string $urlPreview;
 
-    /** @var string */
-    private $urlSecondPreview;
+    private string $urlSecondPreview;
 
-    /** @var string */
-    private $documentUploadPath;
+    private string $documentUploadPath;
 
-    /** @var string */
-    private $documentUploadPathPreview;
+    private string $documentUploadPathPreview;
 
-    /** @var float */
-    private $documentUploadPreviewWidth;
+    private float $documentUploadPreviewWidth;
 
-    /** @var float */
-    private $documentUploadPreviewHeight;
+    private float $documentUploadPreviewHeight;
 
     /** @var Availability[] */
-    private $availabilities = [];
+    private array $availabilities = [];
 
     /** @var Name[] */
-    private $names = [];
+    private array $names = [];
 
     public function __construct(array $data)
     {

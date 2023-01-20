@@ -17,7 +17,7 @@ class PropertyGroup extends Entity
     private ?string $updatedAt;
 
     /** @var Name[] */
-    private array $names = [];
+    private array $names;
 
     public function __construct(array $data)
     {
@@ -35,15 +35,13 @@ class PropertyGroup extends Entity
             $names[] = $name->getData();
         }
 
-        $data =  [
+        return [
             'id' => $this->id,
             'position' => $this->position,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
             'names' => $names
         ];
-
-        return $data;
     }
 
     public function getId(): ?int

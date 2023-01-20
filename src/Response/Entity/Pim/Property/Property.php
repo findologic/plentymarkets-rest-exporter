@@ -10,7 +10,7 @@ class Property extends Entity
 {
     private ?int $id;
 
-    private array $values = [];
+    private array $values;
 
     private ?PropertyData $propertyData;
 

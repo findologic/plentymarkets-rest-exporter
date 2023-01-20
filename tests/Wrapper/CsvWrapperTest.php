@@ -11,6 +11,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\PlentyShop;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration as WebStoreConfiguration;
@@ -29,30 +30,15 @@ class CsvWrapperTest extends TestCase
 
     private const TEST_EXPORT_PATH = 'some_path';
 
-    /**
-     * @var Exporter|MockObject
-     */
-    private $exporterMock;
+    private CsvWrapper $csvWrapper;
 
-    /**
-     * @var RegistryService|MockObject
-     */
-    private $registryServiceMock;
-
-    /**
-     * @var CsvWrapper
-     */
-    private $csvWrapper;
-
-    /**
-     * @var Config
-     */
     private Config $config;
 
-    /**
-     * @var Logger|MockObject
-     */
-    private $loggerMock;
+    private Exporter|MockObject $exporterMock;
+
+    private RegistryService|MockObject $registryServiceMock;
+
+    private Logger|MockObject $loggerMock;
 
     public function setUp(): void
     {
@@ -103,14 +89,11 @@ class CsvWrapperTest extends TestCase
 
     public function testExportsEachVariationSeparatelyIfConfiguredAndIfAllVariationsHaveAGroupableAttribute()
     {
-        $this->registryServiceMock->method('getPluginConfigurations')
-            ->with('Ceres')
-            ->willReturn(
-                [
-                    'global.enableOldUrlPattern' => false,
-                    'item.variation_show_type' => 'all'
-                ]
-            );
+        $plentyShop = new PlentyShop([
+            PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false,
+            PlentyShop::KEY_ITEM_VARIATION_SHOW_TYPE => 'all'
+        ]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(4))->method('createItem')->willReturnOnConsecutiveCalls(
             new CSVItem(106),
@@ -190,14 +173,11 @@ class CsvWrapperTest extends TestCase
 
     public function testExportsThreeItemsWhenTwoOutOfThreeVariantsHaveGroupableAttributes()
     {
-        $this->registryServiceMock->method('getPluginConfigurations')
-            ->with('Ceres')
-            ->willReturn(
-                [
-                    'global.enableOldUrlPattern' => false,
-                    'item.variation_show_type' => 'all'
-                ]
-            );
+        $plentyShop = new PlentyShop([
+            PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false,
+            PlentyShop::KEY_ITEM_VARIATION_SHOW_TYPE => 'all'
+        ]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(3))->method('createItem')->willReturnOnConsecutiveCalls(
             new CSVItem(106),
@@ -258,14 +238,11 @@ class CsvWrapperTest extends TestCase
 
     public function testExportsTwoItemsWhenOnlyOneOutOfThreeVariantsHasGroupableAttributes()
     {
-        $this->registryServiceMock->method('getPluginConfigurations')
-            ->with('Ceres')
-            ->willReturn(
-                [
-                    'global.enableOldUrlPattern' => false,
-                    'item.variation_show_type' => 'all'
-                ]
-            );
+        $plentyShop = new PlentyShop([
+            PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false,
+            PlentyShop::KEY_ITEM_VARIATION_SHOW_TYPE => 'all'
+        ]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(2))->method('createItem')->willReturnOnConsecutiveCalls(
             new CSVItem(106),
@@ -453,14 +430,11 @@ class CsvWrapperTest extends TestCase
 
         $firstItemData = null;
 
-        $this->registryServiceMock->method('getPluginConfigurations')
-            ->with('Ceres')
-            ->willReturn(
-                [
-                    'global.enableOldUrlPattern' => false,
-                    'item.variation_show_type' => 'all'
-                ]
-            );
+        $plentyShop = new PlentyShop([
+            PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false,
+            PlentyShop::KEY_ITEM_VARIATION_SHOW_TYPE => 'all'
+        ]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
         $this->exporterMock->expects($this->exactly(2))
             ->method('createItem')
             ->willReturnOnConsecutiveCalls(
@@ -526,14 +500,11 @@ class CsvWrapperTest extends TestCase
         $variationResponse = $this->getMockResponse('Pim/Variations/variation_with_groupable_attribute.json');
         $variations = PimVariationsParser::parse($variationResponse);
 
-        $this->registryServiceMock->method('getPluginConfigurations')
-            ->with('Ceres')
-            ->willReturn(
-                [
-                    'global.enableOldUrlPattern' => false,
-                    'item.variation_show_type' => 'all'
-                ]
-            );
+        $plentyShop = new PlentyShop([
+            PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false,
+            PlentyShop::KEY_ITEM_VARIATION_SHOW_TYPE => 'all'
+        ]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $exporterMockCopy = clone $this->exporterMock;
         $registryMockCopy = clone $this->registryServiceMock;
@@ -752,14 +723,11 @@ class CsvWrapperTest extends TestCase
 
     public function testSeparatedVariationsIsGroupedBasedOnTwoGroupableAttributes(): void
     {
-        $this->registryServiceMock->method('getPluginConfigurations')
-            ->with('Ceres')
-            ->willReturn(
-                [
-                    'global.enableOldUrlPattern' => false,
-                    'item.variation_show_type' => 'all'
-                ]
-            );
+        $plentyShop = new PlentyShop([
+            PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false,
+            PlentyShop::KEY_ITEM_VARIATION_SHOW_TYPE => 'all'
+        ]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(5))->method('createItem')->willReturnOnConsecutiveCalls(
             new CSVItem(108),
@@ -846,14 +814,11 @@ class CsvWrapperTest extends TestCase
 
     public function testSeparatedVariationsIsGroupedBasedOnOneGroupableAttribute(): void
     {
-        $this->registryServiceMock->method('getPluginConfigurations')
-            ->with('Ceres')
-            ->willReturn(
-                [
-                    'global.enableOldUrlPattern' => false,
-                    'item.variation_show_type' => 'all'
-                ]
-            );
+        $plentyShop = new PlentyShop([
+            PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false,
+            PlentyShop::KEY_ITEM_VARIATION_SHOW_TYPE => 'all'
+        ]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(4))->method('createItem')->willReturnOnConsecutiveCalls(
             new CSVItem(133),

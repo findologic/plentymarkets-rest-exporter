@@ -64,6 +64,9 @@ class Config
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public static function fromArray(array $data, bool $debug = false): self
     {
         $shop = array_values($data)[0] ?? null;
@@ -307,10 +310,7 @@ class Config
         $this->exportOrdernumberVariantBarcodes = $exportOrdernumberVariantBarcodes;
     }
 
-    /**
-     * @var string|int|float $id
-     */
-    public function setExportReferrerId($id): void
+    public function setExportReferrerId(mixed $id): void
     {
         $this->exportReferrerId = self::getFloatCastExportReferrerId($id);
     }

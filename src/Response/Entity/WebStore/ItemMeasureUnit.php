@@ -9,6 +9,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 class ItemMeasureUnit extends Entity
 {
     private string $name;
+
     private ?array $options;
 
     public function __construct(string $name, array $data)

@@ -8,17 +8,13 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Attribute extends Entity
 {
-    /** @var int */
-    private $id;
+    private ?int $id;
 
-    /** @var int */
-    private $valueSetId;
+    private ?int $valueSetId;
 
-    /** @var int */
-    private $valueId;
+    private ?int $valueId;
 
-    /** @var AttributeValue */
-    private $value;
+    private ?AttributeValue $value;
 
     public function __construct(array $data)
     {

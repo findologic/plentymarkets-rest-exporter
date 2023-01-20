@@ -9,212 +9,146 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class Base extends Entity
 {
-    /** @var bool */
-    private $isMain;
+    private ?bool $isMain;
 
-    /** @var int|null */
-    private $mainVariationId;
+    private ?int $mainVariationId;
 
-    /** @var int */
-    private $itemId;
+    private int $itemId;
 
-    /** @var int|null */
-    private $position;
+    private ?int $position;
 
-    /** @var bool */
-    private $isActive;
+    private ?bool $isActive;
 
-    /** @var string */
-    private $number;
+    private ?string $number;
 
-    /** @var string|null */
-    private $model;
+    private ?string $model;
 
-    /** @var string */
-    private $externalId;
+    private ?string $externalId;
 
-    /** @var int */
-    private $availability;
+    private ?int $availability;
 
-    /** @var DateTimeInterface|null */
-    private $estimatedAvailableAt;
+    private ?DateTimeInterface $estimatedAvailableAt;
 
-    /** @var float */
-    private $purchasePrice;
+    private ?float $purchasePrice;
 
-    /** @var float|null */
-    private $movingAveragePrice;
+    private ?float $movingAveragePrice;
 
-    /** @var string|null */
-    private $priceCalculationId;
+    private ?string $priceCalculationId;
 
     /** @var null Unknown data. */
     private $picking = null;
 
-    /** @var int */
-    private $stockLimitation;
+    private ?int $stockLimitation;
 
-    /** @var bool */
-    private $isVisibleIfNetStockIsPositive;
+    private ?bool $isVisibleIfNetStockIsPositive;
 
-    /** @var bool */
-    private $isInvisibleIfNetStockIsNotPositive;
+    private ?bool $isInvisibleIfNetStockIsNotPositive;
 
-    /** @var bool */
-    private $isAvailableIfNetStockIsPositive;
+    private ?bool $isAvailableIfNetStockIsPositive;
 
-    /** @var bool */
-    private $isUnavailableIfNetStockIsNotPositive;
+    private ?bool $isUnavailableIfNetStockIsNotPositive;
 
-    /** @var bool */
-    private $isVisibleInListIfNetStockIsPositive;
+    private ?bool $isVisibleInListIfNetStockIsPositive;
 
-    /** @var bool */
-    private $isInvisibleInListIfNetStockIsNotPositive;
+    private ?bool $isInvisibleInListIfNetStockIsNotPositive;
 
-    /** @var int */
-    private $mainWarehouseId;
+    private ?int $mainWarehouseId;
 
-    /** @var int */
-    private $maximumOrderQuantity;
+    private ?int $maximumOrderQuantity;
 
-    /** @var int|null */
-    private $minimumOrderQuantity;
+    private ?int $minimumOrderQuantity;
 
-    /** @var int|null */
-    private $intervalOrderQuantity;
+    private ?int $intervalOrderQuantity;
 
-    /** @var DateTimeInterface|null */
-    private $availableUntil;
+    private ?DateTimeInterface $availableUntil;
 
-    /** @var DateTimeInterface|null */
-    private $releasedAt;
+    private ?DateTimeInterface $releasedAt;
 
-    /** @var string|null */
-    private $name;
+    private ?string $name;
 
-    /** @var int */
-    private $weightG;
+    private ?int $weightG;
 
-    /** @var int */
-    private $weightNetG;
+    private ?int $weightNetG;
 
-    /** @var int */
-    private $widthMM;
+    private ?int $widthMM;
 
-    /** @var int */
-    private $lengthMM;
+    private ?int $lengthMM;
 
-    /** @var int */
-    private $heightMM;
+    private ?int $heightMM;
 
-    /** @var float */
-    private $extraShippingCharge1;
+    private ?float $extraShippingCharge1;
 
-    /** @var float */
-    private $extraShippingCharge2;
+    private ?float $extraShippingCharge2;
 
-    /** @var int */
-    private $unitsContained;
+    private ?int $unitsContained;
 
-    /** @var int|null */
-    private $palletTypeId;
+    private ?int $palletTypeId;
 
-    /** @var int */
-    private $packingUnits;
+    private ?int $packingUnits;
 
-    /** @var int */
-    private $packingUnitTypeId;
+    private ?int $packingUnitTypeId;
 
-    /** @var float */
-    private $transportationCosts;
+    private ?float $transportationCosts;
 
-    /** @var float */
-    private $storageCosts;
+    private ?float $storageCosts;
 
-    /** @var int */
-    private $customs;
+    private ?int $customs;
 
-    /** @var int */
-    private $operatingCosts;
+    private ?int $operatingCosts;
 
-    /** @var int|null */
-    private $vatId;
+    private ?int $vatId;
 
-    /** @var string|null */
-    private $bundleType;
+    private ?string $bundleType;
 
-    /** @var int */
-    private $automaticClientVisibility;
+    private ?int $automaticClientVisibility;
 
-    /** @var int */
-    private $automaticListVisibility;
+    private ?int $automaticListVisibility;
 
-    /** @var bool */
-    private $isHiddenInCategoryList;
+    private ?bool $isHiddenInCategoryList;
 
-    /** @var float|null */
-    private $defaultShippingCosts;
+    private ?float $defaultShippingCosts;
 
-    /** @var bool */
-    private $mayShowUnitPrice;
+    private ?bool $mayShowUnitPrice;
 
-    /** @var int|null */
-    private $parentVariationId;
+    private ?int $parentVariationId;
 
-    /** @var int|null */
-    private $parentVariationQuantity;
+    private ?int $parentVariationQuantity;
 
-    /** @var int|null */
-    private $singleItemCount;
+    private ?int $singleItemCount;
 
-    /** @var bool|null */
-    private $hasCalculatedBundleWeight;
+    private ?bool $hasCalculatedBundleWeight;
 
-    /** @var bool|null */
-    private $hasCalculatedBundleNetWeight;
+    private ?bool $hasCalculatedBundleNetWeight;
 
-    /** @var bool|null */
-    private $hasCalculatedBundlePurchasePrice;
+    private ?bool $hasCalculatedBundlePurchasePrice;
 
-    /** @var bool|null */
-    private $hasCalculatedBundleMovingAveragePrice;
+    private ?bool $hasCalculatedBundleMovingAveragePrice;
 
-    /** @var int|null */
-    private $customsTariffNumber;
+    private ?int $customsTariffNumber;
 
-    /** @var bool */
-    private $categoriesInherited;
+    private ?bool $categoriesInherited;
 
-    /** @var bool */
-    private $referrerInherited;
+    private ?bool $referrerInherited;
 
-    /** @var bool */
-    private $clientsInherited;
+    private ?bool $clientsInherited;
 
-    /** @var bool */
-    private $salesPricesInherited;
+    private ?bool $salesPricesInherited;
 
-    /** @var bool */
-    private $supplierInherited;
+    private ?bool $supplierInherited;
 
-    /** @var bool */
-    private $warehousesInherited;
+    private ?bool $warehousesInherited;
 
-    /** @var bool */
-    private $propertiesInherited;
+    private ?bool $propertiesInherited;
 
-    /** @var bool */
-    private $tagsInherited;
+    private ?bool $tagsInherited;
 
-    /** @var BaseItemDetails */
-    private $item;
+    private ?BaseItemDetails $item;
 
     /** @var Characteristic[] */
-    private $characteristics;
+    private array $characteristics;
 
     /** @var Image[] */
-    private $images;
+    private array $images;
 
     public function __construct(array $data)
     {
@@ -513,27 +447,27 @@ class Base extends Entity
         return $this->name;
     }
 
-    public function getWeightG(): int
+    public function getWeightG(): ?int
     {
         return $this->weightG;
     }
 
-    public function getWeightNetG(): int
+    public function getWeightNetG(): ?int
     {
         return $this->weightNetG;
     }
 
-    public function getWidthMM(): int
+    public function getWidthMM(): ?int
     {
         return $this->widthMM;
     }
 
-    public function getLengthMM(): int
+    public function getLengthMM(): ?int
     {
         return $this->lengthMM;
     }
 
-    public function getHeightMM(): int
+    public function getHeightMM(): ?int
     {
         return $this->heightMM;
     }

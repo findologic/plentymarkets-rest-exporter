@@ -13,7 +13,7 @@ class AttributeResponse extends IterableResponse implements CollectionInterface,
     use EntityCollection;
 
     /** @var Attribute[] */
-    private $attributes;
+    private array $attributes;
 
     /**
      * @param Attribute[] $attributes

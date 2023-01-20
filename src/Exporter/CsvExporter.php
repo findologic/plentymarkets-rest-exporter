@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 
+use Exception;
 use FINDOLOGIC\Export\Exporter as LibflexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
@@ -14,6 +15,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\CsvWrapper;
+use Psr\Cache\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
 class CsvExporter extends Exporter
@@ -64,6 +66,8 @@ class CsvExporter extends Exporter
      * @param ItemResponse $products
      * @param PimVariationResponse $variations
      * @param PropertySelectionResponse|null $propertySelection
+     * @throws Exception
+     * @throws InvalidArgumentException
      */
     protected function wrapData(
         int $totalCount,

@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ManufacturerResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 class ManufacturerResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private $response;
+    private Response $response;
 
-    private $manufacturerResponse;
+    private ManufacturerResponse $manufacturerResponse;
 
     public function setUp(): void
     {

@@ -13,7 +13,7 @@ class PluginFromSetResponse extends Response implements CollectionInterface
     use EntityCollection;
 
     /** @var Plugin[] */
-    private $plugins = [];
+    private array $plugins;
 
     /**
      * @param Plugin[] $plugins

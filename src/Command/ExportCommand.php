@@ -8,6 +8,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Log4Php\Configurators\LoggerConfigurationAdapterXML;
 use Log4Php\Logger;
 use Psr\Log\LoggerInterface;
@@ -30,17 +31,13 @@ class ExportCommand extends Command
 
     protected static $defaultName = 'export:start';
 
-    /** @var LoggerInterface */
-    private $internalLogger;
+    private LoggerInterface $internalLogger;
 
-    /** @var LoggerInterface */
-    private $customerLogger;
+    private LoggerInterface $customerLogger;
 
-    /** @var Exporter|null */
-    private $exporter;
+    private ?Exporter $exporter;
 
-    /** @var Client|null */
-    private $client;
+    private ?Client $client;
 
     public function __construct(
         ?LoggerInterface $internalLogger = null,
@@ -90,7 +87,10 @@ class ExportCommand extends Command
         );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    /**
+     * @throws GuzzleException
+     */
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 

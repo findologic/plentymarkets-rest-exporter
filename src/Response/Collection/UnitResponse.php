@@ -13,7 +13,7 @@ class UnitResponse extends IterableResponse implements CollectionInterface, Iter
     use EntityCollection;
 
     /** @var Unit[] */
-    private $units;
+    private array $units;
 
     /**
      * @param Unit[] $units

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 
+use Exception;
 use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
@@ -15,12 +16,11 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionRe
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductResponseItem;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
+use Psr\Cache\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
 class CsvWrapper extends Wrapper
 {
-    public const VARIANT_MODE_ALL = 'all';
-
     protected string $exportPath;
 
     protected ?string $fileNamePrefix;
@@ -61,6 +61,9 @@ class CsvWrapper extends Wrapper
 
     /**
      * @inheritDoc
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function wrap(
         int $start,
@@ -138,6 +141,9 @@ class CsvWrapper extends Wrapper
 
     /**
      * @param Variation[] $productVariations
+     *
+     * @throws Exception
+     * @throws InvalidArgumentException
      */
     private function wrapItem(
         ProductEntity $product,
@@ -174,10 +180,11 @@ class CsvWrapper extends Wrapper
      * attributes are exported separately if the "Item view" > "Show variations by type" Ceres config is set to "All".
      *
      * @param Variation[] $productVariations
+     * @throws InvalidArgumentException
      */
     private function splitVariationsByGroupability(array $productVariations): array
     {
-        if (!$this->shouldExportGroupableAttributeVariantsSeparately()) {
+        if (!$this->registryService->getPlentyShop()->shouldExportGroupableAttributeVariantsSeparately()) {
             return [$productVariations, []];
         }
 
@@ -198,17 +205,6 @@ class CsvWrapper extends Wrapper
         }
 
         return [$groupedVariations, $separateVariations];
-    }
-
-    private function shouldExportGroupableAttributeVariantsSeparately(): bool
-    {
-        $config = $this->registryService->getPluginConfigurations('Ceres');
-
-        if (!isset($config['item.variation_show_type'])) {
-            return true;
-        }
-
-        return $config['item.variation_show_type'] === self::VARIANT_MODE_ALL;
     }
 
     private function shouldExportProduct(ProductResponseItem $product, PimVariationResponse $variations): bool

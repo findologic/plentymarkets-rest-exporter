@@ -9,29 +9,22 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class PropertyRelation extends Entity
 {
-    /** @var int */
-    private $id;
+    private ?int $id;
+    
+    private ?int $propertyId;
 
-    /** @var int */
-    private $propertyId;
-
-    /** @var int|null */
-    private $relationTargetId;
+    private ?int $relationTargetId;
 
     /** @var PropertyRelationValue[] */
-    private $values;
+    private array $values;
 
-    /** @var int|null */
-    private $relationTypeIdentifier;
+    private ?int $relationTypeIdentifier;
 
-    /** @var int */
-    private $selectionRelationId;
+    private ?int $selectionRelationId;
 
-    /** @var DateTimeInterface */
-    private $createdAt;
+    private ?DateTimeInterface $createdAt;
 
-    /** @var DateTimeInterface */
-    private $updatedAt;
+    private ?DateTimeInterface $updatedAt;
 
     public function __construct(array $data)
     {

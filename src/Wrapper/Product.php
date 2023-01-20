@@ -7,6 +7,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use DateTime;
+use Exception;
 use FINDOLOGIC\Export\Data\Attribute;
 use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Data\Keyword;
@@ -25,36 +26,31 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration 
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 use GuzzleHttp\Psr7\Uri;
+use PhpUnitsOfMeasure\Exception\NonNumericValue;
+use PhpUnitsOfMeasure\Exception\NonStringUnitName;
+use Psr\Cache\InvalidArgumentException;
 
 class Product
 {
     public const WRAP_MODE_DEFAULT = 0;
-
     public const WRAP_MODE_SEPARATE_VARIATIONS = 1;
 
-    /** @var Item */
-    private $item;
+    private Item $item;
 
-    /** @var Config */
-    private $config;
+    private Config $config;
 
-    /** @var RegistryService */
-    private $registryService;
+    private RegistryService $registryService;
 
-    /** @var ProductEntity */
-    private $productEntity;
+    private ProductEntity $productEntity;
 
     /** @var PimVariation[] */
-    private $variationEntities;
+    private array $variationEntities;
 
-    /** @var string|null */
-    private $reason = null;
+    private ?string $reason = null;
 
-    /** @var StoreConfiguration  */
-    private $storeConfiguration;
+    private StoreConfiguration $storeConfiguration;
 
-    /** @var Exporter */
-    private $exporter;
+    private Exporter $exporter;
 
     private int $wrapMode;
 
@@ -68,6 +64,7 @@ class Product
 
     /**
      * @param PimVariation[] $variationEntities
+     * @throws InvalidArgumentException
      */
     public function __construct(
         Exporter $exporter,
@@ -89,8 +86,8 @@ class Product
         $this->storeConfiguration = $storeConfiguration;
         $this->wrapMode = $wrapMode;
         $this->variationGroupKey = $variationGroupKey;
-        $this->plentyShopConfig = $this->registryService->getPluginConfigurations('Ceres');
         $this->propertySelection = $propertySelection;
+        $this->plentyShopConfig = $this->registryService->getPluginConfigurations('Ceres');
     }
 
     /**
@@ -101,9 +98,9 @@ class Product
      *   * Settings do not allow the product to be exported.
      *   * Product has no variants.
      *
+     * @throws Exception
+     * @throws InvalidArgumentException
      * @see Product::getReason() To get the reason why the product could not be exported.
-     *
-     * @return Item|null
      */
     public function processProductData(): ?Item
     {
@@ -161,6 +158,9 @@ class Product
         return $this->reason;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     protected function setTexts(): void
     {
         if (!$this->storeConfiguration->getDisplayItemName()) {
@@ -191,6 +191,11 @@ class Product
         }
     }
 
+    /**
+     * @throws NonNumericValue
+     * @throws NonStringUnitName
+     * @throws InvalidArgumentException
+     */
     protected function processVariations(bool $checkAvailability = true): int
     {
         $itemHasImage = false;
@@ -222,7 +227,8 @@ class Product
 
             $variation->processData();
 
-            if (!$itemHasImage && $variation->getImage() && $this->registryService->shouldUseLegacyCallistoUrl()) {
+            $useCallistoUrl = $this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl();
+            if (!$itemHasImage && $variation->getImage() && $useCallistoUrl) {
                 $this->item->addImage($variation->getImage());
                 $itemHasImage = true;
             }
@@ -231,7 +237,7 @@ class Product
                 $defaultImage = $variation->getImage();
             }
 
-            if (!$this->registryService->shouldUseLegacyCallistoUrl() && $variation->getPrice() !== 0.0) {
+            if (!$useCallistoUrl && $variation->getPrice() !== 0.0) {
                 $cheapestVariations->addVariation($variation);
             }
 
@@ -310,13 +316,13 @@ class Product
 
         if ($baseUnit) {
             $baseUnitProperty = new Property('base_unit');
-            $baseUnitProperty->addValue((string)$baseUnit);
+            $baseUnitProperty->addValue($baseUnit);
             $this->item->addProperty($baseUnitProperty);
         }
 
         if ($packageSize) {
             $packageSizeProperty = new Property('package_size');
-            $packageSizeProperty->addValue((string)$packageSize);
+            $packageSizeProperty->addValue($packageSize);
             $this->item->addProperty($packageSizeProperty);
         }
 
@@ -359,6 +365,9 @@ class Product
         return true;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     protected function addManufacturer(): void
     {
         $manufacturerId = $this->productEntity->getManufacturerId();
@@ -384,8 +393,8 @@ class Product
     protected function addFreeTextFields(): void
     {
         foreach (range(1, 20) as $field) {
-            $fieldName = 'free' . (string)$field;
-            $getter = 'getFree' . (string)$field;
+            $fieldName = 'free' . $field;
+            $getter = 'getFree' . $field;
 
             $value = (string)$this->productEntity->{$getter}();
             if (trim($value) === '' || mb_strlen($value) > DataHelper::ATTRIBUTE_CHARACTER_LIMIT) {
@@ -396,15 +405,21 @@ class Product
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function buildProductUrl(string $urlPath): string
     {
-        if ($this->registryService->shouldUseLegacyCallistoUrl()) {
+        if ($this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl()) {
             return $this->getCallistoUrl($urlPath);
         } else {
             return $this->getPlentyShopUrl($urlPath);
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function getCallistoUrl(string $urlPath): string
     {
         return sprintf(
@@ -417,6 +432,9 @@ class Product
         );
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function getPlentyShopUrl(string $urlPath): string
     {
         $productUrl = sprintf(
@@ -428,10 +446,8 @@ class Product
             $this->productEntity->getId(),
         );
 
-        if (isset($this->plentyShopConfig['item.show_please_select'])) {
-            if (Utils::filterBoolean($this->plentyShopConfig['item.show_please_select'])) {
-                return $productUrl;
-            }
+        if ($this->registryService->getPlentyShop()->getItemShowPleaseSelect()) {
+            return $productUrl;
         }
 
         $cheapestVariationId = ($this->cheapestVariationId !== null) ?
@@ -443,6 +459,9 @@ class Product
         return sprintf($productUrl . '_%s', $variationId);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function getWebStoreHost(): string
     {
         $rawUri = $this->registryService->getWebStore()->getConfiguration()->getDomainSsl() ?? '';
@@ -454,8 +473,6 @@ class Product
     /**
      * Returns the language URL prefix. This may be relevant for multiple channels.
      * An empty string may be returned if the default store language is already the exported language.
-     *
-     * @return string
      */
     private function getLanguageUrlPrefix(): ?string
     {
@@ -467,7 +484,7 @@ class Product
     }
 
     /**
-     * Returns true if the language of the webStore is the default language. Otherwise false may be returned.
+     * Returns true if the language of the webStore is the default language. Otherwise, false may be returned.
      *
      * @return bool
      */
@@ -490,7 +507,7 @@ class Product
         $ordernumbers = [];
 
         if ($this->config->getExportOrdernumberVariantNumber()) {
-            $ordernumbers[] = (string)$variation->getNumber();
+            $ordernumbers[] = $variation->getNumber();
         }
 
         if ($this->config->getExportOrdernumberVariantModel()) {
@@ -514,7 +531,7 @@ class Product
         return $ordernumbers;
     }
 
-    private function addOrdernumber(string $ordernumber)
+    private function addOrdernumber(string $ordernumber): void
     {
         if (trim($ordernumber) === '') {
             return;

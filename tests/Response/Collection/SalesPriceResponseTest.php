@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Response\Collection;
 
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\SalesPriceParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\SalesPriceResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\Country;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\Currency;
@@ -12,15 +13,16 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\CustomerClas
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\Name;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\SalesPrice\Referrer;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 class SalesPriceResponseTest extends TestCase
 {
     use ResponseHelper;
 
-    private $response;
+    private Response $response;
 
-    private $salesPriceResponse;
+    private SalesPriceResponse $salesPriceResponse;
 
     public function setUp(): void
     {

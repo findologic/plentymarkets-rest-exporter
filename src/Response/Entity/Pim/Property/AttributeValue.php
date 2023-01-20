@@ -9,47 +9,34 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class AttributeValue extends Entity
 {
-    /** @var int */
-    private $id;
+    private ?int $id;
 
-    /** @var int */
-    private $attributeId;
+    private ?int $attributeId;
 
-    /** @var int */
-    private $position;
+    private ?int $position;
 
-    /** @var string */
-    private $image;
+    private ?string $image;
 
-    /** @var string */
-    private $comment;
+    private ?string $comment;
 
     /** @var AttributeValueName[] */
-    private $names;
+    private array $names;
 
-    /** @var string */
-    private $backendName;
+    private ?string $backendName;
 
-    /** @var string */
-    private $amazonValue;
+    private ?string $amazonValue;
 
-    /** @var string */
-    private $ottoValue;
+    private ?string $ottoValue;
 
-    /** @var string */
-    private $neckermannAtEpValue;
+    private ?string $neckermannAtEpValue;
 
-    /** @var string */
-    private $laRedouteValue;
+    private ?string $laRedouteValue;
 
-    /** @var string */
-    private $tracdelightValue;
+    private ?string $tracdelightValue;
 
-    /** @var float */
-    private $percentageDistribution;
+    private ?float $percentageDistribution;
 
-    /** @var DateTimeInterface */
-    private $updatedAt;
+    private ?DateTimeInterface $updatedAt;
 
     public function __construct(array $data)
     {

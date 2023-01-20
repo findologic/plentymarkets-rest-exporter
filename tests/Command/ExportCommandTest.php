@@ -26,21 +26,13 @@ class ExportCommandTest extends TestCase
     use ResponseHelper;
     use DirectoryAware;
 
-    private $application;
+    private Application $application;
 
-    /** @var Exporter|MockObject|null */
-    private $exportMock;
+    private Exporter|MockObject|null $exportMock;
 
-    /** @var MockHandler */
-    private $mockHandler;
+    private LoggerInterface $logger;
 
-    /** @var Client|null */
-    private $clientMock;
-
-    /** @var LoggerInterface */
-    private $logger;
-
-    private $command;
+    private ExportCommand $command;
 
     protected function setUp(): void
     {
@@ -80,7 +72,6 @@ class ExportCommandTest extends TestCase
     public function testExportDoesNotStartWhenFileAlreadyExists(): void
     {
         $this->createTestLog();
-        $this->command = new ExportCommand();
         $this->createTestCsv();
         $this->setUpCommandMocks();
 
@@ -144,18 +135,18 @@ class ExportCommandTest extends TestCase
 
     private function setUpCommandMocks(): void
     {
-        $this->mockHandler = new MockHandler([
+        $mockHandler = new MockHandler([
             $this->getMockResponse('AccountResponse/response.json')
         ]);
 
-        $handlerStack = HandlerStack::create($this->mockHandler);
-        $this->clientMock = new Client(['handler' => $handlerStack]);
+        $handlerStack = HandlerStack::create($mockHandler);
+        $clientMock = new Client(['handler' => $handlerStack]);
 
         $this->exportMock = $this->getMockBuilder(Exporter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->command = new ExportCommand($this->logger, $this->logger, $this->exportMock, $this->clientMock);
+        $this->command = new ExportCommand($this->logger, $this->logger, $this->exportMock, $clientMock);
 
         $this->application->add($this->command);
     }

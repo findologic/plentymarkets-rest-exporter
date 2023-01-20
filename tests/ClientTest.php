@@ -27,6 +27,7 @@ use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
 class ClientTest extends TestCase
 {
@@ -34,11 +35,9 @@ class ClientTest extends TestCase
     use RequestHelper;
     use ResponseHelper;
 
-    /** @var GuzzleClient|MockObject */
-    private $guzzleClientMock;
+    private GuzzleClient|MockObject $guzzleClientMock;
 
-    /** @var Config */
-    private $config;
+    private Config $config;
 
     public function setUp(): void
     {
@@ -53,7 +52,7 @@ class ClientTest extends TestCase
         return new Client($this->guzzleClientMock, $this->config);
     }
 
-    private function getDefaultRequest($overrideUri = null, array $params = []): Request
+    private function getDefaultRequest($overrideUri = null): Request
     {
         $uri = $overrideUri ?? sprintf('https://%s/rest/webstores', $this->config->getDomain());
 
@@ -361,7 +360,7 @@ class ClientTest extends TestCase
         return $request;
     }
 
-    private function getWebShopRequest(): Request
+    private function getWebShopRequest(): RequestInterface
     {
         $uri = sprintf('https://%s/rest/webstores', $this->getDomain());
 

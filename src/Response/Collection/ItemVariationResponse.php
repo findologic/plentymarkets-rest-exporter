@@ -13,7 +13,7 @@ class ItemVariationResponse extends IterableResponse implements CollectionInterf
     use EntityCollection;
 
     /** @var ItemVariation[] */
-    private $itemVariations;
+    private array $itemVariations;
 
     /**
      * @param ItemVariation[] $itemVariations

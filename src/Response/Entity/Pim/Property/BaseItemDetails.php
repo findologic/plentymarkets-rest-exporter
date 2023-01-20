@@ -9,182 +9,123 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Entity;
 
 class BaseItemDetails extends Entity
 {
-    /** @var int */
-    private $id;
+    private ?int $id;
 
-    /** @var int */
-    private $position;
+    private ?int $position;
 
-    /** @var string */
-    private $addCmsPage;
+    private ?string $addCmsPage;
 
-    /** @var int */
-    private $condition;
+    private ?int $condition;
 
-    /** @var string|null */
-    private $free1;
+    private ?string $free1;
 
-    /** @var string|null */
-    private $free2;
+    private ?string $free2;
 
-    /** @var string|null */
-    private $free3;
+    private ?string $free3;
 
-    /** @var string|null */
-    private $free4;
+    private ?string $free4;
 
-    /** @var string|null */
-    private $free5;
+    private ?string $free5;
 
-    /** @var string|null */
-    private $free6;
+    private ?string $free6;
 
-    /** @var string|null */
-    private $free7;
+    private ?string $free7;
 
-    /** @var string|null */
-    private $free8;
+    private ?string $free8;
 
-    /** @var string|null */
-    private $free9;
+    private ?string $free9;
 
-    /** @var string|null */
-    private $free10;
+    private ?string $free10;
 
-    /** @var string|null */
-    private $free11;
+    private ?string $free11;
 
-    /** @var string|null */
-    private $free12;
+    private ?string $free12;
 
-    /** @var string|null */
-    private $free13;
+    private ?string $free13;
 
-    /** @var string|null */
-    private $free14;
+    private ?string $free14;
 
-    /** @var string|null */
-    private $free15;
+    private ?string $free15;
 
-    /** @var string|null */
-    private $free16;
+    private ?string $free16;
 
-    /** @var string|null */
-    private $free17;
+    private ?string $free17;
 
-    /** @var string|null */
-    private $free18;
+    private ?string $free18;
 
-    /** @var string|null */
-    private $free19;
+    private ?string $free19;
 
-    /** @var string|null */
-    private $free20;
+    private ?string $free20;
 
-    /** @var string */
-    private $gimahhot;
+    private ?string $gimahhot;
 
-    /** @var int */
-    private $storeSpecial;
+    private ?int $storeSpecial;
 
-    /** @var int|null */
-    private $ownerId;
+    private ?int $ownerId;
 
-    /** @var int|null */
-    private $manufacturerId;
+    private ?int $manufacturerId;
 
-    /** @var int|null */
-    private $producingCountryId;
+    private ?int $producingCountryId;
 
-    /** @var float */
-    private $revenueAccount;
+    private ?float $revenueAccount;
 
-    /** @var int */
-    private $couponRestriction;
+    private ?int $couponRestriction;
 
-    /** @var int */
-    private $conditionApi;
+    private ?int $conditionApi;
 
-    /** @var bool */
-    private $isSubscribable;
+    private ?bool $isSubscribable;
 
-    /** @var int */
-    private $amazonFbaPlatform;
+    private ?int $amazonFbaPlatform;
 
-    /** @var bool */
-    private $isShippableByAmazon;
+    private ?bool $isShippableByAmazon;
 
-    /** @var int */
-    private $amazonProductType;
+    private ?int $amazonProductType;
 
-    /** @var string */
-    private $amazonFedas;
+    private ?string $amazonFedas;
 
-    /** @var int|null */
-    private $ebayPresetId;
+    private ?int $ebayPresetId;
 
-    /** @var int|null */
-    private $ebayCategory;
+    private ?int $ebayCategory;
 
-    /** @var int|null */
-    private $ebayCategory2;
+    private ?int $ebayCategory2;
 
-    /** @var int|null */
-    private $ebayStoreCategory;
+    private ?int $ebayStoreCategory;
 
-    /** @var int|null */
-    private $ebayStoreCategory2;
+    private ?int $ebayStoreCategory2;
 
-    /** @var int */
-    private $rakutenCategoryId;
+    private ?int $rakutenCategoryId;
 
-    /** @var int */
-    private $flagOne;
+    private ?int $flagOne;
 
-    /** @var int */
-    private $flagTwo;
+    private ?int $flagTwo;
 
-    /** @var int */
-    private $ageRestriction;
+    private ?int $ageRestriction;
 
-    /** @var int */
-    private $feedback;
+    private ?int $feedback;
 
-    /** @var string */
-    private $itemType;
+    private ?string $itemType;
 
-    /** @var int */
-    private $stockType;
+    private ?int $stockType;
 
-    /** @var string */
-    private $sitemapPublished;
+    private ?string $sitemapPublished;
 
-    /** @var bool */
-    private $isSerialNumber;
+    private ?bool $isSerialNumber;
 
-    /** @var bool */
-    private $isShippingPackage;
+    private ?bool $isShippingPackage;
 
-    /** @var int */
-    private $maximumOrderQuantity;
+    private ?int $maximumOrderQuantity;
 
-    /** @var int */
-    private $variationCount;
+    private ?int $variationCount;
 
-    /** @var string */
-    private $customsTariffNumber;
+    private ?string $customsTariffNumber;
 
-    /** @var int */
-    private $mainVariationId;
+    private ?int $mainVariationId;
 
-    /** @var bool */
-    private $inactive;
+    private ?bool $inactive;
 
-    /** @var DateTimeInterface */
-    private $createdAt;
+    private ?DateTimeInterface $createdAt;
 
-    /** @var DateTimeInterface */
-    private $updatedAt;
+    private ?DateTimeInterface $updatedAt;
 
     public function __construct(array $data)
     {

@@ -6,6 +6,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 
 use Carbon\Carbon;
 use DateTime;
+use DateTimeInterface;
 use FINDOLOGIC\Export\Data\Attribute;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
@@ -17,6 +18,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\PlentyShop;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
@@ -39,23 +41,18 @@ class ProductTest extends TestCase
 
     private const AVAILABLE_PROPERTIES = ['price_id', 'variation_id', 'base_unit', 'package_size'];
 
-    /** @var Exporter|MockObject */
-    private $exporterMock;
+    private Exporter|MockObject $exporterMock;
 
-    /** @var Config */
-    private $config;
+    private Config $config;
 
-    /** @var Item|MockObject */
-    private $itemMock;
+    private Item|MockObject $itemMock;
 
-    /** @var Configuration|MockObject */
-    private $storeConfigurationMock;
+    private Configuration|MockObject $storeConfigurationMock;
 
-    /** @var RegistryService|MockObject */
-    private $registryServiceMock;
+    private RegistryService|MockObject $registryServiceMock;
 
     /** @var Variation[]|MockObject[] */
-    private $variationEntityMocks = [];
+    private array $variationEntityMocks = [];
 
     protected function setUp(): void
     {
@@ -297,8 +294,8 @@ class ProductTest extends TestCase
             ->method('getUnit')
             ->willReturn($units->first());
 
-        $this->registryServiceMock->expects($this->exactly(3))->method('shouldUseLegacyCallistoUrl')->willReturn(false);
-
+        $plentyShop = new PlentyShop([PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->registryServiceMock->method('getPriceId')->willReturn($expectedPriceId);
 
@@ -348,7 +345,7 @@ class ProductTest extends TestCase
         $this->assertSame($expectedPackageSize, $columnValues[21]);
 
         $this->assertTrue(
-            DateTime::createFromFormat(DateTime::ISO8601, $item->getDateAdded()->getValues()['']) !== false
+            DateTime::createFromFormat(DateTimeInterface::ATOM, $item->getDateAdded()->getValues()['']) !== false
         );
     }
 
@@ -376,7 +373,8 @@ class ProductTest extends TestCase
 
         $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
 
-        $this->registryServiceMock->expects($this->exactly(3))->method('shouldUseLegacyCallistoUrl')->willReturn(false);
+        $plentyShop = new PlentyShop([PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $text = new Text([
             'lang' => $expectedLanguagePrefix,
@@ -466,7 +464,7 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $this->assertEquals($item->getSort()->getValues(), ['' => 2]);
+        $this->assertEquals(['' => 2], $item->getSort()->getValues());
     }
 
     public function testKeywordsAreSetFromAllVariations(): void
@@ -538,8 +536,8 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $this->assertEquals($item->getPrice()->getValues(), ['' => 50]);
-        $this->assertEquals($item->getInsteadPrice(), 100);
+        $this->assertEquals(['' => 50], $item->getPrice()->getValues());
+        $this->assertEquals(100, $item->getInsteadPrice());
     }
 
     /**
@@ -570,7 +568,10 @@ class ProductTest extends TestCase
         $variationResponse = $this->getMockResponse($variationResponseFile);
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
-        $this->registryServiceMock->expects($this->any())->method('shouldUseLegacyCallistoUrl')->willReturn(false);
+
+        $plentyShop = new PlentyShop([PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
+
         $this->registryServiceMock->method('getPriceId')->willReturn($expectedPriceId);
 
         $this->storeConfigurationMock->expects($this->any())
@@ -601,7 +602,9 @@ class ProductTest extends TestCase
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_item_without_any_images_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
         $this->variationEntityMocks = $variations->all();
-        $this->registryServiceMock->expects($this->any())->method('shouldUseLegacyCallistoUrl')->willReturn(false);
+
+        $plentyShop = new PlentyShop([PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $product = $this->getProduct();
         $item = $product->processProductData();
@@ -876,7 +879,7 @@ class ProductTest extends TestCase
             ->willReturn('de');
 
         $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
-        $this->registryServiceMock->expects($this->exactly(3))->method('shouldUseLegacyCallistoUrl')->willReturn(true);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn(new PlentyShop());
 
         $text = new Text([
             'lang' => 'de',
@@ -926,7 +929,8 @@ class ProductTest extends TestCase
             ->willReturn('de');
 
         $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
-        $this->registryServiceMock->expects($this->exactly(3))->method('shouldUseLegacyCallistoUrl')->willReturn(true);
+        $plentyShop = new PlentyShop([PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => true]);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $text = new Text([
             'lang' => 'de',
@@ -962,16 +966,16 @@ class ProductTest extends TestCase
         return [
             'url with variation id when "item.show_please_select" disabled' => [
                 'plentyShopConfig' => [
-                    'item.show_please_select' => false,
-                    'global.enableOldUrlPattern' => false,
+                    PlentyShop::KEY_ITEM_SHOW_PLEASE_SELECT => false,
+                    PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false,
                 ],
                 'baseUrlPath' => $baseUrlPath,
                 'expectedProductUrl' => $baseUrlPath . '_0_1004'
             ],
             'url without variation id when "item.show_please_select" enabled' => [
                 'plentyShopConfig' => [
-                    'item.show_please_select' => true,
-                    'global.enableOldUrlPattern' => false,
+                    PlentyShop::KEY_ITEM_SHOW_PLEASE_SELECT => true,
+                    PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false,
                 ],
                 'baseUrlPath' => $baseUrlPath,
                 'expectedProductUrl' => $baseUrlPath . '_0'
@@ -1003,10 +1007,9 @@ class ProductTest extends TestCase
             ->willReturn('de');
 
         $this->registryServiceMock->expects($this->once())->method('getAllWebStores')->willReturn($webStores);
-        $this->registryServiceMock->expects($this->once())
-            ->method('getPluginConfigurations')
-            ->with('Ceres')
-            ->willReturn($plentyShopConfig);
+
+        $plentyShop = new PlentyShop($plentyShopConfig);
+        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $text = new Text([
             'lang' => 'de',

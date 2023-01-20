@@ -9,7 +9,6 @@
     <file>tests</file>
     <exclude-pattern>*/vendor/*</exclude-pattern>
 
-
     <arg name="colors"/>
     <arg value="p"/>
 
