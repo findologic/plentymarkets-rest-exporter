@@ -159,7 +159,7 @@ class Plugin extends Entity
         $this->price = $this->getFloatProperty('price', $data);
         $this->email = $this->getStringProperty('email', $data);
         $this->phone = $this->getStringProperty('phone', $data);
-        $this->marketplaceName = $data['marketplaceName'] ?? [];
+        $this->marketplaceName = $this->getArrayProperty('marketplaceName', $data, []);
         $this->subscriptionInformation = $data['subscriptionInformation'] ?? [];
         $this->versionStage = $this->getStringProperty('versionStage', $data);
         $this->versionProductive = $this->getStringProperty('versionProductive', $data);
