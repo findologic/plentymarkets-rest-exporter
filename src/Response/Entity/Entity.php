@@ -46,7 +46,7 @@ abstract class Entity
      */
     protected function getArrayProperty(string $key, array $data, ?array $default = null): ?array
     {
-        return isset($data[$key]) ? (array)$data[$key] : $default;
+        return isset($data[$key]) && is_array($data[$key]) ? $data[$key] : $default;
     }
 
     /**
