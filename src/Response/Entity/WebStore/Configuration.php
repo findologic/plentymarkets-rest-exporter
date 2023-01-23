@@ -366,7 +366,7 @@ class Configuration extends Entity
         $this->retoureMethod = $this->getIntProperty('retoureMethod', $data);
         $this->editSchedulerPaymentMethodActive = $this->getIntProperty('editSchedulerPaymentMethodActive', $data);
         $this->showSEPAMandateDownload = $this->getIntProperty('showSEPAMandateDownload', $data);
-        $this->defaultShippingCountryList = $data['defaultShippingCountryList'] ?? $data;
+        $this->defaultShippingCountryList = $this->getArrayProperty('defaultShippingCountryList', $data, []);
         $this->useDefaultShippingCountryAsShopCountry = $this->getIntProperty(
             'useDefaultShippingCountryAsShopCountry',
             $data
@@ -378,7 +378,7 @@ class Configuration extends Entity
         $this->externalVatCheckInactive = $this->getIntProperty('externalVatCheckInactive', $data);
         $this->customerRegistrationCheck = $this->getIntProperty('customerRegistrationCheck', $data);
         $this->defaultAccountingLocation = $this->getIntProperty('defaultAccountingLocation', $data);
-        $this->ebayAccount = $this->getArrayProperty('ebayAccount', $data);
+        $this->ebayAccount = $this->getArrayProperty('ebayAccount', $data, []);
         $this->itemRatingActive = $this->getIntProperty('itemRatingActive', $data);
         $this->itemNewFeedbackVisibility = $this->getStringProperty('itemNewFeedbackVisibility', $data);
         $this->itemCustomerNameVisibility = $this->getIntProperty('itemCustomerNameVisibility', $data);

@@ -155,7 +155,7 @@ class Plugin extends Entity
         $this->isClosedSource = $this->getBoolProperty('isClosedSource', $data);
         $this->license = $this->getStringProperty('license', $data);
         $this->shortDescription = $data['shortDescription'] ?? [];
-        $this->categories = $data['categories'] ?? [];
+        $this->categories = $this->getArrayProperty('categories', $data, []);
         $this->price = $this->getFloatProperty('price', $data);
         $this->email = $this->getStringProperty('email', $data);
         $this->phone = $this->getStringProperty('phone', $data);
