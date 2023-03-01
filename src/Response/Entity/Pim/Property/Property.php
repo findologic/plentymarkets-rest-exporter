@@ -12,7 +12,7 @@ class Property extends Entity
 
     private array $values;
 
-    private ?PropertyData $propertyData;
+    private ?PropertyData $propertyData = null;
 
     public function __construct(array $data)
     {
