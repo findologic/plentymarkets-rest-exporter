@@ -48,7 +48,7 @@ class ExportCommand extends Command
         parent::__construct();
 
         $this->exporter = $exporter;
-        $this->client = $client ?? new Client(['headers' => ['Authorization' => "Bearer " . Utils::env('ACCOUNT_PAT')]]);
+        $this->client = $client ?? new Client(['headers' => ['Authorization' => 'Bearer ' . Utils::env('ACCOUNT_PAT')]]);
 
         $this->configureLoggers();
         $this->internalLogger = $internalLogger ?? Logger::getLogger('import.php');

@@ -31,7 +31,7 @@ class GenerateTokenCommand extends Command
     {
         parent::__construct();
 
-        $this->client = $client ?? new GuzzleClient(['headers' => ['Authorization' => "Bearer " . Utils::env('ACCOUNT_PAT')]]);
+        $this->client = $client ?? new GuzzleClient(['headers' => ['Authorization' => 'Bearer ' . Utils::env('ACCOUNT_PAT')]]);
     }
 
     protected function configure()
