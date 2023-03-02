@@ -48,7 +48,11 @@ class ExportCommand extends Command
         parent::__construct();
 
         $this->exporter = $exporter;
-        $this->client = $client ?? new Client(['headers' => ['Authorization' => 'Bearer ' . Utils::env('ACCOUNT_PAT')]]);
+        $this->client = $client ?? new Client([
+            'headers' => [
+                'Authorization' => 'Bearer ' . Utils::env('ACCOUNT_PAT')
+            ]
+        ]);
 
         $this->configureLoggers();
         $this->internalLogger = $internalLogger ?? Logger::getLogger('import.php');
@@ -64,7 +68,7 @@ class ExportCommand extends Command
             'shopkey',
             InputArgument::OPTIONAL,
             'Optionally add the shopkey of a specific service. Note that this requires' .
-            ' the env variable "IMPORT_DATA_URL" to be set in .env.local.',
+                ' the env variable "IMPORT_DATA_URL" to be set in .env.local.',
         );
 
         $this->addOption(
