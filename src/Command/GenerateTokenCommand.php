@@ -31,7 +31,11 @@ class GenerateTokenCommand extends Command
     {
         parent::__construct();
 
-        $this->client = $client;
+        $this->client = $client ?? new GuzzleClient([
+            'headers' => [
+                'Authorization' => 'Bearer ' . Utils::env('ACCOUNT_PAT')
+            ]
+        ]);
     }
 
     protected function configure()
@@ -39,14 +43,14 @@ class GenerateTokenCommand extends Command
         $this->setDescription('Generates a bearer token that can be used for manually sending requests.')
             ->setHelp(
                 'Logs into the REST API and returns the bearer token. It can be used to manually send' .
-                ' requests to the API.'
+                    ' requests to the API.'
             );
 
         $this->addArgument(
             'shopkey',
             InputArgument::OPTIONAL,
             'Optionally add the shopkey of a specific service. Note that this requires' .
-            ' the env variable "IMPORT_DATA_URL" to be set in .env.local.',
+                ' the env variable "IMPORT_DATA_URL" to be set in .env.local.',
         );
     }
 

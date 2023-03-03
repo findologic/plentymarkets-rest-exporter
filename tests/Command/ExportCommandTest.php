@@ -5,21 +5,22 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Command;
 
 use Exception;
-use FINDOLOGIC\PlentyMarketsRestExporter\Command\ExportCommand;
+use ReflectionObject;
+use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
+use Psr\Log\LoggerInterface;
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
+use GuzzleHttp\Handler\MockHandler;
+use Symfony\Component\Console\Application;
+use PHPUnit\Framework\MockObject\MockObject;
+use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
+use Symfony\Component\Console\Tester\CommandTester;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
+use FINDOLOGIC\PlentyMarketsRestExporter\Command\ExportCommand;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\DirectoryAware;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
-use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use InvalidArgumentException;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
 
 class ExportCommandTest extends TestCase
 {
@@ -131,6 +132,19 @@ class ExportCommandTest extends TestCase
 
         $this->assertStringContainsString('Something went wrong.', $commandTester->getDisplay());
         $this->assertStringContainsString($expectedExceptionMessage, $commandTester->getDisplay());
+    }
+
+    public function testAuthorizationHeadersAreSetForClient(): void
+    {
+        $exportMock = $this->getMockBuilder(Exporter::class)
+        ->disableOriginalConstructor()
+        ->getMock();
+
+        $command = new ExportCommand($this->logger, $this->logger, $exportMock);
+        $refObject   = new ReflectionObject($command);
+        $client = $refObject->getProperty('client')->getValue($command);
+        
+        $this->assertArrayHasKey('Authorization', $client->getConfig()['headers']);
     }
 
     private function setUpCommandMocks(): void
