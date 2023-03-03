@@ -176,6 +176,6 @@ class ExportCommandTest extends TestCase
 
         /** @var Client */
         $client = $client->getValue();
-        $this->assertArrayHasKey('Authorization', $client->getConfig());
+        $this->assertArrayHasKey('Authorization', $client->getConfig()['headers']);
     }
 }
