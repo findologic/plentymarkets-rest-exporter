@@ -170,12 +170,8 @@ class ExportCommandTest extends TestCase
 
         $command = new ExportCommand($this->logger, $this->logger, $exportMock);
         $refObject   = new ReflectionObject($command);
-
-        $client = $refObject->getProperty('client');
-        $client->setAccessible(true);
-
-        /** @var Client */
-        $client = $client->getValue();
+        $client = $refObject->getProperty('client')->getValue($command);
+        
         $this->assertArrayHasKey('Authorization', $client->getConfig()['headers']);
     }
 }
