@@ -54,7 +54,7 @@ trait PropertyAware
 
             $propertyName = $name->getName();
             $value = $this->getPropertyValue($property);
-            if (!$value && $property->getPropertyData()->getCast() === CastType::EMPTY) {
+            if (!$value && $property->getPropertyData()?->getCast() === CastType::EMPTY) {
                 $value = $propertyName;
 
                 foreach ($propertyDetails->getGroups() as $group) {
@@ -85,7 +85,7 @@ trait PropertyAware
      */
     protected function getPropertyValue(PimProperty $property): array|string|null
     {
-        switch ($property->getPropertyData()->getCast()) {
+        switch ($property->getPropertyData()?->getCast()) {
             case CastType::EMPTY:
                 return null;
             case CastType::TEXT:
