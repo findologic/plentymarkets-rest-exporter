@@ -134,6 +134,19 @@ class ExportCommandTest extends TestCase
         $this->assertStringContainsString($expectedExceptionMessage, $commandTester->getDisplay());
     }
 
+    public function testAuthorizationHeadersAreSetForClient(): void
+    {
+        $exportMock = $this->getMockBuilder(Exporter::class)
+        ->disableOriginalConstructor()
+        ->getMock();
+
+        $command = new ExportCommand($this->logger, $this->logger, $exportMock);
+        $refObject   = new ReflectionObject($command);
+        $client = $refObject->getProperty('client')->getValue($command);
+        
+        $this->assertArrayHasKey('Authorization', $client->getConfig()['headers']);
+    }
+
     private function setUpCommandMocks(): void
     {
         $mockHandler = new MockHandler([
@@ -160,18 +173,5 @@ class ExportCommandTest extends TestCase
     private function createTestLog(string $data = 'This is a logline'): void
     {
         file_put_contents(Utils::env('LOG_DIR') . '/import.log', $data);
-    }
-
-    public function testAuthorizationHeadersAreSet(): void
-    {
-        $exportMock = $this->getMockBuilder(Exporter::class)
-        ->disableOriginalConstructor()
-        ->getMock();
-
-        $command = new ExportCommand($this->logger, $this->logger, $exportMock);
-        $refObject   = new ReflectionObject($command);
-        $client = $refObject->getProperty('client')->getValue($command);
-        
-        $this->assertArrayHasKey('Authorization', $client->getConfig()['headers']);
     }
 }
