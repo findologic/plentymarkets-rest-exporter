@@ -12,6 +12,7 @@ use FINDOLOGIC\Export\Data\Attribute;
 use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Ordernumber;
+use FINDOLOGIC\Export\Data\OverriddenPrice;
 use FINDOLOGIC\Export\Data\Property;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\Export\Helpers\DataHelper;
@@ -78,7 +79,7 @@ class Product
         string $variationGroupKey = ''
     ) {
         $this->exporter = $exporter;
-        $this->item = $exporter->createItem($productEntity->getId());
+        $this->item = $exporter->createItem((string) $productEntity->getId());
         $this->config = $config;
         $this->productEntity = $productEntity;
         $this->registryService = $registryService;
@@ -114,7 +115,7 @@ class Product
 
         $variationCount = $this->processVariations();
         if ($variationCount === 0 && $this->config->isExportUnavailableVariations()) {
-            $this->item = $this->exporter->createItem($this->productEntity->getId());
+            $this->item = $this->exporter->createItem((string) $this->productEntity->getId());
             $variationCount = $this->processVariations(false);
         }
         if ($variationCount === 0) {
@@ -242,7 +243,7 @@ class Product
             }
 
             foreach ($variation->getGroups() as $group) {
-                $this->item->addUsergroup($group);
+                $this->item->addGroup($group);
             }
 
             foreach ($variation->getTags() as $tag) {
@@ -273,7 +274,11 @@ class Product
             $ordernumbers = array_merge($ordernumbers, $this->getVariationOrdernumbers($variation));
 
             foreach ($variation->getAttributes() as $attribute) {
-                $this->item->addMergedAttribute($attribute);
+                $this->item->addAttribute($attribute);
+            }
+
+            foreach ($variation->getImages() as $image) {
+                $this->item->addImage($image);
             }
 
             $prices[] = $variation->getPrice();
@@ -297,13 +302,8 @@ class Product
             return 0;
         }
 
-        // VatRate should be set from the last variation, therefore this code outside the foreach loop
-        if (isset($variation) && $variation->getVatRate() !== null) {
-            $this->item->setTaxRate($variation->getVatRate());
-        }
-
         if ($insteadPrices) {
-            $this->item->setInsteadPrice(min($insteadPrices));
+            $this->item->setOverriddenPrice(new OverriddenPrice);
         }
 
         $ordernumbers = array_unique($ordernumbers);

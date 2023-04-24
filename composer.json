@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^7.4.5",
         "vasily-kartashov/log4php": "^4.1",
         "ext-json": "*",
-        "findologic/libflexport": "^2.9",
+        "findologic/libflexport": "^3.0",
         "nesbot/carbon": "^2.38",
         "symfony/cache": "^5.1",
         "guzzlehttp/promises": "^1.4",

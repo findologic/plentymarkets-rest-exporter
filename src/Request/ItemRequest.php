@@ -13,7 +13,7 @@ class ItemRequest extends Request implements IterableRequestInterface
         ?string $lang = null,
         ?string $name = null,
         ?string $manufacturerId = null,
-        ?int $id = null,
+        ?int $id = 107,
         ?int $flagOne = null,
         ?int $flagTwo = null,
         ?string $updatedBetween = null,

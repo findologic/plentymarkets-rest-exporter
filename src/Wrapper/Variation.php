@@ -4,31 +4,31 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 
-use FINDOLOGIC\Export\Data\Attribute;
+use FINDOLOGIC\Export\Data\Group;
 use FINDOLOGIC\Export\Data\Image;
 use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Property;
-use FINDOLOGIC\Export\Data\Usergroup;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
-use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute\Name;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\CategoryDetails;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage\Availability;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\AttributeValueName;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Image as PimImage;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Tag;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\TagName;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Unit\Name as UnitName;
-use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
+use FINDOLOGIC\Export\Data\Attribute;
+use Psr\Cache\InvalidArgumentException;
+use PhpUnitsOfMeasure\PhysicalQuantity\Mass;
+use PhpUnitsOfMeasure\PhysicalQuantity\Length;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use PhpUnitsOfMeasure\Exception\NonNumericValue;
 use PhpUnitsOfMeasure\Exception\NonStringUnitName;
-use PhpUnitsOfMeasure\PhysicalQuantity\Length;
-use PhpUnitsOfMeasure\PhysicalQuantity\Mass;
-use Psr\Cache\InvalidArgumentException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
+use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Attribute\Name;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Tag;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\TagName;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Unit\Name as UnitName;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\CategoryDetails;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Image as PimImage;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\AttributeValueName;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\ItemVariation\ItemImage\Availability;
 
 class Variation
 {
@@ -66,6 +66,9 @@ class Variation
 
     protected ?Image $image = null;
 
+    /** @var PimImage[] */
+    protected array $images = [];
+
     protected float $vatRate = 0.0;
 
     protected ?string $baseUnit = null;
@@ -84,7 +87,7 @@ class Variation
     /** @var Property[] */
     protected array $properties = [];
 
-    /** @var Usergroup[] */
+    /** @var Group[] */
     protected array $groups = [];
 
     /** @var Keyword[] */
@@ -134,6 +137,7 @@ class Variation
         $this->processGroups();
         $this->processTags();
         $this->processImages();
+        $this->processAllImages();
         $this->processCharacteristics();
         $this->processProperties();
         $this->processVatRate();
@@ -177,6 +181,14 @@ class Variation
     }
 
     /**
+     * @return Group[]
+     */
+    public function getGroups(): array 
+    {
+        return $this->groups;
+    }
+
+    /**
      * @return string[]
      */
     public function getBarcodes(): array
@@ -211,14 +223,6 @@ class Variation
     }
 
     /**
-     * @return Usergroup[]
-     */
-    public function getGroups(): array
-    {
-        return $this->groups;
-    }
-
-    /**
      * @return Keyword[]
      */
     public function getTags(): array
@@ -229,6 +233,14 @@ class Variation
     public function getImage(): ?Image
     {
         return $this->image;
+    }
+
+    /**
+     * @return Image[]
+     */
+    public function getImages(): array
+    {
+        return $this->images;
     }
 
     public function getVatRate(): ?float
@@ -397,7 +409,7 @@ class Variation
         $variationClients = $this->variationEntity->getClients();
         foreach ($variationClients as $variationClient) {
             if ($store = $stores->getWebStoreByStoreIdentifier($variationClient->getPlentyId())) {
-                $this->groups[] = new Usergroup($store->getId() . '_');
+                $this->groups[] = new Group($store->getId() . '_');
             }
         }
     }
@@ -505,6 +517,46 @@ class Variation
         }
 
         return null;
+    }
+
+    private function processAllImages()
+    {
+        $defaultWrapModeImage = null;
+        $images = array_merge($this->variationEntity->getImages(), $this->variationEntity->getBase()->getImages());
+
+        // Sort images by position.
+        usort($images, fn(PimImage $a, PimImage $b) => $a->getPosition() <=> $b->getPosition());
+
+        foreach ($images as $image) {
+            $imageAvailabilities = $image->getAvailabilities();
+            foreach ($imageAvailabilities as $imageAvailability) {
+                if ($imageAvailability->getType() !== Availability::STORE) {
+                    continue;
+                }
+
+                if (!$defaultWrapModeImage) {
+                    $defaultWrapModeImage = $image;
+                }
+
+                $separatedVariation = new SeparatedVariation($this->variationEntity, $this->registryService);
+
+                $variationAttributes = $separatedVariation->getVariationAttributes(
+                    $this->variationGroupKey,
+                    $this->wrapMode
+                );
+                if (!$separatedVariation->isImageAvailable($image->getAttributeValueImages(), $variationAttributes)) {
+                    continue;
+                }
+
+                $this->images[] = new Image($image->getUrlMiddle());
+
+                break;
+            }
+        }
+
+        if (!$this->images && $defaultWrapModeImage) {
+            $this->images[] = new Image($defaultWrapModeImage->getUrlMiddle());
+        }
     }
 
     /**

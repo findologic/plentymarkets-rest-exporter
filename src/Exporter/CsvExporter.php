@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 
 use Exception;
+use FINDOLOGIC\Export\CSV\CSVConfig;
+use FINDOLOGIC\Export\Enums\ExporterType;
 use FINDOLOGIC\Export\Exporter as LibflexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
@@ -35,8 +37,26 @@ class CsvExporter extends Exporter
         $internalLogger->debug('Using Plentymarkets CsvExporter for exporting.');
 
         if (!$fileExporter) {
-            $properties = ['price_id', 'variation_id', 'base_unit', 'package_size'];
-            $fileExporter = LibflexportExporter::create(LibflexportExporter::TYPE_CSV, 100, $properties);
+            $csvConfig = new CSVConfig(
+                [
+                    'price_id',
+                    'variation_id', 
+                    'base_unit', 
+                    'package_size'
+                ],
+                [
+                    'cat',
+                    'cat_url',
+                    'brand',
+                    'color',
+                    'ratingAvg',
+                    'ratingCount',
+                    'free_shipping',
+                    'type'
+                ],
+                2
+            );
+            $fileExporter = LibflexportExporter::create(ExporterType::CSV, 100, $csvConfig);
         }
 
         parent::__construct(
