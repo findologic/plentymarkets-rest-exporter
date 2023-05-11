@@ -153,6 +153,8 @@ abstract class Exporter
                 $internalLogger,
                 $customerLogger,
                 $config,
+                $usedPath,
+                $fileNamePrefix,
                 $client,
                 $registryService,
                 $itemRequest,

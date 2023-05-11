@@ -80,7 +80,7 @@ class ExportCommand extends Command
                 Exporter::TYPE_CSV,
                 Exporter::TYPE_XML
             ),
-            Exporter::TYPE_CSV
+            Exporter::TYPE_XML
         );
 
         $this->addOption(

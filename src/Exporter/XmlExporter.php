@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Exporter;
 
-use FINDOLOGIC\Export\Exporter as LibflexportExporter;
+use Psr\Log\LoggerInterface;
+use FINDOLOGIC\Export\Enums\ExporterType;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
+use FINDOLOGIC\Export\Exporter as LibflexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\ItemRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\PimVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
-use Psr\Log\LoggerInterface;
+use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\CsvWrapper;
 
 class XmlExporter extends Exporter
 {
@@ -21,6 +23,8 @@ class XmlExporter extends Exporter
         LoggerInterface $internalLogger,
         LoggerInterface $customerLogger,
         Config $config,
+        string $exportPath,
+        ?string $fileNamePrefix,
         ?Client $client = null,
         ?RegistryService $registryService = null,
         ?ItemRequest $itemRequest = null,
@@ -28,6 +32,9 @@ class XmlExporter extends Exporter
         ?LibflexportExporter $fileExporter = null
     ) {
         $internalLogger->debug('Using Plentymarkets XmlExporter for exporting.');
+        if (!$fileExporter) {
+            $fileExporter = LibflexportExporter::create(ExporterType::XML, 100);
+        }
 
         parent::__construct(
             $internalLogger,
@@ -38,6 +45,16 @@ class XmlExporter extends Exporter
             $itemRequest,
             $pimVariationRequest,
             $fileExporter
+        );
+
+        $this->wrapper = new CsvWrapper(
+            $exportPath,
+            $fileNamePrefix,
+            $this->fileExporter,
+            $this->config,
+            $this->registryService,
+            $this->internalLogger,
+            $this->customerLogger
         );
     }
 
@@ -50,6 +67,6 @@ class XmlExporter extends Exporter
         PimVariationResponse $variations,
         ?PropertySelectionResponse $propertySelection = null
     ): void {
-        // TODO: Implement wrapData() method.
+        $this->wrapper->wrap($this->offset, $totalCount, $products, $variations, $propertySelection);
     }
 }
