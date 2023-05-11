@@ -17,7 +17,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration as WebStoreConfiguration;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
-use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\CsvWrapper;
+use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\ItemsWrapper;
 use Log4Php\Logger;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -30,7 +30,7 @@ class CsvWrapperTest extends TestCase
 
     private const TEST_EXPORT_PATH = 'some_path';
 
-    private CsvWrapper $csvWrapper;
+    private ItemsWrapper $csvWrapper;
 
     private Config $config;
 
@@ -76,7 +76,7 @@ class CsvWrapperTest extends TestCase
 
         $this->registryServiceMock->method('getWebStore')->willReturn($webstoreMock);
 
-        $this->csvWrapper = new CsvWrapper(
+        $this->csvWrapper = new ItemsWrapper(
             self::TEST_EXPORT_PATH,
             null,
             $this->exporterMock,
@@ -412,7 +412,7 @@ class CsvWrapperTest extends TestCase
 
         $exporterMockCopy = clone $this->exporterMock;
         $registryMockCopy = clone $this->registryServiceMock;
-        $anotherCsvWrapper = new CsvWrapper(
+        $anotherCsvWrapper = new ItemsWrapper(
             self::TEST_EXPORT_PATH,
             null,
             $exporterMockCopy,
@@ -508,7 +508,7 @@ class CsvWrapperTest extends TestCase
 
         $exporterMockCopy = clone $this->exporterMock;
         $registryMockCopy = clone $this->registryServiceMock;
-        $anotherCsvWrapper = new CsvWrapper(
+        $anotherCsvWrapper = new ItemsWrapper(
             self::TEST_EXPORT_PATH,
             null,
             $exporterMockCopy,

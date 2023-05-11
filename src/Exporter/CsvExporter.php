@@ -16,7 +16,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\PimVariationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\ItemResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PimVariationResponse;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\CsvWrapper;
+use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\ItemsWrapper;
 use Psr\Cache\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
@@ -40,8 +40,8 @@ class CsvExporter extends Exporter
             $csvConfig = new CSVConfig(
                 [
                     'price_id',
-                    'variation_id', 
-                    'base_unit', 
+                    'variation_id',
+                    'base_unit',
                     'package_size'
                 ],
                 [
@@ -70,7 +70,7 @@ class CsvExporter extends Exporter
             $fileExporter
         );
 
-        $this->wrapper = new CsvWrapper(
+        $this->wrapper = new ItemsWrapper(
             $exportPath,
             $fileNamePrefix,
             $this->fileExporter,
