@@ -183,7 +183,7 @@ class Variation
     /**
      * @return Group[]
      */
-    public function getGroups(): array 
+    public function getGroups(): array
     {
         return $this->groups;
     }

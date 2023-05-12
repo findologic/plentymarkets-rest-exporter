@@ -303,7 +303,7 @@ class Product
         }
 
         if ($insteadPrices) {
-            $this->item->setOverriddenPrice(new OverriddenPrice);
+            $this->item->setOverriddenPrice(new OverriddenPrice());
         }
 
         $ordernumbers = array_unique($ordernumbers);
