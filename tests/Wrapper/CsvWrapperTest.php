@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 
+use FINDOLOGIC\Export\CSV\CSVConfig;
 use FINDOLOGIC\Export\CSV\CSVItem;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
@@ -39,6 +40,8 @@ class CsvWrapperTest extends TestCase
     private RegistryService|MockObject $registryServiceMock;
 
     private Logger|MockObject $loggerMock;
+
+    private CSVConfig $csvConfig;
 
     public function setUp(): void
     {
@@ -85,6 +88,15 @@ class CsvWrapperTest extends TestCase
             $this->loggerMock,
             $this->loggerMock
         );
+
+        $this->csvConfig = new CSVConfig([
+            'price_id',
+            'variation_id',
+            'base_unit',
+            'package_size'
+        ],[
+            'cat'
+        ]);
     }
 
     public function testExportsEachVariationSeparatelyIfConfiguredAndIfAllVariationsHaveAGroupableAttribute()
@@ -96,10 +108,10 @@ class CsvWrapperTest extends TestCase
         $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(4))->method('createItem')->willReturnOnConsecutiveCalls(
-            new CSVItem(106),
-            new CSVItem(106),
-            new CSVItem(106),
-            new CSVItem(106)
+            new CSVItem('106'),
+            new CSVItem('106'),
+            new CSVItem('106'),
+            new CSVItem('106')
         );
 
         $itemResponse = $this->getMockResponse('ItemResponse/one.json');
@@ -142,26 +154,27 @@ class CsvWrapperTest extends TestCase
 
                     $expectedAttributes = [
                         'cat=Armchairs+%26+Stools&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&groupable+attribute+en=' .
-                        'purple&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=' .
-                        '0&free17=0&free18=0&free19=0&free20=0',
+                            'purple&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=' .
+                            '0&free17=0&free18=0&free19=0&free20=0',
                         'cat=Armchairs+%26+Stools&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&groupable+attribute+en=' .
-                        'black&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=' .
-                        '0&free17=0&free18=0&free19=0&free20=0',
+                            'black&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=' .
+                            '0&free17=0&free18=0&free19=0&free20=0',
                         'cat=Armchairs+%26+Stools&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&groupable+attribute+en=' .
-                        'white&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=' .
-                        '0&free17=0&free18=0&free19=0&free20=0'
+                            'white&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=' .
+                            '0&free17=0&free18=0&free19=0&free20=0'
                     ];
 
                     foreach ($items as $key => $item) {
-                        $line = $item->getCsvFragment();
+                        $line = $item->getCsvFragment($this->csvConfig);
+                        echo $line;
                         $columnValues = explode("\t", $line);
                         $this->assertEquals($expectedIds[$key], $columnValues[0]);
-                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[1]);
+                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[2]);
 
                         $url = $item->getUrl()->getValues();
                         $this->assertEquals($expectedUrls[$key], reset($url));
 
-                        $this->assertEquals($expectedAttributes[$key], $columnValues[11]);
+                        $this->assertEquals($expectedAttributes[$key], $columnValues[12]);
                     }
 
                     return true;
@@ -180,9 +193,9 @@ class CsvWrapperTest extends TestCase
         $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(3))->method('createItem')->willReturnOnConsecutiveCalls(
-            new CSVItem(106),
-            new CSVItem(106),
-            new CSVItem(106)
+            new CSVItem('106'),
+            new CSVItem('106'),
+            new CSVItem('106')
         );
 
         $itemResponse = $this->getMockResponse('ItemResponse/one.json');
@@ -223,10 +236,10 @@ class CsvWrapperTest extends TestCase
                     ];
 
                     foreach ($items as $key => $item) {
-                        $line = $item->getCsvFragment();
+                        $line = $item->getCsvFragment($this->csvConfig);
                         $columnValues = explode("\t", $line);
                         $this->assertEquals($expectedIds[$key], $columnValues[0]);
-                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[1]);
+                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[2]);
                     }
 
                     return true;
@@ -245,8 +258,8 @@ class CsvWrapperTest extends TestCase
         $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(2))->method('createItem')->willReturnOnConsecutiveCalls(
-            new CSVItem(106),
-            new CSVItem(106)
+            new CSVItem('106'),
+            new CSVItem('106')
         );
 
         $itemResponse = $this->getMockResponse('ItemResponse/one.json');
@@ -275,8 +288,8 @@ class CsvWrapperTest extends TestCase
                     $this->assertCount(2, $items);
 
                     $expectedIds = [
-                       '106_1006',
-                       '106'
+                        '106_1006',
+                        '106'
                     ];
 
                     $expectedOrderNumbers = [
@@ -285,10 +298,10 @@ class CsvWrapperTest extends TestCase
                     ];
 
                     foreach ($items as $key => $item) {
-                        $line = $item->getCsvFragment();
+                        $line = $item->getCsvFragment($this->csvConfig);
                         $columnValues = explode("\t", $line);
                         $this->assertEquals($expectedIds[$key], $columnValues[0]);
-                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[1]);
+                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[2]);
                     }
 
                     return true;
@@ -309,7 +322,7 @@ class CsvWrapperTest extends TestCase
                 ]
             );
 
-        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem(106));
+        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem('106'));
 
         $itemResponse = $this->getMockResponse('ItemResponse/one.json');
         $items = ItemParser::parse($itemResponse);
@@ -339,10 +352,10 @@ class CsvWrapperTest extends TestCase
                     $expectedId = '106';
                     $expectedOrderNumber = 'S-000813-C|modeeeel|1004|106|3213213213213|101|1005|102|1006';
 
-                    $line = $items[0]->getCsvFragment();
+                    $line = $items[0]->getCsvFragment($this->csvConfig);
                     $columnValues = explode("\t", $line);
                     $this->assertEquals($expectedId, $columnValues[0]);
-                    $this->assertEquals($expectedOrderNumber, $columnValues[1]);
+                    $this->assertEquals($expectedOrderNumber, $columnValues[2]);
 
                     return true;
                 })
@@ -362,7 +375,7 @@ class CsvWrapperTest extends TestCase
                 ]
             );
 
-        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem(106));
+        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem('106'));
 
         $itemResponse = $this->getMockResponse('ItemResponse/one.json');
         $items = ItemParser::parse($itemResponse);
@@ -392,10 +405,10 @@ class CsvWrapperTest extends TestCase
                     $expectedId = '106';
                     $expectedOrderNumber = 'S-000813-C|modeeeel|1004|106|3213213213213|101|1005|102|1006';
 
-                    $line = $items[0]->getCsvFragment();
+                    $line = $items[0]->getCsvFragment($this->csvConfig);
                     $columnValues = explode("\t", $line);
                     $this->assertEquals($expectedId, $columnValues[0]);
-                    $this->assertEquals($expectedOrderNumber, $columnValues[1]);
+                    $this->assertEquals($expectedOrderNumber, $columnValues[2]);
 
                     return true;
                 })
@@ -438,8 +451,8 @@ class CsvWrapperTest extends TestCase
         $this->exporterMock->expects($this->exactly(2))
             ->method('createItem')
             ->willReturnOnConsecutiveCalls(
-                new CSVItem(106),
-                new CSVItem(106)
+                new CSVItem('106'),
+                new CSVItem('106')
             );
         $this->exporterMock->expects($this->once())
             ->method('serializeItemsToFile')
@@ -448,7 +461,7 @@ class CsvWrapperTest extends TestCase
                 $this->callback(function (array $items) use (&$firstItemData) {
                     $this->assertCount(1, $items);
 
-                    $firstItemData = $items[0]->getCsvFragment();
+                    $firstItemData = $items[0]->getCsvFragment($this->csvConfig);
 
                     return true;
                 })
@@ -465,7 +478,7 @@ class CsvWrapperTest extends TestCase
             );
         $exporterMockCopy->expects($this->once())
             ->method('createItem')
-            ->willReturn(new CSVItem(106));
+            ->willReturn(new CSVItem('106'));
         $exporterMockCopy->expects($this->once())
             ->method('serializeItemsToFile')
             ->with(
@@ -477,7 +490,7 @@ class CsvWrapperTest extends TestCase
                     $this->assertCount(1, $items);
 
                     $separatedProductColumns = explode("\t", $firstItemData);
-                    $groupedProductColumns = explode("\t", $items[0]->getCsvFragment());
+                    $groupedProductColumns = explode("\t", $items[0]->getCsvFragment($this->csvConfig));
 
                     $this->assertEquals($expectedSeparatedProductId, $separatedProductColumns[0]);
                     $this->assertEquals($expectedGroupedProductId, $groupedProductColumns[0]);
@@ -532,8 +545,8 @@ class CsvWrapperTest extends TestCase
         $this->exporterMock->expects($this->exactly(2))
             ->method('createItem')
             ->willReturnOnConsecutiveCalls(
-                new CSVItem(106),
-                new CSVItem(106)
+                new CSVItem('106'),
+                new CSVItem('106')
             );
         $this->exporterMock->expects($this->once())
             ->method('serializeItemsToFile')
@@ -542,7 +555,7 @@ class CsvWrapperTest extends TestCase
                 $this->callback(function (array $items) use (&$firstItemData) {
                     $this->assertCount(1, $items);
 
-                    $firstItemData = $items[0]->getCsvFragment();
+                    $firstItemData = $items[0]->getCsvFragment($this->csvConfig);
 
                     return true;
                 })
@@ -551,7 +564,7 @@ class CsvWrapperTest extends TestCase
 
         $exporterMockCopy->expects($this->once())
             ->method('createItem')
-            ->willReturn(new CSVItem(106));
+            ->willReturn(new CSVItem('106'));
         $exporterMockCopy->expects($this->once())
             ->method('serializeItemsToFile')
             ->with(
@@ -563,7 +576,7 @@ class CsvWrapperTest extends TestCase
                     $this->assertCount(1, $items);
 
                     $separatedProductColumns = explode("\t", $firstItemData);
-                    $groupedProductColumns = explode("\t", $items[0]->getCsvFragment());
+                    $groupedProductColumns = explode("\t", $items[0]->getCsvFragment($this->csvConfig));
 
                     $this->assertEquals($expectedSeparatedProductId, $separatedProductColumns[0]);
                     $this->assertEquals($expectedGroupedProductId, $groupedProductColumns[0]);
@@ -641,11 +654,11 @@ class CsvWrapperTest extends TestCase
             ->withConsecutive(
                 [
                     'Products with id 102, 103, 104, 105, 106, 107 could not be exported. ' .
-                    'Reason: Product has no variations.'
+                        'Reason: Product has no variations.'
                 ],
                 [
                     'Products with id 108, 109, 110, 111, 112, 113 could not be exported. ' .
-                    'Reason: Product has no variations.'
+                        'Reason: Product has no variations.'
                 ]
             );
 
@@ -663,7 +676,7 @@ class CsvWrapperTest extends TestCase
         );
         $variations = PimVariationsParser::parse($variationResponse);
 
-        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem(106));
+        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem('106'));
 
         $this->exporterMock->expects($this->once())
             ->method('serializeItemsToFile')
@@ -675,9 +688,9 @@ class CsvWrapperTest extends TestCase
                     // No 1006
                     $expectedIdentifier = 'S-000813-C|modeeeel|1004|106|3213213213213';
 
-                    $line = $items[0]->getCsvFragment();
+                    $line = $items[0]->getCsvFragment($this->csvConfig);
                     $columnValues = explode("\t", $line);
-                    $this->assertEquals($expectedIdentifier, $columnValues[1]);
+                    $this->assertEquals($expectedIdentifier, $columnValues[2]);
 
                     return true;
                 })
@@ -698,7 +711,7 @@ class CsvWrapperTest extends TestCase
         );
         $variations = PimVariationsParser::parse($variationResponse);
 
-        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem(106));
+        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem('106'));
 
         $this->exporterMock->expects($this->once())
             ->method('serializeItemsToFile')
@@ -710,9 +723,9 @@ class CsvWrapperTest extends TestCase
                     // No 1006
                     $expectedIdentifier = 'S-000813-C|modeeeel|1004|106|3213213213213|101|1005';
 
-                    $line = $items[0]->getCsvFragment();
+                    $line = $items[0]->getCsvFragment($this->csvConfig);
                     $columnValues = explode("\t", $line);
-                    $this->assertEquals($expectedIdentifier, $columnValues[1]);
+                    $this->assertEquals($expectedIdentifier, $columnValues[2]);
 
                     return true;
                 })
@@ -730,11 +743,11 @@ class CsvWrapperTest extends TestCase
         $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(5))->method('createItem')->willReturnOnConsecutiveCalls(
-            new CSVItem(108),
-            new CSVItem(108),
-            new CSVItem(108),
-            new CSVItem(108),
-            new CSVItem(108)
+            new CSVItem('108'),
+            new CSVItem('108'),
+            new CSVItem('108'),
+            new CSVItem('108'),
+            new CSVItem('108')
         );
 
         $itemResponse = $this->getMockResponse(
@@ -798,11 +811,11 @@ class CsvWrapperTest extends TestCase
                     ];
 
                     foreach ($items as $key => $item) {
-                        $line = $item->getCsvFragment();
+                        $line = $item->getCsvFragment($this->csvConfig);
                         $columnValues = explode("\t", $line);
                         $this->assertEquals($expectedIds[$key], $columnValues[0]);
-                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[1]);
-                        $this->assertSame($expectedImagesUrls[$key], $columnValues[10]);
+                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[2]);
+                        $this->assertSame($expectedImagesUrls[$key], $columnValues[16]);
                     }
 
                     return true;
@@ -821,10 +834,10 @@ class CsvWrapperTest extends TestCase
         $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(4))->method('createItem')->willReturnOnConsecutiveCalls(
-            new CSVItem(133),
-            new CSVItem(133),
-            new CSVItem(133),
-            new CSVItem(133),
+            new CSVItem('133'),
+            new CSVItem('133'),
+            new CSVItem('133'),
+            new CSVItem('133'),
         );
 
         $itemResponse = $this->getMockResponse(
@@ -876,10 +889,10 @@ class CsvWrapperTest extends TestCase
                     ];
 
                     foreach ($items as $key => $item) {
-                        $line = $item->getCsvFragment();
+                        $line = $item->getCsvFragment($this->csvConfig);
                         $columnValues = explode("\t", $line);
                         $this->assertEquals($expectedIds[$key], $columnValues[0]);
-                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[1]);
+                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[2]);
                     }
 
                     return true;

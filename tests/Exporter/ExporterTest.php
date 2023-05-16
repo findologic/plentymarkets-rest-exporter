@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Exporter;
 
 use Exception;
+use FINDOLOGIC\Export\Enums\ExporterType;
 use FINDOLOGIC\Export\Exporter as LibFlexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
@@ -208,7 +209,7 @@ class ExporterTest extends TestCase
     public function testFileNameIsChangedWhenSet(): void
     {
         $this->fileNamePrefix = 'findologic.new.funny';
-        $this->fileExporterMock = LibFlexportExporter::create(LibFlexportExporter::TYPE_CSV);
+        $this->fileExporterMock = LibFlexportExporter::create(ExporterType::CSV);
         $expectedFileLocation = self::EXPORTER_LOCATION . $this->fileNamePrefix . '.csv';
 
         $this->setUpClientMock();

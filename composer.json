@@ -52,8 +52,13 @@
             "./vendor/bin/phpcs --standard=phpcs.xml .",
             "XDEBUG_MODE=off ./vendor/bin/phpstan analyse --level 2 src tests"
         ],
+        "win-lint": [
+            "./vendor/bin/phpcs --standard=phpcs.xml .",
+            "./vendor/bin/phpstan analyse --level 2 src tests"
+        ],
         "fix": "./vendor/bin/phpcbf --standard=phpcs.xml .",
-        "test": "XDEBUG_MODE=coverage phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml"
+        "test": "XDEBUG_MODE=coverage phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml",
+        "win-test": "phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml"
     },
     "license": "MIT"
 }
