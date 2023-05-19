@@ -346,10 +346,10 @@ class ProductTest extends TestCase
         $line = $item->getCsvFragment($this->csvConfig);
         $line = trim($line, "\n");
         $columnValues = explode("\t", $line);
-        $this->assertSame((string)$expectedPriceId, $columnValues[18]);
-        $this->assertSame((string)$expectedMainVariationId, $columnValues[19]);
-        $this->assertSame($expectedBaseUnit, $columnValues[20]);
-        $this->assertSame($expectedPackageSize, $columnValues[21]);
+        $this->assertSame((string)$expectedPriceId, $columnValues[17]);
+        $this->assertSame((string)$expectedMainVariationId, $columnValues[18]);
+        $this->assertSame($expectedBaseUnit, $columnValues[19]);
+        $this->assertSame($expectedPackageSize, $columnValues[20]);
 
         $this->assertTrue(
             DateTime::createFromFormat(DateTimeInterface::ATOM, $item->getDateAdded()->getValues()['']) !== false
@@ -597,9 +597,10 @@ class ProductTest extends TestCase
 
         $line = $item->getCsvFragment($this->csvConfig);
         $columnValues = explode("\t", $line);
+        print_r($columnValues);
         $this->assertEquals($expectedPrice, $columnValues[6]);
         $this->assertEquals($expectedUrl, $columnValues[8]);
-        $this->assertEquals($expectedImg, $columnValues[10]);
+        $this->assertEquals($expectedImg, $columnValues[16]);
     }
 
     public function testProductWithoutImagesNotFail(): void
@@ -1089,13 +1090,13 @@ class ProductTest extends TestCase
             ],
             'cheapest with zero price variation' => [
                 'Pim/Variations/response_for_cheapest_price_test.json',
-                'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/exportedImage.jpeg',
+                'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/119-Relaxsessel-Woddenfir.jpg',
                 '11.33',
                 'https://plenty-testshop.de/urlPath_0_1181'
             ],
             'cheapest without store availability' => [
                 'Pim/Variations/response_for_cheapest_price_test_with_no_store_availability_for_image.json',
-                'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/exportedImage.jpeg',
+                'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/119-Relaxsessel-Woddenfir.jpg',
                 '0.01',
                 'https://plenty-testshop.de/urlPath_0_1181'
             ],

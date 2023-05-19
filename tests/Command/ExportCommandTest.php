@@ -78,7 +78,8 @@ class ExportCommandTest extends TestCase
 
         $commandTester = new CommandTester($this->command);
         $commandTester->execute([
-            'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD'
+            'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD',
+            '--type' => 0
         ]);
 
         $this->assertStringNotContainsString('Export finished successfully', $commandTester->getDisplay());
