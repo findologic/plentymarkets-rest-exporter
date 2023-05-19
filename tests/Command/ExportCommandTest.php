@@ -167,7 +167,7 @@ class ExportCommandTest extends TestCase
 
     private function createTestCsv(string $data = 'important data'): void
     {
-        file_put_contents(Utils::env('EXPORT_DIR') . '/findologic.csv', $data);
+        file_put_contents(Utils::env('EXPORT_DIR') . '/findologic.xml', $data);
     }
 
     private function createTestLog(string $data = 'This is a logline'): void
