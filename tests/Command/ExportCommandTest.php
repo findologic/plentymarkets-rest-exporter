@@ -70,16 +70,19 @@ class ExportCommandTest extends TestCase
         ]);
     }
 
-    public function testExportDoesNotStartWhenFileAlreadyExists(): void
+    /**
+     * @dataProvider exportTypesProvider
+     */
+    public function testExportDoesNotStartWhenFileAlreadyExists(int $type, string $filename): void
     {
         $this->createTestLog();
-        $this->createTestCsv();
+        $this->createTestFile($filename);
         $this->setUpCommandMocks();
 
         $commandTester = new CommandTester($this->command);
         $commandTester->execute([
             'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD',
-            '--type' => 0
+            '--type' => $type
         ]);
 
         $this->assertStringNotContainsString('Export finished successfully', $commandTester->getDisplay());
@@ -89,29 +92,37 @@ class ExportCommandTest extends TestCase
         );
     }
 
-    public function testExportStartsWhenForcingDeletionOfOldFile(): void
+    /**
+     * @dataProvider exportTypesProvider
+     */
+    public function testExportStartsWhenForcingDeletionOfOldFile(int $type, string $filename): void
     {
         $this->setUpCommandMocks();
-        $this->createTestCsv();
+        $this->createTestFile($filename);
 
         $commandTester = new CommandTester($this->command);
         $commandTester->setInputs(['y']);
         $commandTester->execute([
-            'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD'
+            'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD',
+            '--type' => $type
         ]);
 
         $this->assertStringContainsString('Export finished successfully', $commandTester->getDisplay());
     }
 
-    public function testExportStartsWhenForcingDeletionOfOldFileViaOption(): void
+    /**
+     * @dataProvider exportTypesProvider
+     */
+    public function testExportStartsWhenForcingDeletionOfOldFileViaOption(int $type, string $filename): void
     {
         $this->setUpCommandMocks();
-        $this->createTestCsv();
+        $this->createTestFile($filename);
 
         $commandTester = new CommandTester($this->command);
         $commandTester->execute([
             'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD',
             '--ignore-export-warning' => true,
+            '--type' => $type
         ]);
 
         $this->assertStringContainsString('Export finished successfully', $commandTester->getDisplay());
@@ -138,13 +149,13 @@ class ExportCommandTest extends TestCase
     public function testAuthorizationHeadersAreSetForClient(): void
     {
         $exportMock = $this->getMockBuilder(Exporter::class)
-        ->disableOriginalConstructor()
-        ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $command = new ExportCommand($this->logger, $this->logger, $exportMock);
         $refObject   = new ReflectionObject($command);
         $client = $refObject->getProperty('client')->getValue($command);
-        
+
         $this->assertArrayHasKey('Authorization', $client->getConfig()['headers']);
     }
 
@@ -166,13 +177,27 @@ class ExportCommandTest extends TestCase
         $this->application->add($this->command);
     }
 
-    private function createTestCsv(string $data = 'important data'): void
+    private function createTestFile(string $filename, string $data = 'important data'): void
     {
-        file_put_contents(Utils::env('EXPORT_DIR') . '/findologic.xml', $data);
+        file_put_contents(Utils::env('EXPORT_DIR') . "/{$filename}", $data);
     }
 
     private function createTestLog(string $data = 'This is a logline'): void
     {
         file_put_contents(Utils::env('LOG_DIR') . '/import.log', $data);
+    }
+
+    public function exportTypesProvider()
+    {
+        return [
+            'CSV' => [
+                'type' => Exporter::TYPE_CSV,
+                'filename' => 'findologic.csv'
+            ],
+            'XML' => [
+                'type' => Exporter::TYPE_XML,
+                'filename' => 'findologic.xml'
+            ]
+        ];
     }
 }
