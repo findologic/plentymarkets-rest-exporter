@@ -274,7 +274,7 @@ class Product
             $ordernumbers = array_merge($ordernumbers, $this->getVariationOrdernumbers($variation));
 
             foreach ($variation->getAttributes() as $attribute) {
-                $this->item->addAttribute($attribute);
+                $this->item->addMergedAttribute($attribute);
             }
 
             foreach ($variation->getImages() as $image) {
