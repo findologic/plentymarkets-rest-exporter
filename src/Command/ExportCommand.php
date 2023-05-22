@@ -160,12 +160,12 @@ class ExportCommand extends Command
             case Exporter::TYPE_CSV:
                 $fileExists = file_exists($exportFileLocation . '/findologic.csv');
                 break;
-            
+
             case Exporter::TYPE_XML:
                 $fileExists = file_exists($exportFileLocation . '/findologic.xml');
                 break;
         }
-        
+
         if (!$fileExists) {
             return true;
         }
@@ -188,6 +188,10 @@ class ExportCommand extends Command
      */
     private function getExporter(int $type, Config $config): Exporter
     {
+        if ($this->exporter) {
+            return $this->exporter;
+        }
+
         return Exporter::buildInstance($type, $config, $this->internalLogger, $this->customerLogger);
     }
 }
