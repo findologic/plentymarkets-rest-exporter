@@ -450,10 +450,13 @@ class ProductTest extends TestCase
 
         $product = $this->getProduct();
         $item = $product->processProductData();
-        $line = $item->getCsvFragment($this->csvConfig);
-        $columnValues = explode("\t", $line);
+        $attributes = $item->getAttributes();
+        $attributesMap = array_reduce($attributes, function (array $list, Attribute $attribute) {
+            $list[$attribute->getKey()] = $attribute->getValues();
+            return $list;
+        }, []);
 
-        $this->assertEquals($expectedResult, $columnValues[11]);
+        $this->assertEquals($expectedResult, $attributesMap['vendor'][0]);
     }
 
     public function testSortIsSetByTheMainVariation(): void
@@ -1114,11 +1117,11 @@ class ProductTest extends TestCase
         return [
             'manufacturer has external name, external name is exported' => [
                 'ManufacturerResponse/one.json',
-                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&vendor=externalNameA',
+                'externalNameA',
             ],
             'manufacturer has no external name, original name is exported' => [
                 'ManufacturerResponse/without_external_name.json',
-                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&vendor=nameA',
+                'nameA',
             ],
         ];
     }
