@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 
-use FINDOLOGIC\Export\CSV\CSVConfig;
-use FINDOLOGIC\Export\CSV\CSVItem;
+use Log4Php\Logger;
 use FINDOLOGIC\Export\Exporter;
+use PHPUnit\Framework\TestCase;
+use FINDOLOGIC\Export\CSV\CSVItem;
+use FINDOLOGIC\Export\CSV\CSVConfig;
+use PHPUnit\Framework\MockObject\MockObject;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\PlentyShop;
 use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration as WebStoreConfiguration;
-use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
-use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\ItemsWrapper;
-use Log4Php\Logger;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
+use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration as WebStoreConfiguration;
 
 class CsvWrapperTest extends TestCase
 {
@@ -94,7 +94,7 @@ class CsvWrapperTest extends TestCase
             'variation_id',
             'base_unit',
             'package_size'
-        ],[
+        ], [
             'cat'
         ]);
     }
