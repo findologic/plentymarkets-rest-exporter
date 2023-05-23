@@ -9,6 +9,7 @@ use FINDOLOGIC\Export\Exporter;
 use PHPUnit\Framework\TestCase;
 use FINDOLOGIC\Export\CSV\CSVItem;
 use FINDOLOGIC\Export\CSV\CSVConfig;
+use FINDOLOGIC\Export\Data\Attribute;
 use PHPUnit\Framework\MockObject\MockObject;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\PlentyShop;
@@ -141,9 +142,9 @@ class CsvWrapperTest extends TestCase
                     ];
 
                     $expectedOrderNumbers = [
-                        'S-000813-C|modeeeel|1004|106|3213213213213',
-                        '101|1005|106',
-                        '102|1006|106'
+                        ['S-000813-C', 'modeeeel', '1004', '106', '3213213213213'],
+                        ['101', '1005', '106'],
+                        ['102', '1006', '106']
                     ];
 
                     $expectedUrls = [
@@ -153,28 +154,50 @@ class CsvWrapperTest extends TestCase
                     ];
 
                     $expectedAttributes = [
-                        'cat=Armchairs+%26+Stools&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&groupable+attribute+en=' .
-                            'purple&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=' .
-                            '0&free17=0&free18=0&free19=0&free20=0',
-                        'cat=Armchairs+%26+Stools&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&groupable+attribute+en=' .
-                            'black&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=' .
-                            '0&free17=0&free18=0&free19=0&free20=0',
-                        'cat=Armchairs+%26+Stools&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&groupable+attribute+en=' .
-                            'white&free7=0&free8=0&free9=0&free10=0&free11=0&free12=0&free13=0&free14=0&free15=0&free16=' .
-                            '0&free17=0&free18=0&free19=0&free20=0'
+                        [
+                            'cat' => 'Armchairs & Stools',
+                            'cat_url' => '/wohnzimmer/sessel-hocker/',
+                            'groupable attribute en' => 'purple',
+                            'free7' => '0',
+                            'free8' => '0',
+                            'free9' => '0',
+                            'free10' => '0',
+                            'free11' => '0',
+                            'free12' => '0',
+                            'free13' => '0',
+                            'free14' => '0',
+                            'free15' => '0',
+                            'free16' => '0',
+                            'free17' => '0',
+                            'free18' => '0',
+                            'free19' => '0',
+                            'free20' => '0'
+                        ]
                     ];
 
+                    $expectedAttributes[] = [...$expectedAttributes[0], 'groupable attribute en' => 'black'];
+                    $expectedAttributes[] = [...$expectedAttributes[0], 'groupable attribute en' => 'white'];
+
                     foreach ($items as $key => $item) {
-                        $line = $item->getCsvFragment($this->csvConfig);
-                        echo $line;
-                        $columnValues = explode("\t", $line);
-                        $this->assertEquals($expectedIds[$key], $columnValues[0]);
-                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[2]);
+
+                        $orderNumbers = $item->getOrdernumbers()->getValues();
+                        $orderNumbersMap = array_map(fn ($item) => $item->getValue(), $orderNumbers[array_key_first($orderNumbers)]);
+
+                        $this->assertEquals($expectedIds[$key], $item->getId());
+                        $this->assertEquals($expectedOrderNumbers[$key], $orderNumbersMap);
 
                         $url = $item->getUrl()->getValues();
                         $this->assertEquals($expectedUrls[$key], reset($url));
 
-                        $this->assertEquals($expectedAttributes[$key], $columnValues[12]);
+                        $attributes = $item->getAttributes();
+                        $attributesMap = array_reduce($attributes, function (array $list, Attribute $attribute) {
+                            $list[$attribute->getKey()] = $attribute->getValues();
+                            return $list;
+                        }, []);
+
+                        foreach ($expectedAttributes[$key] as $attributeKey => $expectedAttributeValue) {
+                            $this->assertEquals($expectedAttributeValue, $attributesMap[$attributeKey][0]);
+                        }
                     }
 
                     return true;
@@ -230,16 +253,18 @@ class CsvWrapperTest extends TestCase
                     ];
 
                     $expectedOrderNumbers = [
-                        'S-000813-C|modeeeel|1004|106|3213213213213',
-                        '102|1006|106',
-                        '101|1005|106'
+                        ['S-000813-C', 'modeeeel', '1004', '106', '3213213213213'],
+                        ['102', '1006', '106'],
+                        ['101', '1005', '106'],
                     ];
 
                     foreach ($items as $key => $item) {
-                        $line = $item->getCsvFragment($this->csvConfig);
-                        $columnValues = explode("\t", $line);
-                        $this->assertEquals($expectedIds[$key], $columnValues[0]);
-                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[2]);
+                        $this->assertEquals($expectedIds[$key], $item->getId());
+
+                        $orderNumbers = $item->getOrdernumbers()->getValues();
+                        $orderNumbersMap = array_map(fn ($item) => $item->getValue(), $orderNumbers[array_key_first($orderNumbers)]);
+
+                        $this->assertEquals($expectedOrderNumbers[$key], $orderNumbersMap);
                     }
 
                     return true;

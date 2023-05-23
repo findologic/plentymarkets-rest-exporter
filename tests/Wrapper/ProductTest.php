@@ -600,7 +600,7 @@ class ProductTest extends TestCase
 
         $line = $item->getCsvFragment($this->csvConfig);
         $columnValues = explode("\t", $line);
-        print_r($columnValues);
+
         $this->assertEquals($expectedPrice, $columnValues[6]);
         $this->assertEquals($expectedUrl, $columnValues[8]);
         $this->assertEquals($expectedImg, $columnValues[16]);
@@ -716,7 +716,7 @@ class ProductTest extends TestCase
      */
     public function testFreeTextFieldsAreNotExportedAccordingToConfiguration(
         array $exportFreeFieldsConfig,
-        string $expectedValue
+        array $expectedAttributeValues
     ): void {
         $this->config = $this->getDefaultConfig($exportFreeFieldsConfig);
         $this->exporterMock = $this->getExporter();
@@ -730,15 +730,20 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $line = $item->getCsvFragment($this->csvConfig);
-        $columnValues = explode("\t", $line);
+        $attributes = $item->getAttributes();
+        $attributesMap = array_reduce($attributes, function (array $list, Attribute $attribute) {
+            $list[$attribute->getKey()] = $attribute->getValues();
+            return $list;
+        }, []);
 
-        $this->assertEquals($expectedValue, $columnValues[11]);
+        foreach ($expectedAttributeValues as $key => $expectedAttributeValue) {
+            $this->assertEquals($expectedAttributeValue, $attributesMap[$key][0]);
+        }
     }
 
     public function testTooLongFreeTextFieldsAreIgnored(): void
     {
-        $expectedValue = 'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&free1=0000000000';
+        $expectedAttributeValues = ['cat' => 'Sessel & Hocker', 'cat_url' => '/wohnzimmer/sessel-hocker/', 'free1' => '0000000000'];
 
         $this->config = $this->getDefaultConfig(['exportFreeTextFields' => true]);
         $this->exporterMock = $this->getExporter();
@@ -752,14 +757,23 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $line = $item->getCsvFragment($this->csvConfig);
-        $columnValues = explode("\t", $line);
+        $attributes = $item->getAttributes();
+        $attributesMap = array_reduce($attributes, function (array $list, Attribute $attribute) {
+            $list[$attribute->getKey()] = $attribute->getValues();
+            return $list;
+        }, []);
 
-        $this->assertEquals($expectedValue, $columnValues[11]);
+        foreach ($expectedAttributeValues as $key => $expectedAttributeValue) {
+            $this->assertEquals($expectedAttributeValue, $attributesMap[$key][0]);
+        }
     }
 
-    public function testAttributesAreSetFromAllVariations()
-    {
+    /**
+     * @dataProvider attributesAreSetFromAllVariationsTestProvider
+     */
+    public function testAttributesAreSetFromAllVariations(
+        array $expectedAttributeValues
+    ) {
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_attribute_values.json');
@@ -780,13 +794,18 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         // TODO: check item's attributes property directly once attributes getter is implemented
-        $line = $item->getCsvFragment($this->csvConfig);
-        $columnValues = explode("\t", $line);
-        $this->assertEquals(
-            'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&' .
-                'couch+color+de=lila&couch+color+de=valueeeee&test+de=some+test+attribute+value+in+German',
-            $columnValues[11]
-        );
+
+        $attributes = $item->getAttributes();
+        $attributesMap = array_reduce($attributes, function (array $list, Attribute $attribute) {
+            $list[$attribute->getKey()] = $attribute->getValues();
+            return $list;
+        }, []);
+
+        foreach ($expectedAttributeValues as $key => $expectedAttributeValue) {
+            if (is_array($expectedAttributeValue)) {
+                $this->assertEquals($expectedAttributeValue, $attributesMap[$key]);
+            } else $this->assertEquals($expectedAttributeValue, $attributesMap[$key][0]);
+        }
     }
 
     public function testSetsSalesFrequencyAsZeroIfSortBySalesIsNotConfigured()
@@ -1126,24 +1145,38 @@ class ProductTest extends TestCase
         ];
     }
 
+    public function attributesAreSetFromAllVariationsTestProvider(): array
+    {
+        return [
+            'has the same exported attribute' => [
+                [
+                    'cat' => 'Sessel & Hocker',
+                    'cat_url' => '/wohnzimmer/sessel-hocker/',
+                    'couch color de' => ['lila', 'valueeeee'],
+                    'test de' => 'some test attribute value in German'
+                ]
+            ],
+        ];
+    }
+
     public function exportFreeFieldsConfigurationTestProvider(): array
     {
         return [
             'using default values' => [
                 [],
-                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&free1=0'
+                ['cat' => 'Sessel & Hocker', 'cat_url' => '/wohnzimmer/sessel-hocker/', 'free1' => '0']
             ],
             'free fields enabled' => [
                 [
                     'exportFreeTextFields' => true,
                 ],
-                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&free1=0'
+                ['cat' => 'Sessel & Hocker', 'cat_url' => '/wohnzimmer/sessel-hocker/', 'free1' => '0']
             ],
             'free fields disabled' => [
                 [
                     'exportFreeTextFields' => false,
                 ],
-                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F'
+                ['cat' => 'Sessel & Hocker', 'cat_url' => '/wohnzimmer/sessel-hocker/']
             ]
         ];
     }
