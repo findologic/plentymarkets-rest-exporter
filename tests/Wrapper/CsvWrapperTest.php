@@ -18,6 +18,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ItemParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\ItemsWrapper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ItemHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
@@ -29,6 +30,8 @@ class CsvWrapperTest extends TestCase
     use ConfigHelper;
 
     use ResponseHelper;
+
+    use ItemHelper;
 
     private const TEST_EXPORT_PATH = 'some_path';
 
@@ -179,21 +182,15 @@ class CsvWrapperTest extends TestCase
                     $expectedAttributes[] = [...$expectedAttributes[0], 'groupable attribute en' => 'white'];
 
                     foreach ($items as $key => $item) {
-
-                        $orderNumbers = $item->getOrdernumbers()->getValues();
-                        $orderNumbersMap = array_map(fn ($item) => $item->getValue(), $orderNumbers[array_key_first($orderNumbers)]);
+                        $orderNumbers = $this->getOrderNumbers($item);
 
                         $this->assertEquals($expectedIds[$key], $item->getId());
-                        $this->assertEquals($expectedOrderNumbers[$key], $orderNumbersMap);
+                        $this->assertEquals($expectedOrderNumbers[$key], $orderNumbers);
 
                         $url = $item->getUrl()->getValues();
                         $this->assertEquals($expectedUrls[$key], reset($url));
 
-                        $attributes = $item->getAttributes();
-                        $attributesMap = array_reduce($attributes, function (array $list, Attribute $attribute) {
-                            $list[$attribute->getKey()] = $attribute->getValues();
-                            return $list;
-                        }, []);
+                        $attributesMap = $this->getMappedAttributes($item);
 
                         foreach ($expectedAttributes[$key] as $attributeKey => $expectedAttributeValue) {
                             $this->assertEquals($expectedAttributeValue, $attributesMap[$attributeKey][0]);
@@ -261,10 +258,9 @@ class CsvWrapperTest extends TestCase
                     foreach ($items as $key => $item) {
                         $this->assertEquals($expectedIds[$key], $item->getId());
 
-                        $orderNumbers = $item->getOrdernumbers()->getValues();
-                        $orderNumbersMap = array_map(fn ($item) => $item->getValue(), $orderNumbers[array_key_first($orderNumbers)]);
+                        $orderNumbers = $this->getOrderNumbers($item);
 
-                        $this->assertEquals($expectedOrderNumbers[$key], $orderNumbersMap);
+                        $this->assertEquals($expectedOrderNumbers[$key], $orderNumbers);
                     }
 
                     return true;
@@ -318,15 +314,15 @@ class CsvWrapperTest extends TestCase
                     ];
 
                     $expectedOrderNumbers = [
-                        '102|1006|106',
-                        'S-000813-C|modeeeel|1004|106|3213213213213|101|1005'
+                        ['102', '1006', '106'],
+                        ['S-000813-C', 'modeeeel', '1004', '106', '3213213213213', '101', '1005']
                     ];
 
                     foreach ($items as $key => $item) {
-                        $line = $item->getCsvFragment($this->csvConfig);
-                        $columnValues = explode("\t", $line);
-                        $this->assertEquals($expectedIds[$key], $columnValues[0]);
-                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[2]);
+                        $orderNumbers = $this->getOrderNumbers($item);
+
+                        $this->assertEquals($expectedIds[$key], $item->getId());
+                        $this->assertEquals($expectedOrderNumbers[$key], $orderNumbers);
                     }
 
                     return true;
@@ -375,12 +371,11 @@ class CsvWrapperTest extends TestCase
                     $this->assertCount(1, $items);
 
                     $expectedId = '106';
-                    $expectedOrderNumber = 'S-000813-C|modeeeel|1004|106|3213213213213|101|1005|102|1006';
+                    $expectedOrderNumber = ['S-000813-C', 'modeeeel', '1004', '106', '3213213213213', '101', '1005', '102', '1006'];
 
-                    $line = $items[0]->getCsvFragment($this->csvConfig);
-                    $columnValues = explode("\t", $line);
-                    $this->assertEquals($expectedId, $columnValues[0]);
-                    $this->assertEquals($expectedOrderNumber, $columnValues[2]);
+                    $orderNumbers = $this->getOrderNumbers($items[0]);
+                    $this->assertEquals($expectedId, $items[0]->getId());
+                    $this->assertEquals($expectedOrderNumber, $orderNumbers);
 
                     return true;
                 })
@@ -428,12 +423,11 @@ class CsvWrapperTest extends TestCase
                     $this->assertCount(1, $items);
 
                     $expectedId = '106';
-                    $expectedOrderNumber = 'S-000813-C|modeeeel|1004|106|3213213213213|101|1005|102|1006';
+                    $expectedOrderNumber = ['S-000813-C', 'modeeeel', '1004', '106', '3213213213213', '101', '1005', '102', '1006'];
 
-                    $line = $items[0]->getCsvFragment($this->csvConfig);
-                    $columnValues = explode("\t", $line);
-                    $this->assertEquals($expectedId, $columnValues[0]);
-                    $this->assertEquals($expectedOrderNumber, $columnValues[2]);
+                    $orderNumbers = $this->getOrderNumbers($items[0]);
+                    $this->assertEquals($expectedId, $items[0]->getId());
+                    $this->assertEquals($expectedOrderNumber, $orderNumbers);
 
                     return true;
                 })
@@ -711,11 +705,10 @@ class CsvWrapperTest extends TestCase
                     $this->assertCount(1, $items);
 
                     // No 1006
-                    $expectedIdentifier = 'S-000813-C|modeeeel|1004|106|3213213213213';
+                    $expectedOrderNumbers = ['S-000813-C', 'modeeeel', '1004', '106', '3213213213213'];
 
-                    $line = $items[0]->getCsvFragment($this->csvConfig);
-                    $columnValues = explode("\t", $line);
-                    $this->assertEquals($expectedIdentifier, $columnValues[2]);
+                    $orderNumbers = $this->getOrderNumbers($items[0]);
+                    $this->assertEquals($expectedOrderNumbers, $orderNumbers);
 
                     return true;
                 })
@@ -746,11 +739,10 @@ class CsvWrapperTest extends TestCase
                     $this->assertCount(1, $items);
 
                     // No 1006
-                    $expectedIdentifier = 'S-000813-C|modeeeel|1004|106|3213213213213|101|1005';
+                    $expectedOrderNumbers = ['S-000813-C', 'modeeeel', '1004', '106', '3213213213213', '101', '1005'];
 
-                    $line = $items[0]->getCsvFragment($this->csvConfig);
-                    $columnValues = explode("\t", $line);
-                    $this->assertEquals($expectedIdentifier, $columnValues[2]);
+                    $orderNumbers = $this->getOrderNumbers($items[0]);
+                    $this->assertEquals($expectedOrderNumbers, $orderNumbers);
 
                     return true;
                 })
@@ -822,10 +814,10 @@ class CsvWrapperTest extends TestCase
                     ];
 
                     $expectedOrderNumbers = [
-                        'yellow-yes-xl|1152|108',
-                        'green-yes-xs|1160|108',
-                        'yellow-no-l|1167|108',
-                        'orange-no-l|1168|108|orange-no-m|1171'
+                        ['yellow-yes-xl', '1152', '108'],
+                        ['green-yes-xs', '1160', '108'],
+                        ['yellow-no-l', '1167', '108'],
+                        ['orange-no-l', '1168', '108', 'orange-no-m', '1171']
                     ];
 
                     $expectedImagesUrls = [
@@ -836,11 +828,12 @@ class CsvWrapperTest extends TestCase
                     ];
 
                     foreach ($items as $key => $item) {
-                        $line = $item->getCsvFragment($this->csvConfig);
-                        $columnValues = explode("\t", $line);
-                        $this->assertEquals($expectedIds[$key], $columnValues[0]);
-                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[2]);
-                        $this->assertSame($expectedImagesUrls[$key], $columnValues[16]);
+                        $orderNumbers = $this->getOrderNumbers($item);
+                        $itemImages = $this->getImages($item);
+
+                        $this->assertEquals($expectedIds[$key], $item->getId());
+                        $this->assertEquals($expectedOrderNumbers[$key], $orderNumbers);
+                        $this->assertSame($expectedImagesUrls[$key], $itemImages[0]->getUrl());
                     }
 
                     return true;
@@ -908,16 +901,15 @@ class CsvWrapperTest extends TestCase
                     ];
 
                     $expectedOrderNumbers = [
-                        '133-green-xl|1118|133|133-green-l|1121',
-                        '133-blue-xl|1119|133|133-blue-l|1122|133-blue-s|1125',
-                        '133-black-s|1126|133'
+                        ['133-green-xl', '1118', '133', '133-green-l', '1121'],
+                        ['133-blue-xl', '1119', '133', '133-blue-l', '1122', '133-blue-s', '1125'],
+                        ['133-black-s', '1126', '133']
                     ];
 
                     foreach ($items as $key => $item) {
-                        $line = $item->getCsvFragment($this->csvConfig);
-                        $columnValues = explode("\t", $line);
-                        $this->assertEquals($expectedIds[$key], $columnValues[0]);
-                        $this->assertEquals($expectedOrderNumbers[$key], $columnValues[2]);
+                        $orderNumbers = $this->getOrderNumbers($item);
+                        $this->assertEquals($expectedIds[$key], $item->getId());
+                        $this->assertEquals($expectedOrderNumbers[$key], $orderNumbers);
                     }
 
                     return true;

@@ -24,6 +24,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ItemHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
@@ -40,6 +41,7 @@ class ProductTest extends TestCase
 {
     use ConfigHelper;
     use ResponseHelper;
+    use ItemHelper;
 
     private Exporter|MockObject $exporterMock;
 
@@ -225,10 +227,10 @@ class ProductTest extends TestCase
 
         $this->assertNotNull($item);
         // TODO: check item's orderNumbers directly once order numbers getter is implemented
-        $line = $item->getCsvFragment($this->csvConfig);
-        $columnValues = explode("\t", $line);
-        $this->assertEquals('S-000813-C|modeeeel|1004|106|3213213213213|101|1005|107', $columnValues[2]);
-        $this->assertSame($expectedImage, $columnValues[16]);
+        $orderNumbers = $this->getOrderNumbers($item);
+        $this->assertEquals(['S-000813-C', 'modeeeel', '1004', '106', '3213213213213', '101', '1005', '107'], $orderNumbers);
+        $images = $this->getImages($item);
+        $this->assertSame($expectedImage, $images[2]->getUrl());
     }
 
     public function testMatchingAvailabilityExportSettingDoesNotOverrideOtherVariationExportabilityChecks()
@@ -249,9 +251,9 @@ class ProductTest extends TestCase
 
         $this->assertNotNull($item);
         // TODO: check item's orderNumbers directly once order numbers getter is implemented
-        $line = $item->getCsvFragment($this->csvConfig);
-        $columnValues = explode("\t", $line);
-        $this->assertEquals('101|1005|107', $columnValues[2]);
+        $orderNumbers = $this->getOrderNumbers($item);
+
+        $this->assertEquals(['101', '1005', '107'], $orderNumbers);
     }
 
     public function testProductIsSuccessfullyWrapped(): void
@@ -343,13 +345,12 @@ class ProductTest extends TestCase
             $item->getUrl()->getValues()['']
         );
 
-        $line = $item->getCsvFragment($this->csvConfig);
-        $line = trim($line, "\n");
-        $columnValues = explode("\t", $line);
-        $this->assertSame((string)$expectedPriceId, $columnValues[17]);
-        $this->assertSame((string)$expectedMainVariationId, $columnValues[18]);
-        $this->assertSame($expectedBaseUnit, $columnValues[19]);
-        $this->assertSame($expectedPackageSize, $columnValues[20]);
+        $itemProperties = $this->getArrayFirstElement($item->getProperties());
+
+        $this->assertSame((string)$expectedPriceId, $itemProperties['price_id']);
+        $this->assertSame((string)$expectedMainVariationId, $itemProperties['variation_id']);
+        $this->assertSame($expectedBaseUnit, $itemProperties['base_unit']);
+        $this->assertSame($expectedPackageSize, $itemProperties['package_size']);
 
         $this->assertTrue(
             DateTime::createFromFormat(DateTimeInterface::ATOM, $item->getDateAdded()->getValues()['']) !== false
@@ -450,11 +451,7 @@ class ProductTest extends TestCase
 
         $product = $this->getProduct();
         $item = $product->processProductData();
-        $attributes = $item->getAttributes();
-        $attributesMap = array_reduce($attributes, function (array $list, Attribute $attribute) {
-            $list[$attribute->getKey()] = $attribute->getValues();
-            return $list;
-        }, []);
+        $attributesMap = $this->getMappedAttributes($item);
 
         $this->assertEquals($expectedResult, $attributesMap['vendor'][0]);
     }
@@ -524,9 +521,9 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         // TODO: check item's keyword property directly once keywords getter is implemented
-        $line = $item->getCsvFragment($this->csvConfig);
-        $columnValues = explode("\t", $line);
-        $this->assertEquals('de tag 1,de tag 2,de tag 3,keywords from product', $columnValues[9]);
+        $itemKeywords = $this->getItemKeywords($item);
+
+        $this->assertEquals(['de tag 1', 'de tag 2', 'de tag 3', 'keywords from product'], $itemKeywords);
     }
 
     public function testPriceAndInsteadPriceIsSetByLowestValues(): void
@@ -598,12 +595,12 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $line = $item->getCsvFragment($this->csvConfig);
-        $columnValues = explode("\t", $line);
-
-        $this->assertEquals($expectedPrice, $columnValues[6]);
-        $this->assertEquals($expectedUrl, $columnValues[8]);
-        $this->assertEquals($expectedImg, $columnValues[16]);
+        $itemPrice = $this->getArrayFirstElement($item->getPrice()->getValues());
+        $itemUrl = $this->getArrayFirstElement($item->getUrl()->getValues());
+        $itemImage = $this->getImages($item);
+        $this->assertEquals($expectedPrice, $itemPrice);
+        $this->assertEquals($expectedUrl, $itemUrl);
+        $this->assertEquals($expectedImg, !empty($itemImage) ? $itemImage[0]->getUrl() : '');
     }
 
     public function testProductWithoutImagesNotFail(): void
@@ -620,9 +617,7 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $line = $item->getCsvFragment($this->csvConfig);
-        $columnValues = explode("\t", $line);
-        $this->assertEmpty($columnValues[10]);
+        $this->assertEmpty($item->getImages());
     }
 
     public function testCheapestVariationIsUsed()
@@ -637,9 +632,8 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         // TODO: check item's images property directly once images getter is implemented
-        $line = $item->getCsvFragment($this->csvConfig);
-        $columnValues = explode("\t", $line);
-        $this->assertEquals(1005, $columnValues[18]);
+        $itemProperties = $this->getArrayFirstElement($item->getProperties());
+        $this->assertEquals(1005, $itemProperties['variation_id']);
     }
 
     public function testGroupsAreSetFromAllVariations()
@@ -658,13 +652,13 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         // TODO: check item's groups property directly once groups getter is implemented
-        $line = $item->getCsvFragment($this->csvConfig);
-        $columnValues = explode("\t", $line);
-        $this->assertEquals('0_,1_', $columnValues[10]);
+        $itemGroups = $this->getItemGroups($item);
+        $this->assertEquals(['0_', '1_'], $itemGroups);
     }
 
     public function testOrdernumbersAreSetFromAllVariations()
     {
+        $expectedOrderNumbers = ['1', '11', '1111', '111', '11111', '111111', '2', '22', '2222', '222', '22222', '222222'];
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_ordernumber_test.json');
@@ -679,9 +673,8 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         // TODO: check item's order numbers property directly once order numbers getter is implemented
-        $line = $item->getCsvFragment($this->csvConfig);
-        $columnValues = explode("\t", $line);
-        $this->assertEquals('1|11|1111|111|11111|111111|2|22|2222|222|22222|222222', $columnValues[2]);
+        $orderNumbers = $this->getOrderNumbers($item);
+        $this->assertEquals($expectedOrderNumbers, $orderNumbers);
     }
 
     /**
@@ -689,7 +682,7 @@ class ProductTest extends TestCase
      */
     public function testOrderNumbersAreExportedAccordingToConfiguration(
         array $orderNumbersExportConfig,
-        string $expectedOrderNumbers
+        array $expectedOrderNumbers
     ): void {
         $this->config = $this->getDefaultConfig($orderNumbersExportConfig);
         $this->exporterMock = $this->getExporter();
@@ -706,9 +699,8 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         // TODO: check item's order numbers property directly once order numbers getter is implemented
-        $line = $item->getCsvFragment($this->csvConfig);
-        $columnValues = explode("\t", $line);
-        $this->assertEquals($expectedOrderNumbers, $columnValues[2]);
+        $orderNumbers = $this->getOrderNumbers($item);
+        $this->assertEquals($expectedOrderNumbers, $orderNumbers);
     }
 
     /**
@@ -730,11 +722,7 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $attributes = $item->getAttributes();
-        $attributesMap = array_reduce($attributes, function (array $list, Attribute $attribute) {
-            $list[$attribute->getKey()] = $attribute->getValues();
-            return $list;
-        }, []);
+        $attributesMap = $this->getMappedAttributes($item);
 
         foreach ($expectedAttributeValues as $key => $expectedAttributeValue) {
             $this->assertEquals($expectedAttributeValue, $attributesMap[$key][0]);
@@ -757,11 +745,7 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $attributes = $item->getAttributes();
-        $attributesMap = array_reduce($attributes, function (array $list, Attribute $attribute) {
-            $list[$attribute->getKey()] = $attribute->getValues();
-            return $list;
-        }, []);
+        $attributesMap = $this->getMappedAttributes($item);
 
         foreach ($expectedAttributeValues as $key => $expectedAttributeValue) {
             $this->assertEquals($expectedAttributeValue, $attributesMap[$key][0]);
@@ -795,16 +779,14 @@ class ProductTest extends TestCase
 
         // TODO: check item's attributes property directly once attributes getter is implemented
 
-        $attributes = $item->getAttributes();
-        $attributesMap = array_reduce($attributes, function (array $list, Attribute $attribute) {
-            $list[$attribute->getKey()] = $attribute->getValues();
-            return $list;
-        }, []);
+        $attributesMap = $this->getMappedAttributes($item);
 
         foreach ($expectedAttributeValues as $key => $expectedAttributeValue) {
             if (is_array($expectedAttributeValue)) {
                 $this->assertEquals($expectedAttributeValue, $attributesMap[$key]);
-            } else $this->assertEquals($expectedAttributeValue, $attributesMap[$key][0]);
+            } else {
+                $this->assertEquals($expectedAttributeValue, $attributesMap[$key][0]);
+            }
         }
     }
 
@@ -1186,7 +1168,7 @@ class ProductTest extends TestCase
         return [
             'using default values' => [
                 [],
-                '1|11|1111|111|11111|111111|2|22|2222|222|22222|222222'
+                ['1', '11', '1111', '111', '11111', '111111', '2', '22', '2222', '222', '22222', '222222']
             ],
             'all fields enabled' => [
                 [
@@ -1196,7 +1178,7 @@ class ProductTest extends TestCase
                     'exportOrdernumberVariantModel' => true,
                     'exportOrdernumberVariantBarcodes' => true
                 ],
-                '1|11|1111|111|11111|111111|2|22|2222|222|22222|222222'
+                ['1', '11', '1111', '111', '11111', '111111', '2', '22', '2222', '222', '22222', '222222']
             ],
             'all fields disabled' => [
                 [
@@ -1206,37 +1188,37 @@ class ProductTest extends TestCase
                     'exportOrdernumberVariantModel' => false,
                     'exportOrdernumberVariantBarcodes' => false
                 ],
-                ''
+                []
             ],
             'product id disabled' => [
                 [
                     'exportOrdernumberProductId' => false,
                 ],
-                '1|11|1111|11111|111111|2|22|2222|22222|222222'
+                ['1', '11', '1111', '11111', '111111', '2', '22', '2222', '22222', '222222']
             ],
             'variant id disabled' => [
                 [
                     'exportOrdernumberVariantId' => false,
                 ],
-                '1|11|111|11111|111111|2|22|222|22222|222222'
+                ['1', '11', '111', '11111', '111111', '2', '22', '222', '22222', '222222']
             ],
             'variant number disabled' => [
                 [
                     'exportOrdernumberVariantNumber' => false,
                 ],
-                '11|1111|111|11111|111111|22|2222|222|22222|222222'
+                ['11', '1111', '111', '11111', '111111', '22', '2222', '222', '22222', '222222']
             ],
             'variant model disabled' => [
                 [
                     'exportOrdernumberVariantModel' => false,
                 ],
-                '1|1111|111|11111|111111|2|2222|222|22222|222222'
+                ['1', '1111', '111', '11111', '111111', '2', '2222', '222', '22222', '222222']
             ],
             'variant barcodes disabled' => [
                 [
                     'exportOrdernumberVariantBarcodes' => false,
                 ],
-                '1|11|1111|111|2|22|2222|222'
+                ['1', '11', '1111', '111', '2', '22', '2222', '222']
             ],
             'various fields disabled' => [
                 [
@@ -1244,7 +1226,7 @@ class ProductTest extends TestCase
                     'exportOrdernumberVariantNumber' => false,
                     'exportOrdernumberVariantBarcodes' => false
                 ],
-                '11|1111|22|2222'
+                ['11', '1111', '22', '2222']
             ]
         ];
     }
