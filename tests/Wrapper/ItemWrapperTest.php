@@ -7,9 +7,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 use Log4Php\Logger;
 use FINDOLOGIC\Export\Exporter;
 use PHPUnit\Framework\TestCase;
-use FINDOLOGIC\Export\CSV\CSVItem;
-use FINDOLOGIC\Export\CSV\CSVConfig;
-use FINDOLOGIC\Export\Data\Attribute;
+use FINDOLOGIC\Export\XML\XMLItem;
 use PHPUnit\Framework\MockObject\MockObject;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\PlentyShop;
@@ -25,7 +23,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration as WebStoreConfiguration;
 
-class CsvWrapperTest extends TestCase
+class ItemWrapperTest extends TestCase
 {
     use ConfigHelper;
 
@@ -35,7 +33,7 @@ class CsvWrapperTest extends TestCase
 
     private const TEST_EXPORT_PATH = 'some_path';
 
-    private ItemsWrapper $csvWrapper;
+    private ItemsWrapper $itemWrapper;
 
     private Config $config;
 
@@ -44,8 +42,6 @@ class CsvWrapperTest extends TestCase
     private RegistryService|MockObject $registryServiceMock;
 
     private Logger|MockObject $loggerMock;
-
-    private CSVConfig $csvConfig;
 
     public function setUp(): void
     {
@@ -83,7 +79,7 @@ class CsvWrapperTest extends TestCase
 
         $this->registryServiceMock->method('getWebStore')->willReturn($webstoreMock);
 
-        $this->csvWrapper = new ItemsWrapper(
+        $this->itemWrapper = new ItemsWrapper(
             self::TEST_EXPORT_PATH,
             null,
             $this->exporterMock,
@@ -92,15 +88,6 @@ class CsvWrapperTest extends TestCase
             $this->loggerMock,
             $this->loggerMock
         );
-
-        $this->csvConfig = new CSVConfig([
-            'price_id',
-            'variation_id',
-            'base_unit',
-            'package_size'
-        ], [
-            'cat'
-        ]);
     }
 
     public function testExportsEachVariationSeparatelyIfConfiguredAndIfAllVariationsHaveAGroupableAttribute()
@@ -112,10 +99,10 @@ class CsvWrapperTest extends TestCase
         $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(4))->method('createItem')->willReturnOnConsecutiveCalls(
-            new CSVItem('106'),
-            new CSVItem('106'),
-            new CSVItem('106'),
-            new CSVItem('106')
+            new XMLItem('106'),
+            new XMLItem('106'),
+            new XMLItem('106'),
+            new XMLItem('106')
         );
 
         $itemResponse = $this->getMockResponse('ItemResponse/one.json');
@@ -135,7 +122,7 @@ class CsvWrapperTest extends TestCase
             ->with(
                 self::TEST_EXPORT_PATH,
                 $this->callback(function (array $items) {
-                    /** @var CSVItem[] $items */
+                    /** @var XMLItem[] $items */
                     $this->assertCount(3, $items);
 
                     $expectedIds = [
@@ -201,7 +188,7 @@ class CsvWrapperTest extends TestCase
                 })
             );
 
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->itemWrapper->wrap(0, 1, $items, $variations);
     }
 
     public function testExportsThreeItemsWhenTwoOutOfThreeVariantsHaveGroupableAttributes()
@@ -213,9 +200,9 @@ class CsvWrapperTest extends TestCase
         $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(3))->method('createItem')->willReturnOnConsecutiveCalls(
-            new CSVItem('106'),
-            new CSVItem('106'),
-            new CSVItem('106')
+            new XMLItem('106'),
+            new XMLItem('106'),
+            new XMLItem('106')
         );
 
         $itemResponse = $this->getMockResponse('ItemResponse/one.json');
@@ -267,7 +254,7 @@ class CsvWrapperTest extends TestCase
                 })
             );
 
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->itemWrapper->wrap(0, 1, $items, $variations);
     }
 
     public function testExportsTwoItemsWhenOnlyOneOutOfThreeVariantsHasGroupableAttributes()
@@ -279,8 +266,8 @@ class CsvWrapperTest extends TestCase
         $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(2))->method('createItem')->willReturnOnConsecutiveCalls(
-            new CSVItem('106'),
-            new CSVItem('106')
+            new XMLItem('106'),
+            new XMLItem('106')
         );
 
         $itemResponse = $this->getMockResponse('ItemResponse/one.json');
@@ -329,7 +316,7 @@ class CsvWrapperTest extends TestCase
                 })
             );
 
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->itemWrapper->wrap(0, 1, $items, $variations);
     }
 
     public function testGroupsVariantsWithGroupableAttributesIntoASingleItemIfConfiguredNotToShowSeparately()
@@ -343,7 +330,7 @@ class CsvWrapperTest extends TestCase
                 ]
             );
 
-        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem('106'));
+        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new XMLItem('106'));
 
         $itemResponse = $this->getMockResponse('ItemResponse/one.json');
         $items = ItemParser::parse($itemResponse);
@@ -371,7 +358,9 @@ class CsvWrapperTest extends TestCase
                     $this->assertCount(1, $items);
 
                     $expectedId = '106';
-                    $expectedOrderNumber = ['S-000813-C', 'modeeeel', '1004', '106', '3213213213213', '101', '1005', '102', '1006'];
+                    $expectedOrderNumber = [
+                        'S-000813-C', 'modeeeel', '1004', '106', '3213213213213', '101', '1005', '102', '1006'
+                    ];
 
                     $orderNumbers = $this->getOrderNumbers($items[0]);
                     $this->assertEquals($expectedId, $items[0]->getId());
@@ -381,7 +370,7 @@ class CsvWrapperTest extends TestCase
                 })
             );
 
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->itemWrapper->wrap(0, 1, $items, $variations);
     }
 
     public function testGroupsVariantsWithoutGroupableAttributesIntoASingleItemDespiteConfigurationToShowSeparately()
@@ -395,7 +384,7 @@ class CsvWrapperTest extends TestCase
                 ]
             );
 
-        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem('106'));
+        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new XMLItem('106'));
 
         $itemResponse = $this->getMockResponse('ItemResponse/one.json');
         $items = ItemParser::parse($itemResponse);
@@ -423,7 +412,9 @@ class CsvWrapperTest extends TestCase
                     $this->assertCount(1, $items);
 
                     $expectedId = '106';
-                    $expectedOrderNumber = ['S-000813-C', 'modeeeel', '1004', '106', '3213213213213', '101', '1005', '102', '1006'];
+                    $expectedOrderNumber = [
+                        'S-000813-C', 'modeeeel', '1004', '106', '3213213213213', '101', '1005', '102', '1006'
+                    ];
 
                     $orderNumbers = $this->getOrderNumbers($items[0]);
                     $this->assertEquals($expectedId, $items[0]->getId());
@@ -433,7 +424,7 @@ class CsvWrapperTest extends TestCase
                 })
             );
 
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->itemWrapper->wrap(0, 1, $items, $variations);
     }
 
     public function testProductsWithSingleVariationAndGroupableAttributeIsExportedTheSameWayRegardlessOfConfiguration()
@@ -444,7 +435,7 @@ class CsvWrapperTest extends TestCase
 
         $exporterMockCopy = clone $this->exporterMock;
         $registryMockCopy = clone $this->registryServiceMock;
-        $anotherCsvWrapper = new ItemsWrapper(
+        $anotherWrapper = new ItemsWrapper(
             self::TEST_EXPORT_PATH,
             null,
             $exporterMockCopy,
@@ -460,8 +451,6 @@ class CsvWrapperTest extends TestCase
         $variationResponse = $this->getMockResponse('Pim/Variations/variation_with_groupable_attribute.json');
         $variations = PimVariationsParser::parse($variationResponse);
 
-        $firstItemData = null;
-
         $plentyShop = new PlentyShop([
             PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false,
             PlentyShop::KEY_ITEM_VARIATION_SHOW_TYPE => 'all'
@@ -470,22 +459,20 @@ class CsvWrapperTest extends TestCase
         $this->exporterMock->expects($this->exactly(2))
             ->method('createItem')
             ->willReturnOnConsecutiveCalls(
-                new CSVItem('106'),
-                new CSVItem('106')
+                new XMLItem('106'),
+                new XMLItem('106')
             );
         $this->exporterMock->expects($this->once())
             ->method('serializeItemsToFile')
             ->with(
                 self::TEST_EXPORT_PATH,
-                $this->callback(function (array $items) use (&$firstItemData) {
+                $this->callback(function (array $items) {
                     $this->assertCount(1, $items);
-
-                    $firstItemData = $items[0]->getCsvFragment($this->csvConfig);
 
                     return true;
                 })
             );
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->itemWrapper->wrap(0, 1, $items, $variations);
 
         $registryMockCopy->method('getPluginConfigurations')
             ->with('Ceres')
@@ -497,31 +484,26 @@ class CsvWrapperTest extends TestCase
             );
         $exporterMockCopy->expects($this->once())
             ->method('createItem')
-            ->willReturn(new CSVItem('106'));
+            ->willReturn(new XMLItem('106'));
         $exporterMockCopy->expects($this->once())
             ->method('serializeItemsToFile')
             ->with(
                 self::TEST_EXPORT_PATH,
-                $this->callback(function (array $items) use (&$firstItemData) {
+                $this->callback(function (array $items) {
                     $expectedSeparatedProductId = '106_1004';
                     $expectedGroupedProductId = '106';
 
                     $this->assertCount(1, $items);
 
-                    $separatedProductColumns = explode("\t", $firstItemData);
-                    $groupedProductColumns = explode("\t", $items[0]->getCsvFragment($this->csvConfig));
-
-                    $this->assertEquals($expectedSeparatedProductId, $separatedProductColumns[0]);
-                    $this->assertEquals($expectedGroupedProductId, $groupedProductColumns[0]);
-                    $this->assertEquals(
-                        array_slice($separatedProductColumns, 1),
-                        array_slice($groupedProductColumns, 1)
-                    );
+                    $itemProperties = $this->getArrayFirstElement($items[0]->getProperties());
+                    $productGrouppedIds = "{$items[0]->getId()}_{$itemProperties['variation_id']}";
+                    $this->assertEquals($expectedSeparatedProductId, $productGrouppedIds);
+                    $this->assertEquals($expectedGroupedProductId, $items[0]->getId());
 
                     return true;
                 })
             );
-        $anotherCsvWrapper->wrap(0, 1, $items, $variations);
+        $anotherWrapper->wrap(0, 1, $items, $variations);
     }
 
     public function testProductsWithSingleVariationGetExportedTheSameWhetherItHasGroupableAttributesOrNot()
@@ -540,7 +522,7 @@ class CsvWrapperTest extends TestCase
 
         $exporterMockCopy = clone $this->exporterMock;
         $registryMockCopy = clone $this->registryServiceMock;
-        $anotherCsvWrapper = new ItemsWrapper(
+        $anotherWrapper = new ItemsWrapper(
             self::TEST_EXPORT_PATH,
             null,
             $exporterMockCopy,
@@ -560,54 +542,46 @@ class CsvWrapperTest extends TestCase
         $modifiedAttributes = AttributeParser::parse($modifiedAttributeResponse);
         $registryMockCopy->method('getAttribute')->with(3)->willReturn($modifiedAttributes->findOne(['id' => 3]));
 
-        $firstItemData = null;
         $this->exporterMock->expects($this->exactly(2))
             ->method('createItem')
             ->willReturnOnConsecutiveCalls(
-                new CSVItem('106'),
-                new CSVItem('106')
+                new XMLItem('106'),
+                new XMLItem('106')
             );
         $this->exporterMock->expects($this->once())
             ->method('serializeItemsToFile')
             ->with(
                 self::TEST_EXPORT_PATH,
-                $this->callback(function (array $items) use (&$firstItemData) {
+                $this->callback(function (array $items) {
                     $this->assertCount(1, $items);
-
-                    $firstItemData = $items[0]->getCsvFragment($this->csvConfig);
 
                     return true;
                 })
             );
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->itemWrapper->wrap(0, 1, $items, $variations);
 
         $exporterMockCopy->expects($this->once())
             ->method('createItem')
-            ->willReturn(new CSVItem('106'));
+            ->willReturn(new XMLItem('106'));
         $exporterMockCopy->expects($this->once())
             ->method('serializeItemsToFile')
             ->with(
                 self::TEST_EXPORT_PATH,
-                $this->callback(function (array $items) use (&$firstItemData) {
+                $this->callback(function (array $items) {
                     $expectedSeparatedProductId = '106_1004';
                     $expectedGroupedProductId = '106';
 
                     $this->assertCount(1, $items);
 
-                    $separatedProductColumns = explode("\t", $firstItemData);
-                    $groupedProductColumns = explode("\t", $items[0]->getCsvFragment($this->csvConfig));
-
-                    $this->assertEquals($expectedSeparatedProductId, $separatedProductColumns[0]);
-                    $this->assertEquals($expectedGroupedProductId, $groupedProductColumns[0]);
-                    $this->assertEquals(
-                        array_slice($separatedProductColumns, 1),
-                        array_slice($groupedProductColumns, 1)
-                    );
+                    $itemProperties = $this->getArrayFirstElement($items[0]->getProperties());
+                    $productGrouppedIds = "{$items[0]->getId()}_{$itemProperties['variation_id']}";
+                    $this->assertEquals($expectedSeparatedProductId, $productGrouppedIds);
+                    $this->assertEquals($expectedGroupedProductId, $items[0]->getId());
 
                     return true;
                 })
             );
-        $anotherCsvWrapper->wrap(0, 1, $items, $variations);
+        $anotherWrapper->wrap(0, 1, $items, $variations);
     }
 
     public function testProductsWithMainVariationIncludingAnExportExclusionTagAreSkippedAndMessageIsLogged()
@@ -635,8 +609,8 @@ class CsvWrapperTest extends TestCase
             );
         $this->exporterMock->expects($this->exactly(2))->method('createItem');
 
-        $this->csvWrapper->wrap(0, 1, $items1, $variations);
-        $this->csvWrapper->wrap(0, 2, $items2, $variations);
+        $this->itemWrapper->wrap(0, 1, $items1, $variations);
+        $this->itemWrapper->wrap(0, 2, $items2, $variations);
     }
 
     public function testLoggingIsSkippedIfSkipableItemsDoNotExist(): void
@@ -654,7 +628,7 @@ class CsvWrapperTest extends TestCase
 
         $this->loggerMock->expects($this->never())->method('notice');
 
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->itemWrapper->wrap(0, 1, $items, $variations);
     }
 
     public function testFailureLogGroupingByReason()
@@ -681,8 +655,8 @@ class CsvWrapperTest extends TestCase
                 ]
             );
 
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
-        $this->csvWrapper->wrap(0, 1, $differentItems, $variations);
+        $this->itemWrapper->wrap(0, 1, $items, $variations);
+        $this->itemWrapper->wrap(0, 1, $differentItems, $variations);
     }
 
     public function testNonMainVariationsWithExclusionTagAreSkipped()
@@ -695,7 +669,7 @@ class CsvWrapperTest extends TestCase
         );
         $variations = PimVariationsParser::parse($variationResponse);
 
-        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem('106'));
+        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new XMLItem('106'));
 
         $this->exporterMock->expects($this->once())
             ->method('serializeItemsToFile')
@@ -714,7 +688,7 @@ class CsvWrapperTest extends TestCase
                 })
             );
 
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->itemWrapper->wrap(0, 1, $items, $variations);
     }
 
     public function testProductsWithExclusionTagsAreExportedIfExlusionTagDoesNotHaveATranslateionInCurrentLanguage()
@@ -729,7 +703,7 @@ class CsvWrapperTest extends TestCase
         );
         $variations = PimVariationsParser::parse($variationResponse);
 
-        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new CSVItem('106'));
+        $this->exporterMock->expects($this->once())->method('createItem')->willReturn(new XMLItem('106'));
 
         $this->exporterMock->expects($this->once())
             ->method('serializeItemsToFile')
@@ -748,7 +722,7 @@ class CsvWrapperTest extends TestCase
                 })
             );
 
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->itemWrapper->wrap(0, 1, $items, $variations);
     }
 
     public function testSeparatedVariationsIsGroupedBasedOnTwoGroupableAttributes(): void
@@ -760,11 +734,11 @@ class CsvWrapperTest extends TestCase
         $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(5))->method('createItem')->willReturnOnConsecutiveCalls(
-            new CSVItem('108'),
-            new CSVItem('108'),
-            new CSVItem('108'),
-            new CSVItem('108'),
-            new CSVItem('108')
+            new XMLItem('108'),
+            new XMLItem('108'),
+            new XMLItem('108'),
+            new XMLItem('108'),
+            new XMLItem('108')
         );
 
         $itemResponse = $this->getMockResponse(
@@ -840,7 +814,7 @@ class CsvWrapperTest extends TestCase
                 })
             );
 
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->itemWrapper->wrap(0, 1, $items, $variations);
     }
 
     public function testSeparatedVariationsIsGroupedBasedOnOneGroupableAttribute(): void
@@ -852,10 +826,10 @@ class CsvWrapperTest extends TestCase
         $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
 
         $this->exporterMock->expects($this->exactly(4))->method('createItem')->willReturnOnConsecutiveCalls(
-            new CSVItem('133'),
-            new CSVItem('133'),
-            new CSVItem('133'),
-            new CSVItem('133'),
+            new XMLItem('133'),
+            new XMLItem('133'),
+            new XMLItem('133'),
+            new XMLItem('133'),
         );
 
         $itemResponse = $this->getMockResponse(
@@ -916,6 +890,6 @@ class CsvWrapperTest extends TestCase
                 })
             );
 
-        $this->csvWrapper->wrap(0, 1, $items, $variations);
+        $this->itemWrapper->wrap(0, 1, $items, $variations);
     }
 }

@@ -155,7 +155,7 @@ class ExportCommand extends Command
         }
 
         $exportFileLocation = Utils::env('EXPORT_DIR', Exporter::DEFAULT_LOCATION);
-
+        $fileExists = false;
         switch ($exporterType) {
             case Exporter::TYPE_CSV:
                 $fileExists = file_exists($exportFileLocation . '/findologic.csv');

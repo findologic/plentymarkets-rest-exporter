@@ -10,7 +10,6 @@ use ReflectionClass;
 use DateTimeInterface;
 use FINDOLOGIC\Export\Exporter;
 use PHPUnit\Framework\TestCase;
-use FINDOLOGIC\Export\CSV\CSVConfig;
 use FINDOLOGIC\Export\Data\Attribute;
 use FINDOLOGIC\Export\Enums\ExporterType;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -56,15 +55,8 @@ class ProductTest extends TestCase
     /** @var Variation[]|MockObject[] */
     private array $variationEntityMocks = [];
 
-    private CSVConfig $csvConfig;
-
     protected function setUp(): void
     {
-        $this->csvConfig = new CSVConfig(
-            ['price_id', 'variation_id', 'base_unit', 'package_size'],
-            ['dimensions_height_mm', 'dimensions_length_mm', 'dimensions_weight_g', 'dimensions_weight_net_g', 'dimensions_width_mm']
-        );
-
         $this->exporterMock = $this->getMockBuilder(Exporter::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -214,7 +206,7 @@ class ProductTest extends TestCase
         $this->exporterMock = $this->getExporter();
         $expectedImage = 'https://cdn03.plentymarkets.com/0pb05rir4h9r/' .
             'item/images/131/middle/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg';
-
+        $expectedOrderNumbers = ['S-000813-C', 'modeeeel', '1004', '106', '3213213213213', '101', '1005', '107'];
         $this->config->setAvailabilityId(5);
         $this->config->setExportUnavailableVariations(true);
 
@@ -228,7 +220,7 @@ class ProductTest extends TestCase
         $this->assertNotNull($item);
         // TODO: check item's orderNumbers directly once order numbers getter is implemented
         $orderNumbers = $this->getOrderNumbers($item);
-        $this->assertEquals(['S-000813-C', 'modeeeel', '1004', '106', '3213213213213', '101', '1005', '107'], $orderNumbers);
+        $this->assertEquals($expectedOrderNumbers, $orderNumbers);
         $images = $this->getImages($item);
         $this->assertSame($expectedImage, $images[2]->getUrl());
     }
@@ -658,7 +650,9 @@ class ProductTest extends TestCase
 
     public function testOrdernumbersAreSetFromAllVariations()
     {
-        $expectedOrderNumbers = ['1', '11', '1111', '111', '11111', '111111', '2', '22', '2222', '222', '22222', '222222'];
+        $expectedOrderNumbers = [
+            '1', '11', '1111', '111', '11111', '111111', '2', '22', '2222', '222', '22222', '222222'
+        ];
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_ordernumber_test.json');
@@ -731,7 +725,10 @@ class ProductTest extends TestCase
 
     public function testTooLongFreeTextFieldsAreIgnored(): void
     {
-        $expectedAttributeValues = ['cat' => 'Sessel & Hocker', 'cat_url' => '/wohnzimmer/sessel-hocker/', 'free1' => '0000000000'];
+        $expectedAttributeValues = [
+            'cat' => 'Sessel & Hocker',
+            'cat_url' => '/wohnzimmer/sessel-hocker/', 'free1' => '0000000000'
+        ];
 
         $this->config = $this->getDefaultConfig(['exportFreeTextFields' => true]);
         $this->exporterMock = $this->getExporter();
@@ -1080,7 +1077,7 @@ class ProductTest extends TestCase
 
     private function getExporter(): Exporter
     {
-        return Exporter::create(ExporterType::CSV, 100, $this->csvConfig);
+        return Exporter::create(ExporterType::XML, 100);
     }
 
     public function cheapestVariationIsExportedTestProvider(): array
