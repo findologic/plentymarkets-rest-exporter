@@ -203,7 +203,7 @@ class Product
         $hasCategories = false;
         $variationsProcessed = 0;
         $prices = [];
-        $insteadPrices = [];
+        $overriddenPrice = new OverriddenPrice();
         $ordernumbers = [];
         $highestPosition = 0;
         $baseUnit = null;
@@ -278,7 +278,9 @@ class Product
             }
 
             $prices[] = $variation->getPrice();
-            $insteadPrices[] = $variation->getInsteadPrice();
+
+            $insteadPrice = $variation->getInsteadPrice();
+            $overriddenPrice->setValue($insteadPrice, (string)$insteadPrice);
 
             if ($variation->hasCategories()) {
                 $hasCategories = true;
@@ -298,9 +300,7 @@ class Product
             return 0;
         }
 
-        if ($insteadPrices) {
-            $this->item->setOverriddenPrice(new OverriddenPrice());
-        }
+        $this->item->setOverriddenPrice($overriddenPrice);
 
         $ordernumbers = array_unique($ordernumbers);
         foreach ($ordernumbers as $ordernumber) {

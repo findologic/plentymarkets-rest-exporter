@@ -534,10 +534,10 @@ class ProductTest extends TestCase
 
         $product = $this->getProduct();
         $item = $product->processProductData();
-        //$overriddenPrice = $this->getArrayFirstElement($item->getOverriddenPrice()->getValues());
+        $overriddenPrice = $item->getOverriddenPrice();
 
         $this->assertEquals(['' => 50], $item->getPrice()->getValues());
-        //$this->assertEquals(100, $overriddenPrice[0]); //Temporarily remove because the fn doesnt exist anymore
+        $this->assertEquals(100, $overriddenPrice[0]); //Temporarily remove because the fn doesnt exist anymore
     }
 
     /**
@@ -728,7 +728,8 @@ class ProductTest extends TestCase
     {
         $expectedAttributeValues = [
             'cat' => 'Sessel & Hocker',
-            'cat_url' => '/wohnzimmer/sessel-hocker/', 'free1' => '0000000000'
+            'cat_url' => '/wohnzimmer/sessel-hocker/',
+            'free1' => '0000000000'
         ];
 
         $this->config = $this->getDefaultConfig(['exportFreeTextFields' => true]);

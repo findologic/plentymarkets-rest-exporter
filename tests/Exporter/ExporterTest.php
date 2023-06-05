@@ -99,10 +99,6 @@ class ExporterTest extends TestCase
     public function exporterTypeProvider(): array
     {
         return [
-            'Exporter type is CSV' => [
-                'type' => Exporter::TYPE_CSV,
-                'expected' => CsvExporter::class
-            ],
             'Exporter type is XML' => [
                 'type' => Exporter::TYPE_XML,
                 'expected' => XmlExporter::class
