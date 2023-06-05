@@ -190,10 +190,6 @@ class ExportCommandTest extends TestCase
     public function exportTypesProvider()
     {
         return [
-            'CSV' => [
-                'type' => Exporter::TYPE_CSV,
-                'filename' => 'findologic.csv'
-            ],
             'XML' => [
                 'type' => Exporter::TYPE_XML,
                 'filename' => 'findologic.xml'

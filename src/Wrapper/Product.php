@@ -230,7 +230,7 @@ class Product
 
             $useCallistoUrl = $this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl();
             if (!$itemHasImage && $variation->getImage() && $useCallistoUrl) {
-                $this->item->addImage($variation->getImage());
+                $this->item->setAllImages($variation->getImages());
                 $itemHasImage = true;
             }
 
@@ -275,10 +275,6 @@ class Product
 
             foreach ($variation->getAttributes() as $attribute) {
                 $this->item->addMergedAttribute($attribute);
-            }
-
-            foreach ($variation->getImages() as $image) {
-                $this->item->addImage($image);
             }
 
             $prices[] = $variation->getPrice();

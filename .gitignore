@@ -16,3 +16,5 @@
 .env.*.local
 coverage.xml
 .phpunit.result.cache
+
+.vscode

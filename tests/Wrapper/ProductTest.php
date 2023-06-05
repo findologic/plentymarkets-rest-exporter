@@ -534,9 +534,10 @@ class ProductTest extends TestCase
 
         $product = $this->getProduct();
         $item = $product->processProductData();
+        //$overriddenPrice = $this->getArrayFirstElement($item->getOverriddenPrice()->getValues());
 
         $this->assertEquals(['' => 50], $item->getPrice()->getValues());
-        // $this->assertEquals(100, $item->getInsteadPrice()); //Temporarily remove because the fn doesnt exist anymore
+        //$this->assertEquals(100, $overriddenPrice[0]); //Temporarily remove because the fn doesnt exist anymore
     }
 
     /**

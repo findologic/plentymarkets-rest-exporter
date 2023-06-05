@@ -137,18 +137,6 @@ abstract class Exporter
         $usedPath = $exportPath ?? Utils::env('EXPORT_DIR', self::DEFAULT_LOCATION);
 
         return match ($type) {
-            self::TYPE_CSV => new CsvExporter(
-                $internalLogger,
-                $customerLogger,
-                $config,
-                $usedPath,
-                $fileNamePrefix,
-                $client,
-                $registryService,
-                $itemRequest,
-                $pimVariationRequest,
-                $fileExporter
-            ),
             self::TYPE_XML => new XmlExporter(
                 $internalLogger,
                 $customerLogger,

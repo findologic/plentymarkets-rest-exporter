@@ -209,11 +209,11 @@ class ExporterTest extends TestCase
     public function testFileNameIsChangedWhenSet(): void
     {
         $this->fileNamePrefix = 'findologic.new.funny';
-        $this->fileExporterMock = LibFlexportExporter::create(ExporterType::CSV);
-        $expectedFileLocation = self::EXPORTER_LOCATION . $this->fileNamePrefix . '.csv';
+        $this->fileExporterMock = LibFlexportExporter::create(ExporterType::XML);
+        $expectedFileLocation = self::EXPORTER_LOCATION . $this->fileNamePrefix . '.xml';
 
         $this->setUpClientMock();
-        $exporter = $this->getExporter(Exporter::TYPE_CSV);
+        $exporter = $this->getExporter(Exporter::TYPE_XML);
         $exporter->export();
 
         $this->assertStringContainsString(
@@ -221,7 +221,7 @@ class ExporterTest extends TestCase
             file_get_contents($expectedFileLocation)
         );
 
-        // Remove CSV file after test.
+        // Remove XML file after test.
         unlink($expectedFileLocation);
     }
 
