@@ -203,7 +203,7 @@ class Product
         $hasCategories = false;
         $variationsProcessed = 0;
         $prices = [];
-        $overriddenPrice = new OverriddenPrice();
+        $insteadPrices = [];
         $ordernumbers = [];
         $highestPosition = 0;
         $baseUnit = null;
@@ -230,6 +230,10 @@ class Product
 
             $useCallistoUrl = $this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl();
             if (!$itemHasImage && $variation->getImage() && $useCallistoUrl) {
+                $this->item->setAllImages($variation->getImages());
+                $itemHasImage = true;
+            }
+            else if(!$itemHasImage){
                 $this->item->setAllImages($variation->getImages());
                 $itemHasImage = true;
             }
@@ -278,9 +282,7 @@ class Product
             }
 
             $prices[] = $variation->getPrice();
-
-            $insteadPrice = $variation->getInsteadPrice();
-            $overriddenPrice->setValue($insteadPrice, (string)$insteadPrice);
+            $insteadPrices[] = $variation->getInsteadPrice();
 
             if ($variation->hasCategories()) {
                 $hasCategories = true;
@@ -300,7 +302,11 @@ class Product
             return 0;
         }
 
-        $this->item->setOverriddenPrice($overriddenPrice);
+        if ($insteadPrices) {
+            $overriddenPrice = new OverriddenPrice();
+            $overriddenPrice->setValue(min($insteadPrices));
+            $this->item->setOverriddenPrice($overriddenPrice);
+        }
 
         $ordernumbers = array_unique($ordernumbers);
         foreach ($ordernumbers as $ordernumber) {

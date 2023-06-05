@@ -222,7 +222,7 @@ class ProductTest extends TestCase
         $orderNumbers = $this->getOrderNumbers($item);
         $this->assertEquals($expectedOrderNumbers, $orderNumbers);
         $images = $this->getImages($item);
-        $this->assertSame($expectedImage, $images[2]->getUrl());
+        $this->assertSame($expectedImage, $images[0]->getUrl());
     }
 
     public function testMatchingAvailabilityExportSettingDoesNotOverrideOtherVariationExportabilityChecks()
@@ -534,10 +534,10 @@ class ProductTest extends TestCase
 
         $product = $this->getProduct();
         $item = $product->processProductData();
-        $overriddenPrice = $item->getOverriddenPrice();
+        $overriddenPrice = $this->getArrayFirstElement($item->getOverriddenPrice()->getValues());
 
         $this->assertEquals(['' => 50], $item->getPrice()->getValues());
-        $this->assertEquals(100, $overriddenPrice[0]); //Temporarily remove because the fn doesnt exist anymore
+        $this->assertEquals(100, $overriddenPrice);
     }
 
     /**
