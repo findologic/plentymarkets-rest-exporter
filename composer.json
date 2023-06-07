@@ -51,7 +51,7 @@
     "scripts": {
         "lint": [
             "./vendor/bin/phpcs --standard=phpcs.xml .",
-            "XDEBUG_MODE=off ./vendor/bin/phpstan analyse --level 2 src tests"
+            "XDEBUG_MODE=off php -d memory_limit=4G ./vendor/bin/phpstan analyse --level 2 src tests"
         ],
         "win-lint": [
             "./vendor/bin/phpcs --standard=phpcs.xml .",

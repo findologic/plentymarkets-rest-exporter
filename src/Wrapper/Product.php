@@ -232,8 +232,7 @@ class Product
             if (!$itemHasImage && $variation->getImage() && $useCallistoUrl) {
                 $this->item->setAllImages($variation->getImages());
                 $itemHasImage = true;
-            }
-            else if(!$itemHasImage){
+            } elseif (!$itemHasImage) {
                 $this->item->setAllImages($variation->getImages());
                 $itemHasImage = true;
             }
