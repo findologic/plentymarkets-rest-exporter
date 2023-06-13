@@ -70,13 +70,10 @@ class ExportCommandTest extends TestCase
         ]);
     }
 
-    /**
-     * @dataProvider exportTypesProvider
-     */
-    public function testExportDoesNotStartWhenFileAlreadyExists(string $filename): void
+    public function testExportDoesNotStartWhenFileAlreadyExists(): void
     {
         $this->createTestLog();
-        $this->createTestFile($filename);
+        $this->createTestFile();
         $this->setUpCommandMocks();
 
         $commandTester = new CommandTester($this->command);
@@ -91,13 +88,10 @@ class ExportCommandTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider exportTypesProvider
-     */
-    public function testExportStartsWhenForcingDeletionOfOldFile(string $filename): void
+    public function testExportStartsWhenForcingDeletionOfOldFile(): void
     {
         $this->setUpCommandMocks();
-        $this->createTestFile($filename);
+        $this->createTestFile();
 
         $commandTester = new CommandTester($this->command);
         $commandTester->setInputs(['y']);
@@ -108,13 +102,10 @@ class ExportCommandTest extends TestCase
         $this->assertStringContainsString('Export finished successfully', $commandTester->getDisplay());
     }
 
-    /**
-     * @dataProvider exportTypesProvider
-     */
-    public function testExportStartsWhenForcingDeletionOfOldFileViaOption(string $filename): void
+    public function testExportStartsWhenForcingDeletionOfOldFileViaOption(): void
     {
         $this->setUpCommandMocks();
-        $this->createTestFile($filename);
+        $this->createTestFile();
 
         $commandTester = new CommandTester($this->command);
         $commandTester->execute([
@@ -174,22 +165,13 @@ class ExportCommandTest extends TestCase
         $this->application->add($this->command);
     }
 
-    private function createTestFile(string $filename, string $data = 'important data'): void
+    private function createTestFile(string $data = 'important data'): void
     {
-        file_put_contents(Utils::env('EXPORT_DIR') . "/{$filename}", $data);
+        file_put_contents(Utils::env('EXPORT_DIR') . '/findologic.xml', $data);
     }
 
     private function createTestLog(string $data = 'This is a logline'): void
     {
         file_put_contents(Utils::env('LOG_DIR') . '/import.log', $data);
-    }
-
-    public function exportTypesProvider()
-    {
-        return [
-            'XML' => [
-                'filename' => 'findologic.xml'
-            ]
-        ];
     }
 }
