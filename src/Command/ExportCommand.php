@@ -72,18 +72,6 @@ class ExportCommand extends Command
         );
 
         $this->addOption(
-            'type',
-            't',
-            InputOption::VALUE_OPTIONAL,
-            sprintf(
-                'Changes the export format. Possible values are CSV (%d) or XML (%d).',
-                Exporter::TYPE_CSV,
-                Exporter::TYPE_XML
-            ),
-            Exporter::TYPE_XML
-        );
-
-        $this->addOption(
             'ignore-export-warning',
             'w',
             InputOption::VALUE_NONE,
@@ -101,10 +89,9 @@ class ExportCommand extends Command
         $shopkey = Utils::validateAndGetShopkey($input->getArgument('shopkey'));
         $config = Utils::getExportConfiguration($shopkey, $this->client);
 
-        $exporterType = (int)$input->getOption('type');
-        $this->exporter = $this->getExporter($exporterType, $config);
+        $this->exporter = $this->getExporter($config);
 
-        if (!$this->shouldStartExportIfFileAlreadyExists($input, $output, $exporterType)) {
+        if (!$this->shouldStartExportIfFileAlreadyExists($input, $output)) {
             $io->note('You can remove the existing files all the time by running "bin/console export:clear".');
             $io->comment('Export has not been started. Files will not be deleted.');
 
@@ -147,8 +134,7 @@ class ExportCommand extends Command
 
     private function shouldStartExportIfFileAlreadyExists(
         InputInterface $input,
-        OutputInterface $output,
-        int $exporterType
+        OutputInterface $output
     ): bool {
         if ($input->getOption('ignore-export-warning')) {
             return true;
@@ -178,12 +164,12 @@ class ExportCommand extends Command
     /**
      * @codeCoverageIgnore Creating an instance here would run an actual export.
      */
-    private function getExporter(int $type, Config $config): Exporter
+    private function getExporter(Config $config): Exporter
     {
         if ($this->exporter) {
             return $this->exporter;
         }
 
-        return Exporter::buildInstance($type, $config, $this->internalLogger, $this->customerLogger);
+        return Exporter::buildInstance($config, $this->internalLogger, $this->customerLogger);
     }
 }

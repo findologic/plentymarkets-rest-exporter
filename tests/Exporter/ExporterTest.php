@@ -99,7 +99,6 @@ class ExporterTest extends TestCase
     {
         return [
             'Exporter type is XML' => [
-                'type' => Exporter::TYPE_XML,
                 'expected' => XmlExporter::class
             ],
         ];
@@ -108,9 +107,9 @@ class ExporterTest extends TestCase
     /**
      * @dataProvider exporterTypeProvider
      */
-    public function testProperInstanceIsCreated(int $type, string $expected): void
+    public function testProperInstanceIsCreated(string $expected): void
     {
-        $exporter = Exporter::buildInstance($type, $this->config, $this->logger, $this->logger);
+        $exporter = Exporter::buildInstance($this->config, $this->logger, $this->logger);
 
         $this->assertInstanceOf($expected, $exporter);
     }
@@ -118,11 +117,11 @@ class ExporterTest extends TestCase
     /**
      * @dataProvider exporterTypeProvider
      */
-    public function testExportWorksProperly(int $type, string $expected): void
+    public function testExportWorksProperly(string $expected): void
     {
         $this->setUpClientMock();
 
-        $exporter = $this->getExporter($type);
+        $exporter = $this->getExporter();
         $exporter->export();
 
         $this->assertInstanceOf($expected, $exporter);
@@ -131,7 +130,7 @@ class ExporterTest extends TestCase
     /**
      * @dataProvider exporterTypeProvider
      */
-    public function testExceptionIsThrownForTestEnvironment(int $type): void
+    public function testExceptionIsThrownForTestEnvironment(): void
     {
         $expectedExceptionMessage = 'Something gone real bad...';
         $this->expectException(Exception::class);
@@ -141,14 +140,14 @@ class ExporterTest extends TestCase
             ->method('send')
             ->willThrowException(new Exception($expectedExceptionMessage));
 
-        $exporter = $this->getExporter($type);
+        $exporter = $this->getExporter();
         $exporter->export();
     }
 
     /**
      * @dataProvider exporterTypeProvider
      */
-    public function testExceptionIsThrownForDevEnvironment(int $type): void
+    public function testExceptionIsThrownForDevEnvironment(): void
     {
         $expectedExceptionMessage = 'Something gone real bad...';
         $this->expectException(Exception::class);
@@ -159,14 +158,14 @@ class ExporterTest extends TestCase
             ->method('send')
             ->willThrowException(new Exception($expectedExceptionMessage));
 
-        $exporter = $this->getExporter($type);
+        $exporter = $this->getExporter();
         $exporter->export();
     }
 
     /**
      * @dataProvider exporterTypeProvider
      */
-    public function testExceptionIsCaughtForProdEnvironment(int $type): void
+    public function testExceptionIsCaughtForProdEnvironment(): void
     {
         $expectedExceptionMessage = 'Something gone real bad...';
         $expectedException = new Exception($expectedExceptionMessage);
@@ -195,7 +194,7 @@ class ExporterTest extends TestCase
             ->method('send')
             ->willThrowException($expectedException);
 
-        $exporter = $this->getExporter($type);
+        $exporter = $this->getExporter();
         $result = $exporter->export();
 
         $this->assertSame(Exporter::FAILURE, $result);
@@ -207,7 +206,7 @@ class ExporterTest extends TestCase
         $this->fileExporterMock = LibFlexportExporter::create(ExporterType::XML);
 
         $this->setUpClientMock();
-        $exporter = $this->getExporter(Exporter::TYPE_XML);
+        $exporter = $this->getExporter();
         $exporter->export();
         $exportPath = $exporter->getWrapper()->getExportPath();
         $this->assertStringContainsString(
@@ -219,45 +218,27 @@ class ExporterTest extends TestCase
         unlink($exportPath);
     }
 
-    public function testExporterThrowsAnExceptionWhenAnUnknownInstanceIsRequested(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unknown or unsupported exporter type.');
-
-        Exporter::buildInstance(
-            12345,
-            $this->config,
-            $this->logger,
-            $this->logger
-        );
-    }
-
     /**
      * @dataProvider exporterTypeProvider
      */
-    public function testExportTimeIsReturned(int $type): void
+    public function testExportTimeIsReturned(): void
     {
-        $exporter = $this->getExporter($type);
+        $exporter = $this->getExporter();
         $this->assertSame('00:00:00', $exporter->getExportTime());
     }
 
     /**
      * @dataProvider exporterTypeProvider
      */
-    public function testWrapperCanBeUsedToGetTheExportPath(int $type): void
+    public function testWrapperCanBeUsedToGetTheExportPath(): void
     {
-        if ($type === Exporter::TYPE_XML) {
-            $this->markTestSkipped('Skipped until XML is implemented.');
-        }
-
-        $exporter = $this->getExporter($type);
+        $exporter = $this->getExporter();
         $this->assertSame(self::EXPORTER_LOCATION, $exporter->getWrapper()->getExportPath());
     }
 
-    protected function getExporter(int $type): Exporter
+    protected function getExporter(): Exporter
     {
         return Exporter::buildInstance(
-            $type,
             $this->config,
             $this->logger,
             $this->logger,

@@ -73,7 +73,7 @@ class ExportCommandTest extends TestCase
     /**
      * @dataProvider exportTypesProvider
      */
-    public function testExportDoesNotStartWhenFileAlreadyExists(int $type, string $filename): void
+    public function testExportDoesNotStartWhenFileAlreadyExists(string $filename): void
     {
         $this->createTestLog();
         $this->createTestFile($filename);
@@ -81,8 +81,7 @@ class ExportCommandTest extends TestCase
 
         $commandTester = new CommandTester($this->command);
         $commandTester->execute([
-            'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD',
-            '--type' => $type
+            'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD'
         ]);
 
         $this->assertStringNotContainsString('Export finished successfully', $commandTester->getDisplay());
@@ -95,7 +94,7 @@ class ExportCommandTest extends TestCase
     /**
      * @dataProvider exportTypesProvider
      */
-    public function testExportStartsWhenForcingDeletionOfOldFile(int $type, string $filename): void
+    public function testExportStartsWhenForcingDeletionOfOldFile(string $filename): void
     {
         $this->setUpCommandMocks();
         $this->createTestFile($filename);
@@ -103,8 +102,7 @@ class ExportCommandTest extends TestCase
         $commandTester = new CommandTester($this->command);
         $commandTester->setInputs(['y']);
         $commandTester->execute([
-            'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD',
-            '--type' => $type
+            'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD'
         ]);
 
         $this->assertStringContainsString('Export finished successfully', $commandTester->getDisplay());
@@ -113,7 +111,7 @@ class ExportCommandTest extends TestCase
     /**
      * @dataProvider exportTypesProvider
      */
-    public function testExportStartsWhenForcingDeletionOfOldFileViaOption(int $type, string $filename): void
+    public function testExportStartsWhenForcingDeletionOfOldFileViaOption(string $filename): void
     {
         $this->setUpCommandMocks();
         $this->createTestFile($filename);
@@ -121,8 +119,7 @@ class ExportCommandTest extends TestCase
         $commandTester = new CommandTester($this->command);
         $commandTester->execute([
             'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD',
-            '--ignore-export-warning' => true,
-            '--type' => $type
+            '--ignore-export-warning' => true
         ]);
 
         $this->assertStringContainsString('Export finished successfully', $commandTester->getDisplay());
@@ -191,7 +188,6 @@ class ExportCommandTest extends TestCase
     {
         return [
             'XML' => [
-                'type' => Exporter::TYPE_XML,
                 'filename' => 'findologic.xml'
             ]
         ];
