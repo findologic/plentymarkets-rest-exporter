@@ -278,7 +278,7 @@ class Product
             }
 
             $prices[] = $variation->getPrice();
-            $overriddenPrices[] = $variation->getInsteadPrice();
+            $overriddenPrices[] = $variation->getOverriddenPrice();
 
             if ($variation->hasCategories()) {
                 $hasCategories = true;

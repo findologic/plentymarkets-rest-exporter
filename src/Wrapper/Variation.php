@@ -60,7 +60,7 @@ class Variation
 
     protected float $price = 0.0;
 
-    protected float $insteadPrice = 0.0;
+    protected float $overriddenPrice = 0.0;
 
     protected array $prices = [];
 
@@ -201,9 +201,9 @@ class Variation
         return $this->price;
     }
 
-    public function getInsteadPrice(): float
+    public function getOverriddenPrice(): float
     {
-        return $this->insteadPrice;
+        return $this->overriddenPrice;
     }
 
     /**
@@ -337,7 +337,7 @@ class Variation
      */
     private function processPrices(): void
     {
-        $insteadPriceId = $this->registryService->getRrpId();
+        $overriddenPriceId = $this->registryService->getRrpId();
 
         $priceId = $this->registryService->getPriceId();
 
@@ -354,8 +354,8 @@ class Variation
                 }
             }
 
-            if ($variationSalesPrice->getId() === $insteadPriceId) {
-                $this->insteadPrice = $price;
+            if ($variationSalesPrice->getId() === $overriddenPriceId) {
+                $this->overriddenPrice = $price;
             }
         }
     }

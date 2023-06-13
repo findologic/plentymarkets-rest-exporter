@@ -518,7 +518,7 @@ class ProductTest extends TestCase
         $this->assertEquals(['de tag 1', 'de tag 2', 'de tag 3', 'keywords from product'], $itemKeywords);
     }
 
-    public function testPriceAndInsteadPriceIsSetByLowestValues(): void
+    public function testPriceAndOverriddenPriceIsSetByLowestValues(): void
     {
         $this->exporterMock = $this->getExporter();
 
