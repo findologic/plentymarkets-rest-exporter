@@ -95,41 +95,23 @@ class ExporterTest extends TestCase
         $_ENV['APP_ENV'] = 'test';
     }
 
-    public function exporterTypeProvider(): array
-    {
-        return [
-            'Exporter type is XML' => [
-                'expected' => XmlExporter::class
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider exporterTypeProvider
-     */
-    public function testProperInstanceIsCreated(string $expected): void
+    public function testProperInstanceIsCreated(): void
     {
         $exporter = Exporter::buildInstance($this->config, $this->logger, $this->logger);
 
-        $this->assertInstanceOf($expected, $exporter);
+        $this->assertInstanceOf(XmlExporter::class, $exporter);
     }
 
-    /**
-     * @dataProvider exporterTypeProvider
-     */
-    public function testExportWorksProperly(string $expected): void
+    public function testExportWorksProperly(): void
     {
         $this->setUpClientMock();
 
         $exporter = $this->getExporter();
         $exporter->export();
 
-        $this->assertInstanceOf($expected, $exporter);
+        $this->assertInstanceOf(XmlExporter::class, $exporter);
     }
 
-    /**
-     * @dataProvider exporterTypeProvider
-     */
     public function testExceptionIsThrownForTestEnvironment(): void
     {
         $expectedExceptionMessage = 'Something gone real bad...';
@@ -144,9 +126,6 @@ class ExporterTest extends TestCase
         $exporter->export();
     }
 
-    /**
-     * @dataProvider exporterTypeProvider
-     */
     public function testExceptionIsThrownForDevEnvironment(): void
     {
         $expectedExceptionMessage = 'Something gone real bad...';
@@ -162,9 +141,6 @@ class ExporterTest extends TestCase
         $exporter->export();
     }
 
-    /**
-     * @dataProvider exporterTypeProvider
-     */
     public function testExceptionIsCaughtForProdEnvironment(): void
     {
         $expectedExceptionMessage = 'Something gone real bad...';
@@ -218,18 +194,12 @@ class ExporterTest extends TestCase
         unlink($exportPath);
     }
 
-    /**
-     * @dataProvider exporterTypeProvider
-     */
     public function testExportTimeIsReturned(): void
     {
         $exporter = $this->getExporter();
         $this->assertSame('00:00:00', $exporter->getExportTime());
     }
 
-    /**
-     * @dataProvider exporterTypeProvider
-     */
     public function testWrapperCanBeUsedToGetTheExportPath(): void
     {
         $exporter = $this->getExporter();
