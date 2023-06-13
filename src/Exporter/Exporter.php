@@ -108,7 +108,6 @@ abstract class Exporter
     /**
      * Builds a new exporter instance. Use Exporter::TYPE_CSV / Exporter::TYPE_XML to get the respective type.
      *
-     * @param int $type Exporter::TYPE_CSV / Exporter::TYPE_XML
      * @param Config $config
      * @param LoggerInterface $internalLogger
      * @param LoggerInterface $customerLogger
@@ -122,7 +121,6 @@ abstract class Exporter
      * @return Exporter
      */
     public static function buildInstance(
-        int $type,
         Config $config,
         LoggerInterface $internalLogger,
         LoggerInterface $customerLogger,
@@ -136,31 +134,18 @@ abstract class Exporter
     ): Exporter {
         $usedPath = $exportPath ?? Utils::env('EXPORT_DIR', self::DEFAULT_LOCATION);
 
-        return match ($type) {
-            self::TYPE_CSV => new CsvExporter(
-                $internalLogger,
-                $customerLogger,
-                $config,
-                $usedPath,
-                $fileNamePrefix,
-                $client,
-                $registryService,
-                $itemRequest,
-                $pimVariationRequest,
-                $fileExporter
-            ),
-            self::TYPE_XML => new XmlExporter(
-                $internalLogger,
-                $customerLogger,
-                $config,
-                $client,
-                $registryService,
-                $itemRequest,
-                $pimVariationRequest,
-                $fileExporter
-            ),
-            default => throw new InvalidArgumentException('Unknown or unsupported exporter type.'),
-        };
+        return new XmlExporter(
+            $internalLogger,
+            $customerLogger,
+            $config,
+            $usedPath,
+            $fileNamePrefix,
+            $client,
+            $registryService,
+            $itemRequest,
+            $pimVariationRequest,
+            $fileExporter
+        );
     }
 
     /**

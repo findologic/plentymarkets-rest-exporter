@@ -19,7 +19,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
 use Psr\Cache\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
-class CsvWrapper extends Wrapper
+class ItemsWrapper extends Wrapper
 {
     protected string $exportPath;
 
@@ -112,7 +112,9 @@ class CsvWrapper extends Wrapper
             $this->exporter->setFileNamePrefix($this->fileNamePrefix);
         }
 
-        $this->exporter->serializeItemsToFile($this->exportPath, $items, $start, count($items), $total);
+        $this->setExportPath(
+            $this->exporter->serializeItemsToFile($this->exportPath, $items, $start, count($items), $total)
+        );
 
         if ($this->skippedProducts !== []) {
             $this->logSkippedProducts();

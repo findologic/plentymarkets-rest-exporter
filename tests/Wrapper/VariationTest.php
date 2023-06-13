@@ -242,7 +242,7 @@ class VariationTest extends TestCase
         $wrapper->processData();
 
         $this->assertCount(1, $wrapper->getAttributes());
-        $this->assertSame('1', $wrapper->getAttributes()[0]->getValues()[0]);
+        $this->assertSame(1, $wrapper->getAttributes()[0]->getValues()[0]);
         $this->assertCount(2, $wrapper->getTags());
         $this->assertSame('en-tag-1', $wrapper->getTags()[0]->getValue());
         $this->assertSame('en-tag-2', $wrapper->getTags()[1]->getValue());

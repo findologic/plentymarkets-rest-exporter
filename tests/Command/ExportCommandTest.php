@@ -73,7 +73,7 @@ class ExportCommandTest extends TestCase
     public function testExportDoesNotStartWhenFileAlreadyExists(): void
     {
         $this->createTestLog();
-        $this->createTestCsv();
+        $this->createTestFile();
         $this->setUpCommandMocks();
 
         $commandTester = new CommandTester($this->command);
@@ -91,7 +91,7 @@ class ExportCommandTest extends TestCase
     public function testExportStartsWhenForcingDeletionOfOldFile(): void
     {
         $this->setUpCommandMocks();
-        $this->createTestCsv();
+        $this->createTestFile();
 
         $commandTester = new CommandTester($this->command);
         $commandTester->setInputs(['y']);
@@ -105,12 +105,12 @@ class ExportCommandTest extends TestCase
     public function testExportStartsWhenForcingDeletionOfOldFileViaOption(): void
     {
         $this->setUpCommandMocks();
-        $this->createTestCsv();
+        $this->createTestFile();
 
         $commandTester = new CommandTester($this->command);
         $commandTester->execute([
             'shopkey' => 'ABCDABCDABCDABCDABCDABCDABCDABCD',
-            '--ignore-export-warning' => true,
+            '--ignore-export-warning' => true
         ]);
 
         $this->assertStringContainsString('Export finished successfully', $commandTester->getDisplay());
@@ -137,13 +137,13 @@ class ExportCommandTest extends TestCase
     public function testAuthorizationHeadersAreSetForClient(): void
     {
         $exportMock = $this->getMockBuilder(Exporter::class)
-        ->disableOriginalConstructor()
-        ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $command = new ExportCommand($this->logger, $this->logger, $exportMock);
         $refObject   = new ReflectionObject($command);
         $client = $refObject->getProperty('client')->getValue($command);
-        
+
         $this->assertArrayHasKey('Authorization', $client->getConfig()['headers']);
     }
 
@@ -165,9 +165,9 @@ class ExportCommandTest extends TestCase
         $this->application->add($this->command);
     }
 
-    private function createTestCsv(string $data = 'important data'): void
+    private function createTestFile(string $data = 'important data'): void
     {
-        file_put_contents(Utils::env('EXPORT_DIR') . '/findologic.csv', $data);
+        file_put_contents(Utils::env('EXPORT_DIR') . '/findologic.xml', $data);
     }
 
     private function createTestLog(string $data = 'This is a logline'): void

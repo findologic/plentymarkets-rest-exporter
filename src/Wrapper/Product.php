@@ -12,6 +12,7 @@ use FINDOLOGIC\Export\Data\Attribute;
 use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Ordernumber;
+use FINDOLOGIC\Export\Data\OverriddenPrice;
 use FINDOLOGIC\Export\Data\Property;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\Export\Helpers\DataHelper;
@@ -78,7 +79,7 @@ class Product
         string $variationGroupKey = ''
     ) {
         $this->exporter = $exporter;
-        $this->item = $exporter->createItem($productEntity->getId());
+        $this->item = $exporter->createItem((string) $productEntity->getId());
         $this->config = $config;
         $this->productEntity = $productEntity;
         $this->registryService = $registryService;
@@ -114,7 +115,7 @@ class Product
 
         $variationCount = $this->processVariations();
         if ($variationCount === 0 && $this->config->isExportUnavailableVariations()) {
-            $this->item = $this->exporter->createItem($this->productEntity->getId());
+            $this->item = $this->exporter->createItem((string) $this->productEntity->getId());
             $variationCount = $this->processVariations(false);
         }
         if ($variationCount === 0) {
@@ -202,7 +203,7 @@ class Product
         $hasCategories = false;
         $variationsProcessed = 0;
         $prices = [];
-        $insteadPrices = [];
+        $overriddenPrices = [];
         $ordernumbers = [];
         $highestPosition = 0;
         $baseUnit = null;
@@ -229,7 +230,7 @@ class Product
 
             $useCallistoUrl = $this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl();
             if (!$itemHasImage && $variation->getImage() && $useCallistoUrl) {
-                $this->item->addImage($variation->getImage());
+                $this->item->setAllImages($variation->getImages());
                 $itemHasImage = true;
             }
 
@@ -242,7 +243,7 @@ class Product
             }
 
             foreach ($variation->getGroups() as $group) {
-                $this->item->addUsergroup($group);
+                $this->item->addGroup($group);
             }
 
             foreach ($variation->getTags() as $tag) {
@@ -277,7 +278,7 @@ class Product
             }
 
             $prices[] = $variation->getPrice();
-            $insteadPrices[] = $variation->getInsteadPrice();
+            $overriddenPrices[] = $variation->getOverriddenPrice();
 
             if ($variation->hasCategories()) {
                 $hasCategories = true;
@@ -297,13 +298,10 @@ class Product
             return 0;
         }
 
-        // VatRate should be set from the last variation, therefore this code outside the foreach loop
-        if (isset($variation) && $variation->getVatRate() !== null) {
-            $this->item->setTaxRate($variation->getVatRate());
-        }
-
-        if ($insteadPrices) {
-            $this->item->setInsteadPrice(min($insteadPrices));
+        if ($overriddenPrices) {
+            $overriddenPrice = new OverriddenPrice();
+            $overriddenPrice->setValue(min($overriddenPrices));
+            $this->item->setOverriddenPrice($overriddenPrice);
         }
 
         $ordernumbers = array_unique($ordernumbers);

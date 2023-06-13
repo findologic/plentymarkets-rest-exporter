@@ -16,6 +16,9 @@ jobs:
         coverage: xdebug
         tools: composer:v2
 
+    - name: Setup CI environment with env files
+      run: cp .env.example .env && cp .env.test.example .env.test
+
     - name: Validate composer.json and composer.lock
       run: composer validate
 

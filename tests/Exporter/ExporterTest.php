@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Exporter;
 
 use Exception;
+use FINDOLOGIC\Export\Enums\ExporterType;
 use FINDOLOGIC\Export\Exporter as LibFlexportExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
-use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\CsvExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\Exporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exporter\XmlExporter;
 use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
@@ -95,47 +95,24 @@ class ExporterTest extends TestCase
         $_ENV['APP_ENV'] = 'test';
     }
 
-    public function exporterTypeProvider(): array
+    public function testProperInstanceIsCreated(): void
     {
-        return [
-            'Exporter type is CSV' => [
-                'type' => Exporter::TYPE_CSV,
-                'expected' => CsvExporter::class
-            ],
-            'Exporter type is XML' => [
-                'type' => Exporter::TYPE_XML,
-                'expected' => XmlExporter::class
-            ],
-        ];
+        $exporter = Exporter::buildInstance($this->config, $this->logger, $this->logger);
+
+        $this->assertInstanceOf(XmlExporter::class, $exporter);
     }
 
-    /**
-     * @dataProvider exporterTypeProvider
-     */
-    public function testProperInstanceIsCreated(int $type, string $expected): void
-    {
-        $exporter = Exporter::buildInstance($type, $this->config, $this->logger, $this->logger);
-
-        $this->assertInstanceOf($expected, $exporter);
-    }
-
-    /**
-     * @dataProvider exporterTypeProvider
-     */
-    public function testExportWorksProperly(int $type, string $expected): void
+    public function testExportWorksProperly(): void
     {
         $this->setUpClientMock();
 
-        $exporter = $this->getExporter($type);
+        $exporter = $this->getExporter();
         $exporter->export();
 
-        $this->assertInstanceOf($expected, $exporter);
+        $this->assertInstanceOf(XmlExporter::class, $exporter);
     }
 
-    /**
-     * @dataProvider exporterTypeProvider
-     */
-    public function testExceptionIsThrownForTestEnvironment(int $type): void
+    public function testExceptionIsThrownForTestEnvironment(): void
     {
         $expectedExceptionMessage = 'Something gone real bad...';
         $this->expectException(Exception::class);
@@ -145,14 +122,11 @@ class ExporterTest extends TestCase
             ->method('send')
             ->willThrowException(new Exception($expectedExceptionMessage));
 
-        $exporter = $this->getExporter($type);
+        $exporter = $this->getExporter();
         $exporter->export();
     }
 
-    /**
-     * @dataProvider exporterTypeProvider
-     */
-    public function testExceptionIsThrownForDevEnvironment(int $type): void
+    public function testExceptionIsThrownForDevEnvironment(): void
     {
         $expectedExceptionMessage = 'Something gone real bad...';
         $this->expectException(Exception::class);
@@ -163,14 +137,11 @@ class ExporterTest extends TestCase
             ->method('send')
             ->willThrowException(new Exception($expectedExceptionMessage));
 
-        $exporter = $this->getExporter($type);
+        $exporter = $this->getExporter();
         $exporter->export();
     }
 
-    /**
-     * @dataProvider exporterTypeProvider
-     */
-    public function testExceptionIsCaughtForProdEnvironment(int $type): void
+    public function testExceptionIsCaughtForProdEnvironment(): void
     {
         $expectedExceptionMessage = 'Something gone real bad...';
         $expectedException = new Exception($expectedExceptionMessage);
@@ -199,7 +170,7 @@ class ExporterTest extends TestCase
             ->method('send')
             ->willThrowException($expectedException);
 
-        $exporter = $this->getExporter($type);
+        $exporter = $this->getExporter();
         $result = $exporter->export();
 
         $this->assertSame(Exporter::FAILURE, $result);
@@ -208,61 +179,36 @@ class ExporterTest extends TestCase
     public function testFileNameIsChangedWhenSet(): void
     {
         $this->fileNamePrefix = 'findologic.new.funny';
-        $this->fileExporterMock = LibFlexportExporter::create(LibFlexportExporter::TYPE_CSV);
-        $expectedFileLocation = self::EXPORTER_LOCATION . $this->fileNamePrefix . '.csv';
+        $this->fileExporterMock = LibFlexportExporter::create(ExporterType::XML);
 
         $this->setUpClientMock();
-        $exporter = $this->getExporter(Exporter::TYPE_CSV);
+        $exporter = $this->getExporter();
         $exporter->export();
-
+        $exportPath = $exporter->getWrapper()->getExportPath();
         $this->assertStringContainsString(
-            "id\tordernumber\tname",
-            file_get_contents($expectedFileLocation)
+            '<?xml version="1.0" encoding="utf-8"?>',
+            file_get_contents($exportPath)
         );
 
-        // Remove CSV file after test.
-        unlink($expectedFileLocation);
+        // Remove XML file after test.
+        unlink($exportPath);
     }
 
-    public function testExporterThrowsAnExceptionWhenAnUnknownInstanceIsRequested(): void
+    public function testExportTimeIsReturned(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unknown or unsupported exporter type.');
-
-        Exporter::buildInstance(
-            12345,
-            $this->config,
-            $this->logger,
-            $this->logger
-        );
-    }
-
-    /**
-     * @dataProvider exporterTypeProvider
-     */
-    public function testExportTimeIsReturned(int $type): void
-    {
-        $exporter = $this->getExporter($type);
+        $exporter = $this->getExporter();
         $this->assertSame('00:00:00', $exporter->getExportTime());
     }
 
-    /**
-     * @dataProvider exporterTypeProvider
-     */
-    public function testWrapperCanBeUsedToGetTheExportPath(int $type): void
+    public function testWrapperCanBeUsedToGetTheExportPath(): void
     {
-        if ($type === Exporter::TYPE_XML) {
-            $this->markTestSkipped('Skipped until XML is implemented.');
-        }
-
-        $exporter = $this->getExporter($type);
+        $exporter = $this->getExporter();
         $this->assertSame(self::EXPORTER_LOCATION, $exporter->getWrapper()->getExportPath());
     }
 
-    protected function getExporter(int $type): Exporter
+    protected function getExporter(): Exporter
     {
         return Exporter::buildInstance(
-            $type,
             $this->config,
             $this->logger,
             $this->logger,
