@@ -4,32 +4,34 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Wrapper;
 
-use Carbon\Carbon;
-use Carbon\CarbonInterface;
 use DateTime;
 use Exception;
-use FINDOLOGIC\Export\Data\Attribute;
-use FINDOLOGIC\Export\Data\Item;
-use FINDOLOGIC\Export\Data\Keyword;
-use FINDOLOGIC\Export\Data\Ordernumber;
-use FINDOLOGIC\Export\Data\OverriddenPrice;
-use FINDOLOGIC\Export\Data\Property;
-use FINDOLOGIC\Export\Exporter;
-use FINDOLOGIC\Export\Helpers\DataHelper;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
-use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Manufacturer;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration as StoreConfiguration;
-use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
-use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
+use Carbon\Carbon;
 use GuzzleHttp\Psr7\Uri;
+use Carbon\CarbonInterface;
+use FINDOLOGIC\Export\Exporter;
+use FINDOLOGIC\Export\Data\Item;
+use FINDOLOGIC\Export\Data\Name;
+use FINDOLOGIC\Export\Data\Keyword;
+use FINDOLOGIC\Export\Data\Property;
+use FINDOLOGIC\Export\Data\Attribute;
+use FINDOLOGIC\Export\XML\XmlVariant;
+use FINDOLOGIC\Export\Data\Ordernumber;
+use Psr\Cache\InvalidArgumentException;
+use FINDOLOGIC\Export\Helpers\DataHelper;
+use FINDOLOGIC\Export\Data\OverriddenPrice;
+use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use PhpUnitsOfMeasure\Exception\NonNumericValue;
 use PhpUnitsOfMeasure\Exception\NonStringUnitName;
-use Psr\Cache\InvalidArgumentException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
+use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Manufacturer;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item as ProductEntity;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation as PimVariation;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration as StoreConfiguration;
 
 class Product
 {
@@ -113,7 +115,7 @@ class Product
             return null;
         }
 
-        $variationCount = $this->processVariations();
+        $variationCount = $this->config->getUseVariants() ? $this->processXmlVariants() : $this->processVariations();
         if ($variationCount === 0 && $this->config->isExportUnavailableVariations()) {
             $this->item = $this->exporter->createItem((string) $this->productEntity->getId());
             $variationCount = $this->processVariations(false);
@@ -190,6 +192,163 @@ class Product
 
             $this->item->addUrl($this->buildProductUrl($text->getUrlPath()));
         }
+    }
+
+    protected function processXmlVariants(bool $checkAvailability = true)
+    {
+        $itemHasImage = false;
+        $hasCategories = false;
+        $variationsProcessed = 0;
+        $prices = [];
+        $overriddenPrices = [];
+        $ordernumbers = [];
+        $highestPosition = 0;
+        $baseUnit = null;
+        $packageSize = null;
+        $variationId = null;
+        $cheapestVariations = new CheapestVariation($this->item);
+        $defaultImage = null;
+        $variants = [];
+        $allImages = [];
+
+        foreach ($this->variationEntities as $variationEntity) {
+            if (!$this->shouldExportVariation($variationEntity, $checkAvailability)) {
+                continue;
+            }
+
+            $variation = new Variation(
+                $this->config,
+                $this->registryService,
+                $variationEntity,
+                $this->propertySelection,
+                $this->wrapMode,
+                $this->variationGroupKey
+            );
+
+            $variation->processData();
+            $variant = new XmlVariant((string)$variation->getId(), $this->item->getId());
+
+            $useCallistoUrl = $this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl();
+            if (!$itemHasImage && $variation->getImage() && $useCallistoUrl) {
+                $allImages[] = $variation->getImages();
+                $itemHasImage = true;
+            }
+
+            if (!$defaultImage && $variation->getImage()) {
+                $defaultImage = $variation->getImage();
+            }
+
+            if (!$useCallistoUrl && $variation->getPrice() !== 0.0) {
+                $cheapestVariations->addVariation($variation);
+            }
+
+            foreach ($variation->getGroups() as $group) {
+                $variant->addGroup($group);
+            }
+
+            foreach ($variation->getTags() as $tag) {
+                $this->item->addKeyword($tag);
+            }
+
+            if (!$packageSize) {
+                $packageSize = $variation->getPackageSize();
+            }
+
+            if (!$baseUnit) {
+                $baseUnit = $variation->getBaseUnit();
+            }
+
+            if (!$variationId) {
+                $variationId = $variation->getId();
+            }
+
+            $position = $variation->getPosition();
+            if ($variation->isMain() || !$this->item->getSort()->getValues()) {
+                if ($variation->getPosition()) {
+                    $this->item->addSort($variation->getPosition());
+                }
+            }
+            $highestPosition = $position > $highestPosition ? $position : $highestPosition;
+
+            foreach ($this->getVariationOrdernumbers($variation) as $ordernumber) {
+                if (trim($ordernumber) !== '') {
+                    $ordernumbers[] = $ordernumber;
+                    $orderNumber = new Ordernumber($ordernumber);
+                    $variant->addOrdernumber($orderNumber);
+                }
+            }
+
+            foreach ($variation->getAttributes() as $attribute) {
+                $variant->addMergedAttribute($attribute);
+            }
+
+            $prices[] = $variation->getPrice();
+            $overriddenPrices[] = $variation->getOverriddenPrice();
+
+            $variant->addPrice($variation->getPrice());
+
+            if ($variation->hasCategories()) {
+                $hasCategories = true;
+            }
+
+            $name = new Name();
+            $variationName = $variationEntity->getBase()->getName();
+
+            if ($variationName) $name->setValue($variationName);
+            else continue;
+
+            $variant->setName($name);
+
+            $this->cheapestVariationId = $cheapestVariations->addImageAndPrice(
+                $defaultImage,
+                $prices,
+                $itemHasImage
+            );
+
+            if (!$hasCategories) {
+                return 0;
+            }
+
+            if ($overriddenPrices) {
+                $overriddenPrice = new OverriddenPrice();
+                $overriddenPrice->setValue(min($overriddenPrices));
+                $variant->setOverriddenPrice($overriddenPrice);
+            }
+
+            $salesFrequency = $this->storeConfiguration->getItemSortByMonthlySales() ? $highestPosition : 0;
+            $this->item->addSalesFrequency($salesFrequency);
+
+            if ($baseUnit) {
+                $baseUnitProperty = new Property('base_unit');
+                $baseUnitProperty->addValue($baseUnit);
+                $variant->addProperty($baseUnitProperty);
+            }
+
+            if ($packageSize) {
+                $packageSizeProperty = new Property('package_size');
+                $packageSizeProperty->addValue($packageSize);
+                $variant->addProperty($packageSizeProperty);
+            }
+
+            $variants[] = $variant;
+            $variationsProcessed++;
+        }
+
+        $variationId = $this->cheapestVariationId ?? $variationId;
+        if ($variationId) {
+            $variationIdProperty = new Property('variation_id');
+            $variationIdProperty->addValue((string)$variationId);
+            $this->item->addProperty($variationIdProperty);
+        }
+
+        $ordernumbers = array_unique($ordernumbers);
+        foreach ($ordernumbers as $ordernumber) {
+            $this->addOrdernumber($ordernumber);
+        }
+
+        $this->item->setAllImages($allImages);
+        $this->item->setAllVariants($variants);
+        return $variationsProcessed;
     }
 
     /**

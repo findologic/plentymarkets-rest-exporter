@@ -19,6 +19,8 @@ class Config
 
     private string $language;
 
+    private bool $useVariants;
+
     private ?int $multiShopId = null;
 
     private ?int $availabilityId = null;
@@ -80,6 +82,7 @@ class Config
             'username' => $shop['export_username'],
             'password' => $shop['export_password'],
             'language' => $shop['language'],
+            'useVariants' => $shop['use_variants'],
             'multiShopId' => $plentyConfig['multishop_id'],
             'availabilityId' => $plentyConfig['availability_id'],
             'priceId' => $plentyConfig['price_id'],
@@ -105,6 +108,7 @@ class Config
             'username' => Utils::env('EXPORT_USERNAME'),
             'password' => Utils::env('EXPORT_PASSWORD'),
             'language' => Utils::env('EXPORT_LANGUAGE'),
+            'useVariants' => (bool)Utils::env('USE_VARIANTS', false),
             'multiShopId' => (int)Utils::env('EXPORT_MULTISHOP_ID'),
             'availabilityId' => (int)Utils::env('EXPORT_AVAILABILITY_ID'),
             'priceId' => (int)Utils::env('EXPORT_PRICE_ID'),
@@ -357,5 +361,15 @@ class Config
     public function setExportWeightUnit(string $exportWeightUnit): void
     {
         $this->exportWeightUnit = $exportWeightUnit;
+    }
+
+    public function getUseVariants()
+    {
+        return true;
+    }
+
+    public function setUseVariants($useVariants): void
+    {
+        $this->useVariants = $useVariants;
     }
 }
