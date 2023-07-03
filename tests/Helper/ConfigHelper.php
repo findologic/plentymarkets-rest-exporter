@@ -19,7 +19,8 @@ trait ConfigHelper
             'availabilityId' => null,
             'priceId' => null,
             'rrpId' => null,
-            'debug' => false
+            'debug' => false,
+            'useVariants' => false
         ], $overrides));
     }
 }

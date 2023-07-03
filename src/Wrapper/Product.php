@@ -294,8 +294,11 @@ class Product
             $name = new Name();
             $variationName = $variationEntity->getBase()->getName();
 
-            if ($variationName) $name->setValue($variationName);
-            else continue;
+            if ($variationName) {
+                $name->setValue($variationName);
+            } else {
+                continue;
+            }
 
             $variant->setName($name);
 

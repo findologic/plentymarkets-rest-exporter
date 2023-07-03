@@ -365,7 +365,7 @@ class Config
 
     public function getUseVariants()
     {
-        return true;
+        return $this->useVariants;
     }
 
     public function setUseVariants($useVariants): void

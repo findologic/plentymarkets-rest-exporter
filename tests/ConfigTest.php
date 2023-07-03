@@ -31,6 +31,7 @@ class ConfigTest extends TestCase
             'priceId' => $expectedPriceId,
             'rrpId' => $expectedRrpId,
             'debug' => $expectedDebug,
+            'useVariants' => false,
             'non-existent-config-option' => 'should not fail'
         ]);
 
@@ -65,6 +66,7 @@ class ConfigTest extends TestCase
         $expectedExportFreeTextFields = false;
         $expectedDimensionUnit = 'm';
         $expectedWeightUnit = 'kg';
+        $expectedUseVariants = false;
 
         $accountResponse = [
             '1234' => [
@@ -75,6 +77,7 @@ class ConfigTest extends TestCase
                 'export_username' => $expectedUsername,
                 'export_password' => $expectedPassword,
                 'language' => $expectedLanguage,
+                'use_variants' => $expectedUseVariants,
                 'plentymarkets' => [
                     'multishop_id' => $expectedMultiShopId,
                     'availability_id' => $expectedAvailabilityId,
@@ -113,6 +116,7 @@ class ConfigTest extends TestCase
         $this->assertSame($expectedExportFreeTextFields, $config->getExportFreeTextFields());
         $this->assertSame($expectedDimensionUnit, $config->getExportDimensionUnit());
         $this->assertSame($expectedWeightUnit, $config->getExportWeightUnit());
+        $this->assertSame($expectedUseVariants, $config->getUseVariants());
     }
 
     /**
