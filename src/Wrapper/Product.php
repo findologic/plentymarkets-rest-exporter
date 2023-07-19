@@ -12,6 +12,7 @@ use Carbon\CarbonInterface;
 use FINDOLOGIC\Export\Exporter;
 use FINDOLOGIC\Export\Data\Item;
 use FINDOLOGIC\Export\Data\Name;
+use FINDOLOGIC\Export\Data\Price;
 use FINDOLOGIC\Export\Data\Keyword;
 use FINDOLOGIC\Export\Data\Property;
 use FINDOLOGIC\Export\Data\Attribute;
@@ -65,6 +66,9 @@ class Product
 
     private ?PropertySelectionResponse $propertySelection;
 
+    /** @var Text[] */
+    private array $productTexts;
+
     /**
      * @param PimVariation[] $variationEntities
      * @throws InvalidArgumentException
@@ -91,6 +95,7 @@ class Product
         $this->variationGroupKey = $variationGroupKey;
         $this->propertySelection = $propertySelection;
         $this->plentyShopConfig = $this->registryService->getPluginConfigurations('Ceres');
+        $this->productTexts = Translator::translateMultiple($this->productEntity->getTexts(), $this->config->getLanguage());
     }
 
     /**
@@ -161,6 +166,17 @@ class Product
         return $this->reason;
     }
 
+    private function getDefaultProductName():string
+    {
+        if (!$this->storeConfiguration->getDisplayItemName()) {
+            return 'noName';
+        }
+
+        $textGetter = 'getName' . $this->storeConfiguration->getDisplayItemName();
+        $text = $this->productTexts[array_key_first($this->productTexts)];
+        return $text->$textGetter(); 
+    }
+
     /**
      * @throws InvalidArgumentException
      */
@@ -172,9 +188,7 @@ class Product
 
         $textGetter = 'getName' . $this->storeConfiguration->getDisplayItemName();
 
-        /** @var Text[] $texts */
-        $texts = Translator::translateMultiple($this->productEntity->getTexts(), $this->config->getLanguage());
-        foreach ($texts as $text) {
+        foreach ($this->productTexts as $text) {
             $name = $text->$textGetter();
             if (trim($name) !== '') {
                 $this->item->addName($name);
@@ -196,7 +210,6 @@ class Product
 
     protected function processXmlVariants(bool $checkAvailability = true)
     {
-        $itemHasImage = false;
         $hasCategories = false;
         $variationsProcessed = 0;
         $prices = [];
@@ -207,9 +220,7 @@ class Product
         $packageSize = null;
         $variationId = null;
         $cheapestVariations = new CheapestVariation($this->item);
-        $defaultImage = null;
         $variants = [];
-        $allImages = [];
 
         foreach ($this->variationEntities as $variationEntity) {
             if (!$this->shouldExportVariation($variationEntity, $checkAvailability)) {
@@ -225,21 +236,18 @@ class Product
                 $this->variationGroupKey
             );
 
+            $defaultImage = null;
             $variation->processData();
             $variant = new XmlVariant((string)$variation->getId(), $this->item->getId());
 
             $useCallistoUrl = $this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl();
-            if (!$itemHasImage && $variation->getImage() && $useCallistoUrl) {
-                $allImages[] = $variation->getImages();
-                $itemHasImage = true;
+            if ($variation->getImage() && $useCallistoUrl) {
+                $variant->setAllImages($variation->getImages());
+                $defaultImage = true;
             }
 
             if (!$defaultImage && $variation->getImage()) {
-                $defaultImage = $variation->getImage();
-            }
-
-            if (!$useCallistoUrl && $variation->getPrice() !== 0.0) {
-                $cheapestVariations->addVariation($variation);
+                $variant->setAllImages($variation->getImages());
             }
 
             foreach ($variation->getGroups() as $group) {
@@ -297,16 +305,20 @@ class Product
             if ($variationName) {
                 $name->setValue($variationName);
             } else {
-                continue;
+                $name->setValue($this->getDefaultProductName());
             }
 
             $variant->setName($name);
 
-            $this->cheapestVariationId = $cheapestVariations->addImageAndPrice(
-                $defaultImage,
-                $prices,
-                $itemHasImage
-            );
+            if (!$useCallistoUrl && $variation->getPrice() !== 0.0) {
+                $cheapestVariations->addVariation($variation);
+            }
+
+            // $this->cheapestVariationId = $cheapestVariations->addImageAndPrice(
+            //     $defaultImage,
+            //     $prices,
+            //     !empty($variant->getImages())
+            // );
 
             if (!$hasCategories) {
                 return 0;
@@ -337,10 +349,19 @@ class Product
             $variationsProcessed++;
         }
 
-        $variationId = $this->cheapestVariationId ?? $variationId;
-        if ($variationId) {
+        $cheapestVariation = $cheapestVariations->getCheapestVariation();
+        if ($cheapestVariation) {
+            // $parentId = $variants[$cheapestVariation[CheapestVariation::VARIATION_ID]];
+
+            $this->item->setAllImages($cheapestVariation[CheapestVariation::IMAGES]);
+            $this->item->addPrice($cheapestVariation[CheapestVariation::PRICE]);
+            // $parentId = "parent_$parentId";
+            // $this->item->setId($parentId);
+            foreach ($variants as $variant) {
+                $variant->setParentId((string)$this->productEntity->getId());
+            }
             $variationIdProperty = new Property('variation_id');
-            $variationIdProperty->addValue((string)$variationId);
+            $variationIdProperty->addValue((string)$cheapestVariation[CheapestVariation::VARIATION_ID]);
             $this->item->addProperty($variationIdProperty);
         }
 
@@ -349,7 +370,6 @@ class Product
             $this->addOrdernumber($ordernumber);
         }
 
-        $this->item->setAllImages($allImages);
         $this->item->setAllVariants($variants);
         return $variationsProcessed;
     }
