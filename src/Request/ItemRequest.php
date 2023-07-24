@@ -29,7 +29,7 @@ class ItemRequest extends Request implements IterableRequestInterface
                 'lang' => $lang,
                 'name' => $name,
                 'manufacturerId' => $manufacturerId,
-                'id' => "107",
+                'id' => $id,
                 'flagOne' => $flagOne,
                 'flagTwo' => $flagTwo,
                 'updatedBetween' => $updatedBetween,

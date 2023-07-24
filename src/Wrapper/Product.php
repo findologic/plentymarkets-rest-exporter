@@ -177,6 +177,14 @@ class Product
         return $text->$textGetter(); 
     }
 
+    protected function getVariationUrl($variationId) : ?string {
+        if(empty($this->productTexts)){
+            return null;
+        }
+        $productAndVariantId = (string)$this->productEntity->getId()."_".$variationId;
+        return $this->buildProductUrl($this->productTexts[0]->getUrlPath(), $productAndVariantId);
+    }
+
     /**
      * @throws InvalidArgumentException
      */
@@ -212,7 +220,6 @@ class Product
     {
         $hasCategories = false;
         $variationsProcessed = 0;
-        $prices = [];
         $overriddenPrices = [];
         $ordernumbers = [];
         $highestPosition = 0;
@@ -290,11 +297,13 @@ class Product
                 $variant->addMergedAttribute($attribute);
             }
 
-            $prices[] = $variation->getPrice();
-            $overriddenPrices[] = $variation->getOverriddenPrice();
-
+            $variantUrl = $this->getVariationUrl($variationEntity->getId());
+            if(!empty($variantUrl)){
+                $variant->addUrl($variantUrl);
+            }
             $variant->addPrice($variation->getPrice());
-
+            $variant->setAllOverriddenPrices($variant->getOverriddenPrice()->getValues());
+            $overriddenPrices[] = $variation->getOverriddenPrice();
             if ($variation->hasCategories()) {
                 $hasCategories = true;
             }
@@ -588,19 +597,19 @@ class Product
     /**
      * @throws InvalidArgumentException
      */
-    private function buildProductUrl(string $urlPath): string
+    private function buildProductUrl(string $urlPath, $itemAndVariationId = null): string
     {
         if ($this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl()) {
-            return $this->getCallistoUrl($urlPath);
+            return $this->getCallistoUrl($urlPath, $itemAndVariationId);
         } else {
-            return $this->getPlentyShopUrl($urlPath);
+            return $this->getPlentyShopUrl($urlPath, $itemAndVariationId);
         }
     }
 
     /**
      * @throws InvalidArgumentException
      */
-    private function getCallistoUrl(string $urlPath): string
+    private function getCallistoUrl(string $urlPath, $itemAndVariationId): string
     {
         return sprintf(
             '%s://%s%s/%s/a-%s',
@@ -608,14 +617,14 @@ class Product
             $this->getWebStoreHost(),
             $this->getLanguageUrlPrefix(),
             trim($urlPath, '/'),
-            $this->productEntity->getId()
+            $itemAndVariationId ?: $this->productEntity->getId()
         );
     }
 
     /**
      * @throws InvalidArgumentException
      */
-    private function getPlentyShopUrl(string $urlPath): string
+    private function getPlentyShopUrl(string $urlPath, $itemAndVariationId): string
     {
         $productUrl = sprintf(
             '%s://%s%s/%s_%s',
@@ -623,7 +632,7 @@ class Product
             $this->getWebStoreHost(),
             $this->getLanguageUrlPrefix(),
             trim($urlPath, '/'),
-            $this->productEntity->getId(),
+            $itemAndVariationId ?: $this->productEntity->getId()
         );
 
         if ($this->registryService->getPlentyShop()->getItemShowPleaseSelect()) {

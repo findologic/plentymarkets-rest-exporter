@@ -19,7 +19,7 @@ trait ItemHelper
         }, []);
     }
 
-    public function getOrderNumbers(Item $item): array
+    public function getOrderNumbers(Item|XmlVariant $item): array
     {
         $orderNumbers = $item->getOrdernumbers()->getValues();
         return array_map(fn ($item) => $item->getValue(), $this->getArrayFirstElement($orderNumbers));
@@ -37,7 +37,7 @@ trait ItemHelper
         return array_map(fn ($item) => $item->getValue(), $this->getArrayFirstElement($keywords));
     }
 
-    public function getItemGroups(Item $item): array
+    public function getItemGroups(Item|XmlVariant $item): array
     {
         $keywords = $item->getGroups();
         return array_map(fn ($item) => $item->getValue(), $keywords);

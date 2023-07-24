@@ -100,7 +100,7 @@ abstract class AbstractProductTest extends TestCase
         $this->assertSame('Product has no variations.', $product->getReason());
     }
 
-        /**
+    /**
      * @dataProvider correctManufacturerIsExportedTestProvider
      */
     public function testCorrectManufacturerNameIsExported(
@@ -268,6 +268,7 @@ abstract class AbstractProductTest extends TestCase
 
     public function testGroupsAreSetFromAllVariations()
     {
+        $expectedGroups = ['0_', '1_'];
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_different_clients.json');
@@ -281,9 +282,12 @@ abstract class AbstractProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        // TODO: check item's groups property directly once groups getter is implemented
-        $itemGroups = $this->getItemGroups($item);
-        $this->assertEquals(['0_', '1_'], $itemGroups);
+        foreach ($item->getVariants() as $key => $variant) {
+            $variantGroups = $this->getItemGroups($variant);
+            if(isset($expectedGroups[$key])){
+                $this->assertEquals($expectedGroups[$key], $variantGroups[0]);
+            }
+        }
     }
 
     protected function getProduct(): Product

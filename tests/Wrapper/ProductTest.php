@@ -5,36 +5,18 @@ declare(strict_types=1);
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 
 use DateTime;
-use Carbon\Carbon;
 use ReflectionClass;
 use DateTimeInterface;
-use FINDOLOGIC\Export\Exporter;
-use PHPUnit\Framework\TestCase;
 use FINDOLOGIC\Export\Data\Attribute;
-use FINDOLOGIC\Export\Enums\ExporterType;
-use PHPUnit\Framework\MockObject\MockObject;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\PlentyShop;
-use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
-use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Product;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ItemHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
-use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Base;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
 
 class ProductTest extends AbstractProductTest
 {
