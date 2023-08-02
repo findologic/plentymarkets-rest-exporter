@@ -187,7 +187,9 @@ class ProductVariantTest extends AbstractProductTest
         $splittedOrderNumbers = [[], []];
 
         array_walk($expectedOrderNumbers, function ($orderNumber) use (&$splittedOrderNumbers) {
-            str_contains($orderNumber, '1') ? $splittedOrderNumbers[0][] = $orderNumber : $splittedOrderNumbers[1][] = $orderNumber;
+            str_contains($orderNumber, '1')
+                ? $splittedOrderNumbers[0][] = $orderNumber
+                : $splittedOrderNumbers[1][] = $orderNumber;
         });
 
         foreach ($item->getVariants() as $key => $variant) {
@@ -220,7 +222,9 @@ class ProductVariantTest extends AbstractProductTest
             $attributesMap = $this->getMappedAttributes($variant);
 
             foreach ($expectedAttributeValues as $key => $expectedAttributeValue) {
-                if ($key === 'free1') continue;
+                if ($key === 'free1') {
+                    continue;
+                }
                 $this->assertEquals($expectedAttributeValue, $attributesMap[$key][0]);
             }
         }

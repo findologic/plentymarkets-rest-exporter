@@ -284,7 +284,7 @@ abstract class AbstractProductTest extends TestCase
 
         foreach ($item->getVariants() as $key => $variant) {
             $variantGroups = $this->getItemGroups($variant);
-            if(isset($expectedGroups[$key])){
+            if (isset($expectedGroups[$key])) {
                 $this->assertEquals($expectedGroups[$key], $variantGroups[0]);
             }
         }

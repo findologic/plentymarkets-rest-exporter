@@ -95,7 +95,10 @@ class Product
         $this->variationGroupKey = $variationGroupKey;
         $this->propertySelection = $propertySelection;
         $this->plentyShopConfig = $this->registryService->getPluginConfigurations('Ceres');
-        $this->productTexts = Translator::translateMultiple($this->productEntity->getTexts(), $this->config->getLanguage());
+        $this->productTexts = Translator::translateMultiple(
+            $this->productEntity->getTexts(),
+            $this->config->getLanguage()
+        );
     }
 
     /**
@@ -166,7 +169,7 @@ class Product
         return $this->reason;
     }
 
-    private function getDefaultProductName():string
+    private function getDefaultProductName(): string
     {
         if (!$this->storeConfiguration->getDisplayItemName()) {
             return 'noName';
@@ -174,14 +177,15 @@ class Product
 
         $textGetter = 'getName' . $this->storeConfiguration->getDisplayItemName();
         $text = $this->productTexts[array_key_first($this->productTexts)];
-        return $text->$textGetter(); 
+        return $text->$textGetter();
     }
 
-    protected function getVariationUrl($variationId) : ?string {
-        if(empty($this->productTexts)){
+    protected function getVariationUrl($variationId): ?string
+    {
+        if (empty($this->productTexts)) {
             return null;
         }
-        $productAndVariantId = (string)$this->productEntity->getId()."_".$variationId;
+        $productAndVariantId = (string)$this->productEntity->getId() . '_' . $variationId;
         return $this->buildProductUrl($this->productTexts[0]->getUrlPath(), $productAndVariantId);
     }
 
@@ -298,7 +302,7 @@ class Product
             }
 
             $variantUrl = $this->getVariationUrl($variationEntity->getId());
-            if(!empty($variantUrl)){
+            if (!empty($variantUrl)) {
                 $variant->addUrl($variantUrl);
             }
             $variant->addPrice($variation->getPrice());

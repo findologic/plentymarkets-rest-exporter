@@ -208,7 +208,7 @@ class Variation extends Entity
         return $this->$prop;
     }
 
-    public function __isset($prop) : bool
+    public function __isset($prop): bool
     {
         return isset($this->$prop);
     }
