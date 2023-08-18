@@ -327,12 +327,6 @@ class Product
                 $cheapestVariations->addVariation($variation);
             }
 
-            // $this->cheapestVariationId = $cheapestVariations->addImageAndPrice(
-            //     $defaultImage,
-            //     $prices,
-            //     !empty($variant->getImages())
-            // );
-
             if (!$hasCategories) {
                 return 0;
             }
@@ -358,18 +352,16 @@ class Product
                 $variant->addProperty($packageSizeProperty);
             }
 
-            $variants[] = $variant;
+            $variants[(string)$variation->getId()] = $variant;
             $variationsProcessed++;
         }
 
         $cheapestVariation = $cheapestVariations->getCheapestVariation();
         if ($cheapestVariation) {
-            // $parentId = $variants[$cheapestVariation[CheapestVariation::VARIATION_ID]];
-
             $this->item->setAllImages($cheapestVariation[CheapestVariation::IMAGES]);
             $this->item->addPrice($cheapestVariation[CheapestVariation::PRICE]);
-            // $parentId = "parent_$parentId";
-            // $this->item->setId($parentId);
+            $variant = $variants[(string)$cheapestVariation[CheapestVariation::VARIATION_ID]];
+            $this->item->setOverriddenPrice($variant->getOverriddenPrice());
             foreach ($variants as $variant) {
                 $variant->setParentId((string)$this->productEntity->getId());
             }
@@ -383,7 +375,7 @@ class Product
             $this->addOrdernumber($ordernumber);
         }
 
-        $this->item->setAllVariants($variants);
+        $this->item->setAllVariants(array_values($variants));
         return $variationsProcessed;
     }
 
@@ -639,7 +631,7 @@ class Product
             $itemAndVariationId ?: $this->productEntity->getId()
         );
 
-        if ($this->registryService->getPlentyShop()->getItemShowPleaseSelect()) {
+        if ($this->registryService->getPlentyShop()->getItemShowPleaseSelect() || isset($itemAndVariationId)) {
             return $productUrl;
         }
 
