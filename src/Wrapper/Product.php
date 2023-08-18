@@ -180,12 +180,17 @@ class Product
         return $text->$textGetter();
     }
 
-    protected function getVariationUrl($variationId): ?string
+    protected function getVariationUrl($variationId, $useCallistoUrl = false): ?string
     {
         if (empty($this->productTexts)) {
             return null;
         }
-        $productAndVariantId = (string)$this->productEntity->getId() . '_' . $variationId;
+        $productAndVariantId = null;
+
+        if (!$useCallistoUrl) {
+            $productAndVariantId = (string)$this->productEntity->getId() . '_' . $variationId;
+        }
+
         return $this->buildProductUrl($this->productTexts[0]->getUrlPath(), $productAndVariantId);
     }
 
@@ -301,7 +306,7 @@ class Product
                 $variant->addMergedAttribute($attribute);
             }
 
-            $variantUrl = $this->getVariationUrl($variationEntity->getId());
+            $variantUrl = $this->getVariationUrl($variationEntity->getId(), $useCallistoUrl);
             if (!empty($variantUrl)) {
                 $variant->addUrl($variantUrl);
             }
@@ -323,7 +328,7 @@ class Product
 
             $variant->setName($name);
 
-            if (!$useCallistoUrl && $variation->getPrice() !== 0.0) {
+            if ($variation->getPrice() !== 0.0) {
                 $cheapestVariations->addVariation($variation);
             }
 
@@ -620,7 +625,7 @@ class Product
     /**
      * @throws InvalidArgumentException
      */
-    private function getPlentyShopUrl(string $urlPath, $itemAndVariationId): string
+    private function getPlentyShopUrl(string $urlPath, $itemAndVariationId = null): string
     {
         $productUrl = sprintf(
             '%s://%s%s/%s_%s',

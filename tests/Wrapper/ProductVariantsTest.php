@@ -44,8 +44,6 @@ class ProductVariantTest extends AbstractProductTest
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        // TODO: check item's attributes property directly once attributes getter is implemented
-
         foreach ($item->getVariants() as $variant) {
             $attributesMap = $this->getMappedAttributes($variant);
 

@@ -42,7 +42,7 @@ class ProductTest extends AbstractProductTest
         $item = $product->processProductData();
 
         $this->assertNotNull($item);
-        // TODO: check item's orderNumbers directly once order numbers getter is implemented
+
         $orderNumbers = $this->getOrderNumbers($item);
         $this->assertEquals($expectedOrderNumbers, $orderNumbers);
         $images = $this->getImages($item);
@@ -66,7 +66,7 @@ class ProductTest extends AbstractProductTest
         $item = $product->processProductData();
 
         $this->assertNotNull($item);
-        // TODO: check item's orderNumbers directly once order numbers getter is implemented
+
         $orderNumbers = $this->getOrderNumbers($item);
 
         $this->assertEquals(['101', '1005', '107'], $orderNumbers);
@@ -305,7 +305,6 @@ class ProductTest extends AbstractProductTest
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        // TODO: check item's keyword property directly once keywords getter is implemented
         $itemKeywords = $this->getItemKeywords($item);
 
         $this->assertEquals(['de tag 1', 'de tag 2', 'de tag 3', 'keywords from product'], $itemKeywords);
@@ -404,7 +403,6 @@ class ProductTest extends AbstractProductTest
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        // TODO: check item's groups property directly once groups getter is implemented
         $itemGroups = $this->getItemGroups($item);
         $this->assertEquals(['0_', '1_'], $itemGroups);
     }
@@ -427,7 +425,6 @@ class ProductTest extends AbstractProductTest
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        // TODO: check item's order numbers property directly once order numbers getter is implemented
         $orderNumbers = $this->getOrderNumbers($item);
         $this->assertEquals($expectedOrderNumbers, $orderNumbers);
     }
@@ -453,7 +450,6 @@ class ProductTest extends AbstractProductTest
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        // TODO: check item's order numbers property directly once order numbers getter is implemented
         $orderNumbers = $this->getOrderNumbers($item);
         $this->assertEquals($expectedOrderNumbers, $orderNumbers);
     }
@@ -535,8 +531,6 @@ class ProductTest extends AbstractProductTest
 
         $product = $this->getProduct();
         $item = $product->processProductData();
-
-        // TODO: check item's attributes property directly once attributes getter is implemented
 
         $attributesMap = $this->getMappedAttributes($item);
 

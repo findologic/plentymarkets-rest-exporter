@@ -261,7 +261,6 @@ abstract class AbstractProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        // TODO: check item's images property directly once images getter is implemented
         $itemProperties = $this->getArrayFirstElement($item->getProperties());
         $this->assertEquals(1005, $itemProperties['variation_id']);
     }
