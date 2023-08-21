@@ -58,7 +58,7 @@
             "./vendor/bin/phpstan analyse --level 2 src tests"
         ],
         "fix": "./vendor/bin/phpcbf --standard=phpcs.xml .",
-        "test": "XDEBUG_MODE=coverage phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml",
+        "test": "XDEBUG_MODE=coverage phpunit -d memory_limit=-1 --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml",
         "win-test": "phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml"
     },
     "license": "MIT"

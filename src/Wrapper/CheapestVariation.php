@@ -17,6 +17,8 @@ class CheapestVariation
 
     public const IMAGES = 'images';
 
+    public const VARIATION_IMAGES = 'variation_images';
+
     private Item $item;
 
     private array $cheapestVariationsData = [];
@@ -32,7 +34,8 @@ class CheapestVariation
             self::VARIATION_ID => $variation->getId(),
             self::PRICE => $variation->getPrice(),
             self::IMAGE => $variation->getImage(),
-            self::IMAGES => $variation->getImages()
+            self::IMAGES => $variation->getImages(),
+            self::VARIATION_IMAGES => $variation->getVariationImages(),
         ];
     }
 

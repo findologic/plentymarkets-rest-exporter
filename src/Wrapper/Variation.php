@@ -69,6 +69,9 @@ class Variation
     /** @var PimImage[] */
     protected array $images = [];
 
+    /** @var Image[] */
+    protected array $variationImages = [];
+
     protected float $vatRate = 0.0;
 
     protected ?string $baseUnit = null;
@@ -138,6 +141,7 @@ class Variation
         $this->processTags();
         $this->processImages();
         $this->processAllImages();
+        $this->processVariationImages();
         $this->processCharacteristics();
         $this->processProperties();
         $this->processVatRate();
@@ -241,6 +245,14 @@ class Variation
     public function getImages(): array
     {
         return $this->images;
+    }
+
+    /**
+     * @return Image[]
+     */
+    public function getVariationImages(): array
+    {
+        return $this->variationImages;
     }
 
     public function getVatRate(): ?float
@@ -469,12 +481,24 @@ class Variation
         $images = array_merge($this->variationEntity->getImages(), $this->variationEntity->getBase()->getImages());
 
         // Sort images by position.
-        usort($images, fn(PimImage $a, PimImage $b) => $a->getPosition() <=> $b->getPosition());
+        usort($images, fn (PimImage $a, PimImage $b) => $a->getPosition() <=> $b->getPosition());
 
         $variantImage = $this->getVariantImage($images);
 
         if ($variantImage) {
             $this->image = $variantImage;
+        }
+    }
+
+    private function processVariationImages(): void
+    {
+        $images = $this->variationEntity->getImages();
+
+        // Sort images by position.
+        usort($images, fn (PimImage $a, PimImage $b) => $a->getPosition() <=> $b->getPosition());
+
+        foreach ($images as $pimImage) {
+            $this->variationImages[] = new Image($pimImage->getUrlMiddle());
         }
     }
 
@@ -525,7 +549,7 @@ class Variation
         $images = array_merge($this->variationEntity->getImages(), $this->variationEntity->getBase()->getImages());
 
         // Sort images by position.
-        usort($images, fn(PimImage $a, PimImage $b) => $a->getPosition() <=> $b->getPosition());
+        usort($images, fn (PimImage $a, PimImage $b) => $a->getPosition() <=> $b->getPosition());
 
         foreach ($images as $image) {
             $imageAvailabilities = $image->getAvailabilities();

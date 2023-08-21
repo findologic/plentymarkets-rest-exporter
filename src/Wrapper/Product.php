@@ -257,13 +257,13 @@ class Product
             $variant = new XmlVariant((string)$variation->getId(), $this->item->getId());
 
             $useCallistoUrl = $this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl();
-            if ($variation->getImage() && $useCallistoUrl) {
-                $variant->setAllImages($variation->getImages());
+            if ($variation->getVariationImages() && $useCallistoUrl) {
+                $variant->setAllImages($variation->getVariationImages());
                 $defaultImage = true;
             }
 
-            if (!$defaultImage && $variation->getImage()) {
-                $variant->setAllImages($variation->getImages());
+            if (!$defaultImage && $variation->getVariationImages()) {
+                $variant->setAllImages($variation->getVariationImages());
             }
 
             foreach ($variation->getGroups() as $group) {
@@ -363,7 +363,7 @@ class Product
 
         $cheapestVariation = $cheapestVariations->getCheapestVariation();
         if ($cheapestVariation) {
-            $this->item->setAllImages($cheapestVariation[CheapestVariation::IMAGES]);
+            $this->item->setAllImages($cheapestVariation[CheapestVariation::VARIATION_IMAGES]);
             $this->item->addPrice($cheapestVariation[CheapestVariation::PRICE]);
             $variant = $variants[(string)$cheapestVariation[CheapestVariation::VARIATION_ID]];
             $this->item->setOverriddenPrice($variant->getOverriddenPrice());
