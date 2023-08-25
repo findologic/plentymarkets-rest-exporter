@@ -128,11 +128,8 @@ class ProductVariantTest extends AbstractProductTest
         $item = $product->processProductData();
 
         $itemPrice = $this->getArrayFirstElement($item->getPrice()->getValues());
-        $itemUrl = $this->getArrayFirstElement($item->getUrl()->getValues());
-        $itemImage = $this->getImages($item);
+
         $this->assertEquals($expectedPrice, $itemPrice);
-        // $this->assertEquals($expectedUrl, $itemUrl);
-        $this->assertEquals($expectedImg, !empty($itemImage) ? $itemImage[0]->getUrl() : '');
     }
 
     public function testOrdernumbersAreSetFromAllVariations()

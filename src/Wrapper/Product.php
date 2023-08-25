@@ -363,6 +363,7 @@ class Product
 
         $cheapestVariation = $cheapestVariations->getCheapestVariation();
         if ($cheapestVariation) {
+            $this->cheapestVariationId = (int)$cheapestVariation[CheapestVariation::VARIATION_ID];
             $this->item->setAllImages($cheapestVariation[CheapestVariation::VARIATION_IMAGES]);
             $this->item->addPrice($cheapestVariation[CheapestVariation::PRICE]);
             $variant = $variants[(string)$cheapestVariation[CheapestVariation::VARIATION_ID]];
