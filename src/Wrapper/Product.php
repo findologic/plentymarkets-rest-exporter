@@ -187,7 +187,7 @@ class Product
                 $this->item->addKeyword(new Keyword($text->getKeywords()));
             }
 
-            $this->item->addUrl($this->buildProductUrl($text->getUrlPath()));
+            $this->item->addUrl($this->getPlentyShopUrl($text->getUrlPath()));
         }
     }
 
@@ -226,9 +226,7 @@ class Product
             );
 
             $variation->processData();
-
-            $useCallistoUrl = $this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl();
-            if (!$itemHasImage && $variation->getImage() && $useCallistoUrl) {
+            if (!$itemHasImage && $variation->getImage()) {
                 $this->item->addImage($variation->getImage());
                 $itemHasImage = true;
             }
@@ -237,7 +235,7 @@ class Product
                 $defaultImage = $variation->getImage();
             }
 
-            if (!$useCallistoUrl && $variation->getPrice() !== 0.0) {
+            if ($variation->getPrice() !== 0.0) {
                 $cheapestVariations->addVariation($variation);
             }
 
@@ -410,26 +408,7 @@ class Product
      */
     private function buildProductUrl(string $urlPath): string
     {
-        if ($this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl()) {
-            return $this->getCallistoUrl($urlPath);
-        } else {
-            return $this->getPlentyShopUrl($urlPath);
-        }
-    }
-
-    /**
-     * @throws InvalidArgumentException
-     */
-    private function getCallistoUrl(string $urlPath): string
-    {
-        return sprintf(
-            '%s://%s%s/%s/a-%s',
-            $this->config->getProtocol(),
-            $this->getWebStoreHost(),
-            $this->getLanguageUrlPrefix(),
-            trim($urlPath, '/'),
-            $this->productEntity->getId()
-        );
+        return $this->getPlentyShopUrl($urlPath);
     }
 
     /**
