@@ -364,7 +364,14 @@ class Product
         $cheapestVariation = $cheapestVariations->getCheapestVariation();
         if ($cheapestVariation) {
             $this->cheapestVariationId = (int)$cheapestVariation[CheapestVariation::VARIATION_ID];
-            $this->item->setAllImages($cheapestVariation[CheapestVariation::VARIATION_IMAGES]);
+            $cheapestVariationImages = $cheapestVariation[CheapestVariation::VARIATION_IMAGES];
+            
+            if (!empty($cheapestVariationImages)) {
+                $this->item->setAllImages($cheapestVariationImages);
+            } elseif ($allImages = $cheapestVariation[CheapestVariation::IMAGES]) {
+                $this->item->addImage($allImages[0]);
+            }
+
             $this->item->addPrice($cheapestVariation[CheapestVariation::PRICE]);
             $variant = $variants[(string)$cheapestVariation[CheapestVariation::VARIATION_ID]];
             $this->item->setOverriddenPrice($variant->getOverriddenPrice());
