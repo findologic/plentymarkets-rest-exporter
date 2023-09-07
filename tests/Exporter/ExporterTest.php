@@ -181,18 +181,18 @@ class ExporterTest extends TestCase
     {
         $this->fileNamePrefix = 'findologic.new.funny';
         $this->fileExporterMock = LibFlexportExporter::create(ExporterType::XML);
+        $expectedFileLocation = self::EXPORTER_LOCATION . $this->fileNamePrefix . '_0_2.xml';
 
         $this->setUpClientMock();
         $exporter = $this->getExporter();
         $exporter->export();
-        $exportPath = $exporter->getWrapper()->getExportPath();
         $this->assertStringContainsString(
             '<?xml version="1.0" encoding="utf-8"?>',
-            file_get_contents($exportPath)
+            file_get_contents($expectedFileLocation)
         );
 
         // Remove XML file after test.
-        unlink($exportPath);
+        unlink($expectedFileLocation);
     }
 
     public function testExportTimeIsReturned(): void
