@@ -212,10 +212,10 @@ class Product
             }
 
             if (trim($text->getShortDescription()) !== '') {
-                $this->item->addSummary($text->getShortDescription());
+                $this->item->addSummary(preg_replace('/[\x00-\x1F\x7F]/u', '', $text->getShortDescription()));
             }
             if (trim($text->getDescription()) !== '') {
-                $this->item->addDescription($text->getDescription());
+                $this->item->addDescription(preg_replace('/[\x00-\x1F\x7F]/u', '', $text->getDescription()));
             }
             if (trim($text->getKeywords()) !== '') {
                 $this->item->addKeyword(new Keyword($text->getKeywords()));
@@ -365,7 +365,7 @@ class Product
         if ($cheapestVariation) {
             $this->cheapestVariationId = (int)$cheapestVariation[CheapestVariation::VARIATION_ID];
             $cheapestVariationImages = $cheapestVariation[CheapestVariation::VARIATION_IMAGES];
-            
+
             if (!empty($cheapestVariationImages)) {
                 $this->item->setAllImages($cheapestVariationImages);
             } elseif ($allImages = $cheapestVariation[CheapestVariation::IMAGES]) {
