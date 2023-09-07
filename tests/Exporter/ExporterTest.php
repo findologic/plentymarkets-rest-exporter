@@ -51,6 +51,7 @@ class ExporterTest extends TestCase
     {
         $this->config = new Config();
         $this->config->setLanguage('de');
+        $this->config->setUseVariants(false);
         $this->logger = new DummyLogger();
         $this->clientMock = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()

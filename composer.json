@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^7.4.5",
         "vasily-kartashov/log4php": "^4.1",
         "ext-json": "*",
-        "findologic/libflexport": "^3.0",
+        "findologic/libflexport": "^3.1",
         "nesbot/carbon": "^2.38",
         "symfony/cache": "^5.1",
         "guzzlehttp/promises": "^1.4",
@@ -58,7 +58,7 @@
             "./vendor/bin/phpstan analyse --level 2 src tests"
         ],
         "fix": "./vendor/bin/phpcbf --standard=phpcs.xml .",
-        "test": "XDEBUG_MODE=coverage phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml",
+        "test": "XDEBUG_MODE=coverage phpunit -d memory_limit=-1 --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml",
         "win-test": "phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml"
     },
     "license": "MIT"
