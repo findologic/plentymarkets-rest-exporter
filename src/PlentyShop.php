@@ -12,30 +12,16 @@ class PlentyShop
 
     public const VARIANT_MODE_ALL = 'all';
 
-    private ?bool $enableOldUrlPattern;
-
     private ?string $variationShowType;
 
     private ?bool $itemShowPleaseSelect;
 
     public function __construct(array $config = [])
     {
-        $this->enableOldUrlPattern = isset($config[self::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN]) ?
-            Utils::filterBoolean($config[self::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN]) : null;
-
         $this->variationShowType = $config[self::KEY_ITEM_VARIATION_SHOW_TYPE] ?? null;
 
         $this->itemShowPleaseSelect = isset($config[self::KEY_ITEM_SHOW_PLEASE_SELECT]) ?
             Utils::filterBoolean($config[self::KEY_ITEM_SHOW_PLEASE_SELECT]) : null;
-    }
-
-    public function shouldUseLegacyCallistoUrl(): bool
-    {
-        if (!isset($this->enableOldUrlPattern)) {
-            return true;
-        }
-
-        return Utils::filterBoolean($this->enableOldUrlPattern);
     }
 
     public function shouldExportGroupableAttributeVariantsSeparately(): bool
@@ -45,16 +31,6 @@ class PlentyShop
         }
 
         return $this->variationShowType === self::VARIANT_MODE_ALL;
-    }
-
-    public function getEnableOldUrlPattern(): ?bool
-    {
-        return $this->enableOldUrlPattern;
-    }
-
-    public function getVariationShowType(): ?string
-    {
-        return $this->variationShowType;
     }
 
     public function getItemShowPleaseSelect(): ?bool
