@@ -10,39 +10,6 @@ use PHPUnit\Framework\TestCase;
 class PlentyShopTest extends TestCase
 {
     /**
-     * @dataProvider shouldUseCallistoUrlTestProvider
-     */
-    public function testShouldUseLegacyCallistoUrl(array $configData, bool $expectedResult): void
-    {
-        $plentyShop = new PlentyShop($configData);
-        $this->assertEquals($expectedResult, $plentyShop->shouldUseLegacyCallistoUrl());
-    }
-
-    public function shouldUseCallistoUrlTestProvider(): array
-    {
-        return [
-            'unknown config' => [
-                'config' => [
-                    'global.test' => false
-                ],
-                'shouldUseCallistoUrl' => true
-            ],
-            'with enable old url pattern config set to false' => [
-                'config' => [
-                    PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false
-                ],
-                'shouldUseCallistoUrl' => false
-            ],
-            'with enable old url pattern config set to true' => [
-                'config' => [
-                    PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => true
-                ],
-                'shouldUseCallistoUrl' => true
-            ],
-        ];
-    }
-
-    /**
      * @dataProvider shouldExportGroupableAttributeVariantsSeparatelyProvider
      */
     public function testShouldExportGroupableAttributeVariantsSeparately(array $configData, bool $expectedResult)

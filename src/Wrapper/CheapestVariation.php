@@ -15,6 +15,8 @@ class CheapestVariation
 
     public const IMAGE = 'image';
 
+    private const IS_MAIN = 'isMain';
+
     public const IMAGES = 'images';
 
     public const VARIATION_IMAGES = 'variation_images';
@@ -36,6 +38,7 @@ class CheapestVariation
             self::IMAGE => $variation->getImage(),
             self::IMAGES => $variation->getImages(),
             self::VARIATION_IMAGES => $variation->getVariationImages(),
+            self::IS_MAIN => $variation->isMain()
         ];
     }
 
@@ -72,7 +75,8 @@ class CheapestVariation
     public function getCheapestVariation(): array|bool
     {
         $priceColumn = array_column($this->cheapestVariationsData, self::PRICE);
-        array_multisort($priceColumn, SORT_ASC, $this->cheapestVariationsData);
+        $isMainColumn = array_column($this->cheapestVariationsData, self::IS_MAIN);
+        array_multisort($priceColumn, SORT_ASC, $isMainColumn, SORT_DESC, $this->cheapestVariationsData);
 
         return reset($this->cheapestVariationsData);
     }

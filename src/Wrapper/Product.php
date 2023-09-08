@@ -180,18 +180,16 @@ class Product
         return $text->$textGetter();
     }
 
-    protected function getVariationUrl($variationId, $useCallistoUrl = false): ?string
+    protected function getVariationUrl($variationId): ?string
     {
         if (empty($this->productTexts)) {
             return null;
         }
-        $productAndVariantId = null;
 
-        if (!$useCallistoUrl) {
-            $productAndVariantId = (string)$this->productEntity->getId() . '_' . $variationId;
-        }
-
-        return $this->buildProductUrl($this->productTexts[0]->getUrlPath(), $productAndVariantId);
+        return $this->getPlentyShopUrl(
+            $this->productTexts[0]->getUrlPath(),
+            $this->productEntity->getId() . '_' . $variationId
+        );
     }
 
     /**
@@ -221,7 +219,7 @@ class Product
                 $this->item->addKeyword(new Keyword($text->getKeywords()));
             }
 
-            $this->item->addUrl($this->buildProductUrl($text->getUrlPath()));
+            $this->item->addUrl($this->getPlentyShopUrl($text->getUrlPath()));
         }
     }
 
@@ -252,17 +250,10 @@ class Product
                 $this->variationGroupKey
             );
 
-            $defaultImage = null;
             $variation->processData();
             $variant = new XmlVariant((string)$variation->getId(), $this->item->getId());
 
-            $useCallistoUrl = $this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl();
-            if ($variation->getVariationImages() && $useCallistoUrl) {
-                $variant->setAllImages($variation->getVariationImages());
-                $defaultImage = true;
-            }
-
-            if (!$defaultImage && $variation->getVariationImages()) {
+            if ($variation->getVariationImages()) {
                 $variant->setAllImages($variation->getVariationImages());
             }
 
@@ -306,7 +297,7 @@ class Product
                 $variant->addMergedAttribute($attribute);
             }
 
-            $variantUrl = $this->getVariationUrl($variationEntity->getId(), $useCallistoUrl);
+            $variantUrl = $this->getVariationUrl($variationEntity->getId());
             if (!empty($variantUrl)) {
                 $variant->addUrl($variantUrl);
             }
@@ -427,18 +418,11 @@ class Product
             );
 
             $variation->processData();
-
-            $useCallistoUrl = $this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl();
-            if (!$itemHasImage && $variation->getImage() && $useCallistoUrl) {
-                $this->item->setAllImages($variation->getImages());
-                $itemHasImage = true;
-            }
-
             if (!$defaultImage && $variation->getImage()) {
                 $defaultImage = $variation->getImage();
             }
 
-            if (!$useCallistoUrl && $variation->getPrice() !== 0.0) {
+            if ($variation->getPrice() !== 0.0) {
                 $cheapestVariations->addVariation($variation);
             }
 
@@ -601,33 +585,6 @@ class Product
 
             $this->item->addMergedAttribute(new Attribute($fieldName, [$value]));
         }
-    }
-
-    /**
-     * @throws InvalidArgumentException
-     */
-    private function buildProductUrl(string $urlPath, $itemAndVariationId = null): string
-    {
-        if ($this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl()) {
-            return $this->getCallistoUrl($urlPath, $itemAndVariationId);
-        } else {
-            return $this->getPlentyShopUrl($urlPath, $itemAndVariationId);
-        }
-    }
-
-    /**
-     * @throws InvalidArgumentException
-     */
-    private function getCallistoUrl(string $urlPath, $itemAndVariationId): string
-    {
-        return sprintf(
-            '%s://%s%s/%s/a-%s',
-            $this->config->getProtocol(),
-            $this->getWebStoreHost(),
-            $this->getLanguageUrlPrefix(),
-            trim($urlPath, '/'),
-            $itemAndVariationId ?: $this->productEntity->getId()
-        );
     }
 
     /**

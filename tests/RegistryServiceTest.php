@@ -327,8 +327,7 @@ class RegistryServiceTest extends TestCase
         );
 
         $this->loggerMock->expects($this->once())->method('error')->with(
-            'Required permissions \'Plugins > Configurations > Show\' have not been granted. ' .
-            'Product-URLs will be exported in Callisto format.'
+            'Required permissions \'Plugins > Configurations > Show\' have not been granted. '
         );
 
         $this->registryMock->expects($this->once())->method('set');
