@@ -112,9 +112,7 @@ class ItemsWrapper extends Wrapper
             $this->exporter->setFileNamePrefix($this->fileNamePrefix);
         }
 
-        $this->setExportPath(
-            $this->exporter->serializeItemsToFile($this->exportPath, $items, $start, count($items), $total)
-        );
+        $this->exporter->serializeItemsToFile($this->exportPath, $items, $start, count($items), $total);
 
         if ($this->skippedProducts !== []) {
             $this->logSkippedProducts();
