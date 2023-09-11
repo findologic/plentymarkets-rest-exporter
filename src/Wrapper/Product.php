@@ -154,6 +154,12 @@ class Product
         $priceIdProperty->addValue((string)$priceId);
         $this->item->addProperty($priceIdProperty);
 
+        if ($field = $this->isMissingRequiredFields()) {
+            $this->reason = sprintf('Product has no %s.', $field);
+
+            return null;
+        }
+
         return $this->item;
     }
 
@@ -693,5 +699,20 @@ class Product
         }
 
         $this->item->addOrdernumber(new Ordernumber($ordernumber));
+    }
+
+    private function isMissingRequiredFields(): ?string
+    {
+        if (count($this->item->getName()->getValues()) === 0) {
+            return 'name';
+        } elseif (count($this->item->getUrl()->getValues()) === 0) {
+            return 'url';
+        } elseif (count($this->item->getOrdernumbers()->getValues()) === 0) {
+            return 'ordernumber';
+        } elseif (count($this->item->getSalesFrequency()->getValues()) === 0) {
+            return 'sales frequency';
+        }
+
+        return null;
     }
 }
