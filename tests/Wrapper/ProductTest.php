@@ -478,7 +478,7 @@ class ProductTest extends AbstractProductTest
             $this->assertEquals($expectedOrderNumbers, $orderNumbers);
         } else {
             $this->assertNull($item);
-            $this->assertEquals('Product has no ordernumber.', $product->getReason());
+            $this->assertEquals('Product is missing at least one required field: ordernumber.', $product->getReason());
         }
     }
 

@@ -154,8 +154,9 @@ class Product
         $priceIdProperty->addValue((string)$priceId);
         $this->item->addProperty($priceIdProperty);
 
-        if ($field = $this->isMissingRequiredFields()) {
-            $this->reason = sprintf('Product has no %s.', $field);
+        $missingFields = $this->missingRequiredFields();
+        if (count($missingFields)) {
+            $this->reason = sprintf('Product is missing at least one required field: %s.', join(', ', $missingFields));
 
             return null;
         }
@@ -707,19 +708,24 @@ class Product
         $this->item->addOrdernumber(new Ordernumber($ordernumber));
     }
 
-    private function isMissingRequiredFields(): ?string
+    private function missingRequiredFields(): array
     {
+        $missingFields = [];
+
         if (count($this->item->getName()->getValues()) === 0) {
-            return 'name';
-        } elseif (count($this->item->getUrl()->getValues()) === 0) {
-            return 'url';
-        } elseif (count($this->item->getOrdernumbers()->getValues()) === 0) {
-            return 'ordernumber';
-        } elseif (count($this->item->getSalesFrequency()->getValues()) === 0) {
-            return 'sales frequency';
+            $missingFields[] = 'name';
+        }
+        if (count($this->item->getUrl()->getValues()) === 0) {
+            $missingFields[] = 'url';
+        }
+        if (count($this->item->getOrdernumbers()->getValues()) === 0) {
+            $missingFields[] = 'ordernumber';
+        }
+        if (count($this->item->getSalesFrequency()->getValues()) === 0) {
+            $missingFields[] = 'sales frequency';
         }
 
-        return null;
+        return $missingFields;
     }
 
     private function cleanString(string $value): string
