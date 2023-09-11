@@ -84,7 +84,8 @@ class ProductTest extends AbstractProductTest
         $expectedName = 'Pretty awesome name!';
         $expectedSummary = 'Easy, transparent, sexy';
         $expectedDescription = 'That is the best item, and I am a bit longer text.';
-        $expectedUrlPath = 'awesome-url-path/somewhere-in-the-store';
+        $urlPath = 'awesome-url-path/somewhere-in-the-store/öäü';
+        $expectedUrlPath = 'awesome-url-path/somewhere-in-the-store/%C3%B6%C3%A4%C3%BC';
         $expectedPriceId = 11;
         $expectedMainVariationId = 1004;
         $expectedBaseUnit = 'Stück';
@@ -140,7 +141,7 @@ class ProductTest extends AbstractProductTest
             'metaDescription' => 'my father gave me a small loan of a million dollar.',
             'description' => $expectedDescription,
             'technicalData' => 'Interesting technical information.',
-            'urlPath' => $expectedUrlPath,
+            'urlPath' => $urlPath,
             'keywords' => 'get me out',
         ]);
 

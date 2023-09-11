@@ -598,12 +598,13 @@ class Product
      */
     private function getPlentyShopUrl(string $urlPath, $itemAndVariationId = null): string
     {
+        $encodedPath = implode('/', array_map('urlencode', explode('/', $urlPath)));
         $productUrl = sprintf(
             '%s://%s%s/%s_%s',
             $this->config->getProtocol(),
             $this->getWebStoreHost(),
             $this->getLanguageUrlPrefix(),
-            trim($urlPath, '/'),
+            $encodedPath,
             $itemAndVariationId ?: $this->productEntity->getId()
         );
 
@@ -617,7 +618,7 @@ class Product
         $variationId = $this->wrapMode ?
             $this->variationEntities[0]->getId() : $cheapestVariationId;
 
-        return sprintf($productUrl . '_%s', $variationId);
+        return sprintf('%s_%s', $productUrl, $variationId);
     }
 
     /**
