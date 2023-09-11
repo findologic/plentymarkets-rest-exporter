@@ -42,6 +42,19 @@ abstract class AbstractProductTest extends TestCase
     use ResponseHelper;
     use ItemHelper;
 
+    protected const DEFAULT_TEXTS = [
+        'lang' => 'de',
+        'name1' => 'name1',
+        'name2' => '',
+        'name3' => '',
+        'shortDescription' => '',
+        'metaDescription' => '',
+        'description' => '',
+        'technicalData' => '',
+        'keywords' => '',
+        'urlPath' => 'name-path',
+    ];
+
     protected Exporter|MockObject $exporterMock;
 
     protected Config $config;
@@ -107,6 +120,9 @@ abstract class AbstractProductTest extends TestCase
         string $manufacturerMockResponse,
         string $expectedResult
     ): void {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/response.json');
@@ -235,6 +251,9 @@ abstract class AbstractProductTest extends TestCase
 
     public function testProductWithoutImagesNotFail(): void
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_item_without_any_images_test.json');
@@ -252,6 +271,9 @@ abstract class AbstractProductTest extends TestCase
 
     public function testCheapestVariationIsUsed()
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_lowest_price_test.json');
@@ -267,6 +289,9 @@ abstract class AbstractProductTest extends TestCase
 
     public function testGroupsAreSetFromAllVariations()
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $expectedGroups = ['0_', '1_'];
         $this->exporterMock = $this->getExporter();
 
@@ -466,5 +491,28 @@ abstract class AbstractProductTest extends TestCase
                 ['11', '1111', '22', '2222']
             ]
         ];
+    }
+
+    protected function setDefaultText(): void
+    {
+        $text = new Text(self::DEFAULT_TEXTS);
+
+        $this->itemMock->expects($this->once())
+            ->method('getTexts')
+            ->willReturn([$text]);
+    }
+
+    protected function setDefaultDisplayName(): void
+    {
+        $this->storeConfigurationMock->expects($this->any())
+            ->method('getDisplayItemName')
+            ->willReturn(1);
+    }
+
+    protected function setDefaultLanguage(): void
+    {
+        $this->storeConfigurationMock->expects($this->any())
+            ->method('getDefaultLanguage')
+            ->willReturn('de');
     }
 }

@@ -12,7 +12,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
 use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
 
-class ProductVariantTest extends AbstractProductTest
+class ProductVariantsTest extends AbstractProductTest
 {
     protected function setUp(bool $useVariants = false): void
     {
@@ -25,6 +25,9 @@ class ProductVariantTest extends AbstractProductTest
     public function testAttributesAreSetFromAllVariations(
         array $expectedAttributeValues
     ) {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_attribute_values.json');
@@ -59,6 +62,9 @@ class ProductVariantTest extends AbstractProductTest
 
     public function testOverriddenPriceIsSetByLowestValues(): void
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
         $expectedOverridenPrices = [150, 100, 100];
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_lowest_price_test.json');
@@ -134,6 +140,9 @@ class ProductVariantTest extends AbstractProductTest
 
     public function testOrdernumbersAreSetFromAllVariations()
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $expectedOrderNumbers = [
             ['1', '11', '1111', '111', '11111', '111111'],
             ['2', '22', '2222', '222', '22222', '222222']
@@ -164,6 +173,9 @@ class ProductVariantTest extends AbstractProductTest
         array $orderNumbersExportConfig,
         array $expectedOrderNumbers
     ): void {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->config = $this->getDefaultConfig($orderNumbersExportConfig);
         $this->config->setUseVariants(true);
         $this->exporterMock = $this->getExporter();
@@ -187,9 +199,14 @@ class ProductVariantTest extends AbstractProductTest
                 : $splittedOrderNumbers[1][] = $orderNumber;
         });
 
-        foreach ($item->getVariants() as $key => $variant) {
-            $orderNumbers = $this->getOrderNumbers($variant);
-            $this->assertEquals($splittedOrderNumbers[$key], $orderNumbers);
+        if (count($expectedOrderNumbers)) {
+            foreach ($item->getVariants() as $key => $variant) {
+                $orderNumbers = $this->getOrderNumbers($variant);
+                $this->assertEquals($splittedOrderNumbers[$key], $orderNumbers);
+            }
+        } else {
+            $this->assertNull($item);
+            $this->assertEquals('Product has no ordernumber.', $product->getReason());
         }
     }
 
@@ -207,7 +224,15 @@ class ProductVariantTest extends AbstractProductTest
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_free_fields_exporting_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
 
-        $this->itemMock = $this->getItem($variations->first()->getBase()->getItem()->getData());
+        $this->itemMock = $this->getItem(array_merge(
+            $variations->first()->getBase()->getItem()->getData(),
+            [
+                'texts' => [self::DEFAULT_TEXTS],
+            ]
+        ));
+
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
 
         $this->variationEntityMocks[] = $variations->first();
         $product = $this->getProduct();
@@ -227,6 +252,10 @@ class ProductVariantTest extends AbstractProductTest
 
     public function testDimensionsWithoutValueAreIgnored(): void
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
+
         $expectedExportedAttributes = [
             [
                 new Attribute('cat', ['Sessel & Hocker']),

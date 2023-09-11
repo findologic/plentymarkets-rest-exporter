@@ -27,7 +27,11 @@ class ProductTest extends AbstractProductTest
 
     public function testProductWithAllVariationsMatchingConfigurationAvailabilityAreExportedIfConfigured()
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
+
         $expectedImage = 'https://cdn03.plentymarkets.com/0pb05rir4h9r/' .
             'item/images/131/middle/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg';
         $expectedOrderNumbers = ['S-000813-C', 'modeeeel', '1004', '106', '3213213213213', '101', '1005', '107'];
@@ -51,6 +55,9 @@ class ProductTest extends AbstractProductTest
 
     public function testMatchingAvailabilityExportSettingDoesNotOverrideOtherVariationExportabilityChecks()
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
 
         $this->config->setAvailabilityId(5);
@@ -243,6 +250,9 @@ class ProductTest extends AbstractProductTest
 
     public function testSortIsSetByTheMainVariation(): void
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_sort_test.json');
@@ -312,6 +322,9 @@ class ProductTest extends AbstractProductTest
 
     public function testPriceAndOverriddenPriceIsSetByLowestValues(): void
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_lowest_price_test.json');
@@ -390,6 +403,9 @@ class ProductTest extends AbstractProductTest
 
     public function testGroupsAreSetFromAllVariations()
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_different_clients.json');
@@ -409,6 +425,9 @@ class ProductTest extends AbstractProductTest
 
     public function testOrdernumbersAreSetFromAllVariations()
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $expectedOrderNumbers = [
             '1', '11', '1111', '111', '11111', '111111', '2', '22', '2222', '222', '22222', '222222'
         ];
@@ -436,6 +455,9 @@ class ProductTest extends AbstractProductTest
         array $orderNumbersExportConfig,
         array $expectedOrderNumbers
     ): void {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->config = $this->getDefaultConfig($orderNumbersExportConfig);
         $this->exporterMock = $this->getExporter();
 
@@ -450,8 +472,13 @@ class ProductTest extends AbstractProductTest
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $orderNumbers = $this->getOrderNumbers($item);
-        $this->assertEquals($expectedOrderNumbers, $orderNumbers);
+        if (count($expectedOrderNumbers)) {
+            $orderNumbers = $this->getOrderNumbers($item);
+            $this->assertEquals($expectedOrderNumbers, $orderNumbers);
+        } else {
+            $this->assertNull($item);
+            $this->assertEquals('Product has no ordernumber.', $product->getReason());
+        }
     }
 
     /**
@@ -467,7 +494,15 @@ class ProductTest extends AbstractProductTest
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_free_fields_exporting_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
 
-        $this->itemMock = $this->getItem($variations->first()->getBase()->getItem()->getData());
+        $this->itemMock = $this->getItem(array_merge(
+            $variations->first()->getBase()->getItem()->getData(),
+            [
+                'texts' => [self::DEFAULT_TEXTS],
+            ]
+        ));
+
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
 
         $this->variationEntityMocks[] = $variations->first();
         $product = $this->getProduct();
@@ -494,7 +529,15 @@ class ProductTest extends AbstractProductTest
         $variationResponse = $this->getMockResponse('Pim/Variations/too_long_field_not_exported_test.json');
         $variations = PimVariationsParser::parse($variationResponse);
 
-        $this->itemMock = $this->getItem($variations->first()->getBase()->getItem()->getData());
+        $this->itemMock = $this->getItem(array_merge(
+            $variations->first()->getBase()->getItem()->getData(),
+            [
+                'texts' => [self::DEFAULT_TEXTS],
+            ]
+        ));
+
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
 
         $this->variationEntityMocks[] = $variations->first();
         $product = $this->getProduct();
@@ -513,6 +556,9 @@ class ProductTest extends AbstractProductTest
     public function testAttributesAreSetFromAllVariations(
         array $expectedAttributeValues
     ) {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_attribute_values.json');
@@ -545,6 +591,9 @@ class ProductTest extends AbstractProductTest
 
     public function testSetsSalesFrequencyAsZeroIfSortBySalesIsNotConfigured()
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_attribute_values.json');
@@ -561,6 +610,9 @@ class ProductTest extends AbstractProductTest
 
     public function testSetSalesFrequencyByPositionIfSortBySalesIsConfigured()
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_different_positions.json');
@@ -582,6 +634,9 @@ class ProductTest extends AbstractProductTest
      */
     public function testUsesHighestPositionForSalesFrequency()
     {
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_different_positions.json');
@@ -608,6 +663,9 @@ class ProductTest extends AbstractProductTest
             new Attribute('dimensions_weight_net_g', ['1000', '2000']),
         ];
 
+        $this->setDefaultText();
+        $this->setDefaultDisplayName();
+        $this->setDefaultLanguage();
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/variants_with_dimensions.json');
