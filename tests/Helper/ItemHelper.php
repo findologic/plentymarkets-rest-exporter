@@ -6,11 +6,11 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper;
 
 use FINDOLOGIC\Export\Data\Attribute;
 use FINDOLOGIC\Export\Data\Item;
-use FINDOLOGIC\Export\XML\XmlVariant;
+use FINDOLOGIC\Export\Data\Variant;
 
 trait ItemHelper
 {
-    public function getMappedAttributes(Item|XmlVariant $item): array
+    public function getMappedAttributes(Item|Variant $item): array
     {
         $attributes = $item->getAttributes();
         return array_reduce($attributes, function (array $list, Attribute $attribute) {
@@ -19,7 +19,7 @@ trait ItemHelper
         }, []);
     }
 
-    public function getOrderNumbers(Item|XmlVariant $item): array
+    public function getOrderNumbers(Item|Variant $item): array
     {
         $orderNumbers = $item->getOrdernumbers()->getValues();
         return array_map(fn ($item) => $item->getValue(), $this->getArrayFirstElement($orderNumbers));
@@ -37,7 +37,7 @@ trait ItemHelper
         return array_map(fn ($item) => $item->getValue(), $this->getArrayFirstElement($keywords));
     }
 
-    public function getItemGroups(Item|XmlVariant $item): array
+    public function getItemGroups(Item|Variant $item): array
     {
         $keywords = $item->getGroups();
         return array_map(fn ($item) => $item->getValue(), $keywords);

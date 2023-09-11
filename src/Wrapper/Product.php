@@ -154,6 +154,13 @@ class Product
         $priceIdProperty->addValue((string)$priceId);
         $this->item->addProperty($priceIdProperty);
 
+        $missingFields = $this->missingRequiredFields();
+        if (count($missingFields)) {
+            $this->reason = sprintf('Product is missing at least one required field: %s.', join(', ', $missingFields));
+
+            return null;
+        }
+
         return $this->item;
     }
 
@@ -210,10 +217,10 @@ class Product
             }
 
             if (trim($text->getShortDescription()) !== '') {
-                $this->item->addSummary(preg_replace('/[\x00-\x1F\x7F]/u', '', $text->getShortDescription()));
+                $this->item->addSummary($this->cleanString($text->getShortDescription()));
             }
             if (trim($text->getDescription()) !== '') {
-                $this->item->addDescription(preg_replace('/[\x00-\x1F\x7F]/u', '', $text->getDescription()));
+                $this->item->addDescription($this->cleanString($text->getDescription()));
             }
             if (trim($text->getKeywords()) !== '') {
                 $this->item->addKeyword(new Keyword($text->getKeywords()));
@@ -583,7 +590,12 @@ class Product
                 continue;
             }
 
-            $this->item->addMergedAttribute(new Attribute($fieldName, [$value]));
+            $this->item->addMergedAttribute(
+                new Attribute(
+                    $fieldName,
+                    [$this->cleanString($value)]
+                )
+            );
         }
     }
 
@@ -592,12 +604,13 @@ class Product
      */
     private function getPlentyShopUrl(string $urlPath, $itemAndVariationId = null): string
     {
+        $encodedPath = implode('/', array_map('urlencode', explode('/', $urlPath)));
         $productUrl = sprintf(
             '%s://%s%s/%s_%s',
             $this->config->getProtocol(),
             $this->getWebStoreHost(),
             $this->getLanguageUrlPrefix(),
-            trim($urlPath, '/'),
+            $encodedPath,
             $itemAndVariationId ?: $this->productEntity->getId()
         );
 
@@ -611,7 +624,7 @@ class Product
         $variationId = $this->wrapMode ?
             $this->variationEntities[0]->getId() : $cheapestVariationId;
 
-        return sprintf($productUrl . '_%s', $variationId);
+        return sprintf('%s_%s', $productUrl, $variationId);
     }
 
     /**
@@ -629,7 +642,7 @@ class Product
      * Returns the language URL prefix. This may be relevant for multiple channels.
      * An empty string may be returned if the default store language is already the exported language.
      */
-    private function getLanguageUrlPrefix(): ?string
+    private function getLanguageUrlPrefix(): string
     {
         if ($this->isDefaultLanguage() || !$this->isLanguageAvailable()) {
             return '';
@@ -693,5 +706,30 @@ class Product
         }
 
         $this->item->addOrdernumber(new Ordernumber($ordernumber));
+    }
+
+    private function missingRequiredFields(): array
+    {
+        $missingFields = [];
+
+        if (count($this->item->getName()->getValues()) === 0) {
+            $missingFields[] = 'name';
+        }
+        if (count($this->item->getUrl()->getValues()) === 0) {
+            $missingFields[] = 'url';
+        }
+        if (count($this->item->getOrdernumbers()->getValues()) === 0) {
+            $missingFields[] = 'ordernumber';
+        }
+        if (count($this->item->getSalesFrequency()->getValues()) === 0) {
+            $missingFields[] = 'sales frequency';
+        }
+
+        return $missingFields;
+    }
+
+    private function cleanString(string $value): string
+    {
+        return preg_replace('/[\x00-\x1F\x7F]/u', '', $value);
     }
 }
