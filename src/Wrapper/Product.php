@@ -216,10 +216,10 @@ class Product
             }
 
             if (trim($text->getShortDescription()) !== '') {
-                $this->item->addSummary(preg_replace('/[\x00-\x1F\x7F]/u', '', $text->getShortDescription()));
+                $this->item->addSummary($this->cleanString($text->getShortDescription()));
             }
             if (trim($text->getDescription()) !== '') {
-                $this->item->addDescription(preg_replace('/[\x00-\x1F\x7F]/u', '', $text->getDescription()));
+                $this->item->addDescription($this->cleanString($text->getDescription()));
             }
             if (trim($text->getKeywords()) !== '') {
                 $this->item->addKeyword(new Keyword($text->getKeywords()));
@@ -589,7 +589,12 @@ class Product
                 continue;
             }
 
-            $this->item->addMergedAttribute(new Attribute($fieldName, [$value]));
+            $this->item->addMergedAttribute(
+                new Attribute(
+                    $fieldName,
+                    [$this->cleanString($value)]
+                )
+            );
         }
     }
 
@@ -636,7 +641,7 @@ class Product
      * Returns the language URL prefix. This may be relevant for multiple channels.
      * An empty string may be returned if the default store language is already the exported language.
      */
-    private function getLanguageUrlPrefix(): ?string
+    private function getLanguageUrlPrefix(): string
     {
         if ($this->isDefaultLanguage() || !$this->isLanguageAvailable()) {
             return '';
@@ -715,5 +720,10 @@ class Product
         }
 
         return null;
+    }
+
+    private function cleanString(string $value): string
+    {
+        return preg_replace('/[\x00-\x1F\x7F]/u', '', $value);
     }
 }
