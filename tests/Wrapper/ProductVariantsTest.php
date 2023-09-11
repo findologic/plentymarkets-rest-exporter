@@ -206,7 +206,7 @@ class ProductVariantsTest extends AbstractProductTest
             }
         } else {
             $this->assertNull($item);
-            $this->assertEquals('Product has no ordernumber.', $product->getReason());
+            $this->assertEquals('Product is missing at least one required field: ordernumber.', $product->getReason());
         }
     }
 
