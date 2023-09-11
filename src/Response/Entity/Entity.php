@@ -10,6 +10,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
 
 abstract class Entity
 {
+    protected const NESTED_PROPERTIES = ['images' => 'image'];
     abstract public function getData(): array;
 
     protected function getStringProperty(string $key, array $data, ?string $default = null): ?string
@@ -66,15 +67,29 @@ abstract class Entity
      */
     protected function getEntities(string $entityClass, string $field, array $data): array
     {
-        if (!isset($data[$field]) || $data[$field] === []) {
+        if ((!isset($data[$field]) || $data[$field] === []) && !array_key_exists($field, self::NESTED_PROPERTIES)) {
             return [];
         }
 
         $entities = [];
         foreach ($data[$field] as $key => $entityData) {
+            $shouldUseNestedProperties = $this->shouldUseNestedProperties($field, $entityData);
+            if ($shouldUseNestedProperties) {
+                $entityData = $entityData[self::NESTED_PROPERTIES[$field]];
+            }
             $entities[] = $this->getEntity($entityClass, $entityData, $key);
         }
 
         return $entities;
+    }
+
+    private function shouldUseNestedProperties($field, $entityData): bool
+    {
+        $nestedProperties = self::NESTED_PROPERTIES;
+        if (array_key_exists($field, $nestedProperties) && array_key_exists($nestedProperties[$field], $entityData)) {
+            return true;
+        }
+
+        return false;
     }
 }

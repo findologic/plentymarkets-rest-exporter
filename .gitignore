@@ -14,5 +14,9 @@
 .env.local
 .env.local.php
 .env.*.local
+.env
+.env.test
 coverage.xml
 .phpunit.result.cache
+
+.vscode

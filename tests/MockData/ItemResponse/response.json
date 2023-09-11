@@ -360,6 +360,18 @@
           "technicalData": "",
           "urlPath": "modern-office-chair-merrick-green",
           "keywords": ""
+        },
+        {
+          "lang": "de",
+          "name1": "Modern office chair \u00bbMerrick\u00ab green",
+          "name2": "",
+          "name3": "",
+          "shortDescription": "Classic design and a relaxed style",
+          "metaDescription": "Modern office chair \u00bbMerrick\u00ab green office & office chairs",
+          "description": "h asdf po gfklj hgfp sfdg",
+          "technicalData": "",
+          "urlPath": "modern-office-chair-merrick-green",
+          "keywords": ""
         }
       ]
     },
@@ -430,7 +442,19 @@
           "metaDescription": "very meta",
           "description": "totally descriptious",
           "technicalData": "",
-          "urlPath": "would you just look at this url path",
+          "urlPath": "a-valid-url-is-provided",
+          "keywords": ""
+        },
+        {
+          "lang": "de",
+          "name1": "Naaaame",
+          "name2": "",
+          "name3": "",
+          "shortDescription": "ssssssshhhhhhhhhoooooooooorrrrrtDescription",
+          "metaDescription": "very meta",
+          "description": "totally descriptious",
+          "technicalData": "",
+          "urlPath": "a-valid-url-is-provided",
           "keywords": ""
         }
       ]

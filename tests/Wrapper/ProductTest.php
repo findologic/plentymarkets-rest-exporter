@@ -4,200 +4,25 @@ declare(strict_types=1);
 
 namespace FINDOLOGIC\PlentyMarketsRestExporter\Tests\Wrapper;
 
-use Carbon\Carbon;
 use DateTime;
+use ReflectionClass;
 use DateTimeInterface;
 use FINDOLOGIC\Export\Data\Attribute;
-use FINDOLOGIC\Export\Exporter;
-use FINDOLOGIC\PlentyMarketsRestExporter\Config;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PropertySelectionParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\VatParser;
-use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\PlentyShop;
-use FINDOLOGIC\PlentyMarketsRestExporter\RegistryService;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Collection\PropertySelectionResponse;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Base;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\UnitParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\CategoryParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\WebStoreParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\AttributeParser;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore;
-use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\WebStore\Configuration;
-use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ConfigHelper;
-use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
-use FINDOLOGIC\PlentyMarketsRestExporter\Wrapper\Product;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
-use ReflectionClass;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\ManufacturerParser;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Item\Text;
+use FINDOLOGIC\PlentyMarketsRestExporter\Parser\PimVariationsParser;
 
-class ProductTest extends TestCase
+class ProductTest extends AbstractProductTest
 {
-    use ConfigHelper;
-    use ResponseHelper;
-
-    private const AVAILABLE_PROPERTIES = ['price_id', 'variation_id', 'base_unit', 'package_size'];
-
-    private Exporter|MockObject $exporterMock;
-
-    private Config $config;
-
-    private Item|MockObject $itemMock;
-
-    private Configuration|MockObject $storeConfigurationMock;
-
-    private RegistryService|MockObject $registryServiceMock;
-
-    /** @var Variation[]|MockObject[] */
-    private array $variationEntityMocks = [];
-
-    protected function setUp(): void
+    protected function setUp(bool $useVariants = false): void
     {
-        $this->exporterMock = $this->getMockBuilder(Exporter::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->config = $this->getDefaultConfig();
-        $this->itemMock = $this->getMockBuilder(Item::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->storeConfigurationMock = $this->getMockBuilder(Configuration::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->registryServiceMock = $this->getMockBuilder(RegistryService::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $standardVatResponse = $this->getMockResponse('VatResponse/standard_vat.json');
-        $standardVat = VatParser::parseSingleEntityResponse($standardVatResponse);
-        $this->registryServiceMock->expects($this->any())->method('getStandardVat')->willReturn($standardVat);
-
-        $categoryResponse = $this->getMockResponse('CategoryResponse/one.json');
-        $parsedCategoryResponse = CategoryParser::parse($categoryResponse);
-
-        $this->registryServiceMock->expects($this->any())
-            ->method('getCategory')
-            ->willReturn($parsedCategoryResponse->first());
-
-        $webstoreResponse = $this->getMockResponse('WebStoreResponse/response.json');
-        $parsedWebstoreResponse = WebStoreParser::parse($webstoreResponse);
-
-        $this->registryServiceMock->expects($this->any())
-            ->method('getWebstore')
-            ->willReturn($parsedWebstoreResponse->first());
-    }
-
-    public function testProductWithoutVariationsIsNotExported(): void
-    {
-        $product = $this->getProduct();
-        $item = $product->processProductData();
-
-        $this->assertNull($item);
-        $this->assertSame('Product has no variations.', $product->getReason());
-    }
-
-    public function testProductWithOnlyInactiveVariationsIsNotExported(): void
-    {
-        $variationMock = $this->getMockBuilder(Variation::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $baseMock = $this->getMockBuilder(Base::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $variationMock->expects($this->once())->method('getBase')->willReturn($baseMock);
-        $baseMock->expects($this->once())->method('isActive')->willReturn(false);
-
-        $this->variationEntityMocks[] = $variationMock;
-
-        $product = $this->getProduct();
-        $item = $product->processProductData();
-
-        $this->assertNull($item);
-        $this->assertSame(
-            'All assigned variations are not exportable (inactive, no longer available, no categories etc.)',
-            $product->getReason()
-        );
-    }
-
-    public function testProductWithInvisibleVariationsIsNotExported(): void
-    {
-        $variationMock = $this->getMockBuilder(Variation::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $baseMock = $this->getMockBuilder(Base::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $variationMock->expects($this->exactly(2))->method('getBase')->willReturn($baseMock);
-        $baseMock->expects($this->once())->method('isActive')->willReturn(true);
-        $baseMock->expects($this->once())->method('getAutomaticListVisibility')
-            ->willReturn(0);
-
-        $this->variationEntityMocks[] = $variationMock;
-
-        $product = $this->getProduct();
-        $item = $product->processProductData();
-
-        $this->assertNull($item);
-        $this->assertSame(
-            'All assigned variations are not exportable (inactive, no longer available, no categories etc.)',
-            $product->getReason()
-        );
-    }
-
-    public function testProductWithNoLongerAvailableVariationsIsNotExported(): void
-    {
-        $variationMock = $this->getMockBuilder(Variation::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $baseMock = $this->getMockBuilder(Base::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $variationMock->expects($this->exactly(3))->method('getBase')->willReturn($baseMock);
-        $baseMock->expects($this->once())->method('isActive')
-            ->willReturn(true);
-        $baseMock->expects($this->once())->method('getAutomaticListVisibility')
-            ->willReturn(3);
-        $baseMock->expects($this->once())->method('getAvailableUntil')
-            ->willReturn(Carbon::now()->subSeconds(3));
-
-        $this->variationEntityMocks[] = $variationMock;
-
-        $product = $this->getProduct();
-        $item = $product->processProductData();
-
-        $this->assertNull($item);
-        $this->assertSame(
-            'All assigned variations are not exportable (inactive, no longer available, no categories etc.)',
-            $product->getReason()
-        );
-    }
-
-    public function testProductWithAllVariationsMatchingConfigurationAvailabilityIdAreNotExported()
-    {
-        $this->exporterMock = $this->getExporter();
-
-        $this->config->setAvailabilityId(5);
-
-        $rawVariations = $this->getMockResponse('Pim/Variations/variations_with_5_for_availability_id.json');
-        $variations = PimVariationsParser::parse($rawVariations);
-        $this->variationEntityMocks = $variations->all();
-
-        $product = $this->getProduct();
-        $item = $product->processProductData();
-
-        $this->assertNull($item);
-        $this->assertSame(
-            'All assigned variations are not exportable (inactive, no longer available, no categories etc.)',
-            $product->getReason()
-        );
+        parent::setUp($useVariants);
     }
 
     public function testProductWithAllVariationsMatchingConfigurationAvailabilityAreExportedIfConfigured()
@@ -205,7 +30,7 @@ class ProductTest extends TestCase
         $this->exporterMock = $this->getExporter();
         $expectedImage = 'https://cdn03.plentymarkets.com/0pb05rir4h9r/' .
             'item/images/131/middle/131-Zweisitzer-Amsterdam-at-Dawn-blau.jpg';
-
+        $expectedOrderNumbers = ['S-000813-C', 'modeeeel', '1004', '106', '3213213213213', '101', '1005', '107'];
         $this->config->setAvailabilityId(5);
         $this->config->setExportUnavailableVariations(true);
 
@@ -217,11 +42,11 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         $this->assertNotNull($item);
-        // TODO: check item's orderNumbers directly once order numbers getter is implemented
-        $line = $item->getCsvFragment();
-        $columnValues = explode("\t", $line);
-        $this->assertEquals('S-000813-C|modeeeel|1004|106|3213213213213|101|1005|107', $columnValues[1]);
-        $this->assertSame($expectedImage, $columnValues[10]);
+
+        $orderNumbers = $this->getOrderNumbers($item);
+        $this->assertEquals($expectedOrderNumbers, $orderNumbers);
+        $images = $this->getImages($item);
+        $this->assertSame($expectedImage, $images[0]->getUrl());
     }
 
     public function testMatchingAvailabilityExportSettingDoesNotOverrideOtherVariationExportabilityChecks()
@@ -241,10 +66,10 @@ class ProductTest extends TestCase
         $item = $product->processProductData();
 
         $this->assertNotNull($item);
-        // TODO: check item's orderNumbers directly once order numbers getter is implemented
-        $line = $item->getCsvFragment();
-        $columnValues = explode("\t", $line);
-        $this->assertEquals('101|1005|107', $columnValues[1]);
+
+        $orderNumbers = $this->getOrderNumbers($item);
+
+        $this->assertEquals(['101', '1005', '107'], $orderNumbers);
     }
 
     public function testProductIsSuccessfullyWrapped(): void
@@ -336,13 +161,12 @@ class ProductTest extends TestCase
             $item->getUrl()->getValues()['']
         );
 
-        $line = $item->getCsvFragment(self::AVAILABLE_PROPERTIES);
-        $line = trim($line, "\n");
-        $columnValues = explode("\t", $line);
-        $this->assertSame((string)$expectedPriceId, $columnValues[18]);
-        $this->assertSame((string)$expectedMainVariationId, $columnValues[19]);
-        $this->assertSame($expectedBaseUnit, $columnValues[20]);
-        $this->assertSame($expectedPackageSize, $columnValues[21]);
+        $itemProperties = $this->getArrayFirstElement($item->getProperties());
+
+        $this->assertSame((string)$expectedPriceId, $itemProperties['price_id']);
+        $this->assertSame((string)$expectedMainVariationId, $itemProperties['variation_id']);
+        $this->assertSame($expectedBaseUnit, $itemProperties['base_unit']);
+        $this->assertSame($expectedPackageSize, $itemProperties['package_size']);
 
         $this->assertTrue(
             DateTime::createFromFormat(DateTimeInterface::ATOM, $item->getDateAdded()->getValues()['']) !== false
@@ -417,38 +241,6 @@ class ProductTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider correctManufacturerIsExportedTestProvider
-     */
-    public function testCorrectManufacturerNameIsExported(
-        string $manufacturerMockResponse,
-        string $expectedResult
-    ): void {
-        $this->exporterMock = $this->getExporter();
-
-        $variationResponse = $this->getMockResponse('Pim/Variations/response.json');
-        $variations = PimVariationsParser::parse($variationResponse);
-        $this->variationEntityMocks = $variations->all();
-
-        $rawManufacturers = $this->getMockResponse($manufacturerMockResponse);
-        $manufacturers = ManufacturerParser::parse($rawManufacturers);
-
-        $this->registryServiceMock->expects($this->once())
-            ->method('getManufacturer')
-            ->willReturn($manufacturers->first());
-
-        $this->itemMock->expects($this->once())
-            ->method('getManufacturerId')
-            ->willReturn(1);
-
-        $product = $this->getProduct();
-        $item = $product->processProductData();
-        $line = $item->getCsvFragment();
-        $columnValues = explode("\t", $line);
-
-        $this->assertEquals($expectedResult, $columnValues[11]);
-    }
-
     public function testSortIsSetByTheMainVariation(): void
     {
         $this->exporterMock = $this->getExporter();
@@ -513,13 +305,12 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        // TODO: check item's keyword property directly once keywords getter is implemented
-        $line = $item->getCsvFragment();
-        $columnValues = explode("\t", $line);
-        $this->assertEquals('de tag 1,de tag 2,de tag 3,keywords from product', $columnValues[12]);
+        $itemKeywords = $this->getItemKeywords($item);
+
+        $this->assertEquals(['de tag 1', 'de tag 2', 'de tag 3', 'keywords from product'], $itemKeywords);
     }
 
-    public function testPriceAndInsteadPriceIsSetByLowestValues(): void
+    public function testPriceAndOverriddenPriceIsSetByLowestValues(): void
     {
         $this->exporterMock = $this->getExporter();
 
@@ -535,9 +326,10 @@ class ProductTest extends TestCase
 
         $product = $this->getProduct();
         $item = $product->processProductData();
+        $overriddenPrice = $this->getArrayFirstElement($item->getOverriddenPrice()->getValues());
 
         $this->assertEquals(['' => 50], $item->getPrice()->getValues());
-        $this->assertEquals(100, $item->getInsteadPrice());
+        $this->assertEquals(100, $overriddenPrice);
     }
 
     /**
@@ -588,47 +380,12 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $line = $item->getCsvFragment();
-        $columnValues = explode("\t", $line);
-        $this->assertEquals($expectedPrice, $columnValues[5]);
-        $this->assertEquals($expectedUrl, $columnValues[9]);
-        $this->assertEquals($expectedImg, $columnValues[10]);
-    }
-
-    public function testProductWithoutImagesNotFail(): void
-    {
-        $this->exporterMock = $this->getExporter();
-
-        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_item_without_any_images_test.json');
-        $variations = PimVariationsParser::parse($variationResponse);
-        $this->variationEntityMocks = $variations->all();
-
-        $plentyShop = new PlentyShop([PlentyShop::KEY_GLOBAL_ENABLE_OLD_URL_PATTERN => false]);
-        $this->registryServiceMock->method('getPlentyShop')->willReturn($plentyShop);
-
-        $product = $this->getProduct();
-        $item = $product->processProductData();
-
-        $line = $item->getCsvFragment();
-        $columnValues = explode("\t", $line);
-        $this->assertEmpty($columnValues[10]);
-    }
-
-    public function testCheapestVariationIsUsed()
-    {
-        $this->exporterMock = $this->getExporter();
-
-        $variationResponse = $this->getMockResponse('Pim/Variations/response_for_lowest_price_test.json');
-        $variations = PimVariationsParser::parse($variationResponse);
-        $this->variationEntityMocks = $variations->all();
-
-        $product = $this->getProduct();
-        $item = $product->processProductData();
-
-        // TODO: check item's images property directly once images getter is implemented
-        $line = $item->getCsvFragment(self::AVAILABLE_PROPERTIES);
-        $columnValues = explode("\t", $line);
-        $this->assertEquals(1005, $columnValues[19]);
+        $itemPrice = $this->getArrayFirstElement($item->getPrice()->getValues());
+        $itemUrl = $this->getArrayFirstElement($item->getUrl()->getValues());
+        $itemImage = $this->getImages($item);
+        $this->assertEquals($expectedPrice, $itemPrice);
+        $this->assertEquals($expectedUrl, $itemUrl);
+        $this->assertEquals($expectedImg, !empty($itemImage) ? $itemImage[0]->getUrl() : '');
     }
 
     public function testGroupsAreSetFromAllVariations()
@@ -646,14 +403,15 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        // TODO: check item's groups property directly once groups getter is implemented
-        $line = $item->getCsvFragment();
-        $columnValues = explode("\t", $line);
-        $this->assertEquals('0_,1_', $columnValues[13]);
+        $itemGroups = $this->getItemGroups($item);
+        $this->assertEquals(['0_', '1_'], $itemGroups);
     }
 
     public function testOrdernumbersAreSetFromAllVariations()
     {
+        $expectedOrderNumbers = [
+            '1', '11', '1111', '111', '11111', '111111', '2', '22', '2222', '222', '22222', '222222'
+        ];
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/response_for_ordernumber_test.json');
@@ -667,10 +425,8 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        // TODO: check item's order numbers property directly once order numbers getter is implemented
-        $line = $item->getCsvFragment();
-        $columnValues = explode("\t", $line);
-        $this->assertEquals('1|11|1111|111|11111|111111|2|22|2222|222|22222|222222', $columnValues[1]);
+        $orderNumbers = $this->getOrderNumbers($item);
+        $this->assertEquals($expectedOrderNumbers, $orderNumbers);
     }
 
     /**
@@ -678,7 +434,7 @@ class ProductTest extends TestCase
      */
     public function testOrderNumbersAreExportedAccordingToConfiguration(
         array $orderNumbersExportConfig,
-        string $expectedOrderNumbers
+        array $expectedOrderNumbers
     ): void {
         $this->config = $this->getDefaultConfig($orderNumbersExportConfig);
         $this->exporterMock = $this->getExporter();
@@ -694,10 +450,8 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        // TODO: check item's order numbers property directly once order numbers getter is implemented
-        $line = $item->getCsvFragment();
-        $columnValues = explode("\t", $line);
-        $this->assertEquals($expectedOrderNumbers, $columnValues[1]);
+        $orderNumbers = $this->getOrderNumbers($item);
+        $this->assertEquals($expectedOrderNumbers, $orderNumbers);
     }
 
     /**
@@ -705,7 +459,7 @@ class ProductTest extends TestCase
      */
     public function testFreeTextFieldsAreNotExportedAccordingToConfiguration(
         array $exportFreeFieldsConfig,
-        string $expectedValue
+        array $expectedAttributeValues
     ): void {
         $this->config = $this->getDefaultConfig($exportFreeFieldsConfig);
         $this->exporterMock = $this->getExporter();
@@ -719,15 +473,20 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $line = $item->getCsvFragment();
-        $columnValues = explode("\t", $line);
+        $attributesMap = $this->getMappedAttributes($item);
 
-        $this->assertEquals($expectedValue, $columnValues[11]);
+        foreach ($expectedAttributeValues as $key => $expectedAttributeValue) {
+            $this->assertEquals($expectedAttributeValue, $attributesMap[$key][0]);
+        }
     }
 
     public function testTooLongFreeTextFieldsAreIgnored(): void
     {
-        $expectedValue = 'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&free1=0000000000';
+        $expectedAttributeValues = [
+            'cat' => 'Sessel & Hocker',
+            'cat_url' => '/wohnzimmer/sessel-hocker/',
+            'free1' => '0000000000'
+        ];
 
         $this->config = $this->getDefaultConfig(['exportFreeTextFields' => true]);
         $this->exporterMock = $this->getExporter();
@@ -741,14 +500,19 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        $line = $item->getCsvFragment();
-        $columnValues = explode("\t", $line);
+        $attributesMap = $this->getMappedAttributes($item);
 
-        $this->assertEquals($expectedValue, $columnValues[11]);
+        foreach ($expectedAttributeValues as $key => $expectedAttributeValue) {
+            $this->assertEquals($expectedAttributeValue, $attributesMap[$key][0]);
+        }
     }
 
-    public function testAttributesAreSetFromAllVariations()
-    {
+    /**
+     * @dataProvider attributesAreSetFromAllVariationsTestProvider
+     */
+    public function testAttributesAreSetFromAllVariations(
+        array $expectedAttributeValues
+    ) {
         $this->exporterMock = $this->getExporter();
 
         $variationResponse = $this->getMockResponse('Pim/Variations/variations_with_attribute_values.json');
@@ -768,14 +532,15 @@ class ProductTest extends TestCase
         $product = $this->getProduct();
         $item = $product->processProductData();
 
-        // TODO: check item's attributes property directly once attributes getter is implemented
-        $line = $item->getCsvFragment();
-        $columnValues = explode("\t", $line);
-        $this->assertEquals(
-            'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&' .
-            'couch+color+de=lila&couch+color+de=valueeeee&test+de=some+test+attribute+value+in+German',
-            $columnValues[11]
-        );
+        $attributesMap = $this->getMappedAttributes($item);
+
+        foreach ($expectedAttributeValues as $key => $expectedAttributeValue) {
+            if (is_array($expectedAttributeValue)) {
+                $this->assertEquals($expectedAttributeValue, $attributesMap[$key]);
+            } else {
+                $this->assertEquals($expectedAttributeValue, $attributesMap[$key][0]);
+            }
+        }
     }
 
     public function testSetsSalesFrequencyAsZeroIfSortBySalesIsNotConfigured()
@@ -936,171 +701,5 @@ class ProductTest extends TestCase
             'https://plenty-testshop.de/' . $expectedProductUrl,
             $item->getUrl()->getValues()['']
         );
-    }
-
-    private function getProduct(): Product
-    {
-        return new Product(
-            $this->exporterMock,
-            $this->config,
-            $this->storeConfigurationMock,
-            $this->registryServiceMock,
-            $this->getPropertySelections(),
-            $this->itemMock,
-            $this->variationEntityMocks,
-            Product::WRAP_MODE_DEFAULT
-        );
-    }
-
-    private function getPropertySelections(): PropertySelectionResponse
-    {
-        return PropertySelectionParser::parse(
-            $this->getMockResponse('PropertySelectionResponse/response.json')
-        );
-    }
-
-
-    private function getItem(array $data): Item
-    {
-        return new Item($data);
-    }
-
-    private function getExporter(): Exporter
-    {
-        return Exporter::create(Exporter::TYPE_CSV, 100, self::AVAILABLE_PROPERTIES);
-    }
-
-    public function cheapestVariationIsExportedTestProvider(): array
-    {
-        return [
-            'item without images (no default image), no image exported' => [
-                'Pim/Variations/response_for_cheapest_without_images.json',
-                '',
-                '20.43',
-                'https://plenty-testshop.de/urlPath_0_6557'
-            ],
-            'cheapest with zero price variation' => [
-                'Pim/Variations/response_for_cheapest_price_test.json',
-                'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/exportedImage.jpeg',
-                '11.33',
-                'https://plenty-testshop.de/urlPath_0_1181'
-            ],
-            'cheapest without store availability' => [
-                'Pim/Variations/response_for_cheapest_price_test_with_no_store_availability_for_image.json',
-                'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/exportedImage.jpeg',
-                '0.01',
-                'https://plenty-testshop.de/urlPath_0_1181'
-            ],
-            'cheapest without an image, default image is used' => [
-                'Pim/Variations/response_for_cheapest_price_variation_without_image.json',
-                'https://cdn03.plentymarkets.com/v3b53of2xcyu/item/images/119/middle/119-Relaxsessel-Woddenfir.jpg',
-                '1.00',
-                'https://plenty-testshop.de/urlPath_0_1179'
-            ]
-        ];
-    }
-
-    public function correctManufacturerIsExportedTestProvider(): array
-    {
-        return [
-            'manufacturer has external name, external name is exported' => [
-                'ManufacturerResponse/one.json',
-                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&vendor=externalNameA',
-            ],
-            'manufacturer has no external name, original name is exported' => [
-                'ManufacturerResponse/without_external_name.json',
-                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&vendor=nameA',
-            ],
-        ];
-    }
-
-    public function exportFreeFieldsConfigurationTestProvider(): array
-    {
-        return [
-            'using default values' => [
-                [],
-                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&free1=0'
-            ],
-            'free fields enabled' => [
-                [
-                    'exportFreeTextFields' => true,
-                ],
-                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F&free1=0'
-            ],
-            'free fields disabled' => [
-                [
-                    'exportFreeTextFields' => false,
-                ],
-                'cat=Sessel+%26+Hocker&cat_url=%2Fwohnzimmer%2Fsessel-hocker%2F'
-            ]
-        ];
-    }
-
-    public function orderNumberExportConfigurationTestProvider(): array
-    {
-        return [
-            'using default values' => [
-                [],
-                '1|11|1111|111|11111|111111|2|22|2222|222|22222|222222'
-            ],
-            'all fields enabled' => [
-                [
-                    'exportOrdernumberProductId' => true,
-                    'exportOrdernumberVariantId' => true,
-                    'exportOrdernumberVariantNumber' => true,
-                    'exportOrdernumberVariantModel' => true,
-                    'exportOrdernumberVariantBarcodes' => true
-                ],
-                '1|11|1111|111|11111|111111|2|22|2222|222|22222|222222'
-            ],
-            'all fields disabled' => [
-                [
-                    'exportOrdernumberProductId' => false,
-                    'exportOrdernumberVariantId' => false,
-                    'exportOrdernumberVariantNumber' => false,
-                    'exportOrdernumberVariantModel' => false,
-                    'exportOrdernumberVariantBarcodes' => false
-                ],
-                ''
-            ],
-            'product id disabled' => [
-                [
-                    'exportOrdernumberProductId' => false,
-                ],
-                '1|11|1111|11111|111111|2|22|2222|22222|222222'
-            ],
-            'variant id disabled' => [
-                [
-                    'exportOrdernumberVariantId' => false,
-                ],
-                '1|11|111|11111|111111|2|22|222|22222|222222'
-            ],
-            'variant number disabled' => [
-                [
-                    'exportOrdernumberVariantNumber' => false,
-                ],
-                '11|1111|111|11111|111111|22|2222|222|22222|222222'
-            ],
-            'variant model disabled' => [
-                [
-                    'exportOrdernumberVariantModel' => false,
-                ],
-                '1|1111|111|11111|111111|2|2222|222|22222|222222'
-            ],
-            'variant barcodes disabled' => [
-                [
-                    'exportOrdernumberVariantBarcodes' => false,
-                ],
-                '1|11|1111|111|2|22|2222|222'
-            ],
-            'various fields disabled' => [
-                [
-                    'exportOrdernumberProductId' => false,
-                    'exportOrdernumberVariantNumber' => false,
-                    'exportOrdernumberVariantBarcodes' => false
-                ],
-                '11|1111|22|2222'
-            ]
-        ];
     }
 }

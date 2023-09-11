@@ -9,13 +9,17 @@ use FINDOLOGIC\Export\Data\Item;
 
 class CheapestVariation
 {
-    private const VARIATION_ID = 'id';
+    public const VARIATION_ID = 'id';
 
-    private const PRICE = 'price';
+    public const PRICE = 'price';
 
-    private const IMAGE = 'image';
+    public const IMAGE = 'image';
 
     private const IS_MAIN = 'isMain';
+
+    public const IMAGES = 'images';
+
+    public const VARIATION_IMAGES = 'variation_images';
 
     private Item $item;
 
@@ -32,6 +36,8 @@ class CheapestVariation
             self::VARIATION_ID => $variation->getId(),
             self::PRICE => $variation->getPrice(),
             self::IMAGE => $variation->getImage(),
+            self::IMAGES => $variation->getImages(),
+            self::VARIATION_IMAGES => $variation->getVariationImages(),
             self::IS_MAIN => $variation->isMain()
         ];
     }
@@ -64,9 +70,9 @@ class CheapestVariation
     }
 
     /**
-     * @return array<string, string|float|int>
+     * @return array<string, string|float|int|array>
      */
-    private function getCheapestVariation(): array
+    public function getCheapestVariation(): array|bool
     {
         $priceColumn = array_column($this->cheapestVariationsData, self::PRICE);
         $isMainColumn = array_column($this->cheapestVariationsData, self::IS_MAIN);

@@ -19,7 +19,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Variation;
 use Psr\Cache\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
-class CsvWrapper extends Wrapper
+class ItemsWrapper extends Wrapper
 {
     protected string $exportPath;
 

@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^7.4.5",
         "vasily-kartashov/log4php": "^4.1",
         "ext-json": "*",
-        "findologic/libflexport": "^2.9",
+        "findologic/libflexport": "^3.1",
         "nesbot/carbon": "^2.38",
         "symfony/cache": "^5.1",
         "guzzlehttp/promises": "^1.4",
@@ -29,7 +29,8 @@
         "symfony/finder": "^5.1",
         "phpunit/phpunit": "^9.5",
         "symfony/phpunit-bridge": "^5.2",
-        "phpstan/phpstan": "^1.9"
+        "phpstan/phpstan": "^1.9",
+        "dg/bypass-finals": "^1.4"
     },
     "config": {
         "platform": {
@@ -50,10 +51,15 @@
     "scripts": {
         "lint": [
             "./vendor/bin/phpcs --standard=phpcs.xml .",
-            "XDEBUG_MODE=off ./vendor/bin/phpstan analyse --level 2 src tests"
+            "XDEBUG_MODE=off php -d memory_limit=4G ./vendor/bin/phpstan analyse --level 2 src tests"
+        ],
+        "win-lint": [
+            "./vendor/bin/phpcs --standard=phpcs.xml .",
+            "./vendor/bin/phpstan analyse --level 2 src tests"
         ],
         "fix": "./vendor/bin/phpcbf --standard=phpcs.xml .",
-        "test": "XDEBUG_MODE=coverage phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml"
+        "test": "XDEBUG_MODE=coverage phpunit -d memory_limit=-1 --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml",
+        "win-test": "phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.xml"
     },
     "license": "MIT"
 }
