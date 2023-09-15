@@ -226,7 +226,7 @@ class Product
                 $this->item->addKeyword(new Keyword($text->getKeywords()));
             }
 
-            $this->item->addUrl($this->getPlentyShopUrl($text->getUrlPath()));
+            $this->item->addUrl($this->buildProductUrl($text->getUrlPath()));
         }
     }
 
@@ -597,6 +597,33 @@ class Product
                 )
             );
         }
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    private function buildProductUrl(string $urlPath): string
+    {
+        if ($this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl()) {
+            return $this->getCallistoUrl($urlPath);
+        } else {
+            return $this->getPlentyShopUrl($urlPath);
+        }
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    private function getCallistoUrl(string $urlPath): string
+    {
+        return sprintf(
+            '%s://%s%s/%s/a-%s',
+            $this->config->getProtocol(),
+            $this->getWebStoreHost(),
+            $this->getLanguageUrlPrefix(),
+            trim($urlPath, '/'),
+            $this->productEntity->getId()
+        );
     }
 
     /**
