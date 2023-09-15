@@ -192,8 +192,7 @@ class Product
         if (empty($this->productTexts)) {
             return null;
         }
-
-        return $this->getPlentyShopUrl(
+        return $this->buildProductUrl(
             $this->productTexts[0]->getUrlPath(),
             $this->productEntity->getId() . '_' . $variationId
         );
@@ -602,12 +601,12 @@ class Product
     /**
      * @throws InvalidArgumentException
      */
-    private function buildProductUrl(string $urlPath): string
+    private function buildProductUrl(string $urlPath, $itemAndVariationId = null): string
     {
         if ($this->registryService->getPlentyShop()->shouldUseLegacyCallistoUrl()) {
             return $this->getCallistoUrl($urlPath);
         } else {
-            return $this->getPlentyShopUrl($urlPath);
+            return $this->getPlentyShopUrl($urlPath, $itemAndVariationId);
         }
     }
 
