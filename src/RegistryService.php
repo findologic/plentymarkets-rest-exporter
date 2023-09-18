@@ -669,7 +669,8 @@ class RegistryService
                 $response = $this->client->send($pluginConfigurationRequest);
             } catch (PermissionException) {
                 $this->customerLogger->error(
-                    'Required permissions \'Plugins > Configurations > Show\' have not been granted. '
+                    'Required permissions \'Plugins > Configurations > Show\' have not been granted. ' .
+                    'Product-URLs will be exported in Ceres format.'
                 );
 
                 $this->set('pluginConfigurations', $allConfigurations);
