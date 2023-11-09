@@ -119,6 +119,7 @@ class ConfigTest extends TestCase
         $this->assertSame($expectedDimensionUnit, $config->getExportDimensionUnit());
         $this->assertSame($expectedWeightUnit, $config->getExportWeightUnit());
         $this->assertSame($expectedUseVariants, $config->getUseVariants());
+        $this->assertSame($expectedItemsPerPage, $config->getItemsPerPage());
     }
 
     /**

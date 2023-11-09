@@ -47,7 +47,7 @@ class Config
 
     private bool $exportFreeTextFields = true;
 
-    private int $itemsPerPage;
+    private int $itemsPerPage = 100;
 
     private ?float $exportReferrerId = null;
 
