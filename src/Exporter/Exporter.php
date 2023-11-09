@@ -235,7 +235,6 @@ abstract class Exporter
     private function getItems($page): ItemResponse
     {
         $this->itemRequest->setPage($page);
-        $this->itemRequest->setItemsPerPage($this->config->getItemsPerPage());
         $response = $this->client->send($this->itemRequest);
 
         return ItemParser::parse($response);
