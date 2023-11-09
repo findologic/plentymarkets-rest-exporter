@@ -77,9 +77,10 @@ abstract class Entity
             if ($shouldUseNestedProperties) {
                 $entityData = $entityData[self::NESTED_PROPERTIES[$field]];
             }
-            $entities[] = $this->getEntity($entityClass, $entityData, $key);
+            if (!is_null($entityData)) {
+                $entities[] = $this->getEntity($entityClass, $entityData, $key);
+            }
         }
-
         return $entities;
     }
 
