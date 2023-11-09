@@ -15,7 +15,7 @@ class VatRequest extends Request implements IterableRequestInterface
             'vat',
             [
                 'page' => $this->page,
-                'itemsPerPage' => self::$ITEMS_PER_PAGE
+                'itemsPerPage' => $this->itemsPerPage
             ]
         );
     }

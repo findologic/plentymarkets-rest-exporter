@@ -49,6 +49,8 @@ final class Utils
 
         $responses = [];
         $lastPage = false;
+        $request->setItemsPerPage($client->getConfig()->getItemsPerPage());
+        
         while (!$lastPage) {
             $response = $client->send($request);
             $lastPage = self::parseIsLastPage($response);

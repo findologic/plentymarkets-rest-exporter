@@ -15,7 +15,7 @@ class PropertyGroupRequest extends Request implements IterableRequestInterface
             'v2/properties/groups',
             [
                 'page' => $this->page,
-                'itemsPerPage' => self::$ITEMS_PER_PAGE,
+                'itemsPerPage' => $this->itemsPerPage,
                 'with' => 'names'
             ]
         );

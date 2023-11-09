@@ -37,7 +37,7 @@ class ItemRequest extends Request implements IterableRequestInterface
                 'variationRelatedUpdatedBetween' => $variationRelatedUpdatedBetween,
                 'or' => $or,
                 'page' => $this->page,
-                'itemsPerPage' => self::$ITEMS_PER_PAGE
+                'itemsPerPage' => $this->itemsPerPage
             ]
         );
     }

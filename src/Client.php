@@ -236,6 +236,11 @@ class Client
         return $this->accessToken;
     }
 
+    public function getConfig(): Config 
+    {
+        return $this->config;
+    }
+
     /**
      * @codeCoverageIgnore Not yet implemented.
      */

@@ -16,7 +16,7 @@ class UnitRequest extends Request implements IterableRequestInterface
             [
                 'updatedAt' => $updatedAt,
                 'page' => $this->page,
-                'itemsPerPage' => self::$ITEMS_PER_PAGE
+                'itemsPerPage' => $this->itemsPerPage
             ]
         );
     }

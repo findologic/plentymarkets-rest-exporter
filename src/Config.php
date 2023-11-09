@@ -47,6 +47,8 @@ class Config
 
     private bool $exportFreeTextFields = true;
 
+    private int $itemsPerPage;
+
     private ?float $exportReferrerId = null;
 
     private string $exportDimensionUnit = 'mm';
@@ -97,6 +99,7 @@ class Config
             'exportReferrerId' => self::getFloatCastExportReferrerId($plentyConfig['export_referrer_id'] ?? null),
             'exportDimensionUnit' => $plentyConfig['export_dimension_unit'],
             'exportWeightUnit' => $plentyConfig['export_weight_unit'],
+            'itemsPerPage' => $plentyConfig['items_per_page'],
             'debug' => $debug
         ]);
     }
@@ -123,6 +126,7 @@ class Config
             'exportReferrerId' => self::getFloatCastExportReferrerId(Utils::env('EXPORT_REFERRER_ID')),
             'exportDimensionUnit' => Utils::env('EXPORT_DIMENSION_UNIT'),
             'exportWeightUnit' => Utils::env('EXPORT_WEIGHT_UNIT'),
+            'itemsPerPage' => Utils::env('ITEMS_PER_PAGE'),
             'debug' => (bool)Utils::env('DEBUG')
         ]);
     }
@@ -332,6 +336,16 @@ class Config
     public function setExportFreeTextFields(bool $exportFreeTextFields): void
     {
         $this->exportFreeTextFields = $exportFreeTextFields;
+    }
+
+    public function getItemsPerPage(): int
+    {
+        return $this->itemsPerPage;
+    }
+
+    public function setItemsPerPage(int $itemsPerPage): void
+    {
+        $this->itemsPerPage = $itemsPerPage;
     }
 
     private static function getFloatCastExportReferrerId($exportReferrerId): ?float
