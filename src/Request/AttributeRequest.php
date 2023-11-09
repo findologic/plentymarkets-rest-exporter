@@ -15,7 +15,7 @@ class AttributeRequest extends Request implements IterableRequestInterface
             'items/attributes',
             [
                 'page' => $this->page,
-                'itemsPerPage' => self::$ITEMS_PER_PAGE,
+                'itemsPerPage' => $this->itemsPerPage,
                 'with' => $with
             ]
         );

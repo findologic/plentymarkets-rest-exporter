@@ -14,6 +14,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\IterableRequestInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
+use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
@@ -38,7 +39,7 @@ final class Utils
      * @throws CriticalException
      *
      */
-    public static function sendIterableRequest(Client $client, Request $request): array
+    public static function sendIterableRequest(Client $client, Request $request, Config $config): array
     {
         if (!$request instanceof IterableRequestInterface) {
             throw new InvalidArgumentException(sprintf(
@@ -49,6 +50,8 @@ final class Utils
 
         $responses = [];
         $lastPage = false;
+        $request->setItemsPerPage($config->getItemsPerPage());
+        
         while (!$lastPage) {
             $response = $client->send($request);
             $lastPage = self::parseIsLastPage($response);

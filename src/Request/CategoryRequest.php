@@ -18,7 +18,7 @@ class CategoryRequest extends Request implements IterableRequestInterface
                 'with' => ['details'],
                 'plentyId' => $storeIdentifier,
                 'page' => $this->page,
-                'itemsPerPage' => self::$ITEMS_PER_PAGE
+                'itemsPerPage' => $this->itemsPerPage
             ]
         );
     }

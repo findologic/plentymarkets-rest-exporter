@@ -15,7 +15,7 @@ class PropertySelectionRequest extends Request implements IterableRequestInterfa
             'properties/selections',
             [
                 'page' => $this->page,
-                'itemsPerPage' => self::$ITEMS_PER_PAGE
+                'itemsPerPage' => $this->itemsPerPage
             ]
         );
     }

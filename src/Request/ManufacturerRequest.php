@@ -18,7 +18,7 @@ class ManufacturerRequest extends Request implements IterableRequestInterface
                 'updatedAt' => $updatedAt,
                 'name' => $name,
                 'page' => $this->page,
-                'itemsPerPage' => self::$ITEMS_PER_PAGE
+                'itemsPerPage' => $this->itemsPerPage
             ]
         );
     }

@@ -11,4 +11,8 @@ interface IterableRequestInterface
     public function setPage(int $page);
 
     public function getPage(): int;
+
+    public function setItemsPerPage(int $itemsPerPage);
+
+    public function getItemsPerPage(): int;
 }
