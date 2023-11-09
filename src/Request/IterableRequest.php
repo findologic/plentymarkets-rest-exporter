@@ -30,7 +30,7 @@ trait IterableRequest
         return $this->page;
     }
 
-    public function getItemsPerPage(): int 
+    public function getItemsPerPage(): int
     {
         return $this->itemsPerPage;
     }
