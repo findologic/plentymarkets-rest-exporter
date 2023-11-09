@@ -250,10 +250,12 @@ class UtilsTest extends TestCase
         ));
 
         $nonIterableRequest = new PluginConfigurationRequest(1234, 1234);
+
         $config = Utils::getExportConfiguration(
-            self::VALID_SHOPKEY,
+            null,
             $this->clientMock
         );
+
         $client = $this->getMockBuilder(PlentyRestClient::class)
             ->disableOriginalConstructor()
             ->getMock();
