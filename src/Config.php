@@ -126,7 +126,7 @@ class Config
             'exportReferrerId' => self::getFloatCastExportReferrerId(Utils::env('EXPORT_REFERRER_ID')),
             'exportDimensionUnit' => Utils::env('EXPORT_DIMENSION_UNIT'),
             'exportWeightUnit' => Utils::env('EXPORT_WEIGHT_UNIT'),
-            'itemsPerPage' => Utils::env('ITEMS_PER_PAGE'),
+            'itemsPerPage' => (int)Utils::env('ITEMS_PER_PAGE'),
             'debug' => (bool)Utils::env('DEBUG')
         ]);
     }
