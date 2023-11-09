@@ -67,6 +67,7 @@ class ConfigTest extends TestCase
         $expectedDimensionUnit = 'm';
         $expectedWeightUnit = 'kg';
         $expectedUseVariants = false;
+        $expectedItemsPerPage = 100;
 
         $accountResponse = [
             '1234' => [
@@ -93,6 +94,7 @@ class ConfigTest extends TestCase
                     'export_free_text_fields' => $expectedExportFreeTextFields,
                     'export_dimension_unit' => $expectedDimensionUnit,
                     'export_weight_unit' => $expectedWeightUnit,
+                    'items_per_page' => $expectedItemsPerPage
                 ],
             ]
         ];
