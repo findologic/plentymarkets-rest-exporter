@@ -217,7 +217,7 @@ abstract class Exporter
             $products = $this->getItems($page);
             $variations = $products->getAllIds() ? $this->getItemVariations($products->getAllIds()) : [];
             $this->wrapData(count($products->all()), $products, $variations, $propertySelection);
-            $this->offset += $this->config->getItemsPerPage();
+            $this->offset += $this->itemRequest->getItemsPerPage();
 
             $page++;
         } while (!$products->isLastPage());
@@ -235,6 +235,7 @@ abstract class Exporter
     private function getItems($page): ItemResponse
     {
         $this->itemRequest->setPage($page);
+        $this->itemRequest->setItemsPerPage($this->config->getItemsPerPage());
         $response = $this->client->send($this->itemRequest);
 
         return ItemParser::parse($response);
@@ -262,7 +263,7 @@ abstract class Exporter
             ->setParam('clientId', $this->registryService->getWebStore()->getStoreIdentifier())
             ->setWith($this->getRequiredVariationValues());
 
-        foreach (Utils::sendIterableRequest($this->client, $this->itemVariationRequest) as $response) {
+        foreach (Utils::sendIterableRequest($this->client, $this->itemVariationRequest, $this->config) as $response) {
             $pimVariationResponse = PimVariationsParser::parse($response);
             $variations = array_merge($pimVariationResponse->all(), $variations);
         }

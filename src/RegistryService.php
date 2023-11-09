@@ -365,7 +365,7 @@ class RegistryService
 
         $categoryRequest = new CategoryRequest($webStore->getStoreIdentifier());
 
-        foreach (Utils::sendIterableRequest($this->client, $categoryRequest) as $response) {
+        foreach (Utils::sendIterableRequest($this->client, $categoryRequest, $this->config) as $response) {
             $categoryResponse = CategoryParser::parse($response);
             $categoriesMatchingCriteria = $categoryResponse->find([
                 'details' => [
@@ -393,7 +393,7 @@ class RegistryService
     protected function fetchVat(): void
     {
         $vatRequest = new VatRequest();
-        foreach (Utils::sendIterableRequest($this->client, $vatRequest) as $response) {
+        foreach (Utils::sendIterableRequest($this->client, $vatRequest, $this->config) as $response) {
             $vatResponse = VatParser::parse($response);
 
             foreach ($vatResponse->all() as $vat) {
@@ -421,7 +421,7 @@ class RegistryService
     protected function fetchSalesPrices(): void
     {
         $salesPriceRequest = new SalesPriceRequest();
-        foreach (Utils::sendIterableRequest($this->client, $salesPriceRequest) as $response) {
+        foreach (Utils::sendIterableRequest($this->client, $salesPriceRequest, $this->config) as $response) {
             $salesPriceResponse = SalesPriceParser::parse($response);
 
             foreach ($salesPriceResponse->all() as $salesPrice) {
@@ -454,7 +454,7 @@ class RegistryService
     protected function fetchAttributes(): void
     {
         $attributeRequest = new AttributeRequest();
-        foreach (Utils::sendIterableRequest($this->client, $attributeRequest) as $response) {
+        foreach (Utils::sendIterableRequest($this->client, $attributeRequest, $this->config) as $response) {
             $attributeResponse = AttributeParser::parse($response);
 
             foreach ($attributeResponse->all() as $attribute) {
@@ -476,7 +476,7 @@ class RegistryService
     protected function fetchManufacturers(): void
     {
         $manufacturerRequest = new ManufacturerRequest();
-        foreach (Utils::sendIterableRequest($this->client, $manufacturerRequest) as $response) {
+        foreach (Utils::sendIterableRequest($this->client, $manufacturerRequest, $this->config) as $response) {
             $manufacturerResponse = ManufacturerParser::parse($response);
 
             foreach ($manufacturerResponse->all() as $manufacturer) {
@@ -499,7 +499,7 @@ class RegistryService
     {
         $propertyRequest = new PropertyRequest();
 
-        foreach (Utils::sendIterableRequest($this->client, $propertyRequest) as $response) {
+        foreach (Utils::sendIterableRequest($this->client, $propertyRequest, $this->config) as $response) {
             $propertyResponse = PropertyParser::parse($response);
 
             foreach ($propertyResponse->all() as $property) {
@@ -525,7 +525,7 @@ class RegistryService
         try {
             $propertyGroupRequest = new PropertyGroupRequest();
 
-            foreach (Utils::sendIterableRequest($this->client, $propertyGroupRequest) as $response) {
+            foreach (Utils::sendIterableRequest($this->client, $propertyGroupRequest, $this->config) as $response) {
                 $propertyGroupResponse = PropertyGroupParser::parse($response);
 
                 foreach ($propertyGroupResponse->all() as $propertyGroup) {
@@ -555,7 +555,7 @@ class RegistryService
         $with = ['names', 'selections'];
         $propertyRequest = new ItemPropertyRequest($with);
 
-        foreach (Utils::sendIterableRequest($this->client, $propertyRequest) as $response) {
+        foreach (Utils::sendIterableRequest($this->client, $propertyRequest, $this->config) as $response) {
             $propertyResponse = ItemPropertyParser::parse($response);
 
             foreach ($propertyResponse->all() as $property) {
@@ -577,7 +577,7 @@ class RegistryService
     protected function fetchUnits(): void
     {
         $unitRequest = new UnitRequest();
-        foreach (Utils::sendIterableRequest($this->client, $unitRequest) as $response) {
+        foreach (Utils::sendIterableRequest($this->client, $unitRequest, $this->config) as $response) {
             $unitResponse = UnitParser::parse($response);
 
             foreach ($unitResponse->all() as $unit) {
@@ -601,7 +601,7 @@ class RegistryService
             $selectionsRequest = new PropertySelectionRequest();
 
             $selections = [];
-            foreach (Utils::sendIterableRequest($this->client, $selectionsRequest) as $response) {
+            foreach (Utils::sendIterableRequest($this->client, $selectionsRequest, $this->config) as $response) {
                 $selectionsResponse = PropertySelectionParser::parse($response);
                 $selections = array_merge($selectionsResponse->all(), $selections);
             }
@@ -632,7 +632,7 @@ class RegistryService
     {
         $propertyGroupRequest = new ItemPropertyGroupRequest('names');
 
-        foreach (Utils::sendIterableRequest($this->client, $propertyGroupRequest) as $response) {
+        foreach (Utils::sendIterableRequest($this->client, $propertyGroupRequest, $this->config) as $response) {
             $propertyGroupResponse = ItemPropertyGroupParser::parse($response);
 
             foreach ($propertyGroupResponse->all() as $propertyGroup) {
