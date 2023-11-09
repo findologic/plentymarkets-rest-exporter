@@ -99,7 +99,8 @@
       "export_ordernumber_variant_barcodes": true,
       "export_free_text_fields": true,
       "export_dimension_unit": "mm",
-      "export_weight_unit": "g"
+      "export_weight_unit": "g",
+      "items_per_page": 100
     },
     "synonyms": "",
     "bonus": "{}",
