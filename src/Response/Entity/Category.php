@@ -145,11 +145,11 @@ class Category extends Entity
     {
         return $this->details;
     }
-    
+
     /**
      * @return Tag[]
      */
-    public function getTags(): array 
+    public function getTags(): array
     {
         return $this->tags;
     }
