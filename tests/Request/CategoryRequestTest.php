@@ -21,7 +21,7 @@ class CategoryRequestTest extends TestCase
 
         $this->assertSame([
             'type' => 'item', // Set by default.
-            'with' => ['details'], // Set by default.
+            'with' => ['details', 'tags'], // Set by default.
             'plentyId' => $expectedStoreIdentifier,
             'page' => $expectedPage,
             'itemsPerPage' => $expectedItemsPerPage,

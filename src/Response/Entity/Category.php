@@ -7,6 +7,7 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\CategoryDetails;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Tag;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\TagName;
 use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 
 class Category extends Entity
