@@ -6,9 +6,14 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity;
 
 use Exception;
 use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Category\CategoryDetails;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\Tag;
+use FINDOLOGIC\PlentyMarketsRestExporter\Response\Entity\Pim\Property\TagName;
+use FINDOLOGIC\PlentyMarketsRestExporter\Translator;
 
 class Category extends Entity
 {
+    public const EXCLUSION_TAG_NAME = 'findologic-exclude';
+
     private int $id;
 
     private ?int $parentCategoryId;
@@ -28,6 +33,9 @@ class Category extends Entity
     /** @var CategoryDetails[] */
     private array $details = [];
 
+    /** @var Tag[] */
+    private array $tags = [];
+
     /**
      * @throws Exception
      */
@@ -45,6 +53,12 @@ class Category extends Entity
         if (!empty($data['details'])) {
             foreach ($data['details'] as $categoryDetails) {
                 $this->details[] = new CategoryDetails($categoryDetails);
+            }
+        }
+
+        if (!empty($data['tagRelationship'])) {
+            foreach ($data['tagRelationship'] as $tag) {
+                $this->tags[] = new Tag($tag);
             }
         }
     }
@@ -67,6 +81,22 @@ class Category extends Entity
             'hasChildren' => $this->hasChildren,
             'details' => $details
         ];
+    }
+
+    public function hasExportExclusionTag(string $lang): bool
+    {
+        foreach ($this->getTags() as $tag) {
+            /** @var TagName[] $names */
+            $names = Translator::translateMultiple($tag->getTagData()->getNames(), $lang);
+
+            foreach ($names as $name) {
+                if (strtolower($name->getName()) === self::EXCLUSION_TAG_NAME) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public function getId(): int
@@ -115,5 +145,13 @@ class Category extends Entity
     public function getDetails(): array
     {
         return $this->details;
+    }
+
+    /**
+     * @return Tag[]
+     */
+    public function getTags(): array
+    {
+        return $this->tags;
     }
 }
