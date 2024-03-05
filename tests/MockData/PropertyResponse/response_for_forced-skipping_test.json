@@ -486,14 +486,6 @@
           "value": "showOnItemsPage",
           "createdAt": "2019-02-22T14:03:20+00:00",
           "updatedAt": "2019-02-22T14:03:20+00:00"
-        },
-        {
-          "id": 842,
-          "propertyId": 123,
-          "type": "clients",
-          "value": "4024",
-          "createdAt": "2019-02-22T14:03:20+00:00",
-          "updatedAt": "2019-02-22T14:03:20+00:00"
         }
       ],
       "amazon": []
