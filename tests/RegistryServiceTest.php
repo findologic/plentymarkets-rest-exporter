@@ -233,6 +233,8 @@ class RegistryServiceTest extends TestCase
                 $expectedWebStore,
                 $expectedWebStore,
                 $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
                 $plentyShopConfig,
                 new CategoryResponse(1, 1, true, []),
                 $expectedSalesPrice,
@@ -451,7 +453,7 @@ class RegistryServiceTest extends TestCase
             'pluginSetId' => 44,
             'configuration' => []
         ]);
-        $this->registryMock->method('get')->willReturn($expectedWebStore);
+        
         $registryServiceMock = $this->getRegistryServiceMockForSpecificFetchMethods(['fetchProperties'], $config);
 
         $rawResponse = $this->getMockResponse('PropertyResponse/response_for_forced-skipping_test.json');
@@ -470,6 +472,20 @@ class RegistryServiceTest extends TestCase
                 return $property->getSkipExport();
             })
         );
+
+        $plentyShopConfig = [];
+        $this->registryMock->expects($this->any())
+            ->method('get')
+            ->willReturnOnConsecutiveCalls(
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $plentyShopConfig
+            );
 
         $registryServiceMock->warmUp();
     }
@@ -494,7 +510,7 @@ class RegistryServiceTest extends TestCase
             'pluginSetId' => 44,
             'configuration' => []
         ]);
-        $this->registryMock->method('get')->willReturn($expectedWebStore);
+        
         $registryServiceMock = $this->getRegistryServiceMockForSpecificFetchMethods(['fetchProperties'], $config);
 
         $rawResponse = $this->getMockResponse('PropertyResponse/response_for_forced-skipping_test.json');
@@ -509,6 +525,20 @@ class RegistryServiceTest extends TestCase
                 return !$property->getSkipExport();
             })
         );
+
+        $plentyShopConfig = [];
+        $this->registryMock->expects($this->any())
+            ->method('get')
+            ->willReturnOnConsecutiveCalls(
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $plentyShopConfig
+            );
 
         $registryServiceMock->warmUp();
     }
