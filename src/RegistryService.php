@@ -705,22 +705,35 @@ class RegistryService
     private function isPropertyExportable(Property $property): bool
     {
         $referrerId = $this->config->getExportReferrerId();
+        $storeIdentifier = $this->getWebStore()->getStoreIdentifier();
 
+        $isExportableByReferrer = false;
         if ($referrerId === null) {
-            return true;
+            $isExportableByReferrer = true;
         }
 
+        $isClientAssigned = false;
+        $isExportableByClient = false;
         foreach ($property->getOptions() as $option) {
-            if ($option->getType() !== PropertyOptionType::REFERRERS) {
-                continue;
+            if ($option->getType() == PropertyOptionType::REFERRERS) {
+                if (is_numeric($option->getValue()) && ((float)$option->getValue() === $referrerId)) {
+                    $isExportableByReferrer = true;
+                }
             }
 
-            if (is_numeric($option->getValue()) && ((float)$option->getValue() === $referrerId)) {
-                return true;
+            if ($option->getType() == PropertyOptionType::CLIENTS) {
+                $isClientAssigned = true;
+                if ((int)$option->getValue() === $storeIdentifier) {
+                    $isExportableByClient = true;
+                }
             }
         }
 
-        return false;
+        if (!$isClientAssigned) {
+            $isExportableByClient = true;
+        }
+
+        return $isExportableByClient && $isExportableByReferrer;
     }
 
     /**
