@@ -15,7 +15,7 @@ class CategoryRequest extends Request implements IterableRequestInterface
             'categories',
             [
                 'type' => 'item',
-                'with' => ['details'],
+                'with' => ['details', 'tags'],
                 'plentyId' => $storeIdentifier,
                 'page' => $this->page,
                 'itemsPerPage' => $this->itemsPerPage

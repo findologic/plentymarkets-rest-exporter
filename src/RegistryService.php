@@ -375,7 +375,9 @@ class RegistryService
             ]);
 
             foreach ($categoriesMatchingCriteria as $category) {
-                $this->set('category_' . $category->getId(), $category);
+                if (!$category->hasExportExclusionTag($this->config->getLanguage())) {
+                    $this->set('category_' . $category->getId(), $category);
+                }
             }
         }
     }
