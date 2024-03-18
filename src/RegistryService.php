@@ -731,6 +731,9 @@ class RegistryService
             }
         }
 
+        /* Property will be exported if there aren't any clients assigned
+        * This is to keep the same functionality for the existing customers
+        */
         if (!$isClientAssigned) {
             $isExportableByClient = true;
         }
