@@ -233,6 +233,8 @@ class RegistryServiceTest extends TestCase
                 $expectedWebStore,
                 $expectedWebStore,
                 $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
                 $plentyShopConfig,
                 new CategoryResponse(1, 1, true, []),
                 $expectedSalesPrice,
@@ -443,6 +445,15 @@ class RegistryServiceTest extends TestCase
     public function testSetSkipExportFlagForPropertiesWithoutMatchingConfiguredReferrerId(): void
     {
         $config = $this->getDefaultConfig(['exportReferrerId' => '10.00']);
+        $expectedWebStore = new WebStore([
+            'id' => 0,
+            'type' => 'plentymarkets',
+            'storeIdentifier' => 12345,
+            'name' => 'Test Store',
+            'pluginSetId' => 44,
+            'configuration' => []
+        ]);
+        
         $registryServiceMock = $this->getRegistryServiceMockForSpecificFetchMethods(['fetchProperties'], $config);
 
         $rawResponse = $this->getMockResponse('PropertyResponse/response_for_forced-skipping_test.json');
@@ -462,6 +473,20 @@ class RegistryServiceTest extends TestCase
             })
         );
 
+        $plentyShopConfig = [];
+        $this->registryMock->expects($this->any())
+            ->method('get')
+            ->willReturnOnConsecutiveCalls(
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $plentyShopConfig
+            );
+
         $registryServiceMock->warmUp();
     }
 
@@ -477,6 +502,15 @@ class RegistryServiceTest extends TestCase
     public function testPropertySkipExportFlagIsNeverSetWhenNoReferrerIdIsConfigured(): void
     {
         $config = $this->getDefaultConfig(['exportReferrerId' => null]);
+        $expectedWebStore = new WebStore([
+            'id' => 0,
+            'type' => 'plentymarkets',
+            'storeIdentifier' => 12345,
+            'name' => 'Test Store',
+            'pluginSetId' => 44,
+            'configuration' => []
+        ]);
+        
         $registryServiceMock = $this->getRegistryServiceMockForSpecificFetchMethods(['fetchProperties'], $config);
 
         $rawResponse = $this->getMockResponse('PropertyResponse/response_for_forced-skipping_test.json');
@@ -491,6 +525,20 @@ class RegistryServiceTest extends TestCase
                 return !$property->getSkipExport();
             })
         );
+
+        $plentyShopConfig = [];
+        $this->registryMock->expects($this->any())
+            ->method('get')
+            ->willReturnOnConsecutiveCalls(
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $expectedWebStore,
+                $plentyShopConfig
+            );
 
         $registryServiceMock->warmUp();
     }
