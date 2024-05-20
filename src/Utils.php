@@ -8,7 +8,7 @@ use Exception;
 use FINDOLOGIC\Export\Helpers\DataHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
-use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
