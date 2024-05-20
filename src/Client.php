@@ -97,7 +97,7 @@ class Client
         try {
             $response = $this->sendRequest($request, $request->getParams());
             $this->handleResponse($request, $response);
-        } catch (RetryableException|RequestException $e) {
+        } catch (RetryableException | RequestException $e) {
             if (!$request->isRetryLimitReached()) {
                 $this->customerLogger->error($e->getMessage());
                 $request->incrementRetryCounter();
