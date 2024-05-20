@@ -92,8 +92,9 @@ class Client
     {
         $this->handleRateLimit();
         $this->handleLogin();
-
-        $request = $request->withUri($this->buildRequestUri($request->getUri()->__toString()));
+        
+        $endpoint = $request->getUri()->__toString();
+        $request = $request->withUri($this->buildRequestUri($endpoint));
         try {
             $response = $this->sendRequest($request, $request->getParams());
             $this->handleResponse($request, $response);
@@ -107,6 +108,7 @@ class Client
                     'Retrying failed request. Attempt number %s.',
                     (string) $request->getRetryCounter()
                 ));
+                $request = $request->withUri(new Uri($endpoint));
                 return $this->send($request);
             }
 

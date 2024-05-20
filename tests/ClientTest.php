@@ -122,7 +122,7 @@ class ClientTest extends TestCase
                     'The API for URI "%s" responded with an empty response',
                     $requestUri
                 ),
-                'expectedCallTimes' => 5
+                'expectedCallTimes' => 6
             ],
             'response with unknown status code 400' => [
                 'request' => new CategoryRequest(1234),
@@ -132,7 +132,7 @@ class ClientTest extends TestCase
                     'Could not reach API method with URI "%s". Status code was 400.',
                     $requestUri
                 ),
-                'expectedCallTimes' => 5
+                'expectedCallTimes' => 6
             ],
         ];
     }
@@ -156,6 +156,10 @@ class ClientTest extends TestCase
             ->method('send')
             ->willReturnOnConsecutiveCalls(
                 $this->getMockResponse('LoginResponse/response.json'),
+                $response,
+                $response,
+                $response,
+                $response,
                 $response
             );
 
