@@ -107,7 +107,7 @@ class Client
                 $this->customerLogger->error($e->getMessage());
                 $request->incrementRetryCounter();
 
-                sleep(1);
+                sleep(50);
 
                 $this->customerLogger->debug(sprintf(
                     'Retrying failed request. Attempt number %s.',
