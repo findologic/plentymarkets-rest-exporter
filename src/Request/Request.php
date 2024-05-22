@@ -8,6 +8,8 @@ use GuzzleHttp\Psr7\Request as GuzzleRequest;
 
 abstract class Request extends GuzzleRequest
 {
+    private const RETRY_LIMIT = 5;
+
     protected array $params = [];
     private int $retryCounter = 1;
 
@@ -42,10 +44,6 @@ abstract class Request extends GuzzleRequest
 
     public function isRetryLimitReached(): bool
     {
-        if ($this->retryCounter == 5) {
-            return true;
-        }
-
-        return false;
+        return $this->retryCounter == self::RETRY_LIMIT;
     }
 }

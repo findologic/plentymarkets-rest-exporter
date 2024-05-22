@@ -92,30 +92,29 @@ class Client
     {
         $this->handleRateLimit();
         $this->handleLogin();
-        
+
         $endpoint = $request->getUri()->__toString();
         $request = $request->withUri($this->buildRequestUri($endpoint));
-        try {
-            $response = $this->sendRequest($request, $request->getParams());
-            $this->handleResponse($request, $response);
-        } catch (RetryableException | RequestException $e) {
-            if (!$request->isRetryLimitReached()) {
+        do {
+            try {
+                $response = $this->sendRequest($request, $request->getParams());
+                $this->handleResponse($request, $response);
+                
+                return $response;
+            } catch (RetryableException | RequestException $e) {
                 $this->customerLogger->error($e->getMessage());
                 $request->incrementRetryCounter();
+
                 sleep(60);
 
                 $this->customerLogger->debug(sprintf(
                     'Retrying failed request. Attempt number %s.',
                     (string) $request->getRetryCounter()
                 ));
-                $request = $request->withUri(new Uri($endpoint));
-                return $this->send($request);
             }
+        } while (!$request->isRetryLimitReached());
 
-            throw $e;
-        }
-
-        return $response;
+        throw new Exception('Maximum retry limit reached without success');
     }
 
     /**
@@ -140,6 +139,7 @@ class Client
             $request,
             $this->getRequestOptions($request, $params)
         );
+
         $this->lastResponse = $response;
 
         return $response;
