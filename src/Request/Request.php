@@ -11,7 +11,7 @@ abstract class Request extends GuzzleRequest
     private const RETRY_LIMIT = 5;
 
     protected array $params = [];
-    private int $retryCounter = 1;
+    private int $retryCounter = 0;
 
     public function __construct(
         string $method,

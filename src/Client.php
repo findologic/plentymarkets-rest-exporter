@@ -14,6 +14,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\RetryableException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\RetryLimitException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
@@ -87,6 +88,7 @@ class Client
      * @throws ThrottlingException
      * @throws GuzzleException
      * @throws CriticalException
+     * @throws RetryLimitException
      */
     public function send(Request $request): ResponseInterface
     {
@@ -105,7 +107,7 @@ class Client
                 $this->customerLogger->error($e->getMessage());
                 $request->incrementRetryCounter();
 
-                sleep(60);
+                sleep(1);
 
                 $this->customerLogger->debug(sprintf(
                     'Retrying failed request. Attempt number %s.',
@@ -114,7 +116,7 @@ class Client
             }
         } while (!$request->isRetryLimitReached());
 
-        throw new Exception('Maximum retry limit reached without success');
+        throw new RetryLimitException('Maximum retry limit reached without success');
     }
 
     /**

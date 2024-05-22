@@ -13,6 +13,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\RetryLimitException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
@@ -117,21 +118,15 @@ class ClientTest extends TestCase
             'response with status code 200 but empty response' => [
                 'request' => new CategoryRequest(1234),
                 'response' => new GuzzleResponse(200, [], ''),
-                'expectedException' => EmptyResponseException::class,
-                'expectedExceptionMessage' => sprintf(
-                    'The API for URI "%s" responded with an empty response',
-                    $requestUri
-                ),
+                'expectedException' => RetryLimitException::class,
+                'expectedExceptionMessage' => 'Maximum retry limit reached without success',
                 'expectedCallTimes' => 6
             ],
             'response with unknown status code 400' => [
                 'request' => new CategoryRequest(1234),
                 'response' => new GuzzleResponse(400, [], 'Unprocessable entity!'),
-                'expectedException' => CustomerException::class,
-                'expectedExceptionMessage' => sprintf(
-                    'Could not reach API method with URI "%s". Status code was 400.',
-                    $requestUri
-                ),
+                'expectedException' => RetryLimitException::class,
+                'expectedExceptionMessage' => 'Maximum retry limit reached without success',
                 'expectedCallTimes' => 6
             ],
         ];
