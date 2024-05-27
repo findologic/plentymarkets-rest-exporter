@@ -44,6 +44,6 @@ abstract class Request extends GuzzleRequest
 
     public function isRetryLimitReached(): bool
     {
-        return $this->retryCounter == self::RETRY_LIMIT;
+        return $this->retryCounter >= self::RETRY_LIMIT;
     }
 }
