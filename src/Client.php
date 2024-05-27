@@ -10,14 +10,17 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Debug\DebuggerInterface;
 use FINDOLOGIC\PlentyMarketsRestExporter\Debug\DummyDebugger;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
-use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\RetryableException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\RetryLimitException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Logger\DummyLogger;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\RequestOptions;
@@ -85,17 +88,35 @@ class Client
      * @throws ThrottlingException
      * @throws GuzzleException
      * @throws CriticalException
+     * @throws RetryLimitException
      */
     public function send(Request $request): ResponseInterface
     {
         $this->handleRateLimit();
         $this->handleLogin();
 
-        $request = $request->withUri($this->buildRequestUri($request->getUri()->__toString()));
-        $response = $this->sendRequest($request, $request->getParams());
-        $this->handleResponse($request, $response);
+        $endpoint = $request->getUri()->__toString();
+        $request = $request->withUri($this->buildRequestUri($endpoint));
+        do {
+            try {
+                $response = $this->sendRequest($request, $request->getParams());
+                $this->handleResponse($request, $response);
+                
+                return $response;
+            } catch (RetryableException | RequestException $e) {
+                $this->customerLogger->error($e->getMessage());
+                $request->incrementRetryCounter();
 
-        return $response;
+                sleep((int)Utils::env('FAILED_REQUEST_SLEEP_TIMER', 60));
+
+                $this->customerLogger->debug(sprintf(
+                    'Retrying failed request. Attempt number %s.',
+                    (string) $request->getRetryCounter()
+                ));
+            }
+        } while (!$request->isRetryLimitReached());
+
+        throw new RetryLimitException('Maximum retry limit reached without success');
     }
 
     /**
@@ -120,6 +141,7 @@ class Client
             $request,
             $this->getRequestOptions($request, $params)
         );
+
         $this->lastResponse = $response;
 
         return $response;

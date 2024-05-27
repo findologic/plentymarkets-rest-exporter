@@ -10,9 +10,10 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Client;
 use FINDOLOGIC\PlentyMarketsRestExporter\Config;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\AuthorizationException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CriticalException;
-use FINDOLOGIC\PlentyMarketsRestExporter\Exception\CustomerException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\CustomerException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\PermissionException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\Retry\EmptyResponseException;
+use FINDOLOGIC\PlentyMarketsRestExporter\Exception\RetryLimitException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Exception\ThrottlingException;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\CategoryRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Request\Request;
@@ -95,6 +96,7 @@ class ClientTest extends TestCase
                 'response' => new GuzzleResponse(401, [], 'OOF you are not logged in bro...'),
                 'expectedException' => AuthorizationException::class,
                 'expectedExceptionMessage' => 'The REST client is not logged in.',
+                'expectedCallTimes' => 2
             ],
             'response with status code 403' => [
                 'request' => new CategoryRequest(1234),
@@ -104,30 +106,28 @@ class ClientTest extends TestCase
                     'The REST client does not have access rights for method with URI "%s"',
                     $requestUri
                 ),
+                'expectedCallTimes' => 2
             ],
             'response with status code 429' => [
                 'request' => new CategoryRequest(1234),
                 'response' => new GuzzleResponse(429, [], 'You have reached your rate limit :('),
                 'expectedException' => ThrottlingException::class,
                 'expectedExceptionMessage' => 'Throttling limit reached.',
+                'expectedCallTimes' => 2
             ],
             'response with status code 200 but empty response' => [
                 'request' => new CategoryRequest(1234),
                 'response' => new GuzzleResponse(200, [], ''),
-                'expectedException' => EmptyResponseException::class,
-                'expectedExceptionMessage' => sprintf(
-                    'The API for URI "%s" responded with an empty response',
-                    $requestUri
-                ),
+                'expectedException' => RetryLimitException::class,
+                'expectedExceptionMessage' => 'Maximum retry limit reached without success',
+                'expectedCallTimes' => 6
             ],
             'response with unknown status code 400' => [
                 'request' => new CategoryRequest(1234),
                 'response' => new GuzzleResponse(400, [], 'Unprocessable entity!'),
-                'expectedException' => CustomerException::class,
-                'expectedExceptionMessage' => sprintf(
-                    'Could not reach API method with URI "%s". Status code was 400.',
-                    $requestUri
-                ),
+                'expectedException' => RetryLimitException::class,
+                'expectedExceptionMessage' => 'Maximum retry limit reached without success',
+                'expectedCallTimes' => 6
             ],
         ];
     }
@@ -139,17 +139,22 @@ class ClientTest extends TestCase
         Request $request,
         GuzzleResponse $response,
         string $expectedException,
-        string $expectedExceptionMessage
+        string $expectedExceptionMessage,
+        int $expectedCallTimes
     ): void {
         $this->expectException($expectedException);
         $this->expectExceptionMessage($expectedExceptionMessage);
 
         $client = $this->getDefaultClient();
 
-        $this->guzzleClientMock->expects($this->exactly(2))
+        $this->guzzleClientMock->expects($this->exactly($expectedCallTimes))
             ->method('send')
             ->willReturnOnConsecutiveCalls(
                 $this->getMockResponse('LoginResponse/response.json'),
+                $response,
+                $response,
+                $response,
+                $response,
                 $response
             );
 

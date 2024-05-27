@@ -6,6 +6,6 @@ namespace FINDOLOGIC\PlentyMarketsRestExporter\Exception;
 
 use Exception;
 
-class CustomerException extends Exception
+class RetryLimitException extends Exception
 {
 }

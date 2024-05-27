@@ -8,7 +8,10 @@ use GuzzleHttp\Psr7\Request as GuzzleRequest;
 
 abstract class Request extends GuzzleRequest
 {
+    private const RETRY_LIMIT = 5;
+
     protected array $params = [];
+    private int $retryCounter = 0;
 
     public function __construct(
         string $method,
@@ -27,5 +30,20 @@ abstract class Request extends GuzzleRequest
     public function getParams(): array
     {
         return $this->params;
+    }
+
+    public function getRetryCounter(): int
+    {
+        return $this->retryCounter;
+    }
+
+    public function incrementRetryCounter(): void
+    {
+        $this->retryCounter++;
+    }
+
+    public function isRetryLimitReached(): bool
+    {
+        return $this->retryCounter >= self::RETRY_LIMIT;
     }
 }
