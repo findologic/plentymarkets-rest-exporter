@@ -29,7 +29,7 @@ final class Utils
      * @param Client $client
      * @param Request $request
      *
-     * @return ResponseInterface[]
+     * @return \Generator
      * @throws EmptyResponseException
      * @throws PermissionException
      * @throws CustomerException
