@@ -29,7 +29,7 @@ final class Utils
      * @param Client $client
      * @param Request $request
      *
-     * @return ResponseInterface[]
+     * @return \Generator
      * @throws EmptyResponseException
      * @throws PermissionException
      * @throws CustomerException
@@ -39,7 +39,7 @@ final class Utils
      * @throws CriticalException
      *
      */
-    public static function sendIterableRequest(Client $client, Request $request, Config $config): array
+    public static function sendIterableRequest(Client $client, Request $request, Config $config): \Generator
     {
         if (!$request instanceof IterableRequestInterface) {
             throw new InvalidArgumentException(sprintf(
@@ -48,7 +48,6 @@ final class Utils
             ));
         }
 
-        $responses = [];
         $lastPage = false;
         $request->setItemsPerPage($config->getItemsPerPage());
         
@@ -57,10 +56,8 @@ final class Utils
             $lastPage = self::parseIsLastPage($response);
             $request->setPage($request->getPage() + 1);
 
-            $responses[] = $response;
+            yield $response;
         }
-
-        return $responses;
     }
 
     public static function validateAndGetShopkey(?string $shopkey): ?string

@@ -12,6 +12,7 @@ use FINDOLOGIC\PlentyMarketsRestExporter\Request\PluginConfigurationRequest;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\DirectoryAware;
 use FINDOLOGIC\PlentyMarketsRestExporter\Tests\Helper\ResponseHelper;
 use FINDOLOGIC\PlentyMarketsRestExporter\Utils;
+use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Client;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -260,6 +261,8 @@ class UtilsTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        Utils::sendIterableRequest($client, $nonIterableRequest, $config);
+        foreach (Utils::sendIterableRequest($client, $nonIterableRequest, $config) as $response) {
+            $this->assertInstanceOf(ResponseInterface::class, $response);
+        };
     }
 }
